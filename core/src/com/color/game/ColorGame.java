@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.color.game.assets.Assets;
 import com.color.game.assets.MusicManager;
 import com.color.game.assets.SoundManager;
+import com.color.game.levels.LevelManager;
 import com.color.game.screens.*;
 
 public class ColorGame extends Game {
@@ -28,6 +29,8 @@ public class ColorGame extends Game {
 	public void init() {
 		//noinspection StatementWithEmptyBody
 		while(!Assets.update());
+
+		LevelManager.init();
 
 		this.soundManager = new SoundManager();
 		this.musicManager = new MusicManager();
@@ -55,6 +58,7 @@ public class ColorGame extends Game {
 	public void dispose() {
 		super.dispose();
 		Assets.dispose();
+		LevelManager.disposeLevels();
 	}
 
 	// Screens

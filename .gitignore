@@ -62,9 +62,3 @@ build/
 
 ## OS Specific
 .DS_Store
-
-gradle.properties
-gradlew.bat
-settings.gradle
-gradlew
-build.gradle

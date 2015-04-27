@@ -20,7 +20,7 @@ public class MenuScreen extends BaseScreen {
         super(game);
 
         Table table = new Table();
-        this.texture = new Texture(Gdx.files.internal("backgrounds/background0.png"));
+        this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
         table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
 
         Label title = new Label("Coloring World", new Label.LabelStyle(Assets.getBasicFont(32), new Color(142f/255, 188f/255, 224f/255, 1)));
@@ -37,12 +37,27 @@ public class MenuScreen extends BaseScreen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        setButtonListeners(buttonPlay,    new Runnable() { @Override public void run() { game.setGameScreen(); } });
-        setButtonListeners(buttonOptions, new Runnable() { @Override public void run() { game.setOptionScreen(); } });
-        setButtonListeners(buttonExit,    new Runnable() { @Override public void run() { Gdx.app.exit(); } });
+        setButtonListener(buttonPlay, new Runnable() {
+            @Override
+            public void run() {
+                game.setGameScreen();
+            }
+        });
+        setButtonListener(buttonOptions, new Runnable() {
+            @Override
+            public void run() {
+                game.setOptionScreen();
+            }
+        });
+        setButtonListener(buttonExit, new Runnable() {
+            @Override
+            public void run() {
+                Gdx.app.exit();
+            }
+        });
     }
 
-    private void setButtonListeners(TextButton button, final Runnable runnable) {
+    private void setButtonListener(TextButton button, final Runnable runnable) {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

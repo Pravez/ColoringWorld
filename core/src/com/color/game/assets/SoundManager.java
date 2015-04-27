@@ -35,4 +35,16 @@ public class SoundManager {
     public void playClickSound() {
         this.clickSound.play(this.volume);
     }
+
+    public void playJumpSound() {
+        this.jumpSound.play(this.volume);
+    }
+
+    public void playLandSound() {
+        this.landSound.play(this.volume);
+    }
+
+    public void playTestSound() {
+        this.testSound.play(this.volume);
+    }
 }

@@ -14,6 +14,8 @@ public class ColorGame extends Game {
 	public SoundManager soundManager;
 	public MusicManager musicManager;
 
+	public KeyMapper    keys;
+
 	private SplashScreen         splashScreen;
 	private DeathScreen          deathScreen;
 	private EndScreen            endScreen;
@@ -29,6 +31,8 @@ public class ColorGame extends Game {
 
 		this.soundManager = new SoundManager();
 		this.musicManager = new MusicManager();
+
+		this.keys         = new KeyMapper();
 
 		this.deathScreen          = new DeathScreen(this);
 		this.endScreen            = new EndScreen(this);

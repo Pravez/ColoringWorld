@@ -3,14 +3,15 @@ Game featuring a strange man using colors to live his life
 
 ## Version 0.0 in development
 
+### Done :
 * establish the roadmap
 * create a class diagram
 * create a new repository
-* save the first prototype as version 0.0A
-* save the Ludum Dare game as version 0.0B
-* reworking/refacto of the code
+* save the Ludum Dare game as version 0.0.0
 * start a changelog file
-* start implementing the 3D
+
+### To-Do :
+* reworking/refacto of the code
 * write the basic story of the game
 * adding cheatcodes : change current level, restart level, teleport to mouse position, … (debug tools)
 

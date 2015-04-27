@@ -1,27 +1,84 @@
 package com.color.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.Game;
+import com.color.game.assets.Assets;
+import com.color.game.assets.MusicManager;
+import com.color.game.assets.SoundManager;
+import com.color.game.screens.*;
 
-public class ColorGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+public class ColorGame extends Game {
+
+	public static final String TITLE="Coloring World";
+	public static final int WIDTH=800, HEIGHT=600;
+
+	public SoundManager soundManager;
+	public MusicManager musicManager;
+
+	private SplashScreen         splashScreen;
+	private DeathScreen          deathScreen;
+	private EndScreen            endScreen;
+	private GameScreen           gameScreen;
+	private LevelSelectionScreen levelSelectionScreen;
+	private MenuScreen           menuScreen;
+	private OptionScreen         optionScreen;
+	private WinScreen            winScreen;
+
+	public void init() {
+		//noinspection StatementWithEmptyBody
+		while(!Assets.update());
+
+		this.soundManager = new SoundManager();
+		this.musicManager = new MusicManager();
+
+		this.deathScreen          = new DeathScreen(this);
+		this.endScreen            = new EndScreen(this);
+		this.gameScreen           = new GameScreen(this);
+		this.levelSelectionScreen = new LevelSelectionScreen(this);
+		this.menuScreen           = new MenuScreen(this);
+		this.optionScreen 	      = new OptionScreen(this);
+		this.winScreen            = new WinScreen(this);
+
+		this.splashScreen.end();
+	}
 	
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		this.splashScreen = new SplashScreen(this);
+		super.setScreen(this.splashScreen);
 	}
 
 	@Override
-	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+	public void dispose() {
+		super.dispose();
+		Assets.dispose();
+	}
+
+	// Screens
+	public void setDeathScreen() {
+		super.setScreen(this.deathScreen);
+	}
+
+	public void setEndScreen() {
+		super.setScreen(this.endScreen);
+	}
+
+	public void setGameScreen() {
+		super.setScreen(this.gameScreen);
+	}
+
+	public void setLevelSelectionScreen() {
+		super.setScreen(this.levelSelectionScreen);
+	}
+
+	public void setMenuScreen() {
+		super.setScreen(this.menuScreen);
+	}
+
+	public void setOptionScreen() {
+		super.setScreen(this.optionScreen);
+	}
+
+	public void setWinScreen() {
+		super.setScreen(this.winScreen);
 	}
 }

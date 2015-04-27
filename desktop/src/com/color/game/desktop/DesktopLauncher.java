@@ -7,6 +7,9 @@ import com.color.game.ColorGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.title  = ColorGame.TITLE;
+		config.width  = ColorGame.WIDTH;
+		config.height = ColorGame.HEIGHT;
 		new LwjglApplication(new ColorGame(), config);
 	}
 }

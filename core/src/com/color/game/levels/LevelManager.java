@@ -1,11 +1,16 @@
 package com.color.game.levels;
 
+import com.badlogic.gdx.math.Vector2;
+import com.color.game.elements.staticelements.Platform;
+
 import java.util.ArrayList;
 
 public class LevelManager {
     private static ArrayList<Level> levels;
     private static int currentLevel = 0;
     private static boolean isFinished = false;
+
+    private static final float STATIC_ELEMENTS_DENSITY = 0f;
 
     public static boolean isFinished() {
         return isFinished;
@@ -42,10 +47,28 @@ public class LevelManager {
     }
 
     public static void addFirstLevel() {
-        Level level = new Level();
+        Level level = new Level(new Vector2(5, 2));
         level.unlock();
 
-        LevelManager.levels.add(level);
+        // Ground
+        level.addActor(new Platform(new Vector2(0, 0), 30, 2, level.map.world));
+        level.addActor(new Platform(new Vector2(30, 0), 30, 2, level.map.world));
+        level.addActor(new Platform(new Vector2(100, 0), 32, 2, level.map.world));
+        level.addActor(new Platform(new Vector2(150, 0), 32, 2, level.map.world));
+
+        // Walls
+        level.addActor(new Platform(new Vector2(0, 2), 1, 46, level.map.world));
+        level.addActor(new Platform(new Vector2(180, 2), 1, 46, level.map.world));
+
+        // Color Platforms
+        //level.addActor(new ColorPlatform(new Vector2(35, 8), 10, 2), PlatformColor.RED));
+        //level.addActor(new ColorPlatform(new Vector2(85, 8), 10, 2), PlatformColor.YELLOW));
+        //level.addActor(new ColorPlatform(new Vector2(135, 8), 10, 2), PlatformColor.BLUE));
+
+        // Doors
+        //level.addDoor(new Door(createDoor(level.map, 180, 2, 2, 6), new Rectangle(176, 2, 4, 6)));
+
+        levels.add(level);
     }
 
     public static void disposeLevels() {

@@ -17,6 +17,7 @@ public abstract class BaseStaticElement extends BaseElement {
         super();
 
         BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(position);
         bodyDef.type = BodyDef.BodyType.StaticBody;
 
         PolygonShape polygonShape = new PolygonShape();

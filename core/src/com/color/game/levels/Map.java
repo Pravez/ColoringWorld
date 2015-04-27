@@ -21,18 +21,18 @@ public class Map {
         this.end   = new Vector2(0, 0);
     }
 
-    public void addBlock(float[] data) {
-        if (data[0] < this.start.x) {
-            this.start.x = data[0];
+    public void addBlock(float posX, float posY, float width, float height) {
+        if (posX < this.start.x) {
+            this.start.x = posX;
         }
-        if (data[1] < this.start.y) {
-            this.start.y = data[1];
+        if (posY < this.start.y) {
+            this.start.y = posY;
         }
-        if (data[0] + data[2] > this.end.x) {
-            this.end.x = data[0] + data[2];
+        if (posX + width > this.end.x) {
+            this.end.x = posX + width;
         }
-        if (data[1] + data[3] > this.end.y) {
-            this.end.y = data[1] + data[3];
+        if (posY + height > this.end.y) {
+            this.end.y = posY + height;
         }
     }
 

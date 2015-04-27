@@ -51,14 +51,14 @@ public class LevelManager {
         level.unlock();
 
         // Ground
-        level.addActor(new Platform(new Vector2(0, 0), 30, 2, level.map.world));
-        level.addActor(new Platform(new Vector2(30, 0), 30, 2, level.map.world));
-        level.addActor(new Platform(new Vector2(100, 0), 32, 2, level.map.world));
-        level.addActor(new Platform(new Vector2(150, 0), 32, 2, level.map.world));
+        level.addActor(new Platform(new Vector2(0, 0), 30, 2, level.map));
+        level.addActor(new Platform(new Vector2(50, 0), 30, 2, level.map));
+        level.addActor(new Platform(new Vector2(100, 0), 32, 2, level.map));
+        level.addActor(new Platform(new Vector2(150, 0), 32, 2, level.map));
 
         // Walls
-        level.addActor(new Platform(new Vector2(0, 2), 1, 46, level.map.world));
-        level.addActor(new Platform(new Vector2(180, 2), 1, 46, level.map.world));
+        level.addActor(new Platform(new Vector2(0, 2), 1, 46, level.map));
+        level.addActor(new Platform(new Vector2(180, 2), 1, 46, level.map));
 
         // Color Platforms
         //level.addActor(new ColorPlatform(new Vector2(35, 8), 10, 2), PlatformColor.RED));

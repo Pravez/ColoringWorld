@@ -7,10 +7,10 @@ public class Level extends Stage {
 
     public Map map;
     private boolean locked = true;
-    private Vector2 characterPos;
+    public Vector2 characterPos;
 
     private float accumulator = 0f;
-    private final float TIME_STEP = 1/300f;
+    private static final float TIME_STEP = 1/300f;
     private static final Vector2 WORLD_GRAVITY = new Vector2(0, -75);
 
     public Level(Vector2 characterPos) {
@@ -25,8 +25,6 @@ public class Level extends Stage {
     public void unlock() {
         this.locked = false;
     }
-
-
 
     @Override
     public void act(float delta) {

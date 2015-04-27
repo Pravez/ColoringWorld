@@ -13,6 +13,7 @@ public abstract class BaseDynamicElement extends BaseElement {
         super();
 
         BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(position);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
         PolygonShape polygonShape = new PolygonShape();

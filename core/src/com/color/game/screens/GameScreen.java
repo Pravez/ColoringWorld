@@ -13,10 +13,14 @@ public class GameScreen extends BaseScreen {
     public Box2DDebugRenderer renderer;
     public OrthographicCamera camera;
 
+    public com.color.game.elements.dynamicelements.Character character;
+
     public GameScreen(ColorGame game) {
         super(game);
         renderer = new Box2DDebugRenderer();
         setupCamera();
+        character = new com.color.game.elements.dynamicelements.Character(LevelManager.getCurrentLevel().characterPos, 2, 2, LevelManager.getCurrentLevel().map.world);
+        LevelManager.getCurrentLevel().addActor(character);
     }
 
     private void setupCamera(){

@@ -9,7 +9,6 @@ public class ColorCommand implements Command {
     public static final float COLOR_DELAY = 5.0f;
 
     PlatformColor color;
-    private boolean complete = false;
     private boolean activated = false;
     private boolean desactivated = false;
 
@@ -17,6 +16,17 @@ public class ColorCommand implements Command {
 
     public ColorCommand (PlatformColor color) {
         this.color = color;
+        restart();
+    }
+
+    public boolean isFinished() {
+        return !this.activated && !this.desactivated;
+    }
+
+    public void restart() {
+        this.activated = false;
+        this.desactivated = false;
+        this.time = 0;
     }
 
     @Override
@@ -26,21 +36,18 @@ public class ColorCommand implements Command {
 
     @Override
     public boolean execute(BaseDynamicElement element, float delta) {
-        System.out.println("execute + " + this.time);
         this.time += delta;
-        if (!activated) {
-            System.out.println("activate");
+        if (!this.activated) {
             LevelManager.getCurrentLevel().activateColorPlatforms(this.color);
-            activated = true;
+            this.activated = true;
         }
-        if (!desactivated && time >= 4f * COLOR_DELAY / 5) {
-            System.out.println("desactivate");
+        if (!this.desactivated && this.time >= 4f * ColorCommand.COLOR_DELAY / 5) {
             LevelManager.getCurrentLevel().desactivateColorPlatforms(this.color);
-            desactivated = true;
+            this.desactivated = true;
         }
-        if (time >= COLOR_DELAY) {
-            return true;
+        if (this.time >= ColorCommand.COLOR_DELAY) {
+            restart();
         }
-        return false;
+        return isFinished();
     }
 }

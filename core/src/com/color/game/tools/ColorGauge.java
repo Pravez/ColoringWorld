@@ -6,12 +6,11 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.color.game.assets.Assets;
+import com.color.game.command.ColorCommand;
 import com.color.game.enums.PlatformColor;
 import com.color.game.levels.LevelManager;
 
 public class ColorGauge {
-    private boolean activated;
-    private boolean refresh;
 
     private Rectangle bounds;
     private Color color;
@@ -25,24 +24,11 @@ public class ColorGauge {
         this.color = color;
 
         this.shapeRenderer = new ShapeRenderer();
-        restart();
-    }
-
-    public boolean isActivated() {
-        return this.activated;
-    }
-
-    public void use() {
-        if (!this.refresh) {
-            this.refresh = true;
-            this.activated = true;
-        }
+        this.time = ColorCommand.COLOR_DELAY;
     }
 
     public void restart() {
         this.time = 0f;
-        this.refresh = false;
-        this.activated = false;
     }
 
     public void draw(Batch batch) {
@@ -53,20 +39,7 @@ public class ColorGauge {
 
         this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         this.shapeRenderer.setColor(this.color);
-        float height = this.bounds.height - 2 * gapY;
-
-        if (this.refresh) {
-            height = (this.bounds.height - 2 * gapY) * time;// / Constants.CHARACTER_CHANGING_COLOR_DELAY;
-
-            if (height >= ((bounds.height - 2 * gapY) / 5) * 4) {
-                activated = false;
-                LevelManager.getCurrentLevel().desactivateColorPlatforms(PlatformColor.getPlatformColor(this.color));
-            }
-            if (height >= bounds.height - 2 * gapY){
-                refresh = false;
-                time = 0f;
-            }
-        }
+        float height = (this.bounds.height - 2 * gapY) * time / ColorCommand.COLOR_DELAY;
         this.shapeRenderer.rect(bounds.x + gapX, bounds.y + gapY, bounds.width - 2 * gapX, height);
         this.shapeRenderer.end();
 
@@ -75,8 +48,10 @@ public class ColorGauge {
     }
 
     public void act(float delta) {
-        if (refresh) {
+        if (this.time < ColorCommand.COLOR_DELAY) {
             this.time += delta;
+        } else {
+            this.time = ColorCommand.COLOR_DELAY;
         }
     }
 }

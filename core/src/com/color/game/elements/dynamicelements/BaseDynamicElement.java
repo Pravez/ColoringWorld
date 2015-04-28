@@ -36,6 +36,10 @@ public abstract class BaseDynamicElement extends BaseElement {
         this.commands.add(command);
     }
 
+    public void clearCommands() {
+        this.commands.clear();
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);

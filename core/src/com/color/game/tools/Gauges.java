@@ -9,9 +9,10 @@ import com.color.game.enums.PlatformColor;
 import java.util.ArrayList;
 
 public class Gauges extends Actor {
-    ColorGauge redGauge;
-    ColorGauge blueGauge;
-    ColorGauge yellowGauge;
+
+    public ColorGauge redGauge;
+    public ColorGauge blueGauge;
+    public ColorGauge yellowGauge;
 
     public Gauges(Rectangle bounds) {
         setWidth(bounds.width);
@@ -23,22 +24,6 @@ public class Gauges extends Actor {
         this.redGauge    = new ColorGauge(new Rectangle(bounds.x, bounds.y, width, bounds.height), Color.RED);
         this.yellowGauge = new ColorGauge(new Rectangle(bounds.x + width + gap, bounds.y, width, bounds.height), Color.YELLOW);
         this.blueGauge   = new ColorGauge(new Rectangle(bounds.x + width * 2 + gap * 2, bounds.y, width, bounds.height), Color.BLUE);
-    }
-
-    public void useRed() {
-        this.redGauge.use();
-    }
-
-    public void useBlue() {
-        this.blueGauge.use();
-    }
-
-    public void useYellow() {
-        this.yellowGauge.use();
-    }
-
-    public boolean isActivated() {
-        return redGauge.isActivated() || blueGauge.isActivated() || yellowGauge.isActivated();
     }
 
     @Override
@@ -57,20 +42,16 @@ public class Gauges extends Actor {
         this.blueGauge.draw(batch);
     }
 
-    public ArrayList<PlatformColor> getActivatedColors(){
-        ArrayList<PlatformColor> activatedPlatforms = new ArrayList<PlatformColor>();
+    public void restartRed() {
+        this.redGauge.restart();
+    }
 
-        if (this.redGauge.isActivated()) {
-            activatedPlatforms.add(PlatformColor.RED);
-        }
-        if (this.yellowGauge.isActivated()) {
-            activatedPlatforms.add(PlatformColor.YELLOW);
-        }
-        if (this.blueGauge.isActivated()) {
-            activatedPlatforms.add(PlatformColor.BLUE);
-        }
+    public void restartBlue() {
+        this.blueGauge.restart();
+    }
 
-        return activatedPlatforms;
+    public void restartYellow() {
+        this.yellowGauge.restart();
     }
 
     public void restartTimeColors() {

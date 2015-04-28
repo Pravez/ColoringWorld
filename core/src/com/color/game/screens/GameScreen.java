@@ -12,6 +12,7 @@ import com.color.game.elements.dynamicelements.states.StandingState;
 import com.color.game.enums.PlatformColor;
 import com.color.game.game.UIStage;
 import com.color.game.levels.LevelManager;
+import com.color.game.tools.ColorGauge;
 import com.color.game.utils.BodyUtils;
 
 
@@ -67,8 +68,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         renderer.render(LevelManager.getCurrentLevel().map.world, camera.combined);
 
-        //uiStage.act(delta);
-        //uiStage.draw();
+        uiStage.act(delta);
+        uiStage.draw();
 
         LevelManager.getCurrentLevel().act(delta);
         LevelManager.getCurrentLevel().draw();
@@ -96,18 +97,17 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             System.out.println("START SQUAT");
             this.character.addCommand(new StartSquatCommand());
         }
+
         // Here the code to activate colors
-        if (Gdx.input.isKeyJustPressed(this.game.keys.redCode)) {
-            System.out.println("START RED");
-            this.character.addCommand(redCommand);
-        }
-        if (Gdx.input.isKeyJustPressed(this.game.keys.blueCode)) {
-            System.out.println("START BLUE");
-            this.character.addCommand(blueCommand);
-        }
-        if (Gdx.input.isKeyJustPressed(this.game.keys.yellowCode)) {
-            System.out.println("START YELLOW");
-            this.character.addCommand(yellowCommand);
+        handleColorCommand(this.game.keys.redCode,    this.redCommand,    this.uiStage.colorGauges.redGauge);
+        handleColorCommand(this.game.keys.blueCode,   this.blueCommand,   this.uiStage.colorGauges.blueGauge);
+        handleColorCommand(this.game.keys.yellowCode, this.yellowCommand, this.uiStage.colorGauges.yellowGauge);
+    }
+
+    private void handleColorCommand(int keyCode, ColorCommand command, ColorGauge gauge) {
+        if (Gdx.input.isKeyJustPressed(keyCode) && command.isFinished()) {
+            this.character.addCommand(command);
+            gauge.restart();
         }
     }
 

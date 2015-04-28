@@ -1,3 +1,11 @@
+# April 28, 2015 :
+* Continuing work on refacto
+* Review of the class diagram, some changes about commands and states
+
+# April 27, 2015 :
+* Started work on the refacto
+* Updated class diagram
+
 # April 26, 2015 :
 * Created a branch for development
 * Some tests with the assets

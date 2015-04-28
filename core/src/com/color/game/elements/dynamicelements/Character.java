@@ -3,21 +3,23 @@ package com.color.game.elements.dynamicelements;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.color.game.elements.dynamicelements.states.State;
 import com.color.game.elements.userData.StaticElementUserData;
+import com.color.game.enums.State;
 import com.color.game.enums.UserDataType;
 
 public class Character extends BaseDynamicElement {
-    private CharacterStates characterStates;
-    private State currentState;
+    /*private CharacterStates characterStates;
+    private State currentState;*/
+
 
     public Character(Vector2 position, int width, int height, World world) {
 
         super(position, width, height, world);
 
         this.physicComponent.configureUserData(new StaticElementUserData(width, height, UserDataType.CHARACTER));
-        this.characterStates = new CharacterStates();
-        this.currentState = characterStates.getStandingState();
+        /*this.characterStates = new CharacterStates();
+        this.currentState = characterStates.getStandingState();*/
+        this.state = State.STANDING;
     }
 
     @Override
@@ -30,7 +32,7 @@ public class Character extends BaseDynamicElement {
         super.act(delta);
     }
 
-    public void walk(){
+    /*public void walk(){
         this.currentState = characterStates.getWalkingState();
     }
 
@@ -52,5 +54,7 @@ public class Character extends BaseDynamicElement {
 
     public State currentState(){
         return this.currentState;
-    }
+    }*/
+
+
 }

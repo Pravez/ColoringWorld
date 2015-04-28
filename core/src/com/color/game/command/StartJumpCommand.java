@@ -2,7 +2,9 @@ package com.color.game.command;
 
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 
-public class MoveCommand implements Command {
+public class StartJumpCommand implements Command {
+
+
     @Override
     public void execute() {
 

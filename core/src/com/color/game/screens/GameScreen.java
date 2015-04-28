@@ -6,10 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.color.game.ColorGame;
-import com.color.game.command.EndJumpCommand;
-import com.color.game.command.EndSquatCommand;
-import com.color.game.command.StartJumpCommand;
-import com.color.game.command.StartSquatCommand;
+import com.color.game.command.*;
+import com.color.game.enums.PlatformColor;
 import com.color.game.levels.LevelManager;
 import com.color.game.elements.dynamicelements.Character;
 
@@ -80,6 +78,18 @@ public class GameScreen extends BaseScreen implements InputProcessor {
             this.character.addCommand(new StartSquatCommand());
         }
         // Here the code to activate colors
+        if (Gdx.input.isKeyJustPressed(this.game.keys.redCode)) {
+            System.out.println("START RED");
+            this.character.addCommand(new ColorCommand(PlatformColor.RED));
+        }
+        if (Gdx.input.isKeyJustPressed(this.game.keys.blueCode)) {
+            System.out.println("START BLUE");
+            this.character.addCommand(new ColorCommand(PlatformColor.BLUE));
+        }
+        if (Gdx.input.isKeyJustPressed(this.game.keys.yellowCode)) {
+            System.out.println("START YELLOW");
+            this.character.addCommand(new ColorCommand(PlatformColor.YELLOW));
+        }
     }
 
     @Override

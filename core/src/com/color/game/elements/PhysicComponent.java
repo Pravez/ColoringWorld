@@ -1,10 +1,7 @@
 package com.color.game.elements;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.color.game.elements.userData.UserData;
 import com.color.game.utils.Constants;
 
@@ -14,6 +11,9 @@ public class PhysicComponent {
     private Body body;
     private BaseElement element;
     private World world;
+
+    private PolygonShape shape;
+    private float density;
 
 
     public PhysicComponent(BaseElement element) {
@@ -39,12 +39,12 @@ public class PhysicComponent {
             height /= 2;
         }
 
-        PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(width, height);
+        this.density = Constants.STATIC_ELEMENT_DENSITY;
+        this.shape = new PolygonShape();
+        this.shape.setAsBox(width, height);
 
         this.body = world.createBody(bodyDef);
-        this.body.createFixture(polygonShape, Constants.STATIC_ELEMENT_DENSITY);
-        polygonShape.dispose();
+        this.body.createFixture(this.shape, Constants.STATIC_ELEMENT_DENSITY);
     }
 
     public void configureUserData(UserData userData){
@@ -56,7 +56,26 @@ public class PhysicComponent {
         return userData;
     }
 
+    public void destroyFixture() {
+        if (this.body.getFixtureList().size != 0) {
+            this.body.destroyFixture(this.body.getFixtureList().first());
+        }
+    }
+
+    public void createFixture() {
+        if (this.body.getFixtureList().size == 0) {
+            this.body.createFixture(this.shape, this.density);
+        }
+    }
+
     public Body getBody() {
         return body;
+    }
+
+    /**
+     * Useful ?
+     */
+    public void dispose() {
+        this.shape.dispose();
     }
 }

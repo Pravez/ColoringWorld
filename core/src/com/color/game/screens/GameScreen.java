@@ -1,6 +1,7 @@
 package com.color.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -12,7 +13,8 @@ import com.color.game.command.StartSquatCommand;
 import com.color.game.levels.LevelManager;
 import com.color.game.elements.dynamicelements.Character;
 
-public class GameScreen extends BaseScreen {
+
+public class GameScreen extends BaseScreen implements InputProcessor {
 
     public Box2DDebugRenderer renderer;
     public OrthographicCamera camera;
@@ -40,6 +42,7 @@ public class GameScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -71,17 +74,58 @@ public class GameScreen extends BaseScreen {
         if (Gdx.input.isKeyJustPressed(this.game.keys.jumpCode)) {
             System.out.println("START JUMP");
             this.character.addCommand(new StartJumpCommand());
-        } else if (!Gdx.input.isKeyPressed(this.game.keys.jumpCode)) {
-            System.out.println("STOP JUMP");
-            this.character.addCommand(new EndJumpCommand());
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.squatCode)) {
             System.out.println("START SQUAT");
             this.character.addCommand(new StartSquatCommand());
-        } else if (!Gdx.input.isKeyPressed(this.game.keys.squatCode)) {
+        }
+        // Here the code to activate colors
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        if (keycode == this.game.keys.jumpCode) {
+            System.out.println("STOP JUMP");
+            this.character.addCommand(new EndJumpCommand());
+        } else if (keycode == this.game.keys.squatCode) {
             System.out.println("STOP SQUAT");
             this.character.addCommand(new EndSquatCommand());
         }
-        // Here the code to activate colors
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }

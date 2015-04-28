@@ -4,16 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.color.game.ColorGame;
 import com.color.game.command.EndJumpCommand;
 import com.color.game.command.EndSquatCommand;
 import com.color.game.command.StartJumpCommand;
 import com.color.game.command.StartSquatCommand;
-import com.color.game.elements.dynamicelements.states.StandingState;
-import com.color.game.levels.LevelManager;
 import com.color.game.elements.dynamicelements.Character;
-import com.color.game.utils.BodyUtils;
+import com.color.game.levels.LevelManager;
 
 
 public class GameScreen extends BaseScreen implements InputProcessor, ContactListener{
@@ -31,7 +29,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         character = new Character(LevelManager.getCurrentLevel().characterPos, 2, 2, LevelManager.getCurrentLevel().map.world);
         LevelManager.getCurrentLevel().addActor(character);
-        LevelManager.getCurrentLevel().getWorld().setContactListener(this);
     }
 
     private void setupCamera(){
@@ -83,6 +80,18 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             this.character.addCommand(new StartSquatCommand());
         }
         // Here the code to activate colors
+        if (Gdx.input.isKeyJustPressed(this.game.keys.redCode)) {
+            System.out.println("START RED");
+            this.character.addCommand(new ColorCommand(PlatformColor.RED));
+        }
+        if (Gdx.input.isKeyJustPressed(this.game.keys.blueCode)) {
+            System.out.println("START BLUE");
+            this.character.addCommand(new ColorCommand(PlatformColor.BLUE));
+        }
+        if (Gdx.input.isKeyJustPressed(this.game.keys.yellowCode)) {
+            System.out.println("START YELLOW");
+            this.character.addCommand(new ColorCommand(PlatformColor.YELLOW));
+        }
     }
 
     @Override

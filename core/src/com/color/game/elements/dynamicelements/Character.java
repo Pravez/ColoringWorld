@@ -20,7 +20,6 @@ public class Character extends BaseDynamicElement {
     private ShapeRenderer shapeRenderer;
 
     public Character(Vector2 position, int width, int height, World world) {
-
         super(position, width, height, world, PhysicComponent.GROUP_PLAYER);
 
         this.physicComponent.configureUserData(new StaticElementUserData(width, height, UserDataType.CHARACTER));
@@ -64,6 +63,11 @@ public class Character extends BaseDynamicElement {
     @Override
     public void move(MovementDirection direction){
         this.physicComponent.move(direction.valueOf());
+    }
+
+    public void reset(Vector2 position) {
+        this.physicComponent.getBody().setTransform(position.x, position.y, 0);
+        this.physicComponent.rebase();
     }
 
     public void teleport(float x, float y) {

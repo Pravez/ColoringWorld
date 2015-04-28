@@ -38,6 +38,10 @@ public class Map{
         }
     }
 
+    public float getPixelBottom() {
+        return this.start.y * BaseElement.WORLD_TO_SCREEN;
+    }
+
     public float getPixelWidth() {
         return (this.end.x - this.start.x) * BaseElement.WORLD_TO_SCREEN;
     }

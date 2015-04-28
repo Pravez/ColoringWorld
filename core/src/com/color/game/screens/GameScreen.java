@@ -87,6 +87,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         handleInputs();
         handleCamera();
+        handleCharacter();
         /*if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             camera.translate(-2, 0);
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
@@ -147,6 +148,13 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             camera.position.y = LevelManager.getCurrentLevel().map.getPixelHeight() - camera.viewportHeight / 2f;
         }
         camera.update();
+    }
+
+    private void handleCharacter() {
+        // Prevent character from falling
+        if (character.getBounds().y < LevelManager.getCurrentLevel().map.getPixelBottom()) {
+            character.reset(LevelManager.getCurrentLevel().characterPos);
+        }
     }
 
     @Override

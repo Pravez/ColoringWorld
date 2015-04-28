@@ -60,6 +60,12 @@ public class PhysicComponent {
         this.body.setUserData(userData);
     }
 
+    public void rebase() {
+        this.body.setLinearVelocity(0f,0f);
+        this.body.setLinearDamping(0f);
+        this.body.setAwake(true);
+    }
+
     public void doLinearImpulse(){
         this.body.applyLinearImpulse(new Vector2(0f, 125f), this.body.getWorldCenter(), true);
     }

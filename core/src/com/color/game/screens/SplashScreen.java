@@ -34,10 +34,11 @@ public class SplashScreen extends BaseScreen {
         this.stage.draw();
 
         if(end) { // everything is loaded and ready to render
-            this.background.addAction(Actions.sequence(Actions.fadeOut(0.75f), Actions.delay(0.2f), Actions.run(new Runnable() {
+            this.background.addAction(Actions.sequence(Actions.fadeOut(0.75f), /*Actions.delay(0.2f),*/ Actions.run(new Runnable() {
                 @Override
                 public void run() {
-                    game.setMenuScreen();
+                    game.setGameScreen();
+                    // game.setMenuScreen();
                 }
             })));
         }
@@ -49,7 +50,7 @@ public class SplashScreen extends BaseScreen {
         this.background.setSize(ColorGame.WIDTH, ColorGame.HEIGHT);
         this.stage.addActor(this.background);
 
-        this.background.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(0.75f), Actions.delay(1f), Actions.run(new Runnable() {
+        this.background.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(0.75f), /*Actions.delay(1f),*/ Actions.run(new Runnable() {
             @Override
             public void run() {
                 game.init();

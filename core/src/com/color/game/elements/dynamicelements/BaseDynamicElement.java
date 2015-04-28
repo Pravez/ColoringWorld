@@ -4,11 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.color.game.command.ColorCommand;
 import com.color.game.command.Command;
 import com.color.game.elements.BaseElement;
-import com.color.game.elements.dynamicelements.states.JumpingState;
 import com.color.game.elements.dynamicelements.states.State;
+import com.color.game.enums.MovementDirection;
 
 import java.util.Iterator;
 
@@ -53,8 +52,6 @@ public abstract class BaseDynamicElement extends BaseElement {
         }
     }
 
-    public void jump(){
-        this.setState(new JumpingState());
-        this.physicComponent.doLinearImpulse();
-    }
+    public abstract void jump();
+    public abstract void move(MovementDirection direction);
 }

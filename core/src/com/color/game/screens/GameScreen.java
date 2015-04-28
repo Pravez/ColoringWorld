@@ -9,6 +9,7 @@ import com.color.game.ColorGame;
 import com.color.game.command.*;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.states.StandingState;
+import com.color.game.enums.MovementDirection;
 import com.color.game.elements.staticelements.Notice;
 import com.color.game.enums.PlatformColor;
 import com.color.game.game.UIStage;
@@ -104,9 +105,17 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             System.out.println("START SQUAT");
             this.character.addCommand(new StartSquatCommand());
         }
+        if (Gdx.input.isKeyJustPressed(this.game.keys.rightCode)) {
+            System.out.println("START MOVING RIGHT");
+            this.character.addCommand(new StartMoveCommand(MovementDirection.RIGHT));
+        }
+        if (Gdx.input.isKeyJustPressed(this.game.keys.leftCode)) {
+            System.out.println("START MOVING RIGHT");
+            this.character.addCommand(new StartMoveCommand(MovementDirection.LEFT));
+        }
 
         // Here the code to activate colors
-        handleColorCommand(this.game.keys.redCode,    this.redCommand,    this.uiStage.colorGauges.redGauge);
+        handleColorCommand(this.game.keys.redCode, this.redCommand, this.uiStage.colorGauges.redGauge);
         handleColorCommand(this.game.keys.blueCode,   this.blueCommand,   this.uiStage.colorGauges.blueGauge);
         handleColorCommand(this.game.keys.yellowCode, this.yellowCommand, this.uiStage.colorGauges.yellowGauge);
     }

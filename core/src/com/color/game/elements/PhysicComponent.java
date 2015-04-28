@@ -56,6 +56,10 @@ public class PhysicComponent {
         this.body.applyLinearImpulse(new Vector2(0f, 125f), this.body.getWorldCenter(), true);
     }
 
+    public void move(int direction) {
+        this.body.applyLinearImpulse(new Vector2(100f*direction, 0f), this.body.getWorldCenter(), true);
+    }
+
     public UserData getUserData() {
         return userData;
     }
@@ -82,4 +86,6 @@ public class PhysicComponent {
     public void dispose() {
         this.shape.dispose();
     }
+
+
 }

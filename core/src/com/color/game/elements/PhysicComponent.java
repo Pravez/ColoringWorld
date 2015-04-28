@@ -52,6 +52,10 @@ public class PhysicComponent {
         this.body.setUserData(userData);
     }
 
+    public void doLinearImpulse(){
+        this.body.applyLinearImpulse(new Vector2(0f, 125f), this.body.getWorldCenter(), true);
+    }
+
     public UserData getUserData() {
         return userData;
     }

@@ -6,7 +6,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.command.Command;
 import com.color.game.elements.BaseElement;
-import com.color.game.enums.State;
+import com.color.game.elements.dynamicelements.states.JumpingState;
+import com.color.game.elements.dynamicelements.states.State;
+
 
 public abstract class BaseDynamicElement extends BaseElement {
 
@@ -16,7 +18,7 @@ public abstract class BaseDynamicElement extends BaseElement {
 
     public BaseDynamicElement(Vector2 position, int width, int height, World world){
         super(position, width, height, BodyDef.BodyType.DynamicBody, world);
-        this.commands = new Array<Command>();
+        this.commands = new Array<>();
     }
 
     public State getState() {
@@ -38,6 +40,8 @@ public abstract class BaseDynamicElement extends BaseElement {
             command.execute(this);
         }
 
+        this.commands.clear();
+
         /*
         Iterator<File> iterator = files.iterator();
         while(iterator.hasNext()){
@@ -48,5 +52,10 @@ public abstract class BaseDynamicElement extends BaseElement {
             // other operations
         }
         */
+    }
+
+    public void jump(){
+        this.setState(new JumpingState());
+        this.physicComponent.doLinearImpulse();
     }
 }

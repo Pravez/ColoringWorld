@@ -3,8 +3,8 @@ package com.color.game.elements.dynamicelements;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.color.game.elements.dynamicelements.states.StandingState;
 import com.color.game.elements.userData.StaticElementUserData;
-import com.color.game.enums.State;
 import com.color.game.enums.UserDataType;
 
 public class Character extends BaseDynamicElement {
@@ -19,7 +19,7 @@ public class Character extends BaseDynamicElement {
         this.physicComponent.configureUserData(new StaticElementUserData(width, height, UserDataType.CHARACTER));
         /*this.characterStates = new CharacterStates();
         this.currentState = characterStates.getStandingState();*/
-        this.state = State.STANDING;
+        this.state = new StandingState();
     }
 
     @Override

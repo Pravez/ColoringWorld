@@ -29,6 +29,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         character = new Character(LevelManager.getCurrentLevel().characterPos, 2, 2, LevelManager.getCurrentLevel().map.world);
         LevelManager.getCurrentLevel().addActor(character);
+        LevelManager.getCurrentLevel().getWorld().setContactListener(this);
     }
 
     private void setupCamera(){

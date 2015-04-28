@@ -1,12 +1,15 @@
 package com.color.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.color.game.ColorGame;
 import com.color.game.command.*;
+import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.states.StandingState;
 import com.color.game.enums.MovementDirection;
@@ -16,7 +19,6 @@ import com.color.game.game.UIStage;
 import com.color.game.levels.LevelManager;
 import com.color.game.tools.ColorGauge;
 import com.color.game.utils.BodyUtils;
-
 
 public class GameScreen extends BaseScreen implements InputProcessor, ContactListener {
 
@@ -53,7 +55,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         float h = Gdx.graphics.getHeight();
         camera = new OrthographicCamera(w, h);//w * (h / w));
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-        //camera.position.set(w / 2f, h / 2f, 0);
         camera.update();
     }
 
@@ -84,6 +85,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         LevelManager.getCurrentLevel().act(delta);
         LevelManager.getCurrentLevel().draw();
 
+        handleInputs();
+        handleCamera();
         /*if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             camera.translate(-2, 0);
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
@@ -95,7 +98,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             camera.translate(0, -2);
         }
         camera.update();*/
-        handleInputs();
     }
 
     private void handleInputs() {
@@ -118,7 +120,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         // Here the code to activate colors
         handleColorCommand(this.game.keys.redCode, this.redCommand, this.uiStage.colorGauges.redGauge);
-        handleColorCommand(this.game.keys.blueCode,   this.blueCommand,   this.uiStage.colorGauges.blueGauge);
+        handleColorCommand(this.game.keys.blueCode, this.blueCommand, this.uiStage.colorGauges.blueGauge);
         handleColorCommand(this.game.keys.yellowCode, this.yellowCommand, this.uiStage.colorGauges.yellowGauge);
     }
 
@@ -127,6 +129,24 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             this.character.addCommand(command);
             gauge.restart();
         }
+    }
+
+    private void handleCamera() {
+        camera.position.x = character.getBounds().x;
+        camera.position.y = character.getBounds().y + camera.viewportHeight/4;
+        if (camera.position.x < camera.viewportWidth / 2f) {
+            camera.position.x = camera.viewportWidth / 2f;
+        }
+        if (camera.position.y < camera.viewportHeight / 2f) {
+            camera.position.y = camera.viewportHeight / 2f;
+        }
+        if (camera.position.x > LevelManager.getCurrentLevel().map.getPixelWidth() - camera.viewportWidth / 2f) {
+            camera.position.x = LevelManager.getCurrentLevel().map.getPixelWidth() - camera.viewportWidth / 2f;
+        }
+        if (camera.position.y > LevelManager.getCurrentLevel().map.getPixelHeight() - camera.viewportHeight / 2f) {
+            camera.position.y = LevelManager.getCurrentLevel().map.getPixelHeight() - camera.viewportHeight / 2f;
+        }
+        camera.update();
     }
 
     @Override
@@ -153,6 +173,12 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        // Teleport the character
+        if (button == Input.Buttons.LEFT) {
+            Vector3 worldCoordinates = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(worldCoordinates);
+            this.character.teleport(worldCoordinates.x / BaseElement.WORLD_TO_SCREEN, worldCoordinates.y / BaseElement.WORLD_TO_SCREEN);
+        }
         return false;
     }
 

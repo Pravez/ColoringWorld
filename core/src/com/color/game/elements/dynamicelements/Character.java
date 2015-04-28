@@ -65,4 +65,8 @@ public class Character extends BaseDynamicElement {
     public void move(MovementDirection direction){
         this.physicComponent.move(direction.valueOf());
     }
+
+    public void teleport(float x, float y) {
+        this.physicComponent.getBody().setTransform(x, y, 0);
+    }
 }

@@ -2,6 +2,7 @@ package com.color.game.levels;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.color.game.elements.BaseElement;
 import com.color.game.utils.BodyUtils;
 
 public class Map{
@@ -37,12 +38,12 @@ public class Map{
         }
     }
 
-    public float getWidth() {
-        return this.end.x - this.start.x;
+    public float getPixelWidth() {
+        return (this.end.x - this.start.x) * BaseElement.WORLD_TO_SCREEN;
     }
 
-    public float getHeight() {
-        return this.end.y - this.start.x;
+    public float getPixelHeight() {
+        return (this.end.y - this.start.x) * BaseElement.WORLD_TO_SCREEN;
     }
 
 

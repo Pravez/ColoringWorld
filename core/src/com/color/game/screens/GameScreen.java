@@ -19,7 +19,7 @@ import com.color.game.utils.BodyUtils;
 public class GameScreen extends BaseScreen implements InputProcessor, ContactListener {
 
     public Box2DDebugRenderer renderer;
-    public OrthographicCamera camera;
+    public static OrthographicCamera camera;
 
     public Character character;
 

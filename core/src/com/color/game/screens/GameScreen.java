@@ -51,8 +51,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     private void setupCamera(){
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
-        camera = new OrthographicCamera(w, w * (h / w));
+        camera = new OrthographicCamera(w, h);//w * (h / w));
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
+        //camera.position.set(w / 2f, h / 2f, 0);
         camera.update();
     }
 
@@ -65,6 +66,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     @Override
     public void render(float delta) {
         super.render(delta);
+        camera.update();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

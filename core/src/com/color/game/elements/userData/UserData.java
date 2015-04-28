@@ -1,6 +1,5 @@
 package com.color.game.elements.userData;
 
-import com.color.game.elements.PhysicComponent;
 import com.color.game.enums.UserDataType;
 
 public abstract class UserData {
@@ -10,14 +9,14 @@ public abstract class UserData {
     protected UserDataType userDataType;
 
     public UserData(int width, int height, UserDataType userDataType) {
-        this.width = width * PhysicComponent.WORLD_TO_SCREEN;
-        this.height = height * PhysicComponent.WORLD_TO_SCREEN;
+        this.width = width;
+        this.height = height;
         this.userDataType = userDataType;
     }
 
     public UserData(int width, int height) {
-        this.width = width * PhysicComponent.WORLD_TO_SCREEN;
-        this.height = height * PhysicComponent.WORLD_TO_SCREEN;
+        this.width = width;
+        this.height = height;
     }
 
     public int getWidth() {

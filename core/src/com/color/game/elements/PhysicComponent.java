@@ -10,8 +10,6 @@ public class PhysicComponent {
     public static final short GROUP_PLAYER = -1;
     public static final short GROUP_SCENERY = -2;
 
-    public static final int WORLD_TO_SCREEN = 10;
-
     private UserData userData;
     private Body body;
     private BaseElement element;
@@ -33,7 +31,7 @@ public class PhysicComponent {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = bodyType;
 
-        if(bodyType == BodyDef.BodyType.StaticBody){
+        //if(bodyType == BodyDef.BodyType.StaticBody){
             if (width <= 1) width = 2;
             if (height <= 1) height = 2;
 
@@ -41,13 +39,13 @@ public class PhysicComponent {
             position.y += height/2;
             width /= 2;
             height /= 2;
-        }
+        //}
 
-        bodyDef.position.set(new Vector2(position.x * WORLD_TO_SCREEN, position.y * WORLD_TO_SCREEN));
+        bodyDef.position.set(new Vector2(position.x, position.y));
 
         this.density = Constants.STATIC_ELEMENT_DENSITY;
         this.shape = new PolygonShape();
-        this.shape.setAsBox(width * WORLD_TO_SCREEN, height * WORLD_TO_SCREEN);
+        this.shape.setAsBox(width, height);
 
         this.body = world.createBody(bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
@@ -67,7 +65,7 @@ public class PhysicComponent {
     }
 
     public void move(int direction) {
-        this.body.applyLinearImpulse(new Vector2(100f*direction, 0f), this.body.getWorldCenter(), true);
+        this.body.applyLinearImpulse(new Vector2(100f * direction, 0f), this.body.getWorldCenter(), true);
     }
 
     public UserData getUserData() {

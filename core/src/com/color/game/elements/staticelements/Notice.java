@@ -26,7 +26,7 @@ public class Notice extends BaseStaticElement {
     private static final int TEXT_WIDTH = 200;
     private static final int TEXT_GAP = 20;
 
-    private boolean display = false;
+    private boolean display = true;
 
     private int index;
 
@@ -37,7 +37,7 @@ public class Notice extends BaseStaticElement {
     public Notice(Vector2 position, int width, int height, Level level, int tutorialIndex) {
         super(position, width, height, level.map, PhysicComponent.GROUP_PLAYER);
         this.physicComponent.configureUserData(new StaticElementUserData(width, height, UserDataType.NOTICE));
-        //this.physicComponent.destroyFixture();
+        this.physicComponent.destroyFixture();
         this.index = tutorialIndex;
 
         level.addNotice(this);
@@ -55,10 +55,10 @@ public class Notice extends BaseStaticElement {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 
-        int width = this.physicComponent.getUserData().getWidth();
-        int height = this.physicComponent.getUserData().getHeight();
-        int x = (int) (this.physicComponent.getBody().getPosition().x - width / 2);
-        int y = (int) (this.physicComponent.getBody().getPosition().y - height/2);
+        int width = this.physicComponent.getUserData().getWidth() * WORLD_TO_SCREEN;
+        int height = this.physicComponent.getUserData().getHeight() * WORLD_TO_SCREEN;
+        int x = (int) (this.physicComponent.getBody().getPosition().x - this.physicComponent.getUserData().getWidth()/2) * WORLD_TO_SCREEN;
+        int y = (int) (this.physicComponent.getBody().getPosition().y - this.physicComponent.getUserData().getHeight()/2) * WORLD_TO_SCREEN;
 
         if (this.display) {
             batch.setProjectionMatrix(GameScreen.camera.combined);

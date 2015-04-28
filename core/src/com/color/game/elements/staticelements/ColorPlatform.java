@@ -58,10 +58,10 @@ public class ColorPlatform extends BaseStaticElement {
         Color c = color.getColor();
         shapeRenderer.setColor(c.r, c.g, c.b, this.activated ? 1.0f : 0.5f);
 
-        int width = this.physicComponent.getUserData().getWidth();
-        int height = this.physicComponent.getUserData().getHeight();
-        int x = (int) (this.physicComponent.getBody().getPosition().x - width/2);
-        int y = (int) (this.physicComponent.getBody().getPosition().y - height/2);
+        int width = this.physicComponent.getUserData().getWidth() * WORLD_TO_SCREEN;
+        int height = this.physicComponent.getUserData().getHeight() * WORLD_TO_SCREEN;
+        int x = (int) (this.physicComponent.getBody().getPosition().x * WORLD_TO_SCREEN - width/2);
+        int y = (int) (this.physicComponent.getBody().getPosition().y * WORLD_TO_SCREEN - height/2);
 
         shapeRenderer.rect(x, y, width, height);
         shapeRenderer.end();

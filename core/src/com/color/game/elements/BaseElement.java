@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public abstract class BaseElement extends Actor {
 
+    public static final int WORLD_TO_SCREEN = 10;
+
     protected GraphicComponent graphicComponent;
     protected PhysicComponent physicComponent;
 
@@ -28,6 +30,6 @@ public abstract class BaseElement extends Actor {
         int height = this.physicComponent.getUserData().getHeight();
         int x = (int) (this.physicComponent.getBody().getPosition().x);
         int y = (int) (this.physicComponent.getBody().getPosition().y);
-        return new Rectangle(x, y, width, height);
+        return new Rectangle(x * WORLD_TO_SCREEN, y * WORLD_TO_SCREEN, width * WORLD_TO_SCREEN, height * WORLD_TO_SCREEN);
     }
 }

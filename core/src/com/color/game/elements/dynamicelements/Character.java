@@ -1,5 +1,6 @@
 package com.color.game.elements.dynamicelements;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.color.game.elements.dynamicelements.states.State;
@@ -14,7 +15,42 @@ public class Character extends BaseDynamicElement {
 
         super(position, width, height, world);
 
-        this.userData = new StaticElementUserData(width, height, UserDataType.CHARACTER);
+        this.physicComponent.configureUserData(new StaticElementUserData(width, height, UserDataType.CHARACTER));
+        this.characterStates = new CharacterStates();
+        this.currentState = characterStates.getStandingState();
+    }
 
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+    }
+
+    public void walk(){
+        this.currentState = characterStates.getWalkingState();
+    }
+
+    public void jump(){
+        this.currentState = characterStates.getJumpingState();
+    }
+
+    public void stand(){
+        this.currentState = characterStates.getStandingState();
+    }
+
+    public void slide(){
+        this.currentState = characterStates.getSlidingState();
+    }
+
+    public void run(){
+        this.currentState = characterStates.getRunningState();
+    }
+
+    public State currentState(){
+        return this.currentState;
     }
 }

@@ -7,19 +7,22 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.color.game.ColorGame;
 import com.color.game.levels.LevelManager;
+import com.color.game.elements.dynamicelements.Character;
 
 public class GameScreen extends BaseScreen {
 
     public Box2DDebugRenderer renderer;
     public OrthographicCamera camera;
 
-    public com.color.game.elements.dynamicelements.Character character;
+    public Character character;
 
     public GameScreen(ColorGame game) {
         super(game);
+
         renderer = new Box2DDebugRenderer();
         setupCamera();
-        character = new com.color.game.elements.dynamicelements.Character(LevelManager.getCurrentLevel().characterPos, 2, 2, LevelManager.getCurrentLevel().map.world);
+
+        character = new Character(LevelManager.getCurrentLevel().characterPos, 2, 2, LevelManager.getCurrentLevel().map.world);
         LevelManager.getCurrentLevel().addActor(character);
     }
 
@@ -57,6 +60,7 @@ public class GameScreen extends BaseScreen {
         } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             camera.translate(0, -2);
         }
+
         camera.update();
     }
 }

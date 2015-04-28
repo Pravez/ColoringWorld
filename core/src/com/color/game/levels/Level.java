@@ -2,6 +2,7 @@ package com.color.game.levels;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.color.game.utils.Constants;
 
 public class Level extends Stage {
 
@@ -9,12 +10,8 @@ public class Level extends Stage {
     private boolean locked = true;
     public Vector2 characterPos;
 
-    private float accumulator = 0f;
-    private static final float TIME_STEP = 1/300f;
-    private static final Vector2 WORLD_GRAVITY = new Vector2(0, -75);
-
     public Level(Vector2 characterPos) {
-        this.map = new Map(WORLD_GRAVITY, true);
+        this.map = new Map(Constants.WORLD_GRAVITY, true);
         this.characterPos = characterPos;
     }
 
@@ -30,11 +27,11 @@ public class Level extends Stage {
     public void act(float delta) {
         super.act(delta);
 
-        accumulator += delta;
+        Constants.accumulator += delta;
 
-        while(accumulator >= delta){
-            LevelManager.getCurrentLevel().map.world.step(TIME_STEP, 6, 2);
-            accumulator -= TIME_STEP;
+        while(Constants.accumulator >= delta){
+            LevelManager.getCurrentLevel().map.world.step(Constants.TIME_STEP, 6, 2);
+            Constants.accumulator -= Constants.TIME_STEP;
         }
     }
 }

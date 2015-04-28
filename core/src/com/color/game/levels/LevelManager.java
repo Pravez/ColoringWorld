@@ -10,8 +10,6 @@ public class LevelManager {
     private static int currentLevel = 0;
     private static boolean isFinished = false;
 
-    private static final float STATIC_ELEMENTS_DENSITY = 0f;
-
     public static boolean isFinished() {
         return isFinished;
     }

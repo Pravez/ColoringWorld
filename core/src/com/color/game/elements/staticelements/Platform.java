@@ -10,6 +10,6 @@ public class Platform extends BaseStaticElement {
     public Platform(Vector2 position, int width, int height, Map map) {
         super(position, width, height, map);
 
-        this.userData = new StaticElementUserData(width, height, UserDataType.PLATFORM);
+        this.physicComponent.configureUserData(new StaticElementUserData(width, height, UserDataType.PLATFORM));
     }
 }

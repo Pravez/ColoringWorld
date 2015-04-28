@@ -19,6 +19,16 @@ public enum PlatformColor {
         return new Color();
     }
 
+    public static PlatformColor getPlatformColor(Color color) {
+        if (color == Color.RED)
+            return PlatformColor.RED;
+        if (color == Color.BLUE)
+            return PlatformColor.BLUE;
+        if (color == Color.YELLOW)
+            return PlatformColor.YELLOW;
+        return null;
+    }
+
     public PlatformColor next() {
         switch(this) {
             case RED:

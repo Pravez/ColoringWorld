@@ -5,12 +5,12 @@ import com.color.game.elements.dynamicelements.BaseDynamicElement;
 
 public class EndJumpCommand implements Command{
     @Override
-    public void execute() {
-
+    public boolean execute() {
+        return true;
     }
 
     @Override
-    public void execute(BaseDynamicElement element) {
-
+    public boolean execute(BaseDynamicElement element, float delta) {
+        return true;
     }
 }

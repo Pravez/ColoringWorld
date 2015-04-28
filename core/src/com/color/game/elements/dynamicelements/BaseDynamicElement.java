@@ -4,10 +4,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.color.game.command.ColorCommand;
 import com.color.game.command.Command;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.states.JumpingState;
 import com.color.game.elements.dynamicelements.states.State;
+
+import java.util.Iterator;
 
 
 public abstract class BaseDynamicElement extends BaseElement {
@@ -36,22 +39,14 @@ public abstract class BaseDynamicElement extends BaseElement {
     @Override
     public void act(float delta) {
         super.act(delta);
-        for (Command command : this.commands) {
-            command.execute(this);
-        }
 
-        this.commands.clear();
-
-        /*
-        Iterator<File> iterator = files.iterator();
+        Iterator<Command> iterator = this.commands.iterator();
         while(iterator.hasNext()){
-            File currentFile = iterator.next();
-            if(someCondition){
+            Command command = iterator.next();
+            if (command.execute(this, delta)) {
                 iterator.remove();
             }
-            // other operations
         }
-        */
     }
 
     public void jump(){

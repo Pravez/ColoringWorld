@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.color.game.assets.Assets;
+import com.color.game.enums.PlatformColor;
+import com.color.game.levels.LevelManager;
 
 public class ColorGauge {
     private boolean activated;
@@ -58,6 +60,7 @@ public class ColorGauge {
 
             if (height >= ((bounds.height - 2 * gapY) / 5) * 4) {
                 activated = false;
+                LevelManager.getCurrentLevel().desactivateColorPlatforms(PlatformColor.getPlatformColor(this.color));
             }
             if (height >= bounds.height - 2 * gapY){
                 refresh = false;

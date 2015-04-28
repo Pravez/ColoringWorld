@@ -7,14 +7,15 @@ import com.color.game.elements.dynamicelements.states.StandingState;
 
 public class EndSquatCommand implements Command{
     @Override
-    public void execute() {
-
+    public boolean execute() {
+        return true;
     }
 
     @Override
-    public void execute(BaseDynamicElement element) {
+    public boolean execute(BaseDynamicElement element, float delta) {
         if(element.getState() instanceof JumpingState){
             element.setState(new StandingState());
         }
+        return true;
     }
 }

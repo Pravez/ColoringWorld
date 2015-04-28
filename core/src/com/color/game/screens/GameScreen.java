@@ -10,6 +10,7 @@ import com.color.game.command.*;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.states.StandingState;
 import com.color.game.enums.PlatformColor;
+import com.color.game.game.UIStage;
 import com.color.game.levels.LevelManager;
 import com.color.game.utils.BodyUtils;
 
@@ -21,15 +22,27 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
     public Character character;
 
+    public UIStage uiStage;
+
+    private ColorCommand redCommand;
+    private ColorCommand blueCommand;
+    private ColorCommand yellowCommand;
+
     public GameScreen(ColorGame game) {
         super(game);
 
         renderer = new Box2DDebugRenderer();
         setupCamera();
 
-        character = new Character(LevelManager.getCurrentLevel().characterPos, 2, 2, LevelManager.getCurrentLevel().map.world);
-        LevelManager.getCurrentLevel().addActor(character);
+        this.character = new Character(LevelManager.getCurrentLevel().characterPos, 2, 2, LevelManager.getCurrentLevel().map.world);
+        LevelManager.getCurrentLevel().addActor(this.character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
+
+        this.uiStage = new UIStage();
+
+        this.redCommand    = new ColorCommand(PlatformColor.RED);
+        this.blueCommand   = new ColorCommand(PlatformColor.BLUE);
+        this.yellowCommand = new ColorCommand(PlatformColor.YELLOW);
     }
 
     private void setupCamera(){
@@ -53,6 +66,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         renderer.render(LevelManager.getCurrentLevel().map.world, camera.combined);
+
+        //uiStage.act(delta);
+        //uiStage.draw();
 
         LevelManager.getCurrentLevel().act(delta);
         LevelManager.getCurrentLevel().draw();
@@ -83,15 +99,15 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         // Here the code to activate colors
         if (Gdx.input.isKeyJustPressed(this.game.keys.redCode)) {
             System.out.println("START RED");
-            this.character.addCommand(new ColorCommand(PlatformColor.RED));
+            this.character.addCommand(redCommand);
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.blueCode)) {
             System.out.println("START BLUE");
-            this.character.addCommand(new ColorCommand(PlatformColor.BLUE));
+            this.character.addCommand(blueCommand);
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.yellowCode)) {
             System.out.println("START YELLOW");
-            this.character.addCommand(new ColorCommand(PlatformColor.YELLOW));
+            this.character.addCommand(yellowCommand);
         }
     }
 

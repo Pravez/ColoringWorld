@@ -16,6 +16,8 @@ public class Assets {
     public final static int TEXT_SIZE = 22;
 
     private static FileHandle basicFont;
+    private static FileHandle bebasFont;
+    private static FileHandle groboldFont;
 
     public static AssetManager manager  = new AssetManager();
     public static Skin         menuSkin;
@@ -30,6 +32,8 @@ public class Assets {
 
         // Fonts
         basicFont = new FileHandle("fonts/Future-Earth.ttf");
+        bebasFont = new FileHandle("fonts/BebasNeue.otf");
+        groboldFont = new FileHandle("fonts/grobold.ttf");
 
         // Musics
         manager.load("musics/music.mp3", Music.class);
@@ -79,6 +83,24 @@ public class Assets {
      */
     public static BitmapFont getBasicFont(int size) {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.basicFont);
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = size;
+        BitmapFont font = generator.generateFont(parameter);
+        generator.dispose();
+        return font;
+    }
+
+    public static BitmapFont getBebasFont(int size) {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.bebasFont);
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = size;
+        BitmapFont font = generator.generateFont(parameter);
+        generator.dispose();
+        return font;
+    }
+
+    public static BitmapFont getGroboldFont(int size) {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.groboldFont);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = size;
         BitmapFont font = generator.generateFont(parameter);

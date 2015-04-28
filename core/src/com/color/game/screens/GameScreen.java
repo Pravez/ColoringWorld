@@ -9,6 +9,7 @@ import com.color.game.ColorGame;
 import com.color.game.command.*;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.states.StandingState;
+import com.color.game.elements.staticelements.Notice;
 import com.color.game.enums.PlatformColor;
 import com.color.game.game.UIStage;
 import com.color.game.levels.LevelManager;
@@ -49,7 +50,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     private void setupCamera(){
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
-        camera = new OrthographicCamera(100, 100 * (h / w));
+        camera = new OrthographicCamera(w, w * (h / w));
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.update();
     }
@@ -67,6 +68,12 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         renderer.render(LevelManager.getCurrentLevel().map.world, camera.combined);
+
+        for (Notice notice : LevelManager.getCurrentLevel().notices) {
+            if (notice.getBounds().overlaps(character.getBounds())) {
+                notice.display();
+            }
+        }
 
         uiStage.act(delta);
         uiStage.draw();
@@ -163,13 +170,12 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if(BodyUtils.isCharacter(a.getBody())){
+        if (BodyUtils.isCharacter(a.getBody())){
             character.setState(new StandingState());
         }
-        if(BodyUtils.isCharacter(b.getBody())){
+        if (BodyUtils.isCharacter(b.getBody())) {
             character.setState(new StandingState());
         }
-
     }
 
     @Override

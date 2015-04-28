@@ -5,22 +5,25 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.elements.staticelements.ColorPlatform;
+import com.color.game.elements.staticelements.Notice;
 import com.color.game.enums.PlatformColor;
 import com.color.game.utils.Constants;
 
-public class Level extends Stage{
+public class Level extends Stage {
 
     public Map map;
     private boolean locked = true;
     public Vector2 characterPos;
 
     private Array<ColorPlatform> colorPlatforms;
+    public Array<Notice> notices;
 
     public Level(Vector2 characterPos) {
         this.map = new Map(Constants.WORLD_GRAVITY, true);
         this.characterPos = characterPos;
 
-        this.colorPlatforms = new Array<ColorPlatform>();
+        this.colorPlatforms = new Array<>();
+        this.notices = new Array<>();
     }
 
     public boolean isLocked() {
@@ -45,6 +48,10 @@ public class Level extends Stage{
 
     public void addColorPlatform(ColorPlatform colorPlatform) {
         this.colorPlatforms.add(colorPlatform);
+    }
+
+    public void addNotice(Notice notice) {
+        this.notices.add(notice);
     }
 
     public void activateColorPlatforms(PlatformColor color) {

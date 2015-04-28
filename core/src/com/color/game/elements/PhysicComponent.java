@@ -7,6 +7,11 @@ import com.color.game.utils.Constants;
 
 public class PhysicComponent {
 
+    public static final short GROUP_PLAYER = -1;
+    public static final short GROUP_SCENERY = -2;
+
+    public static final int WORLD_TO_SCREEN = 10;
+
     private UserData userData;
     private Body body;
     private BaseElement element;
@@ -22,11 +27,10 @@ public class PhysicComponent {
         this.element = element;
     }
 
-    public void configureBody(Vector2 position, int width, int height, BodyDef.BodyType bodyType, World world){
+    public void configureBody(Vector2 position, int width, int height, BodyDef.BodyType bodyType, World world, short group){
         this.world = world;
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(position);
         bodyDef.type = bodyType;
 
         if(bodyType == BodyDef.BodyType.StaticBody){
@@ -39,11 +43,17 @@ public class PhysicComponent {
             height /= 2;
         }
 
+        bodyDef.position.set(new Vector2(position.x * WORLD_TO_SCREEN, position.y * WORLD_TO_SCREEN));
+
         this.density = Constants.STATIC_ELEMENT_DENSITY;
         this.shape = new PolygonShape();
-        this.shape.setAsBox(width, height);
+        this.shape.setAsBox(width * WORLD_TO_SCREEN, height * WORLD_TO_SCREEN);
 
         this.body = world.createBody(bodyDef);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.density = Constants.STATIC_ELEMENT_DENSITY;
+        fixtureDef.shape = this.shape;
+        fixtureDef.filter.groupIndex = group;
         this.body.createFixture(this.shape, Constants.STATIC_ELEMENT_DENSITY);
     }
 

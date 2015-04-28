@@ -14,8 +14,8 @@ public class KeyMapper {
         this.squatCode  = Input.Keys.DOWN;
         this.jumpCode   = Input.Keys.UP;
         this.redCode    = Input.Keys.A;
-        this.blueCode   = Input.Keys.Z;
-        this.yellowCode = Input.Keys.E;
+        this.blueCode   = Input.Keys.E;
+        this.yellowCode = Input.Keys.Z;
         this.runCode    = Input.Keys.SHIFT_LEFT;
     }
 }

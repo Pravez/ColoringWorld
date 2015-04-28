@@ -2,6 +2,7 @@ package com.color.game.levels;
 
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.staticelements.ColorPlatform;
+import com.color.game.elements.staticelements.Notice;
 import com.color.game.elements.staticelements.Platform;
 import com.color.game.enums.PlatformColor;
 
@@ -64,6 +65,9 @@ public class LevelManager {
         level.addActor(new ColorPlatform(new Vector2(35, 8), 10, 2, level, PlatformColor.RED));
         level.addActor(new ColorPlatform(new Vector2(85, 8), 10, 2, level, PlatformColor.YELLOW));
         level.addActor(new ColorPlatform(new Vector2(135, 8), 10, 2, level, PlatformColor.BLUE));
+
+        // Notices
+        level.addActor(new Notice(new Vector2(7, 2), 3, 3, level, 0));
 
         // Doors
         //level.addDoor(new Door(createDoor(level.map, 180, 2, 2, 6), new Rectangle(176, 2, 4, 6)));

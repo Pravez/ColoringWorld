@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.userData.StaticElementUserData;
 import com.color.game.enums.PlatformColor;
 import com.color.game.enums.UserDataType;
@@ -22,7 +23,7 @@ public class ColorPlatform extends BaseStaticElement {
     private ShapeRenderer shapeRenderer;
 
     public ColorPlatform(Vector2 position, int width, int height, Level level, PlatformColor color) {
-        super(position, width, height, level.map);
+        super(position, width, height, level.map, PhysicComponent.GROUP_SCENERY);
         this.physicComponent.configureUserData(new StaticElementUserData(width, height, UserDataType.COLORPLATFORM));
         this.color = color;
         level.addColorPlatform(this);

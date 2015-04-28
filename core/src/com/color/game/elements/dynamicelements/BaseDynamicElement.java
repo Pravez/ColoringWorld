@@ -19,8 +19,8 @@ public abstract class BaseDynamicElement extends BaseElement {
 
     private Array<Command> commands;
 
-    public BaseDynamicElement(Vector2 position, int width, int height, World world){
-        super(position, width, height, BodyDef.BodyType.DynamicBody, world);
+    public BaseDynamicElement(Vector2 position, int width, int height, World world, short group){
+        super(position, width, height, BodyDef.BodyType.DynamicBody, world, group);
         this.commands = new Array<>();
     }
 

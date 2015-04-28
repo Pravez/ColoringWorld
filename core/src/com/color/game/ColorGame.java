@@ -5,6 +5,7 @@ import com.color.game.assets.Assets;
 import com.color.game.assets.MusicManager;
 import com.color.game.assets.SoundManager;
 import com.color.game.levels.LevelManager;
+import com.color.game.levels.Tutorial;
 import com.color.game.screens.*;
 
 public class ColorGame extends Game {
@@ -30,6 +31,7 @@ public class ColorGame extends Game {
 		//noinspection StatementWithEmptyBody
 		while(!Assets.update());
 
+		Tutorial.init();
 		LevelManager.init();
 
 		this.soundManager = new SoundManager();

@@ -18,7 +18,7 @@ public class StartMoveCommand implements Command {
 
     @Override
     public boolean execute(BaseDynamicElement element, float delta) {
-        element.move(direction);
+        element.configureMove(direction);
 
         return true;
     }

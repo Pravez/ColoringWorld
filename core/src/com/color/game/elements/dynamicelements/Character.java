@@ -7,13 +7,15 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.color.game.elements.dynamicelements.states.JumpingState;
 import com.color.game.elements.PhysicComponent;
+import com.color.game.elements.dynamicelements.states.JumpingState;
 import com.color.game.elements.dynamicelements.states.StandingState;
+import com.color.game.elements.dynamicelements.states.WalkingState;
 import com.color.game.elements.userData.StaticElementUserData;
 import com.color.game.enums.MovementDirection;
 import com.color.game.enums.UserDataType;
 import com.color.game.screens.GameScreen;
+import com.color.game.utils.Constants;
 
 public class Character extends BaseDynamicElement {
 
@@ -45,17 +47,21 @@ public class Character extends BaseDynamicElement {
     @Override
     public void act(float delta) {
         super.act(delta);
+        this.physicComponent.move(Constants.CHARACTER_MAX_VELOCITY);
     }
 
     @Override
     public void jump() {
         this.setState(new JumpingState());
-        this.physicComponent.doLinearImpulse();
+        this.physicComponent.jump();
     }
 
     @Override
-    public void move(MovementDirection direction){
-        this.physicComponent.move(direction.valueOf());
+    public void configureMove(MovementDirection direction){
+        if(!(state instanceof WalkingState))
+            this.setState(new WalkingState(direction));
+
+        this.physicComponent.setMove(direction.valueOf());
     }
 
     public void changeWorld(World world, Vector2 position) {

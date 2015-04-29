@@ -53,5 +53,9 @@ public abstract class BaseDynamicElement extends BaseElement {
     }
 
     public abstract void jump();
-    public abstract void move(MovementDirection direction);
+    public abstract void configureMove(MovementDirection direction);
+
+    public void stopMove() {
+        this.physicComponent.stopMove();
+    }
 }

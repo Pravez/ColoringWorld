@@ -12,7 +12,7 @@ public class KeyMapper {
         this.leftCode   = Input.Keys.LEFT;
         this.rightCode  = Input.Keys.RIGHT;
         this.squatCode  = Input.Keys.DOWN;
-        this.jumpCode   = Input.Keys.UP;
+        this.jumpCode   = Input.Keys.SPACE;
         this.redCode    = Input.Keys.A;
         this.blueCode   = Input.Keys.E;
         this.yellowCode = Input.Keys.Z;

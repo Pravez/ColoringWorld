@@ -3,7 +3,6 @@ package com.color.game.elements;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.color.game.elements.userData.UserData;
-import com.color.game.utils.BodyUtils;
 import com.color.game.utils.Constants;
 
 public class PhysicComponent {
@@ -21,6 +20,8 @@ public class PhysicComponent {
     private float density;
 
     private short group;
+
+    private Vector2 currentImpulse;
 
     public PhysicComponent(BaseElement element) {
         this.userData = null;
@@ -43,6 +44,7 @@ public class PhysicComponent {
         //To keep from rotations
         this.bodyDef.fixedRotation = true;
         this.bodyDef.position.set(new Vector2(position.x + width, position.y + height));
+        this.bodyDef.linearDamping = 0.95f;
 
         this.density = Constants.STATIC_ELEMENT_DENSITY;
         this.shape = new PolygonShape();
@@ -54,6 +56,8 @@ public class PhysicComponent {
         fixtureDef.shape = this.shape;
         fixtureDef.filter.groupIndex = this.group;
         this.body.createFixture(this.shape, Constants.STATIC_ELEMENT_DENSITY);
+
+        this.currentImpulse = new Vector2(0f,0f);
     }
 
     public void changeWorld(World world, Vector2 position) {
@@ -79,12 +83,12 @@ public class PhysicComponent {
         this.body.setAwake(true);
     }
 
-    public void doLinearImpulse(){
-        this.body.applyLinearImpulse(new Vector2(0f, 125f), this.body.getWorldCenter(), true);
-    }
-
-    public void move(int direction) {
-        this.body.applyLinearImpulse(new Vector2(100f * direction, 0f), this.body.getWorldCenter(), true);
+    public void move(float max_vel) {
+        if(this.body.getLinearVelocity().x > max_vel){
+            this.body.getLinearVelocity().x = max_vel;
+        }else{
+            this.body.applyLinearImpulse(currentImpulse, this.body.getWorldCenter(), true);
+        }
     }
 
     public UserData getUserData() {
@@ -115,4 +119,15 @@ public class PhysicComponent {
     }
 
 
+    public void setMove(int direction) {
+        this.currentImpulse.x = 10f*direction;
+    }
+
+    public void stopMove(){
+        this.currentImpulse.x = 0;
+    }
+
+    public void jump() {
+        this.body.applyLinearImpulse(new Vector2(0f, 40f*this.body.getMass()), body.getWorldCenter(),  true);
+    }
 }

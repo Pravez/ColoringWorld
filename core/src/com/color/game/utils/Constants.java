@@ -11,4 +11,6 @@ public class Constants {
     public static final float TIME_STEP = 1/300f;
     public static final Vector2 WORLD_GRAVITY = new Vector2(0, -75);
 
+    public static final float CHARACTER_MAX_VELOCITY = 25f;
+
 }

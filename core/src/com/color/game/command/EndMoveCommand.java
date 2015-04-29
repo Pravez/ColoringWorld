@@ -11,6 +11,8 @@ public class EndMoveCommand implements Command{
 
     @Override
     public boolean execute(BaseDynamicElement element, float delta) {
+
+        element.stopMove();
         return true;
     }
 }

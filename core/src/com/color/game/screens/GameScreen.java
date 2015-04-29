@@ -43,7 +43,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         renderer = new Box2DDebugRenderer();
         setupCamera();
 
-        this.character = new Character(LevelManager.getCurrentLevel().characterPos, CHARACTER_WIDTH, CHARACTER_HEIGHT, LevelManager.getCurrentLevel().map.world);
+        this.character = new Character(LevelManager.getCurrentLevel().characterPos, CHARACTER_WIDTH, CHARACTER_HEIGHT, LevelManager.getCurrentLevel().getWorld());
         LevelManager.getCurrentLevel().addActor(this.character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
 
@@ -52,6 +52,14 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         this.redCommand    = new ColorCommand(PlatformColor.RED);
         this.blueCommand   = new ColorCommand(PlatformColor.BLUE);
         this.yellowCommand = new ColorCommand(PlatformColor.YELLOW);
+    }
+
+    private void changeLevel(int levelIndex) {
+        this.character.remove();
+        LevelManager.changeLevel(levelIndex);
+        this.character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
+        LevelManager.getCurrentLevel().addActor(this.character);
+        LevelManager.getCurrentLevel().getWorld().setContactListener(this);
     }
 
     private void setupCamera(){
@@ -63,7 +71,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         /** **/
         camera2 = new OrthographicCamera(w/4, h/4);
-        camera2.position.set(w/9, h/12, 0);
+        camera2.position.set(w / 9, h / 12, 0);
         camera2.update();
     }
 
@@ -111,6 +119,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     }
 
     private void handleInputs() {
+        //System.out.println("Character state : " + this.character.getState());
         if (Gdx.input.isKeyJustPressed(this.game.keys.jumpCode)) {
             System.out.println("START JUMP");
             this.character.addCommand(new StartJumpCommand());
@@ -132,6 +141,14 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         handleColorCommand(this.game.keys.redCode, this.redCommand, this.uiStage.colorGauges.redGauge);
         handleColorCommand(this.game.keys.blueCode, this.blueCommand, this.uiStage.colorGauges.blueGauge);
         handleColorCommand(this.game.keys.yellowCode, this.yellowCommand, this.uiStage.colorGauges.yellowGauge);
+
+        // Debug codes
+        if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+            changeLevel(LevelManager.nextLevelIndex());
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+            changeLevel(LevelManager.previousLevelIndex());
+        }
     }
 
     private void handleColorCommand(int keyCode, ColorCommand command, ColorGauge gauge) {

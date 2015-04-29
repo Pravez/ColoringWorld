@@ -3,6 +3,7 @@ package com.color.game.elements;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.color.game.elements.userData.UserData;
+import com.color.game.utils.BodyUtils;
 import com.color.game.utils.Constants;
 
 public class PhysicComponent {
@@ -15,9 +16,11 @@ public class PhysicComponent {
     private BaseElement element;
     private World world;
 
+    private BodyDef bodyDef;
     private PolygonShape shape;
     private float density;
 
+    private short group;
 
     public PhysicComponent(BaseElement element) {
         this.userData = null;
@@ -28,27 +31,41 @@ public class PhysicComponent {
     public void configureBody(Vector2 position, int width, int height, BodyDef.BodyType bodyType, World world, short group){
         this.world = world;
 
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = bodyType;
+        this.bodyDef = new BodyDef();
+        this.bodyDef.type = bodyType;
 
-        position.scl(2); // Multiply by two because of the half size boxes
-        position.x += width;
-        position.y += height;
+        this.group = group;
+
+        if (bodyType == BodyDef.BodyType.StaticBody) {
+            position.scl(2); // Multiply by two because of the half size boxes
+        }
 
         //To keep from rotations
-        bodyDef.fixedRotation = true;
-        bodyDef.position.set(new Vector2(position.x, position.y));
+        this.bodyDef.fixedRotation = true;
+        this.bodyDef.position.set(new Vector2(position.x + width, position.y + height));
 
         this.density = Constants.STATIC_ELEMENT_DENSITY;
         this.shape = new PolygonShape();
         this.shape.setAsBox(width, height);
 
-        this.body = world.createBody(bodyDef);
+        this.body = world.createBody(this.bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.density = Constants.STATIC_ELEMENT_DENSITY;
         fixtureDef.shape = this.shape;
-        fixtureDef.filter.groupIndex = group;
+        fixtureDef.filter.groupIndex = this.group;
         this.body.createFixture(this.shape, Constants.STATIC_ELEMENT_DENSITY);
+    }
+
+    public void changeWorld(World world, Vector2 position) {
+        destroyFixture();
+        this.bodyDef.position.set(new Vector2(position.x + this.userData.getWidth()/2, position.y + this.userData.getHeight()/2));
+        this.body = world.createBody(this.bodyDef);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.density = Constants.STATIC_ELEMENT_DENSITY;
+        fixtureDef.shape = this.shape;
+        fixtureDef.filter.groupIndex = this.group;
+        this.body.createFixture(this.shape, Constants.STATIC_ELEMENT_DENSITY);
+        this.body.setUserData(userData);
     }
 
     public void configureUserData(UserData userData){

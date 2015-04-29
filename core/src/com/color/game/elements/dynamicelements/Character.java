@@ -58,6 +58,10 @@ public class Character extends BaseDynamicElement {
         this.physicComponent.move(direction.valueOf());
     }
 
+    public void changeWorld(World world, Vector2 position) {
+        this.physicComponent.changeWorld(world, position);
+    }
+
     public void reset(Vector2 position) {
         this.physicComponent.getBody().setTransform(position.x, position.y, 0);
         this.physicComponent.rebase();

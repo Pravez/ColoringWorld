@@ -20,7 +20,7 @@ public class Level extends Stage {
 
     public Level(Vector2 characterPos) {
         this.map = new Map(Constants.WORLD_GRAVITY, true);
-        this.characterPos = characterPos;
+        this.characterPos = characterPos.scl(2);
 
         this.colorPlatforms = new Array<>();
         this.notices = new Array<>();

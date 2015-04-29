@@ -77,8 +77,8 @@ public class LevelManager {
         level.addActor(new ColorPlatform(new Vector2(67, 4), 5, 1, level, PlatformColor.BLUE));
 
         // Notices
-        level.addActor(new Notice(new Vector2(4, 1), 3, 3, level, 0));
-        level.addActor(new Notice(new Vector2(26, 1), 3, 3, level, 1));
+        level.addActor(new Notice(new Vector2(4, 1), 3, 3, level.map, 0));
+        level.addActor(new Notice(new Vector2(26, 1), 3, 3, level.map, 1));
 
         // Doors
         //level.addDoor(new Door(createDoor(level.map, 180, 2, 2, 6), new Rectangle(176, 2, 4, 6)));

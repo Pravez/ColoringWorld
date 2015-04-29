@@ -12,6 +12,7 @@ import com.color.game.command.*;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.states.StandingState;
+import com.color.game.elements.userData.UserData;
 import com.color.game.enums.MovementDirection;
 import com.color.game.elements.staticelements.Notice;
 import com.color.game.enums.PlatformColor;
@@ -60,6 +61,19 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         this.character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
         LevelManager.getCurrentLevel().addActor(this.character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
+        respawn();
+    }
+
+    /**
+     * Reset the tools :
+     *  - stop the color commands
+     *  - stop the graphic gauges
+     */
+    private void respawn() {
+        this.redCommand.stop();
+        this.blueCommand.stop();
+        this.yellowCommand.stop();
+        this.uiStage.colorGauges.stopAll();
     }
 
     private void setupCamera(){
@@ -90,50 +104,29 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         renderer.render(LevelManager.getCurrentLevel().map.world, camera2.combined);
 
-        for (Notice notice : LevelManager.getCurrentLevel().notices) {
-            if (notice.getBounds().overlaps(character.getBounds())) {
-                notice.display();
-            }
-        }
+        LevelManager.getCurrentLevel().act(delta);
+        LevelManager.getCurrentLevel().draw();
 
         uiStage.act(delta);
         uiStage.draw();
 
-        LevelManager.getCurrentLevel().act(delta);
-        LevelManager.getCurrentLevel().draw();
-
         handleInputs();
         handleCamera();
         handleCharacter();
-        /*if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            camera.translate(-2, 0);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            camera.translate(2, 0);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            camera.translate(0, 2);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            camera.translate(0, -2);
-        }
-        camera.update();*/
     }
 
     private void handleInputs() {
-        //System.out.println("Character state : " + this.character.getState());
+
         if (Gdx.input.isKeyJustPressed(this.game.keys.jumpCode)) {
-            System.out.println("START JUMP");
             this.character.addCommand(new StartJumpCommand());
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.squatCode)) {
-            System.out.println("START SQUAT");
             this.character.addCommand(new StartSquatCommand());
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.rightCode)) {
-            System.out.println("START MOVING RIGHT");
             this.character.addCommand(new StartMoveCommand(MovementDirection.RIGHT));
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.leftCode)) {
-            System.out.println("START MOVING RIGHT");
             this.character.addCommand(new StartMoveCommand(MovementDirection.LEFT));
         }
 
@@ -180,6 +173,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         // Prevent character from falling
         if (character.getBounds().y < LevelManager.getCurrentLevel().map.getPixelBottom()) {
             character.reset(LevelManager.getCurrentLevel().characterPos);
+            respawn();
         }
     }
 
@@ -191,10 +185,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     @Override
     public boolean keyUp(int keycode) {
         if (keycode == this.game.keys.jumpCode) {
-            System.out.println("STOP JUMP");
             this.character.addCommand(new EndJumpCommand());
         } else if (keycode == this.game.keys.squatCode) {
-            System.out.println("STOP SQUAT");
             this.character.addCommand(new EndSquatCommand());
         }
         if(keycode == this.game.keys.leftCode || keycode == this.game.keys.rightCode){
@@ -256,11 +248,30 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         if (BodyUtils.isCharacter(b.getBody())) {
             character.setState(new StandingState());
         }
+
+        if (BodyUtils.isNotice(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
+            System.out.println("a");
+            ((Notice)((UserData)a.getBody().getUserData()).getElement()).display();
+        }
+        if (BodyUtils.isNotice(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
+            System.out.println("b");
+            ((Notice)((UserData)b.getBody().getUserData()).getElement()).display();
+        }
     }
 
     @Override
     public void endContact(Contact contact) {
+        Fixture a = contact.getFixtureA();
+        Fixture b = contact.getFixtureB();
 
+        if (BodyUtils.isNotice(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
+            System.out.println("a");
+            ((Notice)((UserData)a.getBody().getUserData()).getElement()).hide();
+        }
+        if (BodyUtils.isNotice(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
+            System.out.println("b");
+            ((Notice)((UserData)b.getBody().getUserData()).getElement()).hide();
+        }
     }
 
     @Override

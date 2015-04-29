@@ -8,19 +8,13 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.color.game.assets.Assets;
-import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.userData.StaticElementUserData;
 import com.color.game.enums.UserDataType;
-import com.color.game.levels.Level;
 import com.color.game.levels.Map;
 import com.color.game.levels.Tutorial;
 import com.color.game.screens.GameScreen;
-import sun.font.GlyphLayout;
 
 public class Notice extends BaseStaticElement {
 
@@ -36,13 +30,10 @@ public class Notice extends BaseStaticElement {
 
     private BitmapFontCache cache;
 
-    public Notice(Vector2 position, int width, int height, Level level, int tutorialIndex) {
-        super(position, width, height, level.map, PhysicComponent.GROUP_PLAYER);
-        this.physicComponent.configureUserData(new StaticElementUserData(width, height, UserDataType.NOTICE));
-        this.physicComponent.destroyFixture();
+    public Notice(Vector2 position, int width, int height, Map map, int tutorialIndex) {
+        super(position, width, height, map, PhysicComponent.GROUP_SENSOR);
+        this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.NOTICE));
         this.index = tutorialIndex;
-
-        level.addNotice(this);
 
         this.shapeRenderer = new ShapeRenderer();
         this.cache = new BitmapFontCache(Assets.getGroboldFont(Notice.FONT_SIZE));
@@ -50,7 +41,11 @@ public class Notice extends BaseStaticElement {
     }
 
     public void display() {
-        display = true;
+        this.display = true;
+    }
+
+    public void hide() {
+        this.display = false;
     }
 
     @Override
@@ -79,6 +74,5 @@ public class Notice extends BaseStaticElement {
         shapeRenderer.end();
 
         batch.begin();
-        this.display = false;
     }
 }

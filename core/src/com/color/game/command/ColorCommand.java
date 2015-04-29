@@ -29,6 +29,10 @@ public class ColorCommand implements Command {
         this.time = 0;
     }
 
+    public void stop() {
+        this.time = ColorCommand.COLOR_DELAY;
+    }
+
     @Override
     public boolean execute() {
         return true;

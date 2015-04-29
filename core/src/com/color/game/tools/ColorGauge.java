@@ -31,6 +31,8 @@ public class ColorGauge {
         this.time = 0f;
     }
 
+    public void stop() { this.time = ColorCommand.COLOR_DELAY; }
+
     public void draw(Batch batch) {
         float gapX = 3;
         float gapY = 2;

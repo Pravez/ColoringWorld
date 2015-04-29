@@ -10,8 +10,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.states.JumpingState;
 import com.color.game.elements.dynamicelements.states.StandingState;
+import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.dynamicelements.states.WalkingState;
-import com.color.game.elements.userData.StaticElementUserData;
 import com.color.game.enums.MovementDirection;
 import com.color.game.enums.UserDataType;
 import com.color.game.screens.GameScreen;
@@ -24,7 +24,7 @@ public class Character extends BaseDynamicElement {
     public Character(Vector2 position, int width, int height, World world) {
         super(position, width, height, world, PhysicComponent.GROUP_PLAYER);
 
-        this.physicComponent.configureUserData(new StaticElementUserData(width, height, UserDataType.CHARACTER));
+        this.physicComponent.configureUserData(new DynamicElementUserData(this, width, height, UserDataType.CHARACTER));
         this.state = new StandingState();
 
         this.shapeRenderer = new ShapeRenderer();

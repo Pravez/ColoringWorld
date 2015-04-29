@@ -8,7 +8,8 @@ import com.color.game.utils.Constants;
 public class PhysicComponent {
 
     public static final short GROUP_PLAYER = -1;
-    public static final short GROUP_SCENERY = -2;
+    public static final short GROUP_SCENERY = 1;
+    public static final short GROUP_SENSOR = -2;
 
     private UserData userData;
     private Body body;
@@ -16,10 +17,7 @@ public class PhysicComponent {
     private World world;
 
     private BodyDef bodyDef;
-    private PolygonShape shape;
-    private float density;
-
-    private short group;
+    private FixtureDef fixtureDef;
 
     private Vector2 currentImpulse;
 
@@ -35,8 +33,6 @@ public class PhysicComponent {
         this.bodyDef = new BodyDef();
         this.bodyDef.type = bodyType;
 
-        this.group = group;
-
         if (bodyType == BodyDef.BodyType.StaticBody) {
             position.scl(2); // Multiply by two because of the half size boxes
         }
@@ -46,16 +42,18 @@ public class PhysicComponent {
         this.bodyDef.position.set(new Vector2(position.x + width, position.y + height));
         this.bodyDef.linearDamping = 0.95f;
 
-        this.density = Constants.STATIC_ELEMENT_DENSITY;
-        this.shape = new PolygonShape();
-        this.shape.setAsBox(width, height);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width, height);
 
         this.body = world.createBody(this.bodyDef);
-        FixtureDef fixtureDef = new FixtureDef();
+        this.fixtureDef = new FixtureDef();
         fixtureDef.density = Constants.STATIC_ELEMENT_DENSITY;
-        fixtureDef.shape = this.shape;
-        fixtureDef.filter.groupIndex = this.group;
-        this.body.createFixture(this.shape, Constants.STATIC_ELEMENT_DENSITY);
+        fixtureDef.shape = shape;
+        fixtureDef.filter.groupIndex = group;
+        if (group == GROUP_SENSOR) {
+            fixtureDef.isSensor = true;
+        }
+        this.body.createFixture(fixtureDef);
 
         this.currentImpulse = new Vector2(0f,0f);
     }
@@ -64,12 +62,8 @@ public class PhysicComponent {
         destroyFixture();
         this.bodyDef.position.set(new Vector2(position.x + this.userData.getWidth()/2, position.y + this.userData.getHeight()/2));
         this.body = world.createBody(this.bodyDef);
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.density = Constants.STATIC_ELEMENT_DENSITY;
-        fixtureDef.shape = this.shape;
-        fixtureDef.filter.groupIndex = this.group;
-        this.body.createFixture(this.shape, Constants.STATIC_ELEMENT_DENSITY);
-        this.body.setUserData(userData);
+        this.body.createFixture(this.fixtureDef);
+        this.body.setUserData(this.userData);
     }
 
     public void configureUserData(UserData userData){
@@ -84,11 +78,15 @@ public class PhysicComponent {
     }
 
     public void move(float max_vel) {
-        if(this.body.getLinearVelocity().x > max_vel){
+        if (this.body.getLinearVelocity().x > max_vel) {
             this.body.getLinearVelocity().x = max_vel;
-        }else{
+        } else {
             this.body.applyLinearImpulse(currentImpulse, this.body.getWorldCenter(), true);
         }
+    }
+
+    public void doLinearImpulse(){
+        this.body.applyLinearImpulse(new Vector2(0f, 250f/*125f*/), this.body.getWorldCenter(), true);
     }
 
     public UserData getUserData() {
@@ -101,23 +99,27 @@ public class PhysicComponent {
         }
     }
 
-    public void createFixture() {
+    public void disableCollisions() {
+        Filter filter = this.body.getFixtureList().first().getFilterData();
+        filter.groupIndex = GROUP_PLAYER;
+        this.body.getFixtureList().first().setFilterData(filter);
+    }
+
+    public void enableCollisions() {
+        Filter filter = this.body.getFixtureList().first().getFilterData();
+        filter.groupIndex = GROUP_SCENERY;
+        this.body.getFixtureList().first().setFilterData(filter);
+    }
+
+    /*public void createFixture() {
         if (this.body.getFixtureList().size == 0) {
             this.body.createFixture(this.shape, this.density);
         }
-    }
+    }*/
 
     public Body getBody() {
         return body;
     }
-
-    /**
-     * Useful ?
-     */
-    public void dispose() {
-        this.shape.dispose();
-    }
-
 
     public void setMove(int direction) {
         this.currentImpulse.x = 10f*direction;
@@ -128,6 +130,6 @@ public class PhysicComponent {
     }
 
     public void jump() {
-        this.body.applyLinearImpulse(new Vector2(0f, 40f*this.body.getMass()), body.getWorldCenter(),  true);
+        this.body.applyLinearImpulse(new Vector2(0f, 40f * this.body.getMass()), body.getWorldCenter(), true);
     }
 }

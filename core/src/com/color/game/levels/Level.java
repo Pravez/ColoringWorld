@@ -16,14 +16,12 @@ public class Level extends Stage {
     public Vector2 characterPos;
 
     private Array<ColorPlatform> colorPlatforms;
-    public Array<Notice> notices;
 
     public Level(Vector2 characterPos) {
         this.map = new Map(Constants.WORLD_GRAVITY, true);
         this.characterPos = characterPos.scl(2);
 
         this.colorPlatforms = new Array<>();
-        this.notices = new Array<>();
     }
 
     public boolean isLocked() {
@@ -48,10 +46,6 @@ public class Level extends Stage {
 
     public void addColorPlatform(ColorPlatform colorPlatform) {
         this.colorPlatforms.add(colorPlatform);
-    }
-
-    public void addNotice(Notice notice) {
-        this.notices.add(notice);
     }
 
     public void activateColorPlatforms(PlatformColor color) {

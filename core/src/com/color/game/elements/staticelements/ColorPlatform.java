@@ -11,8 +11,6 @@ import com.color.game.elements.userData.StaticElementUserData;
 import com.color.game.enums.PlatformColor;
 import com.color.game.enums.UserDataType;
 import com.color.game.levels.Level;
-import com.color.game.levels.LevelManager;
-import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
 
 public class ColorPlatform extends BaseStaticElement {
@@ -24,7 +22,7 @@ public class ColorPlatform extends BaseStaticElement {
 
     public ColorPlatform(Vector2 position, int width, int height, Level level, PlatformColor color) {
         super(position, width, height, level.map, PhysicComponent.GROUP_SCENERY);
-        this.physicComponent.configureUserData(new StaticElementUserData(width, height, UserDataType.COLORPLATFORM));
+        this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.COLORPLATFORM));
         this.color = color;
         level.addColorPlatform(this);
         desactivate();
@@ -33,12 +31,12 @@ public class ColorPlatform extends BaseStaticElement {
     }
 
     public void activate() {
-        this.physicComponent.createFixture();
+        this.physicComponent.enableCollisions();
         this.activated = true;
     }
 
     public void desactivate() {
-        this.physicComponent.destroyFixture();
+        this.physicComponent.disableCollisions();
         this.activated = false;
     }
 

@@ -59,4 +59,10 @@ public class Gauges extends Actor {
         this.blueGauge.restart();
         this.yellowGauge.restart();
     }
+
+    public void stopAll() {
+        this.redGauge.stop();
+        this.blueGauge.stop();
+        this.yellowGauge.stop();
+    }
 }

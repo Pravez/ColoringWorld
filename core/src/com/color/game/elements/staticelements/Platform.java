@@ -19,7 +19,7 @@ public class Platform extends BaseStaticElement {
     public Platform(Vector2 position, int width, int height, Map map) {
         super(position, width, height, map, PhysicComponent.GROUP_SCENERY);
 
-        this.physicComponent.configureUserData(new StaticElementUserData(width, height, UserDataType.PLATFORM));
+        this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.PLATFORM));
 
         this.shapeRenderer = new ShapeRenderer();
     }

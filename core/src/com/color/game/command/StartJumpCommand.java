@@ -13,7 +13,6 @@ public class StartJumpCommand implements Command {
 
     @Override
     public boolean execute(BaseDynamicElement element, float delta) {
-
         if(!(element.getState() instanceof JumpingState)){
             element.jump();
         }

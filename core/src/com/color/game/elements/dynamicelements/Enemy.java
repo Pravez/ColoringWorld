@@ -12,7 +12,7 @@ public class Enemy extends BaseDynamicElement {
     public Enemy(Vector2 position, int width, int height, World world) {
         super(position, width, height, world, PhysicComponent.GROUP_SCENERY);
 
-        this.physicComponent.configureUserData(new DynamicElementUserData(width, height, UserDataType.ENEMY));
+        this.physicComponent.configureUserData(new DynamicElementUserData(this, width, height, UserDataType.ENEMY));
     }
 
     @Override

@@ -151,6 +151,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
             this.runningLevel = LevelManager.previousLevelIndex();
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            changeLevel();
+        }
     }
 
     private void handleColorCommand(int keyCode, ColorCommand command, ColorGauge gauge) {

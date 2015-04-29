@@ -3,9 +3,10 @@ package com.color.game.elements;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.color.game.elements.userData.UserData;
-import com.color.game.utils.Constants;
 
 public class PhysicComponent {
+
+    public static final float STATIC_ELEMENT_DENSITY = 1f;
 
     public static final short GROUP_PLAYER = -1;
     public static final short GROUP_SCENERY = 1;
@@ -47,7 +48,7 @@ public class PhysicComponent {
 
         this.body = world.createBody(this.bodyDef);
         this.fixtureDef = new FixtureDef();
-        fixtureDef.density = Constants.STATIC_ELEMENT_DENSITY;
+        fixtureDef.density = PhysicComponent.STATIC_ELEMENT_DENSITY;
         fixtureDef.shape = shape;
         fixtureDef.filter.groupIndex = group;
         if (group == GROUP_SENSOR) {

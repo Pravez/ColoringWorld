@@ -5,11 +5,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.elements.staticelements.ColorPlatform;
-import com.color.game.elements.staticelements.Notice;
 import com.color.game.enums.PlatformColor;
-import com.color.game.utils.Constants;
 
 public class Level extends Stage {
+
+    public static float accumulator = 0f;
+    public static final float TIME_STEP = 1/300f;
 
     public Map map;
     private boolean locked = true;
@@ -18,7 +19,7 @@ public class Level extends Stage {
     private Array<ColorPlatform> colorPlatforms;
 
     public Level(Vector2 characterPos) {
-        this.map = new Map(Constants.WORLD_GRAVITY, true);
+        this.map = new Map(Map.WORLD_GRAVITY, true);
         this.characterPos = characterPos.scl(2);
 
         this.colorPlatforms = new Array<>();
@@ -36,11 +37,11 @@ public class Level extends Stage {
     public void act(float delta) {
         super.act(delta);
 
-        Constants.accumulator += delta;
+        Level.accumulator += delta;
 
-        while(Constants.accumulator >= delta){
-            LevelManager.getCurrentLevel().map.world.step(Constants.TIME_STEP, 6, 2);
-            Constants.accumulator -= Constants.TIME_STEP;
+        while(Level.accumulator >= delta){
+            LevelManager.getCurrentLevel().map.world.step(Level.TIME_STEP, 6, 2);
+            Level.accumulator -= Level.TIME_STEP;
         }
     }
 

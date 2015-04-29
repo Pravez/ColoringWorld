@@ -15,9 +15,10 @@ import com.color.game.elements.dynamicelements.states.WalkingState;
 import com.color.game.enums.MovementDirection;
 import com.color.game.enums.UserDataType;
 import com.color.game.screens.GameScreen;
-import com.color.game.utils.Constants;
 
 public class Character extends BaseDynamicElement {
+
+    public static final float CHARACTER_MAX_VELOCITY = 25f;
 
     private ShapeRenderer shapeRenderer;
 
@@ -47,7 +48,7 @@ public class Character extends BaseDynamicElement {
     @Override
     public void act(float delta) {
         super.act(delta);
-        this.physicComponent.move(Constants.CHARACTER_MAX_VELOCITY);
+        this.physicComponent.move(Character.CHARACTER_MAX_VELOCITY);
     }
 
     @Override

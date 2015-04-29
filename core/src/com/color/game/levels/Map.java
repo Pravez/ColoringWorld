@@ -5,7 +5,10 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.color.game.elements.BaseElement;
 import com.color.game.utils.BodyUtils;
 
-public class Map{
+public class Map {
+
+    public static final Vector2 WORLD_GRAVITY = new Vector2(0, -75);
+
     public World world;
 
     public Vector2 start;

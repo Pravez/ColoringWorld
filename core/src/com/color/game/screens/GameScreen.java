@@ -22,8 +22,12 @@ import com.color.game.utils.BodyUtils;
 
 public class GameScreen extends BaseScreen implements InputProcessor, ContactListener {
 
+    public static final int CHARACTER_HEIGHT = 2;
+    public static final int CHARACTER_WIDTH = 1;
+
     public Box2DDebugRenderer renderer;
     public static OrthographicCamera camera;
+    public static OrthographicCamera camera2;
 
     public Character character;
 
@@ -39,7 +43,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         renderer = new Box2DDebugRenderer();
         setupCamera();
 
-        this.character = new Character(LevelManager.getCurrentLevel().characterPos, 2, 2, LevelManager.getCurrentLevel().map.world);
+        this.character = new Character(LevelManager.getCurrentLevel().characterPos, CHARACTER_WIDTH, CHARACTER_HEIGHT, LevelManager.getCurrentLevel().map.world);
         LevelManager.getCurrentLevel().addActor(this.character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
 
@@ -56,6 +60,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         camera = new OrthographicCamera(w, h);//w * (h / w));
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.update();
+
+        /** **/
+        camera2 = new OrthographicCamera(w/4, h/4);
+        camera2.position.set(w/9, h/12, 0);
+        camera2.update();
     }
 
     @Override
@@ -71,7 +80,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        renderer.render(LevelManager.getCurrentLevel().map.world, camera.combined);
+        renderer.render(LevelManager.getCurrentLevel().map.world, camera2.combined);
 
         for (Notice notice : LevelManager.getCurrentLevel().notices) {
             if (notice.getBounds().overlaps(character.getBounds())) {

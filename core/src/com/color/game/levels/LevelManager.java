@@ -48,26 +48,27 @@ public class LevelManager {
     }
 
     public static void addFirstLevel() {
-        Level level = new Level(new Vector2(5, 2));
+        Level level = new Level(new Vector2(3, 1));
         level.unlock();
 
         // Ground
-        level.addActor(new Platform(new Vector2(0, 0), 30, 2, level.map));
-        level.addActor(new Platform(new Vector2(50, 0), 30, 2, level.map));
-        level.addActor(new Platform(new Vector2(100, 0), 32, 2, level.map));
-        level.addActor(new Platform(new Vector2(150, 0), 32, 2, level.map));
+        level.addActor(new Platform(new Vector2(0, 0), 15, 1, level.map));
+        level.addActor(new Platform(new Vector2(25, 0), 16, 1, level.map));
+        level.addActor(new Platform(new Vector2(50, 0), 16, 1, level.map));
+        level.addActor(new Platform(new Vector2(75, 0), 16, 1, level.map));
 
         // Walls
-        level.addActor(new Platform(new Vector2(0, 2), 2, 46, level.map));
-        level.addActor(new Platform(new Vector2(180, 2), 2, 46, level.map));
+        level.addActor(new Platform(new Vector2(0, 1), 1, 32, level.map));
+        level.addActor(new Platform(new Vector2(90, 1), 1, 32, level.map));
 
         // Color Platforms
-        level.addActor(new ColorPlatform(new Vector2(35, 8), 10, 2, level, PlatformColor.RED));
-        level.addActor(new ColorPlatform(new Vector2(85, 8), 10, 2, level, PlatformColor.YELLOW));
-        level.addActor(new ColorPlatform(new Vector2(135, 8), 10, 2, level, PlatformColor.BLUE));
+        level.addActor(new ColorPlatform(new Vector2(17, 4), 5, 1, level, PlatformColor.RED));
+        level.addActor(new ColorPlatform(new Vector2(42, 4), 5, 1, level, PlatformColor.YELLOW));
+        level.addActor(new ColorPlatform(new Vector2(67, 4), 5, 1, level, PlatformColor.BLUE));
 
         // Notices
-        level.addActor(new Notice(new Vector2(9, 2), 3, 3, level, 0));
+        level.addActor(new Notice(new Vector2(4, 1), 3, 3, level, 0));
+        level.addActor(new Notice(new Vector2(26, 1), 3, 3, level, 1));
 
         // Doors
         //level.addDoor(new Door(createDoor(level.map, 180, 2, 2, 6), new Rectangle(176, 2, 4, 6)));

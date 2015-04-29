@@ -36,15 +36,8 @@ public class Character extends BaseDynamicElement {
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
         shapeRenderer.setColor(Color.YELLOW);
-
-        int width = this.physicComponent.getUserData().getWidth() * WORLD_TO_SCREEN;
-        int height = this.physicComponent.getUserData().getHeight() * WORLD_TO_SCREEN;
-        int x = (int) (this.physicComponent.getBody().getPosition().x - this.physicComponent.getUserData().getWidth()/2) * WORLD_TO_SCREEN;
-        int y = (int) (this.physicComponent.getBody().getPosition().y - this.physicComponent.getUserData().getHeight()/2) * WORLD_TO_SCREEN;
-
-        shapeRenderer.rect(x, y, width, height);
+        shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
         shapeRenderer.end();
         batch.begin();
     }

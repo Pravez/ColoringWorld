@@ -31,16 +31,12 @@ public class PhysicComponent {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = bodyType;
 
-        //if(bodyType == BodyDef.BodyType.StaticBody){
-            if (width <= 1) width = 2;
-            if (height <= 1) height = 2;
+        position.scl(2); // Multiply by two because of the half size boxes
+        position.x += width;
+        position.y += height;
 
-            position.x += width/2;
-            position.y += height/2;
-            width /= 2;
-            height /= 2;
-        //}
-
+        //To keep from rotations
+        bodyDef.fixedRotation = true;
         bodyDef.position.set(new Vector2(position.x, position.y));
 
         this.density = Constants.STATIC_ELEMENT_DENSITY;

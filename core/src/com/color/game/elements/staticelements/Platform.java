@@ -32,15 +32,8 @@ public class Platform extends BaseStaticElement {
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
         shapeRenderer.setColor(Color.GREEN);
-
-        int width = this.physicComponent.getUserData().getWidth() * WORLD_TO_SCREEN;
-        int height = this.physicComponent.getUserData().getHeight() * WORLD_TO_SCREEN;
-        int x = (int) (this.physicComponent.getBody().getPosition().x * WORLD_TO_SCREEN - width/2);
-        int y = (int) (this.physicComponent.getBody().getPosition().y * WORLD_TO_SCREEN - height/2);
-
-        shapeRenderer.rect(x, y, width, height);
+        shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
         shapeRenderer.end();
         batch.begin();
     }

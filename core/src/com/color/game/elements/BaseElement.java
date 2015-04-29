@@ -28,8 +28,8 @@ public abstract class BaseElement extends Actor {
     public Rectangle getBounds() {
         int width = this.physicComponent.getUserData().getWidth();
         int height = this.physicComponent.getUserData().getHeight();
-        int x = (int) (this.physicComponent.getBody().getPosition().x);
-        int y = (int) (this.physicComponent.getBody().getPosition().y);
+        float x = (this.physicComponent.getBody().getPosition().x) - this.physicComponent.getUserData().getWidth()/2;
+        float y = (this.physicComponent.getBody().getPosition().y) - this.physicComponent.getUserData().getHeight()/2;
         return new Rectangle(x * WORLD_TO_SCREEN, y * WORLD_TO_SCREEN, width * WORLD_TO_SCREEN, height * WORLD_TO_SCREEN);
     }
 }

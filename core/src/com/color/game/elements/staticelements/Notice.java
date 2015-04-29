@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.color.game.assets.Assets;
+import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.userData.StaticElementUserData;
 import com.color.game.enums.UserDataType;
@@ -26,7 +28,7 @@ public class Notice extends BaseStaticElement {
     private static final int TEXT_WIDTH = 200;
     private static final int TEXT_GAP = 20;
 
-    private boolean display = true;
+    private boolean display = false;
 
     private int index;
 
@@ -44,7 +46,7 @@ public class Notice extends BaseStaticElement {
 
         this.shapeRenderer = new ShapeRenderer();
         this.cache = new BitmapFontCache(Assets.getGroboldFont(Notice.FONT_SIZE));
-        this.cache.setWrappedText(Tutorial.getTutorial(this.index), 0, 0, Notice.TEXT_WIDTH);
+        this.cache.setWrappedText(Tutorial.getTutorial(this.index), 0, 0, Notice.TEXT_WIDTH, BitmapFont.HAlignment.CENTER);
     }
 
     public void display() {
@@ -63,7 +65,7 @@ public class Notice extends BaseStaticElement {
         if (this.display) {
             batch.setProjectionMatrix(GameScreen.camera.combined);
             batch.setColor(Color.WHITE);
-            this.cache.setPosition(x - width/2 /*- Notice.TEXT_WIDTH/2*/, y + height + 2 * this.cache.getBounds().height + TEXT_GAP);
+            this.cache.setPosition(x + width/2 - this.cache.getBounds().width/2, y + height + 2 * this.cache.getBounds().height + TEXT_GAP);
             this.cache.draw(batch);
         }
         batch.end();
@@ -71,7 +73,6 @@ public class Notice extends BaseStaticElement {
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
         Color c = Color.MAROON;
         shapeRenderer.setColor(c.r, c.g, c.b, 0.8f);
         shapeRenderer.rect(x, y, width, height);

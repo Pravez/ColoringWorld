@@ -9,8 +9,8 @@ public abstract class UserData {
     protected UserDataType userDataType;
 
     public UserData(int width, int height, UserDataType userDataType) {
-        this.width = width;
-        this.height = height;
+        this.width = width * 2;
+        this.height = height * 2;
         this.userDataType = userDataType;
     }
 

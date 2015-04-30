@@ -137,6 +137,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             this.character.addCommand(new StartSquatCommand());
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.rightCode)) {
+            System.out.println("Character position : " + this.character.getBounds());
+            System.out.println("Map width : " + LevelManager.getCurrentLevel().map.getPixelWidth());
             this.character.addCommand(new StartMoveCommand(MovementDirection.RIGHT));
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.leftCode)) {

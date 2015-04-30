@@ -7,6 +7,7 @@ import com.color.game.elements.userData.UserData;
 public class PhysicComponent {
 
     public static final float STATIC_ELEMENT_DENSITY = 1f;
+    public static final float DYNAMIC_ELEMENT_DENSITY = 1f;
 
     public static final short GROUP_PLAYER = -1;
     public static final short GROUP_SCENERY = 1;
@@ -48,7 +49,14 @@ public class PhysicComponent {
 
         this.body = world.createBody(this.bodyDef);
         this.fixtureDef = new FixtureDef();
-        fixtureDef.density = PhysicComponent.STATIC_ELEMENT_DENSITY;
+
+        if(bodyType == BodyDef.BodyType.StaticBody) {
+            fixtureDef.density = PhysicComponent.STATIC_ELEMENT_DENSITY;
+        }else{
+            fixtureDef.density = PhysicComponent.DYNAMIC_ELEMENT_DENSITY;
+        }
+
+        fixtureDef.friction = 0.5f;
         fixtureDef.shape = shape;
         fixtureDef.filter.groupIndex = group;
         if (group == GROUP_SENSOR) {
@@ -57,6 +65,7 @@ public class PhysicComponent {
         this.body.createFixture(fixtureDef);
 
         this.currentImpulse = new Vector2(0f,0f);
+
     }
 
     public void changeWorld(World world, Vector2 position) {
@@ -79,15 +88,14 @@ public class PhysicComponent {
     }
 
     public void move(float max_vel) {
+
         if (this.body.getLinearVelocity().x > max_vel) {
             this.body.getLinearVelocity().x = max_vel;
-        } else {
+        } else if(this.body.getLinearVelocity().x < -max_vel) {
+            this.body.getLinearVelocity().x = -max_vel;
+        }else{
             this.body.applyLinearImpulse(currentImpulse, this.body.getWorldCenter(), true);
         }
-    }
-
-    public void doLinearImpulse(){
-        this.body.applyLinearImpulse(new Vector2(0f, 250f/*125f*/), this.body.getWorldCenter(), true);
     }
 
     public UserData getUserData() {
@@ -123,7 +131,7 @@ public class PhysicComponent {
     }
 
     public void setMove(int direction) {
-        this.currentImpulse.x = 10f*direction;
+        this.currentImpulse.x = (5f*direction)*this.body.getMass();
     }
 
     public void stopMove(){
@@ -131,6 +139,6 @@ public class PhysicComponent {
     }
 
     public void jump() {
-        this.body.applyLinearImpulse(new Vector2(0f, 40f * this.body.getMass()), body.getWorldCenter(), true);
+        this.body.applyLinearImpulse(new Vector2(0f, 60f * this.body.getMass()), body.getWorldCenter(), true);
     }
 }

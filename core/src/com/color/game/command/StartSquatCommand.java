@@ -10,6 +10,8 @@ public class StartSquatCommand implements Command {
 
     @Override
     public boolean execute(BaseDynamicElement element, float delta) {
+
+        element.squat();
         return true;
     }
 }

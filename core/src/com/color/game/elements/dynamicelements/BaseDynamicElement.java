@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.command.Command;
 import com.color.game.elements.BaseElement;
+import com.color.game.elements.dynamicelements.states.SlidingState;
 import com.color.game.elements.dynamicelements.states.State;
 import com.color.game.enums.MovementDirection;
 
@@ -14,7 +15,8 @@ import java.util.Iterator;
 
 public abstract class BaseDynamicElement extends BaseElement {
 
-    protected State state;
+    protected State movingState;
+    protected State aloftState;
 
     private Array<Command> commands;
 
@@ -23,12 +25,20 @@ public abstract class BaseDynamicElement extends BaseElement {
         this.commands = new Array<>();
     }
 
-    public State getState() {
-        return state;
+    public State getMovingState() {
+        return movingState;
     }
 
-    public void setState(State state) {
-        this.state = state;
+    public void setMovingState(State movingState) {
+        this.movingState = movingState;
+    }
+
+    public State getAloftState() {
+        return aloftState;
+    }
+
+    public void setAloftState(State aloftState) {
+        this.aloftState = aloftState;
     }
 
     public void addCommand(Command command) {
@@ -54,8 +64,10 @@ public abstract class BaseDynamicElement extends BaseElement {
 
     public abstract void jump();
     public abstract void configureMove(MovementDirection direction);
+    public abstract void squat();
 
     public void stopMove() {
+        this.setMovingState(new SlidingState());
         this.physicComponent.stopMove();
     }
 }

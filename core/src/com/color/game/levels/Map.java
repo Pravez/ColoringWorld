@@ -1,13 +1,12 @@
 package com.color.game.levels;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.World;
 import com.color.game.elements.BaseElement;
-import com.color.game.utils.BodyUtils;
 
 public class Map {
 
-    public static final Vector2 WORLD_GRAVITY = new Vector2(0, -75);
+    public static final Vector2 WORLD_GRAVITY = new Vector2(0, -150f);
 
     public World world;
 

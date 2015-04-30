@@ -8,7 +8,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.color.game.elements.PhysicComponent;
-import com.color.game.elements.dynamicelements.states.JumpingState;
+import com.color.game.elements.dynamicelements.states.AloftState;
+import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.StandingState;
 import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.dynamicelements.states.WalkingState;
@@ -26,7 +27,8 @@ public class Character extends BaseDynamicElement {
         super(position, width, height, world, PhysicComponent.GROUP_PLAYER);
 
         this.physicComponent.configureUserData(new DynamicElementUserData(this, width, height, UserDataType.CHARACTER));
-        this.state = new StandingState();
+        this.movingState = new StandingState();
+        this.aloftState = new LandedState();
 
         this.shapeRenderer = new ShapeRenderer();
     }
@@ -49,20 +51,28 @@ public class Character extends BaseDynamicElement {
     public void act(float delta) {
         super.act(delta);
         this.physicComponent.move(Character.CHARACTER_MAX_VELOCITY);
+
+        if(this.physicComponent.getBody().getLinearVelocity().x == 0f){
+            this.setMovingState(new StandingState());
+        }
     }
 
     @Override
     public void jump() {
-        this.setState(new JumpingState());
+        this.setAloftState(new AloftState());
         this.physicComponent.jump();
     }
 
     @Override
     public void configureMove(MovementDirection direction){
-        if(!(state instanceof WalkingState))
-            this.setState(new WalkingState(direction));
+        if(!(movingState instanceof WalkingState))
+            this.setMovingState(new WalkingState(direction));
 
         this.physicComponent.setMove(direction.valueOf());
+    }
+
+    @Override
+    public void squat() {
     }
 
     public void changeWorld(World world, Vector2 position) {

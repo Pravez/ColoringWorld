@@ -11,11 +11,13 @@ import com.color.game.ColorGame;
 import com.color.game.command.*;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.Character;
-import com.color.game.elements.dynamicelements.states.StandingState;
+import com.color.game.elements.dynamicelements.states.AloftState;
+import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.staticelements.Exit;
+import com.color.game.elements.staticelements.Notice;
+import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.UserData;
 import com.color.game.enums.MovementDirection;
-import com.color.game.elements.staticelements.Notice;
 import com.color.game.enums.PlatformColor;
 import com.color.game.game.UIStage;
 import com.color.game.levels.LevelManager;
@@ -254,19 +256,15 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if (BodyUtils.isCharacter(a.getBody())){
-            character.setState(new StandingState());
-        }
         if (BodyUtils.isCharacter(b.getBody())) {
-            character.setState(new StandingState());
+            character.setAloftState(new LandedState());
+            ((DynamicElementUserData)b.getBody().getUserData()).addContact();
         }
 
         if (BodyUtils.isNotice(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
-            System.out.println("a");
             ((Notice)((UserData)a.getBody().getUserData()).getElement()).display();
         }
         if (BodyUtils.isNotice(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
-            System.out.println("b");
             ((Notice)((UserData)b.getBody().getUserData()).getElement()).display();
         }
 
@@ -281,12 +279,17 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         Fixture b = contact.getFixtureB();
 
         if (BodyUtils.isNotice(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
-            System.out.println("a");
             ((Notice)((UserData)a.getBody().getUserData()).getElement()).hide();
         }
         if (BodyUtils.isNotice(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
-            System.out.println("b");
             ((Notice)((UserData)b.getBody().getUserData()).getElement()).hide();
+        }
+
+        if(BodyUtils.isCharacter(b.getBody())){
+            ((DynamicElementUserData)b.getBody().getUserData()).removeContact();
+            if(((DynamicElementUserData)b.getBody().getUserData()).getContactsNumber() == 0){
+                character.setAloftState(new AloftState());
+            }
         }
     }
 

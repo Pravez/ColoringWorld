@@ -24,4 +24,9 @@ public class Enemy extends BaseDynamicElement {
     public void configureMove(MovementDirection direction){
 
     }
+
+    @Override
+    public void squat() {
+
+    }
 }

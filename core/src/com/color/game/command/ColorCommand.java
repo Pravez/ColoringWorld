@@ -30,7 +30,8 @@ public class ColorCommand implements Command {
     }
 
     public void stop() {
-        this.time = ColorCommand.COLOR_DELAY;
+        LevelManager.getCurrentLevel().desactivateColorPlatforms(this.color);
+        restart();
     }
 
     @Override

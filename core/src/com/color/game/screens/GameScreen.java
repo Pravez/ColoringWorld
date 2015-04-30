@@ -73,13 +73,17 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
     /**
      * Reset the tools :
+     *  - remove all the character's commands
      *  - stop the color commands
      *  - stop the graphic gauges
      */
     private void respawn() {
+        this.character.clearCommands();
+
         this.redCommand.stop();
         this.blueCommand.stop();
         this.yellowCommand.stop();
+
         this.uiStage.colorGauges.stopAll();
     }
 
@@ -135,6 +139,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             this.character.addCommand(new StartSquatCommand());
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.rightCode)) {
+            System.out.println("Character position : " + this.character.getBounds());
+            System.out.println("Map width : " + LevelManager.getCurrentLevel().map.getPixelWidth());
             this.character.addCommand(new StartMoveCommand(MovementDirection.RIGHT));
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.leftCode)) {
@@ -160,6 +166,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
     private void handleColorCommand(int keyCode, ColorCommand command, ColorGauge gauge) {
         if (Gdx.input.isKeyJustPressed(keyCode) && command.isFinished()) {
+            System.out.println("Launch color change");
             this.character.addCommand(command);
             gauge.restart();
         }

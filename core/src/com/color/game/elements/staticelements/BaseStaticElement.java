@@ -14,6 +14,6 @@ public abstract class BaseStaticElement extends BaseElement {
     public BaseStaticElement(Vector2 position, int width, int height, Map map, short group) {
         super(position, width, height, BodyDef.BodyType.StaticBody, map.world, group);
 
-        map.addBlock(position.x * 2, position.y * 2, width * 2, height * 2);
+        map.addBlock(position.x, position.y, width * 2, height * 2);
     }
 }

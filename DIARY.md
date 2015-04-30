@@ -1,3 +1,10 @@
+# April 29, 2015 :
+* Continuing work on refacto
+* Some tests on how enhancing collisions
+* Better comprehension of Box2D
+* Tests on the tutorial
+* Better physic (but must be really finished)
+
 # April 28, 2015 :
 * Continuing work on refacto
 * Review of the class diagram, some changes about commands and states

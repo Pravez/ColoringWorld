@@ -12,6 +12,7 @@ import com.color.game.command.*;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.states.StandingState;
+import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.userData.UserData;
 import com.color.game.enums.MovementDirection;
 import com.color.game.elements.staticelements.Notice;
@@ -38,6 +39,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     private ColorCommand blueCommand;
     private ColorCommand yellowCommand;
 
+    private int runningLevel;
+
     public GameScreen(ColorGame game) {
         super(game);
 
@@ -48,6 +51,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         LevelManager.getCurrentLevel().addActor(this.character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
 
+        this.runningLevel = LevelManager.getCurrentLevelNumber();
+
         this.uiStage = new UIStage();
 
         this.redCommand    = new ColorCommand(PlatformColor.RED);
@@ -55,9 +60,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         this.yellowCommand = new ColorCommand(PlatformColor.YELLOW);
     }
 
-    private void changeLevel(int levelIndex) {
+    private void changeLevel() {
         this.character.remove();
-        LevelManager.changeLevel(levelIndex);
+        LevelManager.changeLevel(this.runningLevel);
         this.character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
         LevelManager.getCurrentLevel().addActor(this.character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
@@ -113,6 +118,10 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         handleInputs();
         handleCamera();
         handleCharacter();
+
+        if (this.runningLevel != LevelManager.getCurrentLevelNumber()) {
+            changeLevel();
+        }
     }
 
     private void handleInputs() {
@@ -137,10 +146,13 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         // Debug codes
         if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
-            changeLevel(LevelManager.nextLevelIndex());
+            this.runningLevel = LevelManager.nextLevelIndex();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-            changeLevel(LevelManager.previousLevelIndex());
+            this.runningLevel = LevelManager.previousLevelIndex();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            changeLevel();
         }
     }
 
@@ -256,6 +268,10 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         if (BodyUtils.isNotice(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
             System.out.println("b");
             ((Notice)((UserData)b.getBody().getUserData()).getElement()).display();
+        }
+
+        if (BodyUtils.isExit(a.getBody())) {
+            this.runningLevel = ((Exit) ((UserData) a.getBody().getUserData()).getElement()).getLevelIndex();
         }
     }
 

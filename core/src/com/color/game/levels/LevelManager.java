@@ -1,8 +1,8 @@
 package com.color.game.levels;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.staticelements.ColorPlatform;
+import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.Notice;
 import com.color.game.elements.staticelements.Platform;
 import com.color.game.enums.PlatformColor;
@@ -81,7 +81,7 @@ public class LevelManager {
         level.addActor(new Notice(new Vector2(26, 1), 3, 3, level.map, 1));
 
         // Doors
-        //level.addDoor(new Door(createDoor(level.map, 180, 2, 2, 6), new Rectangle(176, 2, 4, 6)));
+        level.addActor(new Exit(new Vector2(89, 1), 1, 3, level.map, 1));
 
         levels.add(level);
     }

@@ -1,3 +1,12 @@
+# 0.0.1 (April 30, 2015)
+Debug tools added to the game
+
+Features :
+- N to play next level
+- P to play previous level
+- R to restart the level
+- mouse left click to teleport character
+
 # 0.0.0 (April 25, 2015)
 Ludum Dare version, prototype of the game
 

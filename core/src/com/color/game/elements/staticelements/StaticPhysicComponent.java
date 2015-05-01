@@ -5,6 +5,9 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
 
+/**
+ * Main class concerning physics for static bodies and also static elements. It extends the PhysicComponent class.
+ */
 public class StaticPhysicComponent extends PhysicComponent{
 
     public static final float STATIC_ELEMENT_DENSITY = 1f;
@@ -27,6 +30,7 @@ public class StaticPhysicComponent extends PhysicComponent{
         this.body.getFixtureList().first().setFilterData(filter);
     }
 
+    @Override
     public void configureBody(Vector2 position, int width, int height, World world, short group){
         this.world = world;
 

@@ -9,14 +9,14 @@ import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
 
 /**
- * PhysicComponenent specific to dynamic bodies. It manages every move of the dynamic element.
+ * PhysicComponent specific to dynamic bodies. It manages every move of the dynamic element.
  */
 public class DynamicPhysicComponent extends PhysicComponent{
 
     public static final float DYNAMIC_ELEMENT_DENSITY = 1f;
 
     public static final float DYNAMIC_ELEMENT_BASE_VELOCITY = 25f;
-    public static final Vector2 DYNAMIC_ELEMENT_BASE_JUMP = new Vector2(0, 500f);
+    public static final Vector2 DYNAMIC_ELEMENT_BASE_JUMP = new Vector2(0, 55f);
 
     private Vector2 currentImpulse;
 
@@ -34,7 +34,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
         //To keep from rotations
         this.bodyDef.fixedRotation = true;
         this.bodyDef.position.set(new Vector2(position.x + width, position.y + height));
-        this.bodyDef.linearDamping = 0.95f;
+        this.bodyDef.linearDamping = 2.0f;
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width, height);
@@ -42,7 +42,6 @@ public class DynamicPhysicComponent extends PhysicComponent{
         this.body = world.createBody(this.bodyDef);
         this.fixtureDef = new FixtureDef();
         fixtureDef.density = DYNAMIC_ELEMENT_DENSITY;
-        fixtureDef.friction = 0.5f;
         fixtureDef.shape = shape;
         fixtureDef.filter.groupIndex = group;
         this.body.createFixture(fixtureDef);
@@ -71,7 +70,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
      */
     @Override
     public void rebase() {
-        this.body.setLinearVelocity(0f,0f);
+        this.body.setLinearVelocity(0f, 0f);
         this.body.setAwake(true);
     }
 
@@ -81,7 +80,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
     }
 
     /**
-     * Stops moving, really ?
+     * Stops moving, so fat !
      */
     @Override
     public void stopMove(){

@@ -39,7 +39,6 @@ public class BodyUtils {
         if((charpos.x >= platPos.x + semwidth*2 || charpos.x <= platPos.x) && (charpos.y < platPos.y + semheight*2 && charpos.y > platPos.y)){
             if(((DynamicElementUserData)character.getUserData()).getContactsNumber()==1) {
                 onWall = true;
-                System.out.println("onwall");
             }
         }
 

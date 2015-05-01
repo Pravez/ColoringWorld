@@ -50,7 +50,6 @@ public class StaticPhysicComponent extends PhysicComponent{
         this.fixtureDef = new FixtureDef();
 
         fixtureDef.density = STATIC_ELEMENT_DENSITY;
-        fixtureDef.friction = 0.5f;
         fixtureDef.shape = shape;
         fixtureDef.filter.groupIndex = group;
 

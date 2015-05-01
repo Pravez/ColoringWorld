@@ -23,7 +23,7 @@ import com.color.game.screens.GameScreen;
 public class Character extends BaseDynamicElement {
 
     public static final float CHARACTER_RUNNING_VELOCITY = 35f;
-    public static final float CHARACTER_WALKER_VELOCITY = 15f;
+    public static final float CHARACTER_WALKING_VELOCITY = 15f;
     public static final int CHARACTER_HEIGHT = 2;
     public static final int CHARACTER_WIDTH = 1;
 
@@ -83,10 +83,10 @@ public class Character extends BaseDynamicElement {
      */
     @Override
     public void configureMove(MovementDirection direction){
-        if(!(movingState instanceof WalkingState))
+        if(!(movingState instanceof WalkingState) && !(movingState instanceof RunningState)) {
             this.setMovingState(new WalkingState(direction));
-
-        this.physicComponent.setMove(direction.valueOf());
+            this.physicComponent.setMove(direction.valueOf());
+        }
     }
 
     @Override

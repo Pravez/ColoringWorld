@@ -19,12 +19,10 @@ public class DynamicElementUserData extends UserData{
 
     public void addContact(){
         contactsNumber ++;
-        System.out.println(contactsNumber);
     }
 
     public void removeContact(){
         contactsNumber --;
-        System.out.println(contactsNumber);
     }
     public int getContactsNumber() {
         return contactsNumber;

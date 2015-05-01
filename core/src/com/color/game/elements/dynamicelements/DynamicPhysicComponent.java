@@ -16,7 +16,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
     public static final float DYNAMIC_ELEMENT_DENSITY = 1f;
 
     public static final float DYNAMIC_ELEMENT_BASE_VELOCITY = 25f;
-    public static final Vector2 DYNAMIC_ELEMENT_BASE_JUMP = new Vector2(0, 55f);
+    public static final Vector2 DYNAMIC_ELEMENT_BASE_JUMP = new Vector2(0, 550f);
 
     private Vector2 currentImpulse;
 

@@ -131,7 +131,7 @@ public class PhysicComponent {
     }
 
     public void setMove(int direction) {
-        this.currentImpulse.x = (5f*direction)*this.body.getMass();
+        this.currentImpulse.x = (25f*direction);
     }
 
     public void stopMove(){
@@ -139,6 +139,11 @@ public class PhysicComponent {
     }
 
     public void jump() {
-        this.body.applyLinearImpulse(new Vector2(0f, 60f * this.body.getMass()), body.getWorldCenter(), true);
+        //For a later version
+        //if(!((DynamicElementUserData)this.userData).isOnWall()) {
+            this.body.applyLinearImpulse(new Vector2(0f, 500f), body.getWorldCenter(), true);
+        /*}else{
+            this.body.applyLinearImpulse(new Vector2(150f*((DynamicElementUserData)this.userData).getOnWallSide().valueOf(), 200f), body.getWorldCenter(), true);
+        }*/
     }
 }

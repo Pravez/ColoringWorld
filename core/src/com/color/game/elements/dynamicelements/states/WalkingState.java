@@ -7,7 +7,6 @@ public class WalkingState implements State {
     private MovementDirection direction;
 
     public WalkingState(MovementDirection direction) {
-
         this.direction = direction;
     }
 

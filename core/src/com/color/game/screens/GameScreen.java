@@ -26,9 +26,6 @@ import com.color.game.utils.BodyUtils;
 
 public class GameScreen extends BaseScreen implements InputProcessor, ContactListener {
 
-    public static final int CHARACTER_HEIGHT = 2;
-    public static final int CHARACTER_WIDTH = 1;
-
     public Box2DDebugRenderer renderer;
     public static OrthographicCamera camera;
     public static OrthographicCamera camera2;
@@ -49,7 +46,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         renderer = new Box2DDebugRenderer();
         setupCamera();
 
-        this.character = new Character(LevelManager.getCurrentLevel().characterPos, CHARACTER_WIDTH, CHARACTER_HEIGHT, LevelManager.getCurrentLevel().getWorld());
+        this.character = new Character(LevelManager.getCurrentLevel().characterPos, Character.CHARACTER_WIDTH, Character.CHARACTER_HEIGHT, LevelManager.getCurrentLevel().getWorld());
         LevelManager.getCurrentLevel().addActor(this.character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
 
@@ -264,8 +261,20 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         Fixture b = contact.getFixtureB();
 
         if (BodyUtils.isCharacter(b.getBody())) {
-            character.setAloftState(new LandedState());
             ((DynamicElementUserData)b.getBody().getUserData()).addContact();
+
+            if(BodyUtils.isPlatform(a.getBody())) {
+                character.setAloftState(new LandedState());
+                character.setOnWall(BodyUtils.onWall(b.getBody(), a.getBody()));
+
+                //For a later version
+                /*MovementDirection direction = BodyUtils.characterPositionOnWall(b.getBody(), a.getBody());
+                if(direction != MovementDirection.NONE){
+                    ((DynamicElementUserData)b.getBody().getUserData()).setOnWall(true, direction);
+                }else{
+                    ((DynamicElementUserData)b.getBody().getUserData()).setOnWall(false, direction);
+                }*/
+            }
         }
 
         if (BodyUtils.isNotice(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {

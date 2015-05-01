@@ -43,6 +43,7 @@ public abstract class BaseDynamicElement extends BaseElement {
 
     public void addCommand(Command command) {
         this.commands.add(command);
+        System.out.println(this.commands);
     }
 
     public void clearCommands() {

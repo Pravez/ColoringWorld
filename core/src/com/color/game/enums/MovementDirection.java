@@ -3,8 +3,7 @@ package com.color.game.enums;
 
 public enum MovementDirection {
 
-    RIGHT(1),
-    LEFT(-1);
+    RIGHT(1), LEFT(-1), NONE(0);
 
     private final int value;
 

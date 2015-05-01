@@ -10,6 +10,9 @@ import com.color.game.command.ColorCommand;
 import com.color.game.enums.PlatformColor;
 import com.color.game.levels.LevelManager;
 
+/**
+ * ColorGauge, the class to show graphically the delay between two activation of a color command
+ */
 public class ColorGauge {
 
     private Rectangle bounds;
@@ -19,6 +22,11 @@ public class ColorGauge {
 
     private ShapeRenderer shapeRenderer;
 
+    /**
+     * Constructor of the ColorGauge
+     * @param bounds the bounds of the ColorGauge in the screen
+     * @param color the color to show
+     */
     public ColorGauge(Rectangle bounds, Color color) {
         this.bounds = bounds;
         this.color = color;
@@ -27,12 +35,22 @@ public class ColorGauge {
         this.time = ColorCommand.COLOR_DELAY;
     }
 
+    /**
+     * Method called to restart the animation, when the corresponding color command is activated
+     */
     public void restart() {
         this.time = 0f;
     }
 
+    /**
+     * Method to stop the animation, when restarting a level, to put back to the original
+     */
     public void stop() { this.time = ColorCommand.COLOR_DELAY; }
 
+    /**
+     * Method to render the ColorGauge
+     * @param batch the SpriteBatch of the container
+     */
     public void draw(Batch batch) {
         float gapX = 3;
         float gapY = 2;
@@ -49,6 +67,10 @@ public class ColorGauge {
         batch.draw(Assets.manager.get("sprites/bar.png", Texture.class), bounds.x, bounds.y, bounds.width, bounds.height);
     }
 
+    /**
+     * Method to increment the animation counter
+     * @param delta the delta time since the last increment
+     */
     public void act(float delta) {
         if (this.time < ColorCommand.COLOR_DELAY) {
             this.time += delta;

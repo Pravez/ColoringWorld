@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.color.game.ColorGame;
@@ -24,22 +25,41 @@ import com.color.game.levels.LevelManager;
 import com.color.game.tools.ColorGauge;
 import com.color.game.utils.BodyUtils;
 
+/**
+ * GameScreen, the screen during which the game is been played
+ */
 public class GameScreen extends BaseScreen implements InputProcessor, ContactListener {
 
     public Box2DDebugRenderer renderer;
     public static OrthographicCamera camera;
     public static OrthographicCamera camera2;
 
+    /**
+     * The main character of the game
+     */
     public Character character;
 
+    /**
+     * The User Interface Stage containing all the informations during the play
+     */
     public UIStage uiStage;
 
+    /**
+     * The different ColorCommands
+     */
     private ColorCommand redCommand;
     private ColorCommand blueCommand;
     private ColorCommand yellowCommand;
 
+    /**
+     * The number of the level which should be played
+     */
     private int runningLevel;
 
+    /**
+     * The constructor of the class GameScreen
+     * @param game the {@link ColorGame}
+     */
     public GameScreen(ColorGame game) {
         super(game);
 
@@ -59,6 +79,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         this.yellowCommand = new ColorCommand(PlatformColor.YELLOW);
     }
 
+    /**
+     * Method called when changing the level to remove the character body from the world, and place it in the new Level's world
+     */
     private void changeLevel() {
         this.character.remove();
         LevelManager.changeLevel(this.runningLevel);
@@ -84,6 +107,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         this.uiStage.colorGauges.stopAll();
     }
 
+    /**
+     * Method called to setup the {@link OrthographicCamera} of the game
+     */
     private void setupCamera(){
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -97,12 +123,19 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         camera2.update();
     }
 
+    /**
+     * Method called when this screen is putting in the front
+     */
     @Override
     public void show() {
         super.show();
         Gdx.input.setInputProcessor(this);
     }
 
+    /**
+     * Method called to render the game screen
+     * @param delta
+     */
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -112,9 +145,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         renderer.render(LevelManager.getCurrentLevel().map.world, camera2.combined);
 
+        // Act and render the current level Stage
         LevelManager.getCurrentLevel().act(delta);
         LevelManager.getCurrentLevel().draw();
 
+        // Act and render the User Interface Stage
         uiStage.act(delta);
         uiStage.draw();
 
@@ -127,6 +162,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
     }
 
+    /**
+     * Method called to handle the main inputs of the game, and call the corresponding commands
+     */
     private void handleInputs() {
 
         if (Gdx.input.isKeyJustPressed(this.game.keys.jumpCode)) {
@@ -136,8 +174,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             this.character.addCommand(new StartSquatCommand());
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.rightCode)) {
-            System.out.println("Character position : " + this.character.getBounds());
-            System.out.println("Map width : " + LevelManager.getCurrentLevel().map.getPixelWidth());
             this.character.addCommand(new StartMoveCommand(MovementDirection.RIGHT));
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.leftCode)) {
@@ -161,15 +197,32 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
     }
 
+    /**
+     * Method called to handle a specific {@link ColorCommand }
+     * @param keyCode the keyboard code to activate the {@link ColorCommand }
+     * @param command the corresponding {@link ColorCommand }
+     * @param gauge the {@link ColorGauge} rendering the ColorCommand delay
+     */
     private void handleColorCommand(int keyCode, ColorCommand command, ColorGauge gauge) {
         if (Gdx.input.isKeyJustPressed(keyCode) && command.isFinished()) {
-            System.out.println("Launch color change");
             this.character.addCommand(command);
             gauge.restart();
         }
     }
 
+    /**
+     * Method called to handle the camera, to make it follow the character
+     */
     private void handleCamera() {
+        // Linear interpolation of the camera
+        /** **/
+        //float lerp = 0.1f;
+        //Vector3 position = this.camera.position;
+        //camera.position.lerp(new Vector3(character.getBounds().x, character.getBounds().y, 0), lerp);
+        //position.x += (character.getBounds().x - position.x) * lerp;
+        //position.y += (character.getBounds().y - position.y) * lerp;
+        /** **/
+
         camera.position.x = character.getBounds().x;
         camera.position.y = character.getBounds().y + camera.viewportHeight/4;
         if (camera.position.x < camera.viewportWidth / 2f) {
@@ -187,6 +240,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         camera.update();
     }
 
+    /**
+     * Method called to handle specific events including the character
+     */
     private void handleCharacter() {
         // Prevent character from falling
         if (character.getBounds().y < LevelManager.getCurrentLevel().map.getPixelBottom()) {
@@ -277,6 +333,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             }
         }
 
+        // Show the tutorial notices
         if (BodyUtils.isNotice(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
             ((Notice)((UserData)a.getBody().getUserData()).getElement()).display();
         }
@@ -294,6 +351,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
+        // Hide the tutorial notices
         if (BodyUtils.isNotice(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
             ((Notice)((UserData)a.getBody().getUserData()).getElement()).hide();
         }

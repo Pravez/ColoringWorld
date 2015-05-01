@@ -8,12 +8,20 @@ import com.color.game.enums.PlatformColor;
 
 import java.util.ArrayList;
 
+/**
+ * Gauges, the class handling the different {@link ColorGauge} of the game, currently, there are three colors :
+ * Red, Blue and Yellow
+ */
 public class Gauges extends Actor {
 
     public ColorGauge redGauge;
     public ColorGauge blueGauge;
     public ColorGauge yellowGauge;
 
+    /**
+     * Constructor of the Gauges
+     * @param bounds the rectangle bounds of the Gauges in the screen
+     */
     public Gauges(Rectangle bounds) {
         setWidth(bounds.width);
         setHeight(bounds.height);
@@ -26,6 +34,10 @@ public class Gauges extends Actor {
         this.blueGauge   = new ColorGauge(new Rectangle(bounds.x + width * 2 + gap * 2, bounds.y, width, bounds.height), Color.BLUE);
     }
 
+    /**
+     * Act method called to run the {@link ColorGauge} animations
+     * @param delta
+     */
     @Override
     public void act(float delta) {
         super.act(delta);
@@ -34,6 +46,11 @@ public class Gauges extends Actor {
         this.blueGauge.act(delta);
     }
 
+    /**
+     * Draw method called to draw the Gauges and the {@link ColorGauge} inside
+     * @param batch
+     * @param parentAlpha
+     */
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
@@ -60,6 +77,9 @@ public class Gauges extends Actor {
         this.yellowGauge.restart();
     }
 
+    /**
+     * Method called to stop all the running animations of the {@link ColorGauge} and to take them back to their original state
+     */
     public void stopAll() {
         this.redGauge.stop();
         this.blueGauge.stop();

@@ -14,17 +14,27 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
 
+/**
+ * MenuScreen to show the menu of the game
+ */
 public class MenuScreen extends BaseScreen {
 
+    /**
+     * Constructor of the MenuScreen
+     * @param game
+     */
     public MenuScreen(final ColorGame game) {
         super(game);
 
         Table table = new Table();
+        // Background of the MenuScreen
         this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
         table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
 
+        // Title of the game
         Label title = new Label("Coloring World", new Label.LabelStyle(Assets.getBasicFont(32), new Color(142f/255, 188f/255, 224f/255, 1)));
 
+        // Buttons of the menu
         TextButton buttonPlay    = new TextButton("Play", Assets.menuSkin);
         TextButton buttonOptions = new TextButton("Options", Assets.menuSkin);
         TextButton buttonExit    = new TextButton("Exit", Assets.menuSkin);
@@ -37,6 +47,7 @@ public class MenuScreen extends BaseScreen {
         table.setFillParent(true);
         stage.addActor(table);
 
+        // Button listeners
         setButtonListener(buttonPlay, new Runnable() {
             @Override
             public void run() {
@@ -57,6 +68,11 @@ public class MenuScreen extends BaseScreen {
         });
     }
 
+    /**
+     * Method called to set the {@link TextButton}'s {@link ClickListener}
+     * @param button the corresponding {@link TextButton}
+     * @param runnable the {@link Runnable} called when the ClickEvent is being fired
+     */
     private void setButtonListener(TextButton button, final Runnable runnable) {
         button.addListener(new ClickListener() {
             @Override
@@ -67,6 +83,10 @@ public class MenuScreen extends BaseScreen {
         });
     }
 
+    /**
+     * Method called to render the screen
+     * @param delta the delta time since the last rendering call
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);

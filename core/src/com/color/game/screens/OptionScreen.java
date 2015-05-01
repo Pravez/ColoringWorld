@@ -14,22 +14,32 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
 
+/**
+ * OptionScreen of the game to change the different parameters of the game
+ */
 public class OptionScreen extends BaseScreen {
 
     private Label soundValue;
     private Label musicValue;
 
+    /**
+     * Constructor of the OptionScreen
+     * @param game
+     */
     public OptionScreen(final ColorGame game) {
         super(game);
 
         Table table = new Table();
+        // Background of the OptionScreen
         this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
         table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
 
+        // Title of the OptionScreen
         Label title = new Label("Options", new Label.LabelStyle(Assets.getBasicFont(32), new Color(142f/255, 188f/255, 224f/255, 1)));
 
         TextButton buttonMenu = new TextButton("Menu", Assets.menuSkin);
 
+        // The Music Volume Slider
         Label music = new Label("Music Volume :", Assets.menuSkin);
 
         table.add(title).colspan(2).row();
@@ -41,6 +51,7 @@ public class OptionScreen extends BaseScreen {
 
         table.add(musicValue).width(50f).row();
 
+        // The Sound Volume Slider
         Label sound = new Label("Sound Volume :", Assets.menuSkin);
         Slider sliderSound = new Slider(0.0f, 1.0f, 0.1f, false, Assets.menuSkin);
         soundValue = new Label(" " + (int)(game.soundManager.getVolume() * 10), Assets.menuSkin);
@@ -55,6 +66,7 @@ public class OptionScreen extends BaseScreen {
         table.setFillParent(true);
         stage.addActor(table);
 
+        // Setting all the different listeners
         sliderMusic.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -62,7 +74,6 @@ public class OptionScreen extends BaseScreen {
                 musicValue.setText(" " + (int) (game.musicManager.getVolume() * 10));
             }
         });
-
         sliderSound.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -74,6 +85,11 @@ public class OptionScreen extends BaseScreen {
         setButtonListener(buttonMenu, new Runnable (){ @Override public void run() { game.setMenuScreen(); } });
     }
 
+    /**
+     * Method called to set the {@link TextButton}'s {@link ClickListener}
+     * @param button the corresponding {@link TextButton}
+     * @param runnable the {@link Runnable} called when the ClickEvent is being fired
+     */
     private void setButtonListener(TextButton button, final Runnable runnable) {
         button.addListener(new ClickListener() {
             @Override
@@ -84,6 +100,10 @@ public class OptionScreen extends BaseScreen {
         });
     }
 
+    /**
+     * Method called to render the screen
+     * @param delta the delta time since the last rendering call
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);

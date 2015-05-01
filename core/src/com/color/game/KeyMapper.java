@@ -2,6 +2,10 @@ package com.color.game;
 
 import com.badlogic.gdx.Input;
 
+/**
+ * KeyMapper, class storing all the keyboard codes for the different actions and effects of the game
+ * in order to change them easily
+ */
 public class KeyMapper {
     public int leftCode, rightCode;
     public int squatCode, jumpCode;

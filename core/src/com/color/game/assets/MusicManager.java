@@ -2,6 +2,9 @@ package com.color.game.assets;
 
 import com.badlogic.gdx.audio.Music;
 
+/**
+ * MusicManager, class to manage all the music of the game
+ */
 public class MusicManager {
 
     private float volume = 0.1f;

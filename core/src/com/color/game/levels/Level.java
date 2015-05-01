@@ -7,17 +7,36 @@ import com.badlogic.gdx.utils.Array;
 import com.color.game.elements.staticelements.ColorPlatform;
 import com.color.game.enums.PlatformColor;
 
+/**
+ * Level class containing everything needed for the Levels of the game
+ */
 public class Level extends Stage {
 
     public static float accumulator = 0f;
     public static final float TIME_STEP = 1/300f;
 
+    /**
+     * The map containg the world of the Level
+     */
     public Map map;
+    /**
+     * If the level is locked or not
+     */
     private boolean locked = true;
+    /**
+     * The position of the {@link com.color.game.elements.dynamicelements.Character} at the beginning of the level
+     */
     public Vector2 characterPos;
 
+    /**
+     * The list of the {@link ColorPlatform} of the level
+     */
     private Array<ColorPlatform> colorPlatforms;
 
+    /**
+     * The Constructor of the Level
+     * @param characterPos the position of the {@link com.color.game.elements.dynamicelements.Character} at the beginning of the level
+     */
     public Level(Vector2 characterPos) {
         this.map = new Map(Map.WORLD_GRAVITY, true);
         this.characterPos = characterPos.scl(2);
@@ -33,6 +52,10 @@ public class Level extends Stage {
         this.locked = false;
     }
 
+    /**
+     * Method called to run the level
+     * @param delta the delta time since the last act call
+     */
     @Override
     public void act(float delta) {
         super.act(delta);
@@ -45,10 +68,18 @@ public class Level extends Stage {
         }
     }
 
+    /**
+     * Method to add a {@link ColorPlatform} to the Level (adding it to the list)
+     * @param colorPlatform the {@link ColorPlatform} to add
+     */
     public void addColorPlatform(ColorPlatform colorPlatform) {
         this.colorPlatforms.add(colorPlatform);
     }
 
+    /**
+     * Method called to activate all the {@link ColorPlatform} of the Level according to their color
+     * @param color the {@link PlatformColor} of the {@link ColorPlatform} to activate
+     */
     public void activateColorPlatforms(PlatformColor color) {
         for (ColorPlatform colorPlatform : this.colorPlatforms) {
             if (colorPlatform.getPlatformColor() == color) {
@@ -57,6 +88,10 @@ public class Level extends Stage {
         }
     }
 
+    /**
+     * Method called to desactivate all the {@link ColorPlatform} of the Level according to their color
+     * @param color the {@link PlatformColor} of the {@link ColorPlatform} to desactivate
+     */
     public void desactivateColorPlatforms(PlatformColor color) {
         for (ColorPlatform colorPlatform : this.colorPlatforms) {
             if (colorPlatform.getPlatformColor() == color) {

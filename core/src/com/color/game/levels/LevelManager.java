@@ -9,8 +9,17 @@ import com.color.game.enums.PlatformColor;
 
 import java.util.ArrayList;
 
+/**
+ * LevelManager, class to handle the different {@link Level} of the Game
+ */
 public class LevelManager {
+    /**
+     * The list of the {@link Level}
+     */
     private static ArrayList<Level> levels;
+    /**
+     * The current {@link Level} running
+     */
     private static int currentLevel = 0;
     private static boolean isFinished = false;
 
@@ -51,6 +60,9 @@ public class LevelManager {
         }
     }
 
+    /**
+     * Method to init the different {@link Level} of the Game, should load the {@link Level} from files
+     */
     public static void init() {
         levels = new ArrayList<Level>();
         addFirstLevel();

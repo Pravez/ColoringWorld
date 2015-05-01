@@ -11,10 +11,22 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+/**
+ * Assets class containing all the assets needed for the game handled by a {@link AssetManager}
+ * Also contains the fonts and the skin
+ * This class allows to generate BitmapFont with the needed size
+ */
 public class Assets {
+
+    /**
+     * Default size to have homogeneous texts
+     */
     public final static int TITLE_SIZE = 42;
     public final static int TEXT_SIZE = 22;
 
+    /**
+     * The fileHandles for the different used fonts
+     */
     private static FileHandle basicFont;
     private static FileHandle bebasFont;
     private static FileHandle groboldFont;
@@ -24,6 +36,7 @@ public class Assets {
 
     /**
      * Add to the loading queue of the AssetManager all the assets to load
+     * It should be called only once at the beginning
      */
     public static void queueLoading() {
         // Backgrounds
@@ -108,6 +121,9 @@ public class Assets {
         return font;
     }
 
+    /**
+     * Dispose all the assets loaded for the game
+     */
     public static void dispose() {
         manager.dispose();
         menuSkin.dispose();

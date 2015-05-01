@@ -27,6 +27,10 @@ public class ColorGame extends Game {
 	private OptionScreen         optionScreen;
 	private WinScreen            winScreen;
 
+	/**
+	 * Method to init all the needed assets, the sounds, musics, and creating all the different screens
+	 * in order to make the transitions faster
+	 */
 	public void init() {
 		//noinspection StatementWithEmptyBody
 		while(!Assets.update());
@@ -49,13 +53,21 @@ public class ColorGame extends Game {
 
 		this.splashScreen.end();
 	}
-	
+
+	/**
+	 * Create method called at the creation of the Game
+	 * Launch the splash screen
+	 */
 	@Override
 	public void create () {
 		this.splashScreen = new SplashScreen(this);
 		super.setScreen(this.splashScreen);
 	}
 
+	/**
+	 * Dispose method called at the closure of the game
+	 * Dispose all the assets, and levels
+	 */
 	@Override
 	public void dispose() {
 		super.dispose();

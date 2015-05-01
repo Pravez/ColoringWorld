@@ -2,6 +2,9 @@ package com.color.game.assets;
 
 import com.badlogic.gdx.audio.Sound;
 
+/**
+ * SoundManager, class to manage all the sounds of the game
+ */
 public class SoundManager {
 
     private float volume = 0.1f;

@@ -1,7 +1,6 @@
 package com.color.game.elements.dynamicelements;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.command.Command;
@@ -25,7 +24,9 @@ public abstract class BaseDynamicElement extends BaseElement {
     private Array<Command> commands;
 
     public BaseDynamicElement(Vector2 position, int width, int height, World world, short group){
-        super(position, width, height, BodyDef.BodyType.DynamicBody, world, group);
+        super();
+        physicComponent = new DynamicPhysicComponent(this);
+        physicComponent.configureBody(position, width, height, world, group);
         this.commands = new Array<>();
     }
 

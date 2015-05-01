@@ -2,6 +2,7 @@
 * Updating physics, part 3 : corrections on the wall jump
 * Correction concerning the use of states. Every state is now used
 * Work began on the wall jump, but won't be used now. (Probably later, as a feature)
+* Reworked classes concerning components of elements.
 * Java doc
 
 # April 30, 2015 :

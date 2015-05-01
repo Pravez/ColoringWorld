@@ -7,6 +7,9 @@ import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.enums.MovementDirection;
 import com.color.game.enums.UserDataType;
 
+/**
+ * Class waiting to be implemented in next releases.
+ */
 public class Enemy extends BaseDynamicElement {
 
     public Enemy(Vector2 position, int width, int height, World world) {

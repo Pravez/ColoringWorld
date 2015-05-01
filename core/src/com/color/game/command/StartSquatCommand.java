@@ -2,11 +2,10 @@ package com.color.game.command;
 
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 
-public class StartSquatCommand implements Command {
-    @Override
-    public boolean execute() {
-        return true;
-    }
+/**
+ * Command to ask the element to start doing squat.
+ */
+public class StartSquatCommand implements Command{
 
     @Override
     public boolean execute(BaseDynamicElement element, float delta) {

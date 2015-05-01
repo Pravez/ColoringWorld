@@ -1,3 +1,14 @@
+# May 1, 2015 :
+* Updating physics, part 3 : corrections on the wall jump
+* Correction concerning the use of states. Every state is now used
+* Work began on the wall jump, but won't be used now. (Probably later, as a feature)
+* Java doc
+
+# April 30, 2015 :
+* Bugfixes
+* Updating physic for the jump
+* Release 0.0.1 according to the roadmap, with debug tools.
+
 # April 29, 2015 :
 * Continuing work on refacto
 * Some tests on how enhancing collisions

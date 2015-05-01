@@ -34,10 +34,6 @@ public class ColorCommand implements Command {
         restart();
     }
 
-    @Override
-    public boolean execute() {
-        return true;
-    }
 
     @Override
     public boolean execute(BaseDynamicElement element, float delta) {

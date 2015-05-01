@@ -3,17 +3,16 @@ package com.color.game.command;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.enums.MovementDirection;
 
+/**
+ * Command to initialize the moving of an element. It will save the direction (really ? useful ?) and also configure
+ * the movement of the character by calling methods who will create the "velocity" of the element.
+ */
 public class StartMoveCommand implements Command {
 
     private MovementDirection direction;
 
     public StartMoveCommand(MovementDirection direction) {
         this.direction = direction;
-    }
-
-    @Override
-    public boolean execute() {
-        return true;
     }
 
     @Override

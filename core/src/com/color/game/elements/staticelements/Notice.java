@@ -16,6 +16,10 @@ import com.color.game.levels.Map;
 import com.color.game.levels.Tutorial;
 import com.color.game.screens.GameScreen;
 
+/**
+ * Notice is the element which is supposed to help the character (or the player, it's better). When it collides whith the
+ * character it will "send" a message to the player to give information. See his draw method for further information.
+ */
 public class Notice extends BaseStaticElement {
 
     private static final int FONT_SIZE = 14;

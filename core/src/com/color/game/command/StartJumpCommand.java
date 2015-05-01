@@ -3,13 +3,12 @@ package com.color.game.command;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.dynamicelements.states.AloftState;
 
+/**
+ * Command verifying the current state of the element and checking if it is possible to do a jump. If it is,
+ * it will call some methods of the element to do his job.
+ */
 public class StartJumpCommand implements Command {
 
-
-    @Override
-    public boolean execute() {
-        return true;
-    }
 
     @Override
     public boolean execute(BaseDynamicElement element, float delta) {

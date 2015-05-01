@@ -16,6 +16,10 @@ import com.color.game.enums.MovementDirection;
 import com.color.game.enums.UserDataType;
 import com.color.game.screens.GameScreen;
 
+/**
+ * Class Character, [extending] a dynamic element evolving in a {@link com.badlogic.gdx.physics.box2d.World}. It is the main
+ * "character" of the game, and is the one that the player controls. It can move, jump, squat and do many things !
+ */
 public class Character extends BaseDynamicElement {
 
     public static final float CHARACTER_RUNNING_VELOCITY = 35f;
@@ -54,10 +58,12 @@ public class Character extends BaseDynamicElement {
         super.act(delta);
         this.physicComponent.move(Character.CHARACTER_RUNNING_VELOCITY);
 
+        //If the body has no velocity, if it doesn't move, it is standing.
         if(this.physicComponent.getBody().getLinearVelocity().x == 0f && !(this.getMovingState() instanceof StandingState)){
             this.setMovingState(new StandingState());
         }
 
+        //If the character is already moving, but at its max speed, it is no longer walking but running.
         if((this.getMovingState() instanceof WalkingState) && (this.physicComponent.getBody().getLinearVelocity().x == CHARACTER_RUNNING_VELOCITY || this.physicComponent.getBody().getLinearVelocity().x == -CHARACTER_RUNNING_VELOCITY)){
             this.setMovingState(new RunningState());
         }
@@ -70,6 +76,11 @@ public class Character extends BaseDynamicElement {
         }
     }
 
+    /**
+     * Character is set to moving and has a force to apply to walk. It will first be a in walking state, and
+     * will be later if always moving in a running state.
+     * @param direction The direction where the element will move
+     */
     @Override
     public void configureMove(MovementDirection direction){
         if(!(movingState instanceof WalkingState))
@@ -82,10 +93,20 @@ public class Character extends BaseDynamicElement {
     public void squat() {
     }
 
+    /**
+     * Method to change to "teleport" the character to another level. Instead of killing the instance of the class, we
+     * are just moving it elsewhere, in another level.
+     * @param world The world where the character will be replaced
+     * @param position The position in the new world
+     */
     public void changeWorld(World world, Vector2 position) {
         this.physicComponent.changeWorld(world, position);
     }
 
+    /**
+     * Resets the character at the beginning of the level.
+     * @param position Position where the character will be replaced
+     */
     public void reset(Vector2 position) {
         this.physicComponent.getBody().setTransform(position.x, position.y, 0);
         this.physicComponent.rebase();
@@ -93,10 +114,6 @@ public class Character extends BaseDynamicElement {
 
     public void teleport(float x, float y) {
         this.physicComponent.getBody().setTransform(x, y, 0);
-    }
-
-    public boolean isOnWall() {
-        return onWall;
     }
 
     public void setOnWall(boolean onWall) {

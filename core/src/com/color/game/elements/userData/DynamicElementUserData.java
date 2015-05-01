@@ -12,10 +12,6 @@ public class DynamicElementUserData extends UserData{
     /*private boolean onWall;
     private MovementDirection onWallSide;*/
 
-    public DynamicElementUserData(int width, int height) {
-        super(width, height);
-    }
-
     public DynamicElementUserData(BaseDynamicElement element, int width, int height, UserDataType userDataType) {
         super(element, width, height, userDataType);
         contactsNumber = 0;

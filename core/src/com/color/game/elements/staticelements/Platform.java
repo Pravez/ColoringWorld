@@ -12,6 +12,11 @@ import com.color.game.enums.UserDataType;
 import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
 
+
+/**
+ * The simple platform of the platforming game ! Extending the basic static element, this class is used to draw the
+ * platform. No particularities because the basic platform has no particularities.
+ */
 public class Platform extends BaseStaticElement {
 
     private ShapeRenderer shapeRenderer;

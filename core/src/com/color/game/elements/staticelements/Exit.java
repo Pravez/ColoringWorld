@@ -12,6 +12,11 @@ import com.color.game.enums.UserDataType;
 import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
 
+/**
+ * Exit is the actor (extending {@link com.color.game.elements.staticelements.BaseStaticElement}) which is supposed to
+ * know the level index where it is located, and which will send the character to the next level according to the index
+ * if it collides with it.
+ */
 public class Exit extends BaseStaticElement {
 
     private int levelIndex;

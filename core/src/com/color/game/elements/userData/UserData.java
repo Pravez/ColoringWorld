@@ -3,6 +3,10 @@ package com.color.game.elements.userData;
 import com.color.game.elements.BaseElement;
 import com.color.game.enums.UserDataType;
 
+/**
+ * UserData, the userdatas class usefull to stock every information we need in each body part of the world.
+ * It is only a class to stock datas.
+ */
 public abstract class UserData {
 
     protected BaseElement element;

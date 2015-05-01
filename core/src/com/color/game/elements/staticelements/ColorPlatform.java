@@ -13,6 +13,11 @@ import com.color.game.enums.UserDataType;
 import com.color.game.levels.Level;
 import com.color.game.screens.GameScreen;
 
+/**
+ * Color platforms ! extending the basic static element, these are simple platforms, but colored. They are activated or not,
+ * means that they are in a certain group of elements or not. See the {@link com.color.game.elements.PhysicComponent}. They have
+ * a color appearing when they are activated.
+ */
 public class ColorPlatform extends BaseStaticElement {
 
     private PlatformColor color;

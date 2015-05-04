@@ -1,3 +1,10 @@
+# 0.1.0 (May 4, 2015)
+Release of the first new version of the initial prototype.
+Initial code has been changed, during the refacto.
+No sprites, only the pure basics of the game.
+No changes compared to the Ludum Dare version.
+
+
 # 0.0.1 (April 30, 2015)
 Debug tools added to the game
 

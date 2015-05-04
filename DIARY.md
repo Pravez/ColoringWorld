@@ -1,3 +1,7 @@
+# May 4, 2015 :
+* Released version 0.1, starting dev on version 0.1.0
+* /!\ waiting for confirmation for the release of the version 0.1
+
 # May 3, 2015 :
 * Started to compose music
 

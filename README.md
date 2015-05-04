@@ -1,9 +1,12 @@
 # ColoringWorld
 Game featuring a strange man using colors to live his life
 
-## Version 0.0 in development
+## Version 0.1 in development
 
 ### Done :
+
+
+# Version 0.1 released
 * establish the roadmap
 * create a class diagram
 * create a new repository
@@ -12,6 +15,4 @@ Game featuring a strange man using colors to live his life
 * adding cheatcodes : change current level, restart level, teleport to mouse position, … (debug tools)
 
 ### To-Do :
-* reworking/refacto of the code
-* write the basic story of the game
 

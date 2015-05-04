@@ -25,24 +25,25 @@ public class ColorPlatform extends BaseStaticElement {
 
     private ShapeRenderer shapeRenderer;
 
-    public ColorPlatform(Vector2 position, int width, int height, Level level, PlatformColor color) {
+    public ColorPlatform(Vector2 position, int width, int height, Level level, PlatformColor color, boolean activated) {
         super(position, width, height, level.map, PhysicComponent.GROUP_SCENERY);
         this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.COLORPLATFORM));
         this.color = color;
+        this.activated = activated;
         level.addColorPlatform(this);
-        desactivate();
+        if (!this.activated)
+            this.physicComponent.disableCollisions();
 
         shapeRenderer = new ShapeRenderer();
     }
 
-    public void activate() {
-        this.physicComponent.enableCollisions();
-        this.activated = true;
-    }
-
-    public void desactivate() {
-        this.physicComponent.disableCollisions();
-        this.activated = false;
+    public void changeActivation() {
+        this.activated = !this.activated;
+        if (this.activated) {
+            this.physicComponent.enableCollisions();
+        } else {
+            this.physicComponent.disableCollisions();
+        }
     }
 
     public PlatformColor getPlatformColor() {

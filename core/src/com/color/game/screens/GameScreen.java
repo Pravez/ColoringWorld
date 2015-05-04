@@ -56,6 +56,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      */
     private int runningLevel;
 
+    private boolean restart = false;
+
     /**
      * The constructor of the class GameScreen
      * @param game the {@link ColorGame}
@@ -83,12 +85,21 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      * Method called when changing the level to remove the character body from the world, and place it in the new Level's world
      */
     private void changeLevel() {
+        respawn();
         this.character.remove();
         LevelManager.changeLevel(this.runningLevel);
         this.character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
         LevelManager.getCurrentLevel().addActor(this.character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
+    }
+
+    /**
+     * Method to restart the level if the Character dies
+     */
+    public void restart() {
+        this.character.reset(LevelManager.getCurrentLevel().characterPos);
         respawn();
+        this.restart = false;
     }
 
     /**
@@ -160,6 +171,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         if (this.runningLevel != LevelManager.getCurrentLevelNumber()) {
             changeLevel();
         }
+        if (this.restart) {
+            restart();
+        }
     }
 
     /**
@@ -193,7 +207,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             this.runningLevel = LevelManager.previousLevelIndex();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            changeLevel();
+            restart();
         }
     }
 
@@ -246,8 +260,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     private void handleCharacter() {
         // Prevent character from falling
         if (character.getBounds().y < LevelManager.getCurrentLevel().map.getPixelBottom()) {
-            character.reset(LevelManager.getCurrentLevel().characterPos);
-            respawn();
+            changeLevel();
         }
     }
 
@@ -319,6 +332,12 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         if (BodyUtils.isCharacter(b.getBody())) {
             ((DynamicElementUserData)b.getBody().getUserData()).addContact();
 
+            // Character touching an enemy
+            if (BodyUtils.isEnemy(a.getBody())) {
+                this.restart = true;
+            }
+
+            // Character touching a platform
             if(BodyUtils.isPlatform(a.getBody())) {
                 character.setAloftState(new LandedState());
                 character.setOnWall(BodyUtils.onWall(b.getBody(), a.getBody()));

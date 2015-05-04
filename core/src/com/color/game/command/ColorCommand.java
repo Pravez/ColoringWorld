@@ -30,7 +30,9 @@ public class ColorCommand implements Command {
     }
 
     public void stop() {
-        LevelManager.getCurrentLevel().desactivateColorPlatforms(this.color);
+        if (this.activated) {
+            LevelManager.getCurrentLevel().changeColorPlatformsActivation(this.color);
+        }
         restart();
     }
 
@@ -39,11 +41,11 @@ public class ColorCommand implements Command {
     public boolean execute(BaseDynamicElement element, float delta) {
         this.time += delta;
         if (!this.activated) {
-            LevelManager.getCurrentLevel().activateColorPlatforms(this.color);
+            LevelManager.getCurrentLevel().changeColorPlatformsActivation(this.color);
             this.activated = true;
         }
         if (!this.desactivated && this.time >= 4f * ColorCommand.COLOR_DELAY / 5) {
-            LevelManager.getCurrentLevel().desactivateColorPlatforms(this.color);
+            LevelManager.getCurrentLevel().changeColorPlatformsActivation(this.color);
             this.desactivated = true;
         }
         if (this.time >= ColorCommand.COLOR_DELAY) {

@@ -77,25 +77,15 @@ public class Level extends Stage {
     }
 
     /**
-     * Method called to activate all the {@link ColorPlatform} of the Level according to their color
-     * @param color the {@link PlatformColor} of the {@link ColorPlatform} to activate
+     * Method called to change the activation state of the {@link ColorPlatform} of the Level according to their color
+     *  - if they are activated, they are deactivated
+     *  - if they are deactivated, they are activated
+     * @param color the {@link PlatformColor} of the {@link ColorPlatform} to activate or deactivate
      */
-    public void activateColorPlatforms(PlatformColor color) {
+    public void changeColorPlatformsActivation(PlatformColor color) {
         for (ColorPlatform colorPlatform : this.colorPlatforms) {
             if (colorPlatform.getPlatformColor() == color) {
-                colorPlatform.activate();
-            }
-        }
-    }
-
-    /**
-     * Method called to desactivate all the {@link ColorPlatform} of the Level according to their color
-     * @param color the {@link PlatformColor} of the {@link ColorPlatform} to desactivate
-     */
-    public void desactivateColorPlatforms(PlatformColor color) {
-        for (ColorPlatform colorPlatform : this.colorPlatforms) {
-            if (colorPlatform.getPlatformColor() == color) {
-                colorPlatform.desactivate();
+                colorPlatform.changeActivation();
             }
         }
     }

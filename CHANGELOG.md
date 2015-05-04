@@ -1,3 +1,8 @@
+# 0.1.1 (May 4, 2015)
+Features :
+- ColorPlatforms can have a default state and when activating the corresponding color, their state changes
+so we can have platforms activated by default
+
 # 0.1.0 (May 4, 2015)
 Release of the first new version of the initial prototype.
 Initial code has been changed, during the refacto.

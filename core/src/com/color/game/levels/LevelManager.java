@@ -1,10 +1,7 @@
 package com.color.game.levels;
 
 import com.badlogic.gdx.math.Vector2;
-import com.color.game.elements.staticelements.ColorPlatform;
-import com.color.game.elements.staticelements.Exit;
-import com.color.game.elements.staticelements.Notice;
-import com.color.game.elements.staticelements.Platform;
+import com.color.game.elements.staticelements.*;
 import com.color.game.enums.PlatformColor;
 
 import java.util.ArrayList;
@@ -84,9 +81,10 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(90, 1), 1, 32, level.map));
 
         // Color Platforms
-        level.addActor(new ColorPlatform(new Vector2(17, 4), 5, 1, level, PlatformColor.RED));
-        level.addActor(new ColorPlatform(new Vector2(42, 4), 5, 1, level, PlatformColor.YELLOW));
-        level.addActor(new ColorPlatform(new Vector2(67, 4), 5, 1, level, PlatformColor.BLUE));
+        level.addActor(new ColorPlatform(new Vector2(17, 4), 5, 1, level, PlatformColor.RED, false));
+        level.addActor(new ColorPlatform(new Vector2(17, 8), 5, 1, level, PlatformColor.RED, true));
+        level.addActor(new ColorPlatform(new Vector2(42, 4), 5, 1, level, PlatformColor.YELLOW, false));
+        level.addActor(new ColorPlatform(new Vector2(67, 4), 5, 1, level, PlatformColor.BLUE, false));
 
         // Notices
         level.addActor(new Notice(new Vector2(4, 1), 3, 3, level.map, 0));
@@ -94,6 +92,9 @@ public class LevelManager {
 
         // Doors
         level.addActor(new Exit(new Vector2(89, 1), 1, 3, level.map, 1));
+
+        // Deadly Platforms
+        level.addActor(new DeadlyPlatform(new Vector2(15, 0), 10, 1, level.map));
 
         levels.add(level);
     }
@@ -115,12 +116,12 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(30, 20), 15, 1, level.map));
 
         // Color Platforms
-        level.addActor(new ColorPlatform(new Vector2(17, 4), 5, 1, level, PlatformColor.RED));
+        level.addActor(new ColorPlatform(new Vector2(17, 4), 5, 1, level, PlatformColor.RED, false));
 
-        level.addActor(new ColorPlatform(new Vector2(27, 7), 5, 1, level, PlatformColor.YELLOW));
+        level.addActor(new ColorPlatform(new Vector2(27, 7), 5, 1, level, PlatformColor.YELLOW, false));
 
-        level.addActor(new ColorPlatform(new Vector2(41, 11), 5, 1, level, PlatformColor.BLUE));
-        level.addActor(new ColorPlatform(new Vector2(47, 15), 5, 1, level, PlatformColor.BLUE));
+        level.addActor(new ColorPlatform(new Vector2(41, 11), 5, 1, level, PlatformColor.BLUE, false));
+        level.addActor(new ColorPlatform(new Vector2(47, 15), 5, 1, level, PlatformColor.BLUE, false));
 
         // Doors
         //level.addDoor(new Door(WorldUtils.createDoor(level.map, 74, 42, 2, 4), new Rectangle(74, 42, 2, 4)));

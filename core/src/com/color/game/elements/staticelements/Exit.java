@@ -40,11 +40,10 @@ public class Exit extends BaseStaticElement {
         super.draw(batch, parentAlpha);
         batch.end();
 
-        Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        Color c = Color.WHITE;
-        shapeRenderer.setColor(c.r, c.g, c.b, 0.8f);
+
+        shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
         shapeRenderer.end();
 

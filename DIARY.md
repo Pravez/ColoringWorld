@@ -1,3 +1,9 @@
+# May 3, 2015 :
+* Started to compose music
+
+# May 2, 2015 :
+* Nothing
+
 # May 1, 2015 :
 * Updating physics, part 3 : corrections on the wall jump
 * Correction concerning the use of states. Every state is now used

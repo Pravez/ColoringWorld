@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.color.game.ColorGame;
@@ -56,6 +55,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      */
     private int runningLevel;
 
+    private boolean run = true;
+
     private boolean restart = false;
 
     /**
@@ -100,6 +101,20 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         this.character.reset(LevelManager.getCurrentLevel().characterPos);
         respawn();
         this.restart = false;
+    }
+
+    /**
+     * Method to pause the game
+     */
+    public void pause() {
+        this.run = false;
+    }
+
+    /**
+     * Method to resume the game
+     */
+    public void resume() {
+        this.run = true;
     }
 
     /**
@@ -156,23 +171,45 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         renderer.render(LevelManager.getCurrentLevel().map.world, camera2.combined);
 
-        // Act and render the current level Stage
-        LevelManager.getCurrentLevel().act(delta);
-        LevelManager.getCurrentLevel().draw();
-
-        // Act and render the User Interface Stage
-        uiStage.act(delta);
-        uiStage.draw();
-
-        handleInputs();
+        // If the game is in running mode
+        if (this.run) {
+            // Act the current level Stage
+            LevelManager.getCurrentLevel().act(delta);
+            // Act the User Interface Stage
+            uiStage.act(delta);
+            handleInputs();
+            handleCharacter();
+        }
         handleCamera();
-        handleCharacter();
+        handleDebugCodes();
+
+        // Render the Game
+        LevelManager.getCurrentLevel().draw();
+        uiStage.draw();
 
         if (this.runningLevel != LevelManager.getCurrentLevelNumber()) {
             changeLevel();
         }
         if (this.restart) {
             restart();
+        }
+    }
+
+    /**
+     * Method called to handle the debug code inputs
+     */
+    private void handleDebugCodes() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+            this.runningLevel = LevelManager.nextLevelIndex();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+            this.runningLevel = LevelManager.previousLevelIndex();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            restart();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            this.run = !this.run;
         }
     }
 
@@ -198,17 +235,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         handleColorCommand(this.game.keys.redCode, this.redCommand, this.uiStage.colorGauges.redGauge);
         handleColorCommand(this.game.keys.blueCode, this.blueCommand, this.uiStage.colorGauges.blueGauge);
         handleColorCommand(this.game.keys.yellowCode, this.yellowCommand, this.uiStage.colorGauges.yellowGauge);
-
-        // Debug codes
-        if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
-            this.runningLevel = LevelManager.nextLevelIndex();
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-            this.runningLevel = LevelManager.previousLevelIndex();
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            restart();
-        }
     }
 
     /**

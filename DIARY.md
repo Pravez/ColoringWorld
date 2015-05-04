@@ -1,6 +1,10 @@
+# May 5, 2015
+* Version 0.1.2 with the resume / pause to the game
+
 # May 4, 2015 :
 * Released version 0.1, starting dev on version 0.1.0
 * /!\ waiting for confirmation for the release of the version 0.1
+* Version 0.1.1 with the default state of Color Platforms (activated by default or not)
 
 # May 3, 2015 :
 * Started to compose music

@@ -1,3 +1,8 @@
+# 0.1.2 (May 5, 2015)
+Features :
+- The game can be paused and resumed by pressing the Escape key for the moment. Methods are ready to be 
+used by the interface in the future.
+
 # 0.1.1 (May 4, 2015)
 Features :
 - ColorPlatforms can have a default state and when activating the corresponding color, their state changes

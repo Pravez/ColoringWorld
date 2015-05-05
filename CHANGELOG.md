@@ -1,3 +1,7 @@
+# 0.1.3 (May 5, 2015)
+Features :
+- Adding in the User Interface Stage a button to pause or resume the game instead of the Escape key
+
 # 0.1.2 (May 5, 2015)
 Features :
 - The game can be paused and resumed by pressing the Escape key for the moment. Methods are ready to be 

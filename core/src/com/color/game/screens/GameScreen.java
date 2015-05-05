@@ -2,6 +2,7 @@ package com.color.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -75,7 +76,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         this.runningLevel = LevelManager.getCurrentLevelNumber();
 
-        this.uiStage = new UIStage();
+        this.uiStage = new UIStage(this);
+        Gdx.input.setInputProcessor(this.uiStage);
 
         this.redCommand    = new ColorCommand(PlatformColor.RED);
         this.blueCommand   = new ColorCommand(PlatformColor.BLUE);
@@ -118,6 +120,14 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     }
 
     /**
+     * Method to know if the game is paused or not
+     * @return the result as a boolean
+     */
+    public boolean isPaused() {
+        return !this.run;
+    }
+
+    /**
      * Reset the tools :
      *  - remove all the character's commands
      *  - stop the color commands
@@ -155,7 +165,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     @Override
     public void show() {
         super.show();
-        Gdx.input.setInputProcessor(this);
+        Gdx.input.setInputProcessor(new InputMultiplexer(this.uiStage, this));
     }
 
     /**
@@ -207,9 +217,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             restart();
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            this.run = !this.run;
         }
     }
 

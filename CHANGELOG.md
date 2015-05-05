@@ -1,3 +1,8 @@
+# 0.1.4 (May 5, 2015)
+Features :
+- Adding Teleporter class which can teleport a character or other dynamic element of the game to a 
+specific position
+
 # 0.1.3 (May 5, 2015)
 Features :
 - Adding in the User Interface Stage a button to pause or resume the game instead of the Escape key

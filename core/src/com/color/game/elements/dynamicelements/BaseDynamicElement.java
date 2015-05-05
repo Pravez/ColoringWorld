@@ -67,6 +67,13 @@ public abstract class BaseDynamicElement extends BaseElement {
         this.physicComponent.stopMove();
     }
 
+    /**
+     * Method to teleport the element to a specific position
+     * @param position the position where to teleport the element
+     */
+    public void teleport(Vector2 position) {
+        this.physicComponent.getBody().setTransform(position.x, position.y, 0);
+    }
 
     public void addCommand(Command command) {
         this.commands.add(command);

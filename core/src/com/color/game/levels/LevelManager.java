@@ -67,7 +67,7 @@ public class LevelManager {
     }
 
     public static void addFirstLevel() {
-        Level level = new Level(new Vector2(3, 1));
+        Level level = new Level(new Vector2(4, 1));
         level.unlock();
 
         // Ground
@@ -89,6 +89,9 @@ public class LevelManager {
         // Notices
         level.addActor(new Notice(new Vector2(4, 1), 3, 3, level.map, 0));
         level.addActor(new Notice(new Vector2(26, 1), 3, 3, level.map, 1));
+
+        // Teleporter
+        level.addActor(new Teleporter(new Vector2(1, 1), 2, 1, level.map, new Vector2(85, 1)));
 
         // Doors
         level.addActor(new Exit(new Vector2(89, 1), 1, 3, level.map, 1));

@@ -1,6 +1,7 @@
 # May 5, 2015
 * Version 0.1.2 with the resume / pause to the game
 * Version 0.1.3 with a button to resume or pause the game in the User Interface Stage
+* Version 0.1.4 with the Teleporter class which can teleport a dynamic element to a specific position
 
 # May 4, 2015 :
 * Released version 0.1, starting dev on version 0.1.0

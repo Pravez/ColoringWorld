@@ -6,8 +6,10 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.color.game.ColorGame;
 import com.color.game.command.*;
 import com.color.game.elements.BaseElement;
@@ -16,6 +18,7 @@ import com.color.game.elements.dynamicelements.states.AloftState;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.Notice;
+import com.color.game.elements.staticelements.Teleporter;
 import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.UserData;
 import com.color.game.enums.MovementDirection;
@@ -25,6 +28,8 @@ import com.color.game.levels.LevelManager;
 import com.color.game.tools.ColorGauge;
 import com.color.game.utils.BodyUtils;
 
+import java.util.Iterator;
+
 /**
  * GameScreen, the screen during which the game is been played
  */
@@ -33,6 +38,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     public Box2DDebugRenderer renderer;
     public static OrthographicCamera camera;
     public static OrthographicCamera camera2;
+
+    private Array<Runnable> runnables;
 
     /**
      * The main character of the game
@@ -82,6 +89,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         this.redCommand    = new ColorCommand(PlatformColor.RED);
         this.blueCommand   = new ColorCommand(PlatformColor.BLUE);
         this.yellowCommand = new ColorCommand(PlatformColor.YELLOW);
+
+        this.runnables = new Array<>();
     }
 
     /**
@@ -183,6 +192,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         // If the game is in running mode
         if (this.run) {
+            runRunnables();
             // Act the current level Stage
             LevelManager.getCurrentLevel().act(delta);
             // Act the User Interface Stage
@@ -203,6 +213,13 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         if (this.restart) {
             restart();
         }
+    }
+
+    private void runRunnables() {
+        for (Runnable runnable : this.runnables) {
+            runnable.run();
+        }
+        this.runnables.clear();
     }
 
     /**
@@ -332,7 +349,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         if (button == Input.Buttons.LEFT) {
             Vector3 worldCoordinates = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(worldCoordinates);
-            this.character.teleport(worldCoordinates.x / BaseElement.WORLD_TO_SCREEN, worldCoordinates.y / BaseElement.WORLD_TO_SCREEN);
+            this.character.teleport(new Vector2(worldCoordinates.x / BaseElement.WORLD_TO_SCREEN, worldCoordinates.y / BaseElement.WORLD_TO_SCREEN));
         }
         return false;
     }
@@ -359,7 +376,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
     @Override
     public void beginContact(Contact contact) {
-        Fixture a = contact.getFixtureA();
+        final Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
         if (BodyUtils.isCharacter(b.getBody())) {
@@ -391,6 +408,16 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
         if (BodyUtils.isNotice(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
             ((Notice)((UserData)b.getBody().getUserData()).getElement()).display();
+        }
+
+        // Teleport the player
+        if (BodyUtils.isTeleporter(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
+            this.runnables.add(new Runnable() {
+                @Override
+                public void run() {
+                    ((Teleporter) ((UserData) a.getBody().getUserData()).getElement()).act(character);
+                }
+            });
         }
 
         if (BodyUtils.isExit(a.getBody())) {

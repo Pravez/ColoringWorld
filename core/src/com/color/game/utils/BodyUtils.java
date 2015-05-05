@@ -18,6 +18,11 @@ public class BodyUtils {
         return userData != null && userData.getUserDataType() == UserDataType.NOTICE;
     }
 
+    public static boolean isTeleporter(Body body) {
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && userData.getUserDataType() == UserDataType.TELEPORTER;
+    }
+
     public static boolean isExit(Body body) {
         UserData userData = (UserData) body.getUserData();
         return userData != null && userData.getUserDataType() == UserDataType.EXIT;

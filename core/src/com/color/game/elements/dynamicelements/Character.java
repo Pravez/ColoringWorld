@@ -112,10 +112,6 @@ public class Character extends BaseDynamicElement {
         this.physicComponent.rebase();
     }
 
-    public void teleport(float x, float y) {
-        this.physicComponent.getBody().setTransform(x, y, 0);
-    }
-
     public void setOnWall(boolean onWall) {
         this.onWall = onWall;
     }

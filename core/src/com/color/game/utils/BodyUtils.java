@@ -23,6 +23,11 @@ public class BodyUtils {
         return userData != null && userData.getUserDataType() == UserDataType.TELEPORTER;
     }
 
+    /*public static boolean isSensor(Body body) {
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && userData.getElement().;
+    }*/
+
     public static boolean isWindBlower(Body body) {
         UserData userData = (UserData) body.getUserData();
         return userData != null && userData.getUserDataType() == UserDataType.WINDBLOWER;

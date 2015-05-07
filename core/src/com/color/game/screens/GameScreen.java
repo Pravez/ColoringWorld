@@ -444,6 +444,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             ((Notice)((UserData)b.getBody().getUserData()).getElement()).hide();
         }
 
+        // WindBlowers
+        if (BodyUtils.isWindBlower(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
+            ((WindBlower)((UserData)a.getBody().getUserData()).getElement()).endAct(character);
+        }
+
         if(BodyUtils.isCharacter(b.getBody())){
             ((DynamicElementUserData)b.getBody().getUserData()).removeContact();
             if(((DynamicElementUserData)b.getBody().getUserData()).getContactsNumber() == 0){

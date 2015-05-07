@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.color.game.command.PushCommand;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.userData.StaticElementUserData;
@@ -19,8 +20,9 @@ import com.color.game.screens.GameScreen;
  */
 public class WindBlower extends BaseStaticElement {
 
-    private static final float PUSH_FORCE = 550f;
+    private static final float PUSH_FORCE = 50f;
     private Vector2 force;
+    private PushCommand pushCommand;
 
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
@@ -30,11 +32,24 @@ public class WindBlower extends BaseStaticElement {
         Vector2 coordinates = direction.toCoordinates();
         this.force = new Vector2(coordinates.x * PUSH_FORCE, coordinates.y * PUSH_FORCE);
 
+        this.pushCommand = new PushCommand(new Vector2(coordinates.x * PUSH_FORCE, coordinates.y * PUSH_FORCE));
+
         this.shapeRenderer = new ShapeRenderer();
     }
 
     public void act(BaseDynamicElement element) {
-        element.applyLinearForce(this.force);
+        /*float distance = Math.abs(element.getBounds().y - (this.getBounds().y + this.getBounds().height));
+        System.out.println("Distance : " + distance);
+        distance /= this.getBounds().height;
+        System.out.println("Percent distance : " + distance);
+        distance = (float) Math.max(0.6, distance);
+        element.applyLinearForce(new Vector2(this.force.x * distance, this.force.y * distance));*/
+        this.pushCommand.restart();
+        element.addCommand(this.pushCommand);
+    }
+
+    public void endAct(BaseDynamicElement element) {
+        this.pushCommand.end();
     }
 
     @Override

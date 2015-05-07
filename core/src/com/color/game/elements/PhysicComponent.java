@@ -40,6 +40,15 @@ public abstract class PhysicComponent {
     public abstract void configureBody(Vector2 position, int width, int height, World world, short group);
 
     /**
+     * Main method to initialize the corpse, the body of the element when it is a circle.
+     * @param position The position where will be located the body
+     * @param radius The radius of the body
+     * @param world The world containing the body
+     * @param group Body's group
+     */
+    public abstract void configureCircleBody(Vector2 position, int radius, World world, short group);
+
+    /**
      * Method to enable collision with other bodies
      */
     public void enableCollisions(){}

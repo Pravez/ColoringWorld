@@ -16,10 +16,7 @@ import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.states.AloftState;
 import com.color.game.elements.dynamicelements.states.LandedState;
-import com.color.game.elements.staticelements.Exit;
-import com.color.game.elements.staticelements.Notice;
-import com.color.game.elements.staticelements.Teleporter;
-import com.color.game.elements.staticelements.WindBlower;
+import com.color.game.elements.staticelements.*;
 import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.UserData;
 import com.color.game.enums.MovementDirection;
@@ -67,6 +64,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     private boolean run = true;
 
     private boolean restart = false;
+
+    private Magnes currentMagnes;
 
     /**
      * The constructor of the class GameScreen
@@ -255,6 +254,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         if (Gdx.input.isKeyJustPressed(this.game.keys.leftCode)) {
             this.character.addCommand(new StartMoveCommand(MovementDirection.LEFT));
         }
+        if (Gdx.input.isKeyJustPressed(this.game.keys.magnesCode)) {
+            if (this.currentMagnes != null) {
+                this.currentMagnes.act(this.character);
+            }
+        }
 
         // Here the code to activate colors
         handleColorCommand(this.game.keys.redCode, this.redCommand, this.uiStage.colorGauges.redGauge);
@@ -326,6 +330,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             this.character.addCommand(new EndJumpCommand());
         } else if (keycode == this.game.keys.squatCode) {
             this.character.addCommand(new EndSquatCommand());
+        }
+        if (keycode == this.game.keys.magnesCode) {
+            if (this.currentMagnes != null) {
+                this.currentMagnes.endAct();
+            }
         }
         if(keycode == this.game.keys.leftCode || keycode == this.game.keys.rightCode){
             this.character.addCommand(new EndMoveCommand());
@@ -426,6 +435,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             ((WindBlower)((UserData)a.getBody().getUserData()).getElement()).act(character);
         }
 
+        // Magnes
+        if (BodyUtils.isMagnes(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
+            this.currentMagnes = (Magnes)((UserData)b.getBody().getUserData()).getElement();
+        }
+
         if (BodyUtils.isExit(a.getBody())) {
             this.runningLevel = ((Exit) ((UserData) a.getBody().getUserData()).getElement()).getLevelIndex();
         }
@@ -447,6 +461,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         // WindBlowers
         if (BodyUtils.isWindBlower(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
             ((WindBlower)((UserData)a.getBody().getUserData()).getElement()).endAct();
+        }
+
+        // Magnes
+        if (BodyUtils.isMagnes(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
+            this.currentMagnes = null;
         }
 
         if(BodyUtils.isCharacter(b.getBody())){

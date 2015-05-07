@@ -11,6 +11,7 @@ public class KeyMapper {
     public int squatCode, jumpCode;
     public int redCode, blueCode, yellowCode;
     public int runCode;
+    public int magnesCode;
 
     public KeyMapper() {
         this.leftCode   = Input.Keys.LEFT;
@@ -21,5 +22,6 @@ public class KeyMapper {
         this.blueCode   = Input.Keys.E;
         this.yellowCode = Input.Keys.Z;
         this.runCode    = Input.Keys.SHIFT_LEFT;
+        this.magnesCode = Input.Keys.X;
     }
 }

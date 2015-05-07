@@ -11,27 +11,19 @@ import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.userData.StaticElementUserData;
 import com.color.game.enums.UserDataType;
-import com.color.game.enums.WindDirection;
 import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
 
-/**
- * WindBlower class, platform that can push a character in a certain direction
- */
-public class WindBlower extends BaseStaticElement {
+public class Magnes extends BaseStaticElement {
 
-    private static final float PUSH_FORCE = 60f;
     private PushCommand pushCommand;
-    private Vector2 force;
 
     private ShapeRenderer shapeRenderer;
 
-    public WindBlower(Vector2 position, int width, int height, Map map, WindDirection direction) {
-        super(position, width, height, map, PhysicComponent.GROUP_SENSOR);
-        this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.WINDBLOWER));
+    public Magnes(Vector2 position, int radius, Map map) {
+        super(position, radius, map, PhysicComponent.GROUP_SENSOR);
+        this.physicComponent.configureUserData(new StaticElementUserData(this, radius, radius, UserDataType.MAGNES));
 
-        Vector2 coordinates = direction.toCoordinates();
-        this.force = new Vector2(coordinates.x * PUSH_FORCE, coordinates.y * PUSH_FORCE);
         this.pushCommand = new PushCommand();
 
         this.shapeRenderer = new ShapeRenderer();
@@ -42,7 +34,9 @@ public class WindBlower extends BaseStaticElement {
         this.pushCommand.setRunnable(new Runnable() {
             @Override
             public void run() {
-                element.applyLinearForce(force);
+                float dx = getCenter().x - element.getCenter().x;
+                float dy = getCenter().y - element.getCenter().y;
+                element.applyLinearVelocity(new Vector2(dx, dy));
             }
         });
         element.addCommand(this.pushCommand);
@@ -60,9 +54,9 @@ public class WindBlower extends BaseStaticElement {
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        Color c = Color.CYAN;
+        Color c = Color.PURPLE;
         shapeRenderer.setColor(c.r, c.g, c.b, 0.5f);
-        shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
+        shapeRenderer.circle(this.getBounds().x + this.getBounds().width/2, this.getBounds().y + this.getBounds().width/2, this.getBounds().width/2);
         shapeRenderer.end();
         batch.begin();
     }

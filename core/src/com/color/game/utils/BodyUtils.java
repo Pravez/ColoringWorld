@@ -33,6 +33,11 @@ public class BodyUtils {
         return userData != null && userData.getUserDataType() == UserDataType.WINDBLOWER;
     }
 
+    public static boolean isMagnes(Body body) {
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && userData.getUserDataType() == UserDataType.MAGNES;
+    }
+
     public static boolean isExit(Body body) {
         UserData userData = (UserData) body.getUserData();
         return userData != null && userData.getUserDataType() == UserDataType.EXIT;

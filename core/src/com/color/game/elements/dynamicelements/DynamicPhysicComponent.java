@@ -1,10 +1,7 @@
 package com.color.game.elements.dynamicelements;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
 
@@ -38,6 +35,31 @@ public class DynamicPhysicComponent extends PhysicComponent{
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width, height);
+
+        this.body = world.createBody(this.bodyDef);
+        this.fixtureDef = new FixtureDef();
+        fixtureDef.density = DYNAMIC_ELEMENT_DENSITY;
+        fixtureDef.shape = shape;
+        fixtureDef.filter.groupIndex = group;
+        this.body.createFixture(fixtureDef);
+
+        this.currentImpulse = new Vector2(0f,0f);
+    }
+
+    @Override
+    public void configureCircleBody(Vector2 position, int radius, World world, short group){
+        this.world = world;
+
+        this.bodyDef = new BodyDef();
+        this.bodyDef.type = BodyDef.BodyType.DynamicBody;
+
+        //To keep from rotations
+        this.bodyDef.fixedRotation = true;
+        this.bodyDef.position.set(new Vector2(position.x + radius, position.y + radius));
+        this.bodyDef.linearDamping = 2.0f;
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius);
 
         this.body = world.createBody(this.bodyDef);
         this.fixtureDef = new FixtureDef();

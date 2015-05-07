@@ -58,5 +58,37 @@ public class StaticPhysicComponent extends PhysicComponent{
         }
 
         this.body.createFixture(fixtureDef);
+        shape.dispose();
+    }
+
+    @Override
+    public void configureCircleBody(Vector2 position, int radius, World world, short group){
+        this.world = world;
+
+        this.bodyDef = new BodyDef();
+        this.bodyDef.type = BodyDef.BodyType.StaticBody;
+
+        position.scl(2); // Multiply by two because of the half size boxes
+
+        //To keep from rotations
+        this.bodyDef.fixedRotation = true;
+        this.bodyDef.position.set(new Vector2(position.x + radius, position.y + radius));
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius);
+
+        this.body = world.createBody(this.bodyDef);
+        this.fixtureDef = new FixtureDef();
+
+        fixtureDef.density = STATIC_ELEMENT_DENSITY;
+        fixtureDef.shape = shape;
+        fixtureDef.filter.groupIndex = group;
+
+        if (group == GROUP_SENSOR) {
+            fixtureDef.isSensor = true;
+        }
+
+        this.body.createFixture(fixtureDef);
+        shape.dispose();
     }
 }

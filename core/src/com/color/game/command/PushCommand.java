@@ -9,11 +9,11 @@ import com.color.game.elements.dynamicelements.BaseDynamicElement;
  */
 public class PushCommand implements Command {
 
-    private Vector2 force;
+    private Runnable runnable;
     private boolean finished = false;
 
-    public PushCommand(Vector2 force) {
-        this.force = force;
+    public PushCommand() {
+
     }
 
     public void restart() {
@@ -24,9 +24,15 @@ public class PushCommand implements Command {
         this.finished = true;
     }
 
+    public void setRunnable(Runnable runnable) {
+        this.runnable = runnable;
+    }
+
     @Override
     public boolean execute(BaseDynamicElement element, float delta) {
-        element.applyLinearForce(this.force);
+        if (runnable != null) {
+            runnable.run();
+        }
         return this.finished;
     }
 }

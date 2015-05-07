@@ -57,6 +57,18 @@ public abstract class BaseDynamicElement extends BaseElement {
     }
 
     /**
+     * Method used to apply a velocity on a BaseDynamicElement
+     * @param velocity the force to apply
+     */
+    public void applyLinearVelocity(Vector2 velocity) {
+        this.physicComponent.getBody().setLinearVelocity(velocity);
+    }
+
+    public void removeGravity() {
+        this.physicComponent.getBody().setGravityScale(0);
+    }
+
+    /**
      * Abstract method to set where and how the element will be moving itself
      * @param direction The direction where the element will move
      */

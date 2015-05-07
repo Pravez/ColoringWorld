@@ -23,6 +23,11 @@ public class BodyUtils {
         return userData != null && userData.getUserDataType() == UserDataType.TELEPORTER;
     }
 
+    public static boolean isWindBlower(Body body) {
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && userData.getUserDataType() == UserDataType.WINDBLOWER;
+    }
+
     public static boolean isExit(Body body) {
         UserData userData = (UserData) body.getUserData();
         return userData != null && userData.getUserDataType() == UserDataType.EXIT;

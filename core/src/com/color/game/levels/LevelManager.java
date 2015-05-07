@@ -3,6 +3,7 @@ package com.color.game.levels;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.staticelements.*;
 import com.color.game.enums.PlatformColor;
+import com.color.game.enums.WindDirection;
 
 import java.util.ArrayList;
 
@@ -125,6 +126,10 @@ public class LevelManager {
 
         level.addActor(new ColorPlatform(new Vector2(41, 11), 5, 1, level, PlatformColor.BLUE, false));
         level.addActor(new ColorPlatform(new Vector2(47, 15), 5, 1, level, PlatformColor.BLUE, false));
+
+        // Wind Blowers
+        level.addActor(new WindBlower(new Vector2(5, 1), 4, 1, level.map, WindDirection.NORTH));
+        level.addActor(new WindBlower(new Vector2(28, 1), 4, 3, level.map, WindDirection.NORTH));
 
         // Doors
         //level.addDoor(new Door(WorldUtils.createDoor(level.map, 74, 42, 2, 4), new Rectangle(74, 42, 2, 4)));

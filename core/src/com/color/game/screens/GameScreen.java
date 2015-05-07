@@ -19,6 +19,7 @@ import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.Notice;
 import com.color.game.elements.staticelements.Teleporter;
+import com.color.game.elements.staticelements.WindBlower;
 import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.UserData;
 import com.color.game.enums.MovementDirection;
@@ -418,6 +419,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
                     ((Teleporter) ((UserData) a.getBody().getUserData()).getElement()).act(character);
                 }
             });
+        }
+
+        // WindBlowers
+        if (BodyUtils.isWindBlower(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
+            ((WindBlower)((UserData)a.getBody().getUserData()).getElement()).act(character);
         }
 
         if (BodyUtils.isExit(a.getBody())) {

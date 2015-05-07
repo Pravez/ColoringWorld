@@ -49,6 +49,14 @@ public abstract class BaseDynamicElement extends BaseElement {
     public abstract void jump();
 
     /**
+     * Method used to apply a force on a BaseDynamicElement
+     * @param force the force to apply
+     */
+    public void applyLinearForce(Vector2 force) {
+        this.physicComponent.getBody().applyLinearImpulse(force, this.physicComponent.getBody().getWorldCenter(), true);
+    }
+
+    /**
      * Abstract method to set where and how the element will be moving itself
      * @param direction The direction where the element will move
      */

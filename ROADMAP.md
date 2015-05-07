@@ -42,9 +42,9 @@ With this, you will be able to have an overview of the game and its future.
 * the character can squat/duck (Paul)
 * progressive tutorial with notices displaying sentences in the back spread in the level
 * the color platforms can have a default state such as activated and by activating the color, they become disabled (Alexis)
-* wind blowers
+* wind blowers (Alexis)
 * adding magnetic fields to the character that he can activate next to magnes and hang to the magnes
-* teleporters in the level
+* teleporters in the level (Alexis)
 * splippery zones
 * zones that grip the character to the floor
 * zones in the level which have special effect on the character when a color is activated or something else, 

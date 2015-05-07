@@ -7,6 +7,7 @@ Game featuring a strange man using colors to live his life
 * ColorPlatforms can have a default state (activated, or deactivated)
 * pause or resume the Game with a button
 * adding Teleporter class
+* adding WindBlower class
 
 
 # Version 0.1 released

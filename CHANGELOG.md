@@ -1,3 +1,8 @@
+# 0.1.5 (May 7, 2015)
+Features :
+- Adding the WindBlower class which can "blow" or push the character or other dynamic element of the
+game into a specific direction
+
 # 0.1.4 (May 5, 2015)
 Features :
 - Adding Teleporter class which can teleport a character or other dynamic element of the game to a 

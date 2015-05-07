@@ -1,3 +1,6 @@
+# May 7, 2015
+* Version 0.1.5 with the WindBlower class which can push a dynamic element in a specific direction
+
 # May 5, 2015
 * Version 0.1.2 with the resume / pause to the game
 * Version 0.1.3 with a button to resume or pause the game in the User Interface Stage

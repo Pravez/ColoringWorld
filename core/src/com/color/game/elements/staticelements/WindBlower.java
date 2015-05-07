@@ -20,8 +20,7 @@ import com.color.game.screens.GameScreen;
  */
 public class WindBlower extends BaseStaticElement {
 
-    private static final float PUSH_FORCE = 50f;
-    private Vector2 force;
+    private static final float PUSH_FORCE = 60f;
     private PushCommand pushCommand;
 
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
@@ -29,26 +28,19 @@ public class WindBlower extends BaseStaticElement {
     public WindBlower(Vector2 position, int width, int height, Map map, WindDirection direction) {
         super(position, width, height, map, PhysicComponent.GROUP_SENSOR);
         this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.WINDBLOWER));
-        Vector2 coordinates = direction.toCoordinates();
-        this.force = new Vector2(coordinates.x * PUSH_FORCE, coordinates.y * PUSH_FORCE);
 
+        Vector2 coordinates = direction.toCoordinates();
         this.pushCommand = new PushCommand(new Vector2(coordinates.x * PUSH_FORCE, coordinates.y * PUSH_FORCE));
 
         this.shapeRenderer = new ShapeRenderer();
     }
 
     public void act(BaseDynamicElement element) {
-        /*float distance = Math.abs(element.getBounds().y - (this.getBounds().y + this.getBounds().height));
-        System.out.println("Distance : " + distance);
-        distance /= this.getBounds().height;
-        System.out.println("Percent distance : " + distance);
-        distance = (float) Math.max(0.6, distance);
-        element.applyLinearForce(new Vector2(this.force.x * distance, this.force.y * distance));*/
         this.pushCommand.restart();
         element.addCommand(this.pushCommand);
     }
 
-    public void endAct(BaseDynamicElement element) {
+    public void endAct() {
         this.pushCommand.end();
     }
 

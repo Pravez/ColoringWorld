@@ -446,7 +446,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         // WindBlowers
         if (BodyUtils.isWindBlower(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
-            ((WindBlower)((UserData)a.getBody().getUserData()).getElement()).endAct(character);
+            ((WindBlower)((UserData)a.getBody().getUserData()).getElement()).endAct();
         }
 
         if(BodyUtils.isCharacter(b.getBody())){

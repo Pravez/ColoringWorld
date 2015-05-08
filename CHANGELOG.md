@@ -1,3 +1,7 @@
+# 0.1.7 (May 8, 2015)
+Features :
+- Added the AlteringPlatforms, platforms that can slow the character or be slippery.
+
 # 0.1.6 (May 8, 2015)
 Features :
 - Added the magnet which one attract a dynamic body to his center

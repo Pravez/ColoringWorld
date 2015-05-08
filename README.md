@@ -1,9 +1,11 @@
 # ColoringWorld
 Game featuring a strange man using colors to live his life
 
-## Version 0.1 in development
+### Version 0.3 in development :
+*
 
-### Done :
+
+# Version 0.2 released :
 * ColorPlatforms can have a default state (activated, or deactivated)
 * pause or resume the Game with a button
 * adding Teleporter class

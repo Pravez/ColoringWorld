@@ -37,15 +37,15 @@ With this, you will be able to have an overview of the game and its future.
 * adding cheatcodes : change current level, restart level, teleport to mouse position, … (debug tools)
 
 ## Version 0.2 - Adding features
-* the game can be paused and resumed (Alexis)
-* the character can squat/duck (Paul)
-* the color platforms can have a default state such as activated and by activating the color, they become disabled (Alexis)
-* wind blowers (Alexis)
-* adding magnetic fields to the character that he can activate next to magnet and hang to the magnet (Alexis)
-* adding magnetic fields on the ground or anywhere that attracts the character (Paul)
-* teleporters in the level (Alexis)
-* slippery zones (Paul)
-* zones that grip the character to the floor (Paul)
+* the game can be paused and resumed
+* the character can squat/duck
+* the color platforms can have a default state such as activated and by activating the color, they become disabled
+* wind blowers
+* adding magnetic fields to the character that he can activate next to magnet and hang to the magnet
+* adding magnetic fields on the ground or anywhere that attracts the character
+* teleporters in the level
+* slippery zones
+* zones that grip the character to the floor 
 
 ## Version 0.3 - Enemies
 * enemy who kill the character

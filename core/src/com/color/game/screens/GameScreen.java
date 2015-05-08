@@ -412,27 +412,21 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             }
         }
 
-        // Show the tutorial notices
-        if (BodyUtils.isNotice(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
-            ((Notice)((UserData)a.getBody().getUserData()).getElement()).display();
-        }
-        if (BodyUtils.isNotice(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
-            ((Notice)((UserData)b.getBody().getUserData()).getElement()).display();
-        }
-
-        // Teleport the player
-        if (BodyUtils.isTeleporter(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
+        // Sensors
+        if (BodyUtils.isSensor(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
             this.runnables.add(new Runnable() {
                 @Override
                 public void run() {
-                    ((Teleporter) ((UserData) a.getBody().getUserData()).getElement()).act(character);
+                    ((Sensor) ((UserData) a.getBody().getUserData()).getElement()).act(character);
                 }
             });
-        }
-
-        // WindBlowers
-        if (BodyUtils.isWindBlower(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
-            ((WindBlower)((UserData)a.getBody().getUserData()).getElement()).act(character);
+        } else if (BodyUtils.isSensor(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
+            this.runnables.add(new Runnable() {
+                @Override
+                public void run() {
+                    ((Sensor) ((UserData) a.getBody().getUserData()).getElement()).act(character);
+                }
+            });
         }
 
         // Magnes
@@ -450,17 +444,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        // Hide the tutorial notices
-        if (BodyUtils.isNotice(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
-            ((Notice)((UserData)a.getBody().getUserData()).getElement()).hide();
-        }
-        if (BodyUtils.isNotice(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
-            ((Notice)((UserData)b.getBody().getUserData()).getElement()).hide();
-        }
-
-        // WindBlowers
-        if (BodyUtils.isWindBlower(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
-            ((WindBlower)((UserData)a.getBody().getUserData()).getElement()).endAct();
+        // Sensors
+        if (BodyUtils.isSensor(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
+            ((Sensor)((UserData)a.getBody().getUserData()).getElement()).endAct();
+        } else if (BodyUtils.isNotice(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
+            ((Sensor)((UserData)b.getBody().getUserData()).getElement()).endAct();
         }
 
         // Magnes

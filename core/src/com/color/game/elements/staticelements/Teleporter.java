@@ -16,19 +16,27 @@ import com.color.game.screens.GameScreen;
 /**
  * Teleporter class, element which can teleport the player from a position to another
  */
-public class Teleporter extends BaseStaticElement {
+public class Teleporter extends Sensor {
 
     private Vector2 teleportPosition;
 
     private ShapeRenderer shapeRenderer;
 
     public Teleporter(Vector2 position, int width, int height, Map map, Vector2 teleportPosition) {
-        super(position, width, height, map, PhysicComponent.GROUP_SENSOR);
-        this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.TELEPORTER));
+        super(position, width, height, map);
 
         this.teleportPosition = teleportPosition.scl(2);
 
         shapeRenderer = new ShapeRenderer();
+    }
+
+    @Override
+    public void act(BaseDynamicElement element) {
+        element.teleport(this.teleportPosition);
+    }
+
+    @Override
+    public void endAct() {
     }
 
     @Override
@@ -44,9 +52,5 @@ public class Teleporter extends BaseStaticElement {
         shapeRenderer.end();
 
         batch.begin();
-    }
-
-    public void act(BaseDynamicElement element) {
-        element.teleport(this.teleportPosition);
     }
 }

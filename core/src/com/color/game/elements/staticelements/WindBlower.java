@@ -18,7 +18,7 @@ import com.color.game.screens.GameScreen;
 /**
  * WindBlower class, platform that can push a character in a certain direction
  */
-public class WindBlower extends BaseStaticElement {
+public class WindBlower extends Sensor {
 
     private static final float PUSH_FORCE = 60f;
     private PushCommand pushCommand;
@@ -27,8 +27,7 @@ public class WindBlower extends BaseStaticElement {
     private ShapeRenderer shapeRenderer;
 
     public WindBlower(Vector2 position, int width, int height, Map map, WindDirection direction) {
-        super(position, width, height, map, PhysicComponent.GROUP_SENSOR);
-        this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.WINDBLOWER));
+        super(position, width, height, map);
 
         Vector2 coordinates = direction.toCoordinates();
         this.force = new Vector2(coordinates.x * PUSH_FORCE, coordinates.y * PUSH_FORCE);
@@ -37,6 +36,7 @@ public class WindBlower extends BaseStaticElement {
         this.shapeRenderer = new ShapeRenderer();
     }
 
+    @Override
     public void act(final BaseDynamicElement element) {
         this.pushCommand.restart();
         this.pushCommand.setRunnable(new Runnable() {
@@ -48,6 +48,7 @@ public class WindBlower extends BaseStaticElement {
         element.addCommand(this.pushCommand);
     }
 
+    @Override
     public void endAct() {
         this.pushCommand.end();
     }

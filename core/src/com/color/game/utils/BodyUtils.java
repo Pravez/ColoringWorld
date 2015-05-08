@@ -13,24 +13,9 @@ public class BodyUtils {
         return userData != null && userData.getUserDataType() == UserDataType.CHARACTER;
     }
 
-    public static boolean isNotice(Body body) {
+    public static boolean isSensor(Body body) {
         UserData userData = (UserData) body.getUserData();
-        return userData != null && userData.getUserDataType() == UserDataType.NOTICE;
-    }
-
-    public static boolean isTeleporter(Body body) {
-        UserData userData = (UserData) body.getUserData();
-        return userData != null && userData.getUserDataType() == UserDataType.TELEPORTER;
-    }
-
-    /*public static boolean isSensor(Body body) {
-        UserData userData = (UserData) body.getUserData();
-        return userData != null && userData.getElement().;
-    }*/
-
-    public static boolean isWindBlower(Body body) {
-        UserData userData = (UserData) body.getUserData();
-        return userData != null && userData.getUserDataType() == UserDataType.WINDBLOWER;
+        return userData != null && userData.getUserDataType() == UserDataType.SENSOR;
     }
 
     public static boolean isMagnes(Body body) {

@@ -65,7 +65,6 @@ public abstract class PhysicComponent {
     public void move(float max_vel){}
     public void squat(){}
     public void stopSquat(){}
-    public void applyForce(Vector2 force, Vector2 point){}
     public void configureAltering(float alteration) {}
 
         public void configureUserData(UserData userData){

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.color.game.elements.PhysicComponent;
+import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
 import com.color.game.elements.dynamicelements.states.StandingState;
 import com.color.game.elements.dynamicelements.states.WalkingState;
@@ -35,9 +36,12 @@ public class Character extends BaseDynamicElement {
         super(position, width, height, world, PhysicComponent.GROUP_PLAYER);
 
         this.physicComponent.configureUserData(new DynamicElementUserData(this, width, height, UserDataType.CHARACTER));
+        this.shapeRenderer = new ShapeRenderer();
+
         onWall = false;
 
-        this.shapeRenderer = new ShapeRenderer();
+        this.setMovingState(new StandingState());
+        this.setAloftState(new LandedState());
     }
 
     @Override
@@ -72,9 +76,7 @@ public class Character extends BaseDynamicElement {
 
     @Override
     public void jump() {
-        if(!onWall) {
-            this.physicComponent.jump();
-        }
+        this.physicComponent.jump();
     }
 
     /**
@@ -119,15 +121,19 @@ public class Character extends BaseDynamicElement {
         this.physicComponent.rebase();
     }
 
-    public void setOnWall(boolean onWall) {
-        this.onWall = onWall;
-    }
-
     public Vector2 getSquatVector2(){
         return new Vector2(CHARACTER_WIDTH, CHARACTER_SQUAT_HEIGHT);
     }
 
     public Vector2 getStandVector2(){
         return new Vector2(CHARACTER_WIDTH, CHARACTER_HEIGHT);
+    }
+
+    public boolean isOnWall() {
+        return onWall;
+    }
+
+    public void setOnWall(boolean onWall) {
+        this.onWall = onWall;
     }
 }

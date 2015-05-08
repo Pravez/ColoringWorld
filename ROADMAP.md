@@ -46,8 +46,6 @@ With this, you will be able to have an overview of the game and its future.
 * teleporters in the level (Alexis)
 * slippery zones (Paul)
 * zones that grip the character to the floor (Paul)
-* zones in the level which have special effect on the character when a color is activated or something else, 
-by default (when blue is activated, the gravity is reversed, …)
 
 ## Version 0.3 - Enemies
 * enemy who kill the character
@@ -84,3 +82,8 @@ by default (when blue is activated, the gravity is reversed, …)
 * add levers that can change segments of walls in order to access the exit or something else
 * adding new maps of levels by dividing into different places
 * changing the language of the game
+* Add the secondary colors to the platforms - a green platform that is activated only when yellow gauge and blue gauge are activated
+
+## Version 0.7 - Super Bonuses
+* zones in the level which have special effect on the character when a color is activated or something else,
+by default (when blue is activated, the gravity is reversed, …)

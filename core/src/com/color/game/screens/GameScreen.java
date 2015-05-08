@@ -16,18 +16,17 @@ import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.states.AloftState;
 import com.color.game.elements.dynamicelements.states.LandedState;
-import com.color.game.elements.staticelements.*;
+import com.color.game.elements.staticelements.BaseStaticElement;
+import com.color.game.elements.staticelements.Exit;
+import com.color.game.elements.staticelements.platforms.Platform;
+import com.color.game.elements.staticelements.platforms.PlatformColor;
 import com.color.game.elements.staticelements.sensors.Magnes;
-import com.color.game.elements.staticelements.sensors.Magnet;
 import com.color.game.elements.staticelements.sensors.Sensor;
 import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.UserData;
-import com.color.game.command.MovementDirection;
-import com.color.game.elements.staticelements.platforms.PlatformColor;
+import com.color.game.gui.ColorGauge;
 import com.color.game.gui.UIStage;
 import com.color.game.levels.LevelManager;
-import com.color.game.gui.ColorGauge;
-import com.color.game.utils.BodyUtils;
 
 /**
  * GameScreen, the screen during which the game is been played
@@ -398,10 +397,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     @Override
     public void beginContact(Contact contact) {
         final Fixture a = contact.getFixtureA();
-        Fixture b = contact.getFixtureB();
+        final Fixture b = contact.getFixtureB();
 
         if (UserData.isCharacter(b.getBody())) {
-            ((DynamicElementUserData)b.getBody().getUserData()).addContact();
 
             // Character touching an enemy
             if (UserData.isEnemy(a.getBody())) {
@@ -410,16 +408,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
             // Character touching a platform
             if(UserData.isPlatform(a.getBody())) {
-                character.setAloftState(new LandedState());
-                character.setOnWall(BodyUtils.onWall(b.getBody(), a.getBody()));
-
-                //For a later version
-                /*MovementDirection direction = BodyUtils.characterPositionOnWall(b.getBody(), a.getBody());
-                if(direction != MovementDirection.NONE){
-                    ((DynamicElementUserData)b.getBody().getUserData()).setOnWall(true, direction);
-                }else{
-                    ((DynamicElementUserData)b.getBody().getUserData()).setOnWall(false, direction);
-                }*/
+                BaseStaticElement p = (BaseStaticElement)((UserData)a.getBody().getUserData()).getElement();
+                if(!Platform.isWall(p, character)){
+                    ((DynamicElementUserData)b.getBody().getUserData()).addContact();
+                    character.setAloftState(new LandedState());
+                }
             }
         }
 
@@ -435,7 +428,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             this.runnables.add(new Runnable() {
                 @Override
                 public void run() {
-                    ((Sensor) ((UserData) a.getBody().getUserData()).getElement()).act(character);
+                    ((Sensor) ((UserData) b.getBody().getUserData()).getElement()).act(character);
                 }
             });
         }
@@ -469,9 +462,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             this.currentMagnes = null;
         }
 
-        if(UserData.isCharacter(b.getBody())) {
-            ((DynamicElementUserData)b.getBody().getUserData()).removeContact();
-            if(((DynamicElementUserData)b.getBody().getUserData()).getContactsNumber() == 0){
+        if(UserData.isCharacter(b.getBody()) && UserData.isPlatform(a.getBody())){
+            if(!Platform.isWall((BaseStaticElement) ((UserData) a.getBody().getUserData()).getElement(), (Character) ((UserData) b.getBody().getUserData()).getElement())) {
+                ((DynamicElementUserData) b.getBody().getUserData()).removeContact();
+            }
+            if(((DynamicElementUserData)b.getBody().getUserData()).getContactsNumber() <= 0){
                 character.setAloftState(new AloftState());
             }
         }

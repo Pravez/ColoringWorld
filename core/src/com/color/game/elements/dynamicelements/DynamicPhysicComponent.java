@@ -115,12 +115,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
      */
     @Override
     public void jump() {
-        //For a later version
-        //if(!((DynamicElementUserData)this.userData).isOnWall()) {
         this.body.applyLinearImpulse(DYNAMIC_ELEMENT_BASE_JUMP, body.getWorldCenter(), true);
-        /*}else{
-            this.body.applyLinearImpulse(new Vector2(150f*((DynamicElementUserData)this.userData).getOnWallSide().valueOf(), 200f), body.getWorldCenter(), true);
-        }*/
     }
 
     /**
@@ -152,7 +147,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
         this.fixtureDef.density = DYNAMIC_ELEMENT_SQUAT_DENSITY;
         this.body.createFixture(this.fixtureDef);
 
-        this.body.setTransform(this.body.getPosition().x, this.body.getPosition().y-shapesize.y, 0f);
+        this.body.setTransform(this.body.getPosition().x, this.body.getPosition().y - shapesize.y, 0f);
 
         this.userData.setHeight((int)shapesize.y*2);
 
@@ -173,10 +168,5 @@ public class DynamicPhysicComponent extends PhysicComponent{
         this.body.createFixture(this.fixtureDef);
 
         this.userData.setHeight((int)shapesize.y*2);
-    }
-
-    @Override
-    public void applyForce(Vector2 force, Vector2 point) {
-        this.body.applyForceToCenter(force, true);
     }
 }

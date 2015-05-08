@@ -1,3 +1,8 @@
+# 0.1.6 (May 8, 2015)
+Features :
+- Added the magnet which one attract a dynamic body to his center
+- Added the ability to squat for the character
+
 # 0.1.5 (May 7, 2015)
 Features :
 - Adding the WindBlower class which can "blow" or push the character or other dynamic element of the

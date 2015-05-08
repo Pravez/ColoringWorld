@@ -1,3 +1,8 @@
+# May 8, 2015
+* Lost time in merges
+* Added the squat command
+* Added magnets to attract dynamic bodies on their center
+
 # May 7, 2015
 * Version 0.1.5 with the WindBlower class which can push a dynamic element in a specific direction
 

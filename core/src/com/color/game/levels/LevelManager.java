@@ -85,7 +85,10 @@ public class LevelManager {
         level.addActor(new ColorPlatform(new Vector2(17, 4), 5, 1, level, PlatformColor.RED, false));
         level.addActor(new ColorPlatform(new Vector2(17, 8), 5, 1, level, PlatformColor.RED, true));
         level.addActor(new ColorPlatform(new Vector2(42, 4), 5, 1, level, PlatformColor.YELLOW, false));
-        level.addActor(new ColorPlatform(new Vector2(67, 4), 5, 1, level, PlatformColor.BLUE, false));
+
+        //Altering movement platforms
+        level.addActor(new AlteringPlatform(new Vector2(67, 4), 20, 1, level.map, 0f));
+        level.addActor(new AlteringPlatform(new Vector2(50,4), 5, 1, level.map, 5f));
 
         // Notices
         level.addActor(new Notice(new Vector2(4, 1), 3, 3, level.map, 0));

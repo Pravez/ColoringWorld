@@ -91,4 +91,10 @@ public class StaticPhysicComponent extends PhysicComponent{
         this.body.createFixture(fixtureDef);
         shape.dispose();
     }
+
+    @Override
+    public void configureAltering(float friction){
+        this.body.getFixtureList().get(0).setFriction(friction);
+        this.fixtureDef.friction = friction;
+    }
 }

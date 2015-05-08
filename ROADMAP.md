@@ -37,8 +37,7 @@ With this, you will be able to have an overview of the game and its future.
 * adding cheatcodes : change current level, restart level, teleport to mouse position, … (debug tools)
 
 ## Version 0.2 - Adding features
-* the game can be paused (Alexis)
-* the game can be resumed (Alexis)
+* the game can be paused and resumed (Alexis)
 * the character can squat/duck (Paul)
 * progressive tutorial with notices displaying sentences in the back spread in the level
 * the color platforms can have a default state such as activated and by activating the color, they become disabled (Alexis)

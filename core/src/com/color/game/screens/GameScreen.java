@@ -150,6 +150,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         this.yellowCommand.stop();
 
         this.uiStage.colorGauges.stopAll();
+        endCommands();
     }
 
     /**
@@ -189,7 +190,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
     /**
      * Method called to render the game screen
-     * @param delta
+     * @param delta the delta time since the last render call
      */
     @Override
     public void render(float delta) {

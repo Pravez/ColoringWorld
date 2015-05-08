@@ -233,6 +233,7 @@ public class LevelManager {
 
         // Enemies
         level.addActor(new MovingEnemy(new Vector2(53, 1), 2, 2, level));
+        level.addActor(new MovingEnemy(new Vector2(60, 7), 2, 2, level));
 
         levels.add(level);
 

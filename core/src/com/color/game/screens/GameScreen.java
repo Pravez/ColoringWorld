@@ -402,9 +402,19 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         final Fixture b = contact.getFixtureB();
 
         if (UserData.isEnemy(a.getBody()) && UserData.isPlatform(b.getBody())) {
-            ((Enemy)((UserData)a.getBody().getUserData()).getElement()).act((BaseStaticElement)((UserData)b.getBody().getUserData()).getElement());
+            this.runnables.add(new Runnable() {
+                @Override
+                public void run() {
+                    ((Enemy) ((UserData) a.getBody().getUserData()).getElement()).act((BaseStaticElement) ((UserData) b.getBody().getUserData()).getElement());
+                }
+            });
         } else if (UserData.isEnemy(b.getBody()) && UserData.isPlatform(a.getBody())) {
-            ((Enemy)((UserData)b.getBody().getUserData()).getElement()).act((BaseStaticElement)((UserData)a.getBody().getUserData()).getElement());
+            this.runnables.add(new Runnable() {
+                @Override
+                public void run() {
+                    ((Enemy) ((UserData) b.getBody().getUserData()).getElement()).act((BaseStaticElement) ((UserData) a.getBody().getUserData()).getElement());
+                }
+            });
         }
 
         if (UserData.isCharacter(b.getBody())) {

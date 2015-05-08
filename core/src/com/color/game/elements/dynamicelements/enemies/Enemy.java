@@ -35,6 +35,7 @@ public abstract class Enemy extends BaseDynamicElement {
     }
 
     public void respawn() {
+        this.physicComponent.getBody().setActive(true);
         this.physicComponent.getBody().setTransform(this.initialPosition, 0);
         this.physicComponent.rebase();
     }

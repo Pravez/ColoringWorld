@@ -32,4 +32,8 @@ public abstract class BaseElement extends Actor {
         return new Vector2(this.physicComponent.getBody().getPosition().x * WORLD_TO_SCREEN,
                 this.physicComponent.getBody().getPosition().y * WORLD_TO_SCREEN);
     }
+
+    public PhysicComponent getPhysicComponent() {
+        return physicComponent;
+    }
 }

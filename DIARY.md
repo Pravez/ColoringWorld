@@ -6,6 +6,7 @@
 * Corrected bug of walljump
 * Added a collection of levels to test every element of gameplay
 * Released version 0.2
+* Version 0.2.1 with enemies who can die, move and prevent from falling
 
 # May 7, 2015
 * Version 0.1.5 with the WindBlower class which can push a dynamic element in a specific direction

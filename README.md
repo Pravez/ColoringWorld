@@ -1,8 +1,11 @@
 # ColoringWorld
 Game featuring a strange man using colors to live his life
 
-### Version 0.3 in development :
-*
+## Version 0.2 in development :
+### Done :
+* enemies who kill the character
+* enemies who can die
+* enemies who can move
 
 
 # Version 0.2 released :

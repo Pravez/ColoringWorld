@@ -1,3 +1,12 @@
+# 0.2.1 (May 8, 2015)
+Features :
+- Enemies can die
+- Enemies can move
+- Enemies who can move won't fall from their platform
+
+# 0.2.0 (May 8, 2015)
+Adding some features to the initial version, work on the BaseStaticElements
+
 # 0.1.7a (May 8, 2015)
 Features :
 - Correction of the bug of the wall jumping

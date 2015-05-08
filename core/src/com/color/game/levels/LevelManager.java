@@ -1,16 +1,11 @@
 package com.color.game.levels;
 
 import com.badlogic.gdx.math.Vector2;
-import com.color.game.elements.staticelements.*;
-import com.color.game.elements.staticelements.platforms.AlteringPlatform;
-import com.color.game.elements.staticelements.platforms.ColorPlatform;
-import com.color.game.elements.staticelements.platforms.DeadlyPlatform;
-import com.color.game.elements.staticelements.platforms.Platform;
-import com.color.game.elements.staticelements.sensors.Magnet;
+import com.color.game.elements.staticelements.Exit;
+import com.color.game.elements.staticelements.platforms.*;
 import com.color.game.elements.staticelements.sensors.Notice;
 import com.color.game.elements.staticelements.sensors.Teleporter;
 import com.color.game.elements.staticelements.sensors.WindBlower;
-import com.color.game.elements.staticelements.platforms.PlatformColor;
 import com.color.game.elements.staticelements.sensors.WindDirection;
 
 import java.util.ArrayList;
@@ -71,11 +66,11 @@ public class LevelManager {
      */
     public static void init() {
         levels = new ArrayList<Level>();
-        addFirstLevel();
+        /*addFirstLevel();
         addSecondLevel();
         addThirdLevel();
         addForthLevel();
-        addFifthLevel();
+        addFifthLevel();*/
         addSixthLevel();
         addSeventhLevel();
     }
@@ -215,6 +210,27 @@ public class LevelManager {
 
     // Magnes & Magnet
     public static void addSixthLevel() {
+        Level level = new Level(new Vector2(4, 1));
+        level.unlock();
+
+        //Ground
+        level.addActor(new Platform(new Vector2(0, 0), 200, 1, level.map));
+
+        //Walls
+        level.addActor(new Platform(new Vector2(50,1),1,2,level.map));
+        level.addActor(new Platform(new Vector2(75,1),1,2,level.map));
+        level.addActor(new Platform(new Vector2(100,1),1,2,level.map));
+        level.addActor(new Platform(new Vector2(125,1),1,2,level.map));
+        level.addActor(new Platform(new Vector2(150,1),1,2,level.map));
+
+        level.addActor(new Platform(new Vector2(0,1),1,32,level.map));
+        level.addActor(new Platform(new Vector2(199,1),1,32,level.map));
+
+        //Platforms
+        level.addActor(new Platform(new Vector2(55,6),25,1,level.map));
+        level.addActor(new Platform(new Vector2(105,6),25,1,level.map));
+
+        levels.add(level);
 
     }
 

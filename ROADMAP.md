@@ -39,14 +39,13 @@ With this, you will be able to have an overview of the game and its future.
 ## Version 0.2 - Adding features
 * the game can be paused and resumed (Alexis)
 * the character can squat/duck (Paul)
-* progressive tutorial with notices displaying sentences in the back spread in the level
 * the color platforms can have a default state such as activated and by activating the color, they become disabled (Alexis)
 * wind blowers (Alexis)
 * adding magnetic fields to the character that he can activate next to magnet and hang to the magnet (Alexis)
 * adding magnetic fields on the ground or anywhere that attracts the character (Paul)
 * teleporters in the level (Alexis)
-* slippery zones
-* zones that grip the character to the floor
+* slippery zones (Paul)
+* zones that grip the character to the floor (Paul)
 * zones in the level which have special effect on the character when a color is activated or something else, 
 by default (when blue is activated, the gravity is reversed, …)
 
@@ -68,6 +67,7 @@ by default (when blue is activated, the gravity is reversed, …)
 * buttons effects (hover, active, …)
 
 ## Version 0.5 - Level design
+* progressive tutorial with notices displaying sentences in the back spread in the level
 * sprites (character, blocks)
 * animations
 * animation of death : the game runs slower

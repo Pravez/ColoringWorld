@@ -1,12 +1,15 @@
 package com.color.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.math.MathUtils;
 import com.color.game.assets.Assets;
 import com.color.game.assets.MusicManager;
 import com.color.game.assets.SoundManager;
 import com.color.game.levels.LevelManager;
 import com.color.game.levels.Tutorial;
 import com.color.game.screens.*;
+
+import java.util.ArrayList;
 
 public class ColorGame extends Game {
 
@@ -19,13 +22,11 @@ public class ColorGame extends Game {
 	public KeyMapper    keys;
 
 	private SplashScreen         splashScreen;
-	private DeathScreen          deathScreen;
-	private EndScreen            endScreen;
 	private GameScreen           gameScreen;
 	private LevelSelectionScreen levelSelectionScreen;
 	private MenuScreen           menuScreen;
 	private OptionScreen         optionScreen;
-	private WinScreen            winScreen;
+	private TransitionScreen     transitionScreen;
 
 	/**
 	 * Method to init all the needed assets, the sounds, musics, and creating all the different screens
@@ -43,13 +44,11 @@ public class ColorGame extends Game {
 
 		this.keys         = new KeyMapper();
 
-		this.deathScreen          = new DeathScreen(this);
-		this.endScreen            = new EndScreen(this);
 		this.gameScreen           = new GameScreen(this);
 		this.levelSelectionScreen = new LevelSelectionScreen(this);
 		this.menuScreen           = new MenuScreen(this);
 		this.optionScreen 	      = new OptionScreen(this);
-		this.winScreen            = new WinScreen(this);
+		this.transitionScreen     = new TransitionScreen(this);
 
 		this.splashScreen.end();
 	}
@@ -77,11 +76,41 @@ public class ColorGame extends Game {
 
 	// Screens
 	public void setDeathScreen() {
-		super.setScreen(this.deathScreen);
+		this.transitionScreen.setTitle("You die");
+		/*if (BaseStage.character.getDeathState() == DeathState.PIKES) {
+            cause.setText("Aouch, it is prickly !");
+        } else {*/
+		ArrayList<String> sentences = new ArrayList<String>();
+		sentences.add("You have fallen into a puddle...");
+		sentences.add("Maybe you thought you could fly ?");
+		sentences.add("Nice try ! But not...");
+		sentences.add("GAME OVER... You have to try again !");
+		sentences.add("Are you a dummy ? This was so easy !");
+		sentences.add("This game is such a pain !");
+		sentences.add("Still playing at this game ?");
+
+		this.transitionScreen.setMessage(sentences.get(MathUtils.random(0, sentences.size() - 1)));
+		//}
+		super.setScreen(this.transitionScreen);
 	}
 
 	public void setEndScreen() {
-		super.setScreen(this.endScreen);
+		this.transitionScreen.setTitle("You finished the game");
+		/*if (BaseStage.character.getDeathState() == DeathState.PIKES) {
+            cause.setText("Aouch, it is prickly !");
+        } else {*/
+		ArrayList<String> sentences = new ArrayList<String>();
+		sentences.add("You have fallen into a puddle...");
+		sentences.add("Maybe you thought you could fly ?");
+		sentences.add("Nice try ! But not...");
+		sentences.add("GAME OVER... You have to try again !");
+		sentences.add("Are you a dummy ? This was so easy !");
+		sentences.add("This game is such a pain !");
+		sentences.add("Still playing at this game ?");
+
+		this.transitionScreen.setMessage(sentences.get(MathUtils.random(0, sentences.size() - 1)));
+		//}
+		super.setScreen(this.transitionScreen);
 	}
 
 	public void setGameScreen() {
@@ -101,6 +130,21 @@ public class ColorGame extends Game {
 	}
 
 	public void setWinScreen() {
-		super.setScreen(this.winScreen);
+		this.transitionScreen.setTitle("You win");
+		/*if (BaseStage.character.getDeathState() == DeathState.PIKES) {
+            cause.setText("Aouch, it is prickly !");
+        } else {*/
+		ArrayList<String> sentences = new ArrayList<String>();
+		sentences.add("You have fallen into a puddle...");
+		sentences.add("Maybe you thought you could fly ?");
+		sentences.add("Nice try ! But not...");
+		sentences.add("GAME OVER... You have to try again !");
+		sentences.add("Are you a dummy ? This was so easy !");
+		sentences.add("This game is such a pain !");
+		sentences.add("Still playing at this game ?");
+
+		this.transitionScreen.setMessage(sentences.get(MathUtils.random(0, sentences.size() - 1)));
+		//}
+		super.setScreen(this.transitionScreen);
 	}
 }

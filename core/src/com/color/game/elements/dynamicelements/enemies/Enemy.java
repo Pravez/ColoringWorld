@@ -20,10 +20,20 @@ import com.color.game.screens.GameScreen;
  */
 public abstract class Enemy extends BaseDynamicElement {
 
+    /**
+     * The initial position of the enemy in the level
+     */
     private Vector2 initialPosition;
 
     private ShapeRenderer shapeRenderer;
 
+    /**
+     * Enemy constructor
+     * @param position the position of the enemy
+     * @param width the width of the enemy
+     * @param height the height of the enemy
+     * @param level the level of the enemy
+     */
     public Enemy(Vector2 position, int width, int height, Level level) {
         super(position, width, height, level.getWorld(), PhysicComponent.GROUP_SCENERY);
         level.addEnemy(this);
@@ -34,6 +44,9 @@ public abstract class Enemy extends BaseDynamicElement {
         this.shapeRenderer = new ShapeRenderer();
     }
 
+    /**
+     * Method called when restarting the level to reset the enemy in the level
+     */
     public void respawn() {
         this.physicComponent.getBody().setActive(true);
         this.physicComponent.getBody().setTransform(this.initialPosition, 0);

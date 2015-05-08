@@ -1,6 +1,7 @@
 package com.color.game.levels;
 
 import com.badlogic.gdx.math.Vector2;
+import com.color.game.elements.dynamicelements.enemies.MovingEnemy;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.platforms.*;
 import com.color.game.elements.staticelements.sensors.Notice;
@@ -229,6 +230,9 @@ public class LevelManager {
         //Platforms
         level.addActor(new Platform(new Vector2(55,6),25,1,level.map));
         level.addActor(new Platform(new Vector2(105,6),25,1,level.map));
+
+        // Enemies
+        level.addActor(new MovingEnemy(new Vector2(53, 1), 2, 2, level));
 
         levels.add(level);
 

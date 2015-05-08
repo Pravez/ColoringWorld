@@ -14,6 +14,7 @@ import com.color.game.ColorGame;
 import com.color.game.command.*;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.Character;
+import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.dynamicelements.states.AloftState;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.staticelements.BaseStaticElement;
@@ -109,6 +110,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      */
     private void restart() {
         this.character.reset(LevelManager.getCurrentLevel().characterPos);
+        LevelManager.getCurrentLevel().restart();
         respawn();
         this.restart = false;
     }
@@ -398,6 +400,12 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     public void beginContact(Contact contact) {
         final Fixture a = contact.getFixtureA();
         final Fixture b = contact.getFixtureB();
+
+        if (UserData.isEnemy(a.getBody()) && UserData.isPlatform(b.getBody())) {
+            ((Enemy)((UserData)a.getBody().getUserData()).getElement()).act((BaseStaticElement)((UserData)b.getBody().getUserData()).getElement());
+        } else if (UserData.isEnemy(b.getBody()) && UserData.isPlatform(a.getBody())) {
+            ((Enemy)((UserData)b.getBody().getUserData()).getElement()).act((BaseStaticElement)((UserData)a.getBody().getUserData()).getElement());
+        }
 
         if (UserData.isCharacter(b.getBody())) {
 

@@ -124,7 +124,6 @@ public class DynamicPhysicComponent extends PhysicComponent{
      */
     @Override
     public void move(float max_vel) {
-
         if (this.body.getLinearVelocity().x > max_vel) {
             this.body.getLinearVelocity().x = max_vel;
         } else if(this.body.getLinearVelocity().x < -max_vel) {

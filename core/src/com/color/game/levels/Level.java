@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.staticelements.platforms.ColorPlatform;
 import com.color.game.elements.staticelements.platforms.PlatformColor;
 
@@ -34,14 +35,29 @@ public class Level extends Stage {
     private Array<ColorPlatform> colorPlatforms;
 
     /**
+     * The list of the {@link Enemy} of the level
+     */
+    private Array<Enemy> enemies;
+
+    /**
      * The Constructor of the Level
      * @param characterPos the position of the {@link com.color.game.elements.dynamicelements.Character} at the beginning of the level
      */
     public Level(Vector2 characterPos) {
-        this.map = new Map(Map.WORLD_GRAVITY, true);
+        this.map          = new Map(Map.WORLD_GRAVITY, true);
         this.characterPos = characterPos.scl(2);
 
         this.colorPlatforms = new Array<>();
+        this.enemies        = new Array<>();
+    }
+
+    /**
+     * Method to call when restarting the Level in order to restart all the positions of the scenery and enemies
+     */
+    public void restart() {
+        for (Enemy enemy : this.enemies) {
+            enemy.respawn();
+        }
     }
 
     public boolean isLocked() {
@@ -74,6 +90,14 @@ public class Level extends Stage {
      */
     public void addColorPlatform(ColorPlatform colorPlatform) {
         this.colorPlatforms.add(colorPlatform);
+    }
+
+    /**
+     * Method to add a {@link Enemy} to the Level (adding it to the list)
+     * @param enemy the {@link Enemy} to add
+     */
+    public void addEnemy(Enemy enemy) {
+        this.enemies.add(enemy);
     }
 
     /**

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
-import com.color.game.elements.staticelements.sensors.Sensor;
 import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
 
@@ -47,6 +46,9 @@ public class Teleporter extends Sensor {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.MAGENTA);
         shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
+        Color color = Color.MAGENTA;
+        shapeRenderer.setColor(color.r, color.g, color.b, 0.7f);
+        shapeRenderer.rect(this.teleportPosition.x * WORLD_TO_SCREEN, this.teleportPosition.y * WORLD_TO_SCREEN, 2 * WORLD_TO_SCREEN, 2 * WORLD_TO_SCREEN);
         shapeRenderer.end();
 
         batch.begin();

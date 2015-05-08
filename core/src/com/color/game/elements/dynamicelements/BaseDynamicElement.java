@@ -79,6 +79,8 @@ public abstract class BaseDynamicElement extends BaseElement {
      */
     public abstract void squat();
 
+    public abstract void stopSquat();
+
     /**
      * Method to stop the element, and so will let the damping do his job : the element will be in a sliding state.
      */
@@ -117,5 +119,13 @@ public abstract class BaseDynamicElement extends BaseElement {
 
     public void setAloftState(State aloftState) {
         this.aloftState = aloftState;
+    }
+
+    public Vector2 getSquatVector2(){
+        return null;
+    }
+
+    public Vector2 getStandVector2(){
+        return null;
     }
 }

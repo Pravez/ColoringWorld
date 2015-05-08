@@ -10,9 +10,7 @@ public class EndSquatCommand implements Command{
 
     @Override
     public boolean execute(BaseDynamicElement element, float delta) {
-        /*if(element.getAloftState() instanceof AloftState){
-            element.setAloftState(new StandingState());
-        }*/
+        element.stopSquat();
         return true;
     }
 }

@@ -25,6 +25,7 @@ public class Character extends BaseDynamicElement {
     public static final float CHARACTER_RUNNING_VELOCITY = 35f;
     public static final float CHARACTER_WALKING_VELOCITY = 15f;
     public static final int CHARACTER_HEIGHT = 2;
+    public static final int CHARACTER_SQUAT_HEIGHT = 1;
     public static final int CHARACTER_WIDTH = 1;
 
     private ShapeRenderer shapeRenderer;
@@ -91,6 +92,12 @@ public class Character extends BaseDynamicElement {
 
     @Override
     public void squat() {
+        physicComponent.squat();
+    }
+
+    @Override
+    public void stopSquat(){
+        physicComponent.stopSquat();
     }
 
     /**
@@ -114,5 +121,13 @@ public class Character extends BaseDynamicElement {
 
     public void setOnWall(boolean onWall) {
         this.onWall = onWall;
+    }
+
+    public Vector2 getSquatVector2(){
+        return new Vector2(CHARACTER_WIDTH, CHARACTER_SQUAT_HEIGHT);
+    }
+
+    public Vector2 getStandVector2(){
+        return new Vector2(CHARACTER_WIDTH, CHARACTER_HEIGHT);
     }
 }

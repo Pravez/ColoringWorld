@@ -11,6 +11,7 @@ import com.color.game.elements.PhysicComponent;
 public class DynamicPhysicComponent extends PhysicComponent{
 
     public static final float DYNAMIC_ELEMENT_DENSITY = 1f;
+    public static final float DYNAMIC_ELEMENT_SQUAT_DENSITY = 4f;
 
     public static final float DYNAMIC_ELEMENT_BASE_VELOCITY = 25f;
     public static final Vector2 DYNAMIC_ELEMENT_BASE_JUMP = new Vector2(0, 550f);
@@ -136,5 +137,41 @@ public class DynamicPhysicComponent extends PhysicComponent{
         }else{
             this.body.applyLinearImpulse(currentImpulse, this.body.getWorldCenter(), true);
         }
+    }
+
+    @Override
+    public void squat() {
+        PolygonShape shape = new PolygonShape();
+
+        Vector2 shapesize = ((BaseDynamicElement)element).getSquatVector2();
+        shape.setAsBox(shapesize.x, shapesize.y);
+
+        body.destroyFixture(this.body.getFixtureList().get(0));
+
+        this.fixtureDef.shape = shape;
+        this.fixtureDef.density = DYNAMIC_ELEMENT_SQUAT_DENSITY;
+        this.body.createFixture(this.fixtureDef);
+
+        this.body.setTransform(this.body.getPosition().x, this.body.getPosition().y-shapesize.y, 0f);
+
+        this.userData.setHeight((int)shapesize.y*2);
+
+    }
+
+    @Override
+    public void stopSquat() {
+
+        PolygonShape shape = new PolygonShape();
+
+        Vector2 shapesize = ((BaseDynamicElement)element).getStandVector2();
+        shape.setAsBox(shapesize.x, shapesize.y);
+
+        body.destroyFixture(this.body.getFixtureList().get(0));
+
+        this.fixtureDef.shape = shape;
+        this.fixtureDef.density = DYNAMIC_ELEMENT_DENSITY;
+        this.body.createFixture(this.fixtureDef);
+
+        this.userData.setHeight((int)shapesize.y*2);
     }
 }

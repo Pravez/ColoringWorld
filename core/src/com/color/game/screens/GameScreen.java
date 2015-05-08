@@ -447,7 +447,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         // Sensors
         if (BodyUtils.isSensor(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
             ((Sensor)((UserData)a.getBody().getUserData()).getElement()).endAct();
-        } else if (BodyUtils.isNotice(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
+        } else if (BodyUtils.isSensor(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
             ((Sensor)((UserData)b.getBody().getUserData()).getElement()).endAct();
         }
 

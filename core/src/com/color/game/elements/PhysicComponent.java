@@ -63,6 +63,8 @@ public abstract class PhysicComponent {
     public void changeWorld(World world, Vector2 position){}
     public void jump(){}
     public void move(float max_vel){}
+    public void squat(){}
+    public void stopSquat(){}
 
     /*public void createFixture() {
         if (this.body.getFixtureList().size == 0) {

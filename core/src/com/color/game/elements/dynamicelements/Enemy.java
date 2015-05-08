@@ -32,4 +32,9 @@ public class Enemy extends BaseDynamicElement {
     public void squat() {
 
     }
+
+    @Override
+    public void stopSquat() {
+
+    }
 }

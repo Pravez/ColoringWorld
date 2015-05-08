@@ -9,5 +9,6 @@ public enum UserDataType {
     PLATFORM,
     CHARACTER,
     COLORPLATFORM,
-    ENEMY
+    ENEMY,
+    MAGNET
 }

@@ -43,9 +43,10 @@ With this, you will be able to have an overview of the game and its future.
 * progressive tutorial with notices displaying sentences in the back spread in the level
 * the color platforms can have a default state such as activated and by activating the color, they become disabled (Alexis)
 * wind blowers (Alexis)
-* adding magnetic fields to the character that he can activate next to magnes and hang to the magnes (Alexis)
+* adding magnetic fields to the character that he can activate next to magnet and hang to the magnet (Alexis)
+* adding magnetic fields on the ground or anywhere that attracts the character (Paul)
 * teleporters in the level (Alexis)
-* splippery zones
+* slippery zones
 * zones that grip the character to the floor
 * zones in the level which have special effect on the character when a color is activated or something else, 
 by default (when blue is activated, the gravity is reversed, …)

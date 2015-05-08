@@ -23,6 +23,11 @@ public class BodyUtils {
         return userData != null && userData.getUserDataType() == UserDataType.MAGNES;
     }
 
+    public static boolean isMagnet(Body body){
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && userData.getUserDataType() == UserDataType.MAGNET;
+    }
+
     public static boolean isExit(Body body) {
         UserData userData = (UserData) body.getUserData();
         return userData != null && userData.getUserDataType() == UserDataType.EXIT;

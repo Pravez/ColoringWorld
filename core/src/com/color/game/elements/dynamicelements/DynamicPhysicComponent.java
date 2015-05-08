@@ -174,4 +174,9 @@ public class DynamicPhysicComponent extends PhysicComponent{
 
         this.userData.setHeight((int)shapesize.y*2);
     }
+
+    @Override
+    public void applyForce(Vector2 force, Vector2 point) {
+        this.body.applyForceToCenter(force, true);
+    }
 }

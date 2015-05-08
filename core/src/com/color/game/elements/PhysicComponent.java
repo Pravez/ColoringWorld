@@ -65,12 +65,7 @@ public abstract class PhysicComponent {
     public void move(float max_vel){}
     public void squat(){}
     public void stopSquat(){}
-
-    /*public void createFixture() {
-        if (this.body.getFixtureList().size == 0) {
-            this.body.createFixture(this.shape, this.density);
-        }
-    }*/
+    public void applyForce(Vector2 force, Vector2 point){}
 
     public void configureUserData(UserData userData){
         this.userData = userData;
@@ -90,8 +85,4 @@ public abstract class PhysicComponent {
     public Body getBody() {
         return body;
     }
-
-
-
-
 }

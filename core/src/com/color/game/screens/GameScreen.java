@@ -26,8 +26,6 @@ import com.color.game.levels.LevelManager;
 import com.color.game.tools.ColorGauge;
 import com.color.game.utils.BodyUtils;
 
-import java.util.Iterator;
-
 /**
  * GameScreen, the screen during which the game is been played
  */
@@ -434,6 +432,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             this.currentMagnes = (Magnes)((UserData)b.getBody().getUserData()).getElement();
         }
 
+        //Magnet
+        if(BodyUtils.isMagnet(b.getBody()) && BodyUtils.isCharacter(a.getBody())){
+            ((Magnet)((UserData)b.getBody().getUserData()).getElement()).act(character);
+        }
+
         if (BodyUtils.isExit(a.getBody())) {
             this.runningLevel = ((Exit) ((UserData) a.getBody().getUserData()).getElement()).getLevelIndex();
         }
@@ -454,6 +457,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         // Magnes
         if (BodyUtils.isMagnes(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
             this.currentMagnes = null;
+        }
+
+        //Magnet
+        if (BodyUtils.isMagnet(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
+            ((Magnet)((UserData)b.getBody().getUserData()).getElement()).endAct();
         }
 
         if(BodyUtils.isCharacter(b.getBody())){

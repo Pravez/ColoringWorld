@@ -64,6 +64,10 @@ public abstract class BaseDynamicElement extends BaseElement {
         this.physicComponent.getBody().setLinearVelocity(velocity);
     }
 
+    public void attractToPoint(Vector2 force, Vector2 point){
+        this.physicComponent.applyForce(force, point);
+    }
+
     public void removeGravity() {
         this.physicComponent.getBody().setGravityScale(0);
     }

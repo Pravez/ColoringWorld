@@ -100,8 +100,9 @@ public class LevelManager {
         // Deadly Platforms
         level.addActor(new DeadlyPlatform(new Vector2(15, 0), 10, 1, level.map));
 
-        // Magnes
-        level.addActor(new Magnes(new Vector2(7, 5), 6, level.map));
+        // Magnet
+        //level.addActor(new Magnes(new Vector2(7, 5), 6, level.map));
+        level.addActor(new Magnet(new Vector2(5,2), 6, level.map));
 
         levels.add(level);
     }

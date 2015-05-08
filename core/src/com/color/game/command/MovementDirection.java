@@ -1,4 +1,4 @@
-package com.color.game.enums;
+package com.color.game.command;
 
 
 public enum MovementDirection {

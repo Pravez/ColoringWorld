@@ -4,44 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.UserData;
-import com.color.game.enums.UserDataType;
 
 public class BodyUtils {
-
-    public static boolean isCharacter(Body body) {
-        UserData userData = (UserData) body.getUserData();
-        return userData != null && userData.getUserDataType() == UserDataType.CHARACTER;
-    }
-
-    public static boolean isSensor(Body body) {
-        UserData userData = (UserData) body.getUserData();
-        return userData != null && userData.getUserDataType() == UserDataType.SENSOR;
-    }
-
-    public static boolean isMagnes(Body body) {
-        UserData userData = (UserData) body.getUserData();
-        return userData != null && userData.getUserDataType() == UserDataType.MAGNES;
-    }
-
-    public static boolean isMagnet(Body body){
-        UserData userData = (UserData) body.getUserData();
-        return userData != null && userData.getUserDataType() == UserDataType.MAGNET;
-    }
-
-    public static boolean isExit(Body body) {
-        UserData userData = (UserData) body.getUserData();
-        return userData != null && userData.getUserDataType() == UserDataType.EXIT;
-    }
-
-    public static boolean isPlatform(Body body){
-        UserData userData = (UserData) body.getUserData();
-        return userData != null && (userData.getUserDataType() == UserDataType.COLORPLATFORM || userData.getUserDataType() == UserDataType.PLATFORM);
-    }
-
-    public static boolean isEnemy(Body body){
-        UserData userData = (UserData) body.getUserData();
-        return userData != null && userData.getUserDataType() == UserDataType.ENEMY;
-    }
 
     public static boolean onWall(Body character, Body platform){
         boolean onWall = false;

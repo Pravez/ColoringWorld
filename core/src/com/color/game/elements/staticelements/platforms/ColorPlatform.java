@@ -1,4 +1,4 @@
-package com.color.game.elements.staticelements;
+package com.color.game.elements.staticelements.platforms;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.PhysicComponent;
+import com.color.game.elements.staticelements.BaseStaticElement;
 import com.color.game.elements.userData.StaticElementUserData;
-import com.color.game.enums.PlatformColor;
-import com.color.game.enums.UserDataType;
+import com.color.game.elements.userData.UserDataType;
 import com.color.game.levels.Level;
 import com.color.game.screens.GameScreen;
 

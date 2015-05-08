@@ -1,10 +1,11 @@
-package com.color.game.elements.staticelements;
+package com.color.game.elements.staticelements.sensors;
 
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
+import com.color.game.elements.staticelements.BaseStaticElement;
 import com.color.game.elements.userData.StaticElementUserData;
-import com.color.game.enums.UserDataType;
+import com.color.game.elements.userData.UserDataType;
 import com.color.game.levels.Map;
 
 /**

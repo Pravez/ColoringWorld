@@ -1,4 +1,4 @@
-package com.color.game.elements.staticelements;
+package com.color.game.elements.staticelements.sensors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -9,28 +9,26 @@ import com.badlogic.gdx.math.Vector2;
 import com.color.game.command.PushCommand;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
+import com.color.game.elements.staticelements.BaseStaticElement;
 import com.color.game.elements.userData.StaticElementUserData;
-import com.color.game.enums.UserDataType;
-import com.color.game.enums.WindDirection;
+import com.color.game.elements.userData.UserDataType;
 import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
 
 /**
- * WindBlower class, platform that can push a character in a certain direction
+ * Static element supposed to do the inverse of the windblower. Instead of pushing a dynamic element, it will force it
+ * to go on his center.
  */
-public class WindBlower extends Sensor {
+public class Magnet extends Sensor {
 
-    private static final float PUSH_FORCE = 60f;
+    private static final float ATTRACT_FORCE = 10f;
     private PushCommand pushCommand;
-    private Vector2 force;
 
     private ShapeRenderer shapeRenderer;
 
-    public WindBlower(Vector2 position, int width, int height, Map map, WindDirection direction) {
-        super(position, width, height, map);
+    public Magnet(Vector2 position, int radius, Map map) {
+        super(position, radius, map);
 
-        Vector2 coordinates = direction.toCoordinates();
-        this.force = new Vector2(coordinates.x * PUSH_FORCE, coordinates.y * PUSH_FORCE);
         this.pushCommand = new PushCommand();
 
         this.shapeRenderer = new ShapeRenderer();
@@ -42,7 +40,8 @@ public class WindBlower extends Sensor {
         this.pushCommand.setRunnable(new Runnable() {
             @Override
             public void run() {
-                element.applyLinearForce(force);
+
+                element.applyLinearForce(calculateForce(element.getCenter()));
             }
         });
         element.addCommand(this.pushCommand);
@@ -53,6 +52,24 @@ public class WindBlower extends Sensor {
         this.pushCommand.end();
     }
 
+    public Vector2 calculateForce(Vector2 dynamicElement){
+        Vector2 center = this.getCenter();
+        Vector2 force = new Vector2(0,0);
+        if(dynamicElement.x > center.x){
+            force.x = -ATTRACT_FORCE;
+        }else if(dynamicElement.x < center.x){
+            force.x = ATTRACT_FORCE;
+        }
+
+        if(dynamicElement.y > center.y){
+            force.y = -ATTRACT_FORCE;
+        }else if(dynamicElement.y < center.y){
+            force.y = ATTRACT_FORCE;
+        }
+
+        return force;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
@@ -61,9 +78,9 @@ public class WindBlower extends Sensor {
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        Color c = Color.CYAN;
+        Color c = Color.ORANGE;
         shapeRenderer.setColor(c.r, c.g, c.b, 0.5f);
-        shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
+        shapeRenderer.circle(this.getBounds().x + this.getBounds().width/2, this.getBounds().y + this.getBounds().width/2, this.getBounds().width/2);
         shapeRenderer.end();
         batch.begin();
     }

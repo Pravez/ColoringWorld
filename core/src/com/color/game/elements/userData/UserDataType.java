@@ -1,4 +1,4 @@
-package com.color.game.enums;
+package com.color.game.elements.userData;
 
 
 public enum UserDataType {
@@ -9,6 +9,5 @@ public enum UserDataType {
     PLATFORM,
     CHARACTER,
     COLORPLATFORM,
-    ENEMY,
-    MAGNET
+    ENEMY
 }

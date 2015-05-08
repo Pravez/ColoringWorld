@@ -1,4 +1,4 @@
-package com.color.game.elements.staticelements;
+package com.color.game.elements.staticelements.sensors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -9,25 +9,21 @@ import com.badlogic.gdx.math.Vector2;
 import com.color.game.command.PushCommand;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
+import com.color.game.elements.staticelements.BaseStaticElement;
 import com.color.game.elements.userData.StaticElementUserData;
-import com.color.game.enums.UserDataType;
+import com.color.game.elements.userData.UserDataType;
 import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
 
-/**
- * Static element supposed to do the inverse of the windblower. Instead of pushing a dynamic element, it will force it
- * to go on his center.
- */
-public class Magnet extends BaseStaticElement{
+public class Magnes extends BaseStaticElement {
 
-    private static final float ATTRACT_FORCE = 10f;
     private PushCommand pushCommand;
 
     private ShapeRenderer shapeRenderer;
 
-    public Magnet(Vector2 position, int radius, Map map) {
+    public Magnes(Vector2 position, int radius, Map map) {
         super(position, radius, map, PhysicComponent.GROUP_SENSOR);
-        this.physicComponent.configureUserData(new StaticElementUserData(this, radius, radius, UserDataType.MAGNET));
+        this.physicComponent.configureUserData(new StaticElementUserData(this, radius, radius, UserDataType.MAGNES));
 
         this.pushCommand = new PushCommand();
 
@@ -39,29 +35,12 @@ public class Magnet extends BaseStaticElement{
         this.pushCommand.setRunnable(new Runnable() {
             @Override
             public void run() {
-
-                element.applyLinearForce(calculateForce(element.getCenter()));
+                float dx = getCenter().x - element.getCenter().x;
+                float dy = getCenter().y - element.getCenter().y;
+                element.applyLinearVelocity(new Vector2(dx, dy));
             }
         });
         element.addCommand(this.pushCommand);
-    }
-
-    public Vector2 calculateForce(Vector2 dynamicElement){
-        Vector2 center = this.getCenter();
-        Vector2 force = new Vector2(0,0);
-        if(dynamicElement.x > center.x){
-            force.x = -ATTRACT_FORCE;
-        }else if(dynamicElement.x < center.x){
-            force.x = ATTRACT_FORCE;
-        }
-
-        if(dynamicElement.y > center.y){
-            force.y = -ATTRACT_FORCE;
-        }else if(dynamicElement.y < center.y){
-            force.y = ATTRACT_FORCE;
-        }
-
-        return force;
     }
 
     public void endAct() {
@@ -76,7 +55,7 @@ public class Magnet extends BaseStaticElement{
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        Color c = Color.ORANGE;
+        Color c = Color.PURPLE;
         shapeRenderer.setColor(c.r, c.g, c.b, 0.5f);
         shapeRenderer.circle(this.getBounds().x + this.getBounds().width/2, this.getBounds().y + this.getBounds().width/2, this.getBounds().width/2);
         shapeRenderer.end();

@@ -7,7 +7,7 @@ import com.color.game.command.Command;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.states.SlidingState;
 import com.color.game.elements.dynamicelements.states.State;
-import com.color.game.enums.MovementDirection;
+import com.color.game.command.MovementDirection;
 
 import java.util.Iterator;
 

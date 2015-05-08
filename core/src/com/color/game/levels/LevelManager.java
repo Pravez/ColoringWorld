@@ -2,8 +2,16 @@ package com.color.game.levels;
 
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.staticelements.*;
-import com.color.game.enums.PlatformColor;
-import com.color.game.enums.WindDirection;
+import com.color.game.elements.staticelements.platforms.AlteringPlatform;
+import com.color.game.elements.staticelements.platforms.ColorPlatform;
+import com.color.game.elements.staticelements.platforms.DeadlyPlatform;
+import com.color.game.elements.staticelements.platforms.Platform;
+import com.color.game.elements.staticelements.sensors.Magnet;
+import com.color.game.elements.staticelements.sensors.Notice;
+import com.color.game.elements.staticelements.sensors.Teleporter;
+import com.color.game.elements.staticelements.sensors.WindBlower;
+import com.color.game.elements.staticelements.platforms.PlatformColor;
+import com.color.game.elements.staticelements.sensors.WindDirection;
 
 import java.util.ArrayList;
 

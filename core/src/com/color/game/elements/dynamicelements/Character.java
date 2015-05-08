@@ -12,8 +12,8 @@ import com.color.game.elements.dynamicelements.states.RunningState;
 import com.color.game.elements.dynamicelements.states.StandingState;
 import com.color.game.elements.dynamicelements.states.WalkingState;
 import com.color.game.elements.userData.DynamicElementUserData;
-import com.color.game.enums.MovementDirection;
-import com.color.game.enums.UserDataType;
+import com.color.game.command.MovementDirection;
+import com.color.game.elements.userData.UserDataType;
 import com.color.game.screens.GameScreen;
 
 /**

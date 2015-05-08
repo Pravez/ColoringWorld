@@ -1,4 +1,4 @@
-package com.color.game.elements.staticelements;
+package com.color.game.elements.staticelements.sensors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -6,27 +6,35 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.color.game.elements.PhysicComponent;
-import com.color.game.elements.userData.StaticElementUserData;
-import com.color.game.enums.UserDataType;
+import com.color.game.elements.dynamicelements.BaseDynamicElement;
+import com.color.game.elements.staticelements.sensors.Sensor;
 import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
 
-
 /**
- * The simple platform of the platforming game ! Extending the basic static element, this class is used to draw the
- * platform. No particularities because the basic platform has no particularities.
+ * Teleporter class, element which can teleport the player from a position to another
  */
-public class Platform extends BaseStaticElement {
+public class Teleporter extends Sensor {
+
+    private Vector2 teleportPosition;
 
     private ShapeRenderer shapeRenderer;
 
-    public Platform(Vector2 position, int width, int height, Map map) {
-        super(position, width, height, map, PhysicComponent.GROUP_SCENERY);
+    public Teleporter(Vector2 position, int width, int height, Map map, Vector2 teleportPosition) {
+        super(position, width, height, map);
 
-        this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.PLATFORM));
+        this.teleportPosition = teleportPosition.scl(2);
 
-        this.shapeRenderer = new ShapeRenderer();
+        shapeRenderer = new ShapeRenderer();
+    }
+
+    @Override
+    public void act(BaseDynamicElement element) {
+        element.teleport(this.teleportPosition);
+    }
+
+    @Override
+    public void endAct() {
     }
 
     @Override
@@ -37,9 +45,10 @@ public class Platform extends BaseStaticElement {
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.GREEN);
+        shapeRenderer.setColor(Color.MAGENTA);
         shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
         shapeRenderer.end();
+
         batch.begin();
     }
 }

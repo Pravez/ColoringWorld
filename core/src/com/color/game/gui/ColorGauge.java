@@ -1,4 +1,4 @@
-package com.color.game.tools;
+package com.color.game.gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.color.game.assets.Assets;
 import com.color.game.command.ColorCommand;
-import com.color.game.enums.PlatformColor;
-import com.color.game.levels.LevelManager;
 
 /**
  * ColorGauge, the class to show graphically the delay between two activation of a color command

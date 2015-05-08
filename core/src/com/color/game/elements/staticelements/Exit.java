@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.userData.StaticElementUserData;
-import com.color.game.enums.UserDataType;
+import com.color.game.elements.userData.UserDataType;
 import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
 

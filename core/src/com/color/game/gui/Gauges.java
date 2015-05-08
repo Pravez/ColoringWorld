@@ -1,12 +1,10 @@
-package com.color.game.tools;
+package com.color.game.gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.color.game.enums.PlatformColor;
-
-import java.util.ArrayList;
+import com.color.game.gui.ColorGauge;
 
 /**
  * Gauges, the class handling the different {@link ColorGauge} of the game, currently, there are three colors :

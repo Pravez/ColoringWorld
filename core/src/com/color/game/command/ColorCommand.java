@@ -1,7 +1,7 @@
 package com.color.game.command;
 
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
-import com.color.game.enums.PlatformColor;
+import com.color.game.elements.staticelements.platforms.PlatformColor;
 import com.color.game.levels.LevelManager;
 
 public class ColorCommand implements Command {

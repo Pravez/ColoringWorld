@@ -1,11 +1,12 @@
-package com.color.game.elements.dynamicelements;
+package com.color.game.elements.dynamicelements.enemies;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.color.game.elements.PhysicComponent;
+import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.userData.DynamicElementUserData;
-import com.color.game.enums.MovementDirection;
-import com.color.game.enums.UserDataType;
+import com.color.game.command.MovementDirection;
+import com.color.game.elements.userData.UserDataType;
 
 /**
  * Class waiting to be implemented in next releases.

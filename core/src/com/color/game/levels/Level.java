@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.color.game.elements.staticelements.ColorPlatform;
-import com.color.game.enums.PlatformColor;
+import com.color.game.elements.staticelements.platforms.ColorPlatform;
+import com.color.game.elements.staticelements.platforms.PlatformColor;
 
 /**
  * Level class containing everything needed for the Levels of the game

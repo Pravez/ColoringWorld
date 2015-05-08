@@ -1,4 +1,4 @@
-package com.color.game.elements.staticelements;
+package com.color.game.elements.staticelements.sensors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -7,41 +7,44 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.command.PushCommand;
-import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
-import com.color.game.elements.userData.StaticElementUserData;
-import com.color.game.enums.UserDataType;
 import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
 
-public class Magnes extends BaseStaticElement {
+/**
+ * WindBlower class, platform that can push a character in a certain direction
+ */
+public class WindBlower extends Sensor {
 
+    private static final float PUSH_FORCE = 60f;
     private PushCommand pushCommand;
+    private Vector2 force;
 
     private ShapeRenderer shapeRenderer;
 
-    public Magnes(Vector2 position, int radius, Map map) {
-        super(position, radius, map, PhysicComponent.GROUP_SENSOR);
-        this.physicComponent.configureUserData(new StaticElementUserData(this, radius, radius, UserDataType.MAGNES));
+    public WindBlower(Vector2 position, int width, int height, Map map, WindDirection direction) {
+        super(position, width, height, map);
 
+        Vector2 coordinates = direction.toCoordinates();
+        this.force = new Vector2(coordinates.x * PUSH_FORCE, coordinates.y * PUSH_FORCE);
         this.pushCommand = new PushCommand();
 
         this.shapeRenderer = new ShapeRenderer();
     }
 
+    @Override
     public void act(final BaseDynamicElement element) {
         this.pushCommand.restart();
         this.pushCommand.setRunnable(new Runnable() {
             @Override
             public void run() {
-                float dx = getCenter().x - element.getCenter().x;
-                float dy = getCenter().y - element.getCenter().y;
-                element.applyLinearVelocity(new Vector2(dx, dy));
+                element.applyLinearForce(force);
             }
         });
         element.addCommand(this.pushCommand);
     }
 
+    @Override
     public void endAct() {
         this.pushCommand.end();
     }
@@ -54,9 +57,9 @@ public class Magnes extends BaseStaticElement {
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        Color c = Color.PURPLE;
+        Color c = Color.CYAN;
         shapeRenderer.setColor(c.r, c.g, c.b, 0.5f);
-        shapeRenderer.circle(this.getBounds().x + this.getBounds().width/2, this.getBounds().y + this.getBounds().width/2, this.getBounds().width/2);
+        shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
         shapeRenderer.end();
         batch.begin();
     }

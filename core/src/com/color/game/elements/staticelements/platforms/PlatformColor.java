@@ -1,4 +1,4 @@
-package com.color.game.enums;
+package com.color.game.elements.staticelements.platforms;
 
 import com.badlogic.gdx.graphics.Color;
 

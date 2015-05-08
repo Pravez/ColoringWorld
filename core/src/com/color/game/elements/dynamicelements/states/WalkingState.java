@@ -1,6 +1,6 @@
 package com.color.game.elements.dynamicelements.states;
 
-import com.color.game.enums.MovementDirection;
+import com.color.game.command.MovementDirection;
 
 /**
  * State when an element is moving at its lower speed.

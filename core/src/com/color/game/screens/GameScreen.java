@@ -17,13 +17,16 @@ import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.states.AloftState;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.staticelements.*;
+import com.color.game.elements.staticelements.sensors.Magnes;
+import com.color.game.elements.staticelements.sensors.Magnet;
+import com.color.game.elements.staticelements.sensors.Sensor;
 import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.UserData;
-import com.color.game.enums.MovementDirection;
-import com.color.game.enums.PlatformColor;
-import com.color.game.game.UIStage;
+import com.color.game.command.MovementDirection;
+import com.color.game.elements.staticelements.platforms.PlatformColor;
+import com.color.game.gui.UIStage;
 import com.color.game.levels.LevelManager;
-import com.color.game.tools.ColorGauge;
+import com.color.game.gui.ColorGauge;
 import com.color.game.utils.BodyUtils;
 
 /**
@@ -147,6 +150,15 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         this.yellowCommand.stop();
 
         this.uiStage.colorGauges.stopAll();
+    }
+
+    /**
+     * Method to end all the Start Commands the character could have
+     */
+    private void endCommands() {
+        this.character.addCommand(new EndJumpCommand());
+        this.character.addCommand(new EndMoveCommand());
+        this.character.addCommand(new EndSquatCommand());
     }
 
     /**
@@ -387,16 +399,16 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         final Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if (BodyUtils.isCharacter(b.getBody())) {
+        if (UserData.isCharacter(b.getBody())) {
             ((DynamicElementUserData)b.getBody().getUserData()).addContact();
 
             // Character touching an enemy
-            if (BodyUtils.isEnemy(a.getBody())) {
+            if (UserData.isEnemy(a.getBody())) {
                 this.restart = true;
             }
 
             // Character touching a platform
-            if(BodyUtils.isPlatform(a.getBody())) {
+            if(UserData.isPlatform(a.getBody())) {
                 character.setAloftState(new LandedState());
                 character.setOnWall(BodyUtils.onWall(b.getBody(), a.getBody()));
 
@@ -411,14 +423,14 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
 
         // Sensors
-        if (BodyUtils.isSensor(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
+        if (UserData.isSensor(a.getBody()) && UserData.isCharacter(b.getBody())) {
             this.runnables.add(new Runnable() {
                 @Override
                 public void run() {
                     ((Sensor) ((UserData) a.getBody().getUserData()).getElement()).act(character);
                 }
             });
-        } else if (BodyUtils.isSensor(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
+        } else if (UserData.isSensor(b.getBody()) && UserData.isCharacter(a.getBody())) {
             this.runnables.add(new Runnable() {
                 @Override
                 public void run() {
@@ -428,17 +440,13 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
 
         // Magnes
-        if (BodyUtils.isMagnes(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
+        if (UserData.isMagnes(b.getBody()) && UserData.isCharacter(a.getBody())) {
             this.currentMagnes = (Magnes)((UserData)b.getBody().getUserData()).getElement();
         }
 
-        //Magnet
-        if(BodyUtils.isMagnet(b.getBody()) && BodyUtils.isCharacter(a.getBody())){
-            ((Magnet)((UserData)b.getBody().getUserData()).getElement()).act(character);
-        }
-
-        if (BodyUtils.isExit(a.getBody())) {
+        if (UserData.isExit(a.getBody())) {
             this.runningLevel = ((Exit) ((UserData) a.getBody().getUserData()).getElement()).getLevelIndex();
+            endCommands();
             this.game.setWinScreen();
         }
     }
@@ -449,23 +457,18 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         Fixture b = contact.getFixtureB();
 
         // Sensors
-        if (BodyUtils.isSensor(a.getBody()) && BodyUtils.isCharacter(b.getBody())) {
+        if (UserData.isSensor(a.getBody()) && UserData.isCharacter(b.getBody())) {
             ((Sensor)((UserData)a.getBody().getUserData()).getElement()).endAct();
-        } else if (BodyUtils.isSensor(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
+        } else if (UserData.isSensor(b.getBody()) && UserData.isCharacter(a.getBody())) {
             ((Sensor)((UserData)b.getBody().getUserData()).getElement()).endAct();
         }
 
         // Magnes
-        if (BodyUtils.isMagnes(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
+        if (UserData.isMagnes(b.getBody()) && UserData.isCharacter(a.getBody())) {
             this.currentMagnes = null;
         }
 
-        //Magnet
-        if (BodyUtils.isMagnet(b.getBody()) && BodyUtils.isCharacter(a.getBody())) {
-            ((Magnet)((UserData)b.getBody().getUserData()).getElement()).endAct();
-        }
-
-        if(BodyUtils.isCharacter(b.getBody())){
+        if(UserData.isCharacter(b.getBody())) {
             ((DynamicElementUserData)b.getBody().getUserData()).removeContact();
             if(((DynamicElementUserData)b.getBody().getUserData()).getContactsNumber() == 0){
                 character.setAloftState(new AloftState());

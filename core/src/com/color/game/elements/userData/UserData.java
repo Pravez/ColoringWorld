@@ -1,7 +1,7 @@
 package com.color.game.elements.userData;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import com.color.game.elements.BaseElement;
-import com.color.game.enums.UserDataType;
 
 /**
  * UserData, the userdatas class usefull to stock every information we need in each body part of the world.
@@ -53,5 +53,36 @@ public abstract class UserData {
 
     public void setUserDataType(UserDataType userDataType) {
         this.userDataType = userDataType;
+    }
+
+    // Static methods to check the UserDataType
+    public static boolean isCharacter(Body body) {
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && userData.getUserDataType() == UserDataType.CHARACTER;
+    }
+
+    public static boolean isSensor(Body body) {
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && userData.getUserDataType() == UserDataType.SENSOR;
+    }
+
+    public static boolean isMagnes(Body body) {
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && userData.getUserDataType() == UserDataType.MAGNES;
+    }
+
+    public static boolean isExit(Body body) {
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && userData.getUserDataType() == UserDataType.EXIT;
+    }
+
+    public static boolean isPlatform(Body body){
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && (userData.getUserDataType() == UserDataType.COLORPLATFORM || userData.getUserDataType() == UserDataType.PLATFORM);
+    }
+
+    public static boolean isEnemy(Body body){
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && userData.getUserDataType() == UserDataType.ENEMY;
     }
 }

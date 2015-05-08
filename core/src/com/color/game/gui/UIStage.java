@@ -1,4 +1,4 @@
-package com.color.game.game;
+package com.color.game.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.color.game.assets.Assets;
 import com.color.game.screens.GameScreen;
-import com.color.game.tools.Gauges;
 
 public class UIStage extends Stage {
 

@@ -1,4 +1,4 @@
-package com.color.game.enums;
+package com.color.game.elements.staticelements.sensors;
 
 import com.badlogic.gdx.math.Vector2;
 

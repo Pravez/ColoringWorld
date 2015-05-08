@@ -1,3 +1,8 @@
+# 0.1.7a (May 8, 2015)
+Features :
+- Correction of the bug of the wall jumping
+- Added plenty of levels to test every element of gaming
+
 # 0.1.7 (May 8, 2015)
 Features :
 - Added the AlteringPlatforms, platforms that can slow the character or be slippery.

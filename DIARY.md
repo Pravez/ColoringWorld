@@ -3,6 +3,9 @@
 * Added the squat command
 * Added magnets to attract dynamic bodies on their center
 * Added platforms that can be slippery or that can slow the character (or the dynamic body on it)
+* Corrected bug of walljump
+* Added a collection of levels to test every element of gameplay
+* Released version 0.2
 
 # May 7, 2015
 * Version 0.1.5 with the WindBlower class which can push a dynamic element in a specific direction

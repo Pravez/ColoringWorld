@@ -11,6 +11,7 @@ Game featuring a strange man using colors to live his life
 * adding magnet
 * adding altering platforms
 * adding squat
+* adding multiple levels
 
 
 # Version 0.1 released

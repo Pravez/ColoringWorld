@@ -9,8 +9,12 @@ public class DynamicPlatformPhysicComponent extends PhysicComponent {
 
     public static final float DYNAMIC_PLATFORM_DENSITY = 1000f;
 
+    private Vector2 linearVelocity;
+
     public DynamicPlatformPhysicComponent(BaseElement element) {
         super(element);
+        this.linearVelocity = new Vector2(0f, 0f);
+
     }
 
     @Override
@@ -18,7 +22,7 @@ public class DynamicPlatformPhysicComponent extends PhysicComponent {
         this.world = world;
 
         this.bodyDef = new BodyDef();
-        this.bodyDef.type = BodyDef.BodyType.DynamicBody;
+        this.bodyDef.type = BodyDef.BodyType.KinematicBody;
 
         //To keep from rotations
         this.bodyDef.fixedRotation = true;
@@ -41,7 +45,7 @@ public class DynamicPlatformPhysicComponent extends PhysicComponent {
         this.world = world;
 
         this.bodyDef = new BodyDef();
-        this.bodyDef.type = BodyDef.BodyType.DynamicBody;
+        this.bodyDef.type = BodyDef.BodyType.KinematicBody;
 
         //To keep from rotations
         this.bodyDef.fixedRotation = true;
@@ -59,6 +63,11 @@ public class DynamicPlatformPhysicComponent extends PhysicComponent {
         this.body.createFixture(fixtureDef);
     }
 
+    @Override
+    public void move(float max_vel) {
+        this.body.setLinearVelocity(linearVelocity.scl(max_vel));
+    }
+
     public void setPlayerGroup() {
         Filter filter = new Filter();
         filter.groupIndex = GROUP_PLAYER;
@@ -69,5 +78,13 @@ public class DynamicPlatformPhysicComponent extends PhysicComponent {
         Filter filter = new Filter();
         filter.groupIndex = GROUP_SCENERY;
         this.body.getFixtureList().first().setFilterData(filter);
+    }
+
+    public void setNextPath(Vector2 nextPoint){
+        float dx = nextPoint.x - this.body.getPosition().x;
+        float dy = nextPoint.y - this.body.getPosition().y;
+
+        linearVelocity.x = dx;
+        linearVelocity.y = dy;
     }
 }

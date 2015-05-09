@@ -10,5 +10,6 @@ public enum UserDataType {
     CHARACTER,
     COLORPLATFORM,
     DEADLY,
-    ENEMY
+    ENEMY,
+    DYNAMICPLATFORM
 }

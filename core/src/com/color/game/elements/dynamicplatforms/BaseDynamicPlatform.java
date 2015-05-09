@@ -3,10 +3,7 @@ package com.color.game.elements.dynamicplatforms;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
-import com.color.game.elements.dynamicelements.DynamicPhysicComponent;
-import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.DynamicPlatformUserData;
-import com.color.game.elements.userData.StaticElementUserData;
 import com.color.game.elements.userData.UserDataType;
 import com.color.game.levels.Level;
 
@@ -21,7 +18,7 @@ public class BaseDynamicPlatform extends BaseElement {
         super();
         this.physicComponent = new DynamicPlatformPhysicComponent(this);
         this.physicComponent.configureBody(position, width, height, level.getWorld(), PhysicComponent.GROUP_SCENERY);
-        this.physicComponent.configureUserData(new DynamicPlatformUserData(this, width, height, UserDataType.PLATFORM));
+        this.physicComponent.configureUserData(new DynamicPlatformUserData(this, width, height, UserDataType.DYNAMICPLATFORM));
         this.physicComponent.getBody().setGravityScale(0);
         this.initialPosition = position;
         level.addDynamicPlatform(this);
@@ -41,5 +38,10 @@ public class BaseDynamicPlatform extends BaseElement {
         ((DynamicPlatformPhysicComponent)this.physicComponent).setPlayerGroup();
         this.physicComponent.getBody().setAwake(true);
         //this.physicComponent.getBody().setActive(false);
+    }
+
+    @Override
+    public void act(float delta){
+        super.act(delta);
     }
 }

@@ -78,7 +78,9 @@ public abstract class UserData {
 
     public static boolean isPlatform(Body body){
         UserData userData = (UserData) body.getUserData();
-        return userData != null && (userData.getUserDataType() == UserDataType.COLORPLATFORM || userData.getUserDataType() == UserDataType.PLATFORM);
+        return userData != null && (userData.getUserDataType() == UserDataType.COLORPLATFORM ||
+                userData.getUserDataType() == UserDataType.PLATFORM ||
+                userData.getUserDataType() == UserDataType.DYNAMICPLATFORM);
     }
 
     public static boolean isDeadly(Body body){
@@ -94,5 +96,10 @@ public abstract class UserData {
     public static boolean isEnemy(Body body){
         UserData userData = (UserData) body.getUserData();
         return userData != null && userData.getUserDataType() == UserDataType.ENEMY;
+    }
+
+    public static boolean isDynamicPlatform(Body body){
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && userData.getUserDataType() == UserDataType.DYNAMICPLATFORM;
     }
 }

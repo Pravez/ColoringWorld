@@ -6,6 +6,7 @@ import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
+import com.color.game.elements.dynamicplatforms.BaseDynamicPlatform;
 import com.color.game.elements.staticelements.BaseStaticElement;
 import com.color.game.elements.staticelements.platforms.Platform;
 import com.color.game.elements.userData.UserDataType;
@@ -79,7 +80,7 @@ public class MovingEnemy extends Enemy {
                 changeDir = true;
             }
         }
-        if(element instanceof BaseDynamicElement){
+        if(element instanceof BaseDynamicElement || element instanceof BaseDynamicPlatform){
             changeDir = true;
         }
         if(changeDir){

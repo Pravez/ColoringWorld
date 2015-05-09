@@ -11,9 +11,17 @@ import com.color.game.elements.userData.UserData;
  */
 public abstract class PhysicComponent {
 
-    public static final short GROUP_PLAYER = -1;
-    public static final short GROUP_SCENERY = 1;
-    public static final short GROUP_SENSOR = -2;
+    public static final short CATEGORY_PLAYER = 0x0001;  // 0000000000000001 in binary
+    public static final short CATEGORY_MONSTER = 0x0002; // 0000000000000010 in binary
+    public static final short CATEGORY_SCENERY = 0x0004; // 0000000000000100 in binary
+    public static final short CATEGORY_SENSOR = 0x0008; // 0000000000001000 in binary
+    public static final short CATEGORY_DEAD = 0x0016; // 0000000000010000 in binary
+
+    public static final short MASK_PLAYER = CATEGORY_MONSTER | CATEGORY_SCENERY | CATEGORY_SENSOR;
+    public static final short MASK_MONSTER = CATEGORY_PLAYER | CATEGORY_SCENERY;
+    public static final short MASK_DEAD = CATEGORY_SCENERY;
+    public static final short MASK_SENSOR = CATEGORY_PLAYER;
+    public static final short MASK_SCENERY = -1;
 
     protected UserData userData;
     protected Body body;
@@ -35,28 +43,41 @@ public abstract class PhysicComponent {
      * @param width The width of the body
      * @param height The height of the body
      * @param world The world containing the body
-     * @param group Body's group
+     * @param category Body's category
+     * @param mask Body's collision mask
      */
-    public abstract void configureBody(Vector2 position, int width, int height, World world, short group);
+    public abstract void configureBody(Vector2 position, int width, int height, World world, short category, short mask);
 
     /**
      * Main method to initialize the corpse, the body of the element when it is a circle.
      * @param position The position where will be located the body
      * @param radius The radius of the body
      * @param world The world containing the body
-     * @param group Body's group
+     * @param category Body's category
+     * @param mask Body's collision mask
      */
-    public abstract void configureCircleBody(Vector2 position, int radius, World world, short group);
+    public abstract void configureCircleBody(Vector2 position, int radius, World world, short category, short mask);
 
     /**
      * Method to enable collision with other bodies
      */
-    public void enableCollisions(){}
+    public void enableCollisions() {
+        Filter filter = this.body.getFixtureList().first().getFilterData();
+        filter.categoryBits = PhysicComponent.CATEGORY_SCENERY;
+        filter.maskBits = PhysicComponent.MASK_SCENERY;
+        this.body.getFixtureList().first().setFilterData(filter);
+    }
 
     /**
      * Method to disable collision with other bodies
      */
-    public void disableCollisions(){}
+    public void disableCollisions() {
+        Filter filter = this.body.getFixtureList().first().getFilterData();
+        filter.categoryBits = PhysicComponent.CATEGORY_DEAD;
+        filter.maskBits = PhysicComponent.MASK_DEAD;
+        this.body.getFixtureList().first().setFilterData(filter);
+    }
+
     public void stopMove(){}
     public void setMove(int direction){}
     public void rebase(){}

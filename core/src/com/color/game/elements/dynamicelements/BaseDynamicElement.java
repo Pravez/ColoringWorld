@@ -25,10 +25,10 @@ public abstract class BaseDynamicElement extends BaseElement {
 
     private Array<Command> commands;
 
-    public BaseDynamicElement(Vector2 position, int width, int height, World world, short group){
+    public BaseDynamicElement(Vector2 position, int width, int height, World world, short category, short mask){
         super();
         physicComponent = new DynamicPhysicComponent(this);
-        physicComponent.configureBody(position, width, height, world, group);
+        physicComponent.configureBody(position, width, height, world, category, mask);
         this.commands = new Array<>();
     }
 

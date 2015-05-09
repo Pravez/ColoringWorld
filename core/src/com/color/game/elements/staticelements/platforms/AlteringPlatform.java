@@ -17,7 +17,7 @@ public class AlteringPlatform extends BaseStaticElement {
     private ShapeRenderer shapeRenderer;
 
     public AlteringPlatform(Vector2 position, int width, int height, Map map, float alteration){
-        super(position, width, height, map, PhysicComponent.GROUP_SCENERY);
+        super(position, width, height, map, PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);
 
         this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.PLATFORM));
         this.physicComponent.configureAltering(alteration);

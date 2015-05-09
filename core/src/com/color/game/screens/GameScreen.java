@@ -18,6 +18,7 @@ import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.dynamicelements.states.AloftState;
 import com.color.game.elements.dynamicelements.states.LandedState;
+import com.color.game.elements.dynamicplatforms.ColorFallingPlatform;
 import com.color.game.elements.staticelements.BaseStaticElement;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.platforms.Platform;
@@ -439,7 +440,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             }
         }
 
-        if(UserData.isDynamicBody(b.getBody())){
+        // Contact between an enemy or a character and a platform
+        if(UserData.isDynamicBody(b.getBody())) {
             BaseDynamicElement de = ((BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement());
             if(UserData.isPlatform(a.getBody())) {
                 BaseElement p = ((UserData)a.getBody().getUserData()).getElement();
@@ -450,7 +452,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             }
         }
 
-        // Sensors
+        // Sensors with the character
         if (UserData.isSensor(a.getBody()) && UserData.isCharacter(b.getBody())) {
             this.runnables.add(new Runnable() {
                 @Override
@@ -472,7 +474,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             this.currentMagnes = (Magnes)((UserData)b.getBody().getUserData()).getElement();
         }
 
-        if (UserData.isExit(a.getBody())) {
+        // The character reaches the exit
+        if (UserData.isExit(a.getBody()) && UserData.isCharacter(b.getBody())) {
             this.runningLevel = ((Exit) ((UserData) a.getBody().getUserData()).getElement()).getLevelIndex();
             endCommands();
             this.game.setWinScreen();
@@ -496,6 +499,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             this.currentMagnes = null;
         }
 
+        // End Contact between an enemy or a character and a platform
         if(UserData.isDynamicBody(b.getBody()) && UserData.isPlatform(a.getBody())){
             if(!Platform.isWall(((UserData) a.getBody().getUserData()).getElement(), (BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement())) {
                 ((DynamicElementUserData) b.getBody().getUserData()).removeContact();

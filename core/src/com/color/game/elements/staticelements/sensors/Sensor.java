@@ -21,7 +21,7 @@ public abstract class Sensor extends BaseStaticElement {
      * @param map the map containing the Sensor
      */
     public Sensor(Vector2 position, int width, int height, Map map) {
-        super(position, width, height, map, PhysicComponent.GROUP_SENSOR);
+        super(position, width, height, map, PhysicComponent.CATEGORY_SENSOR, PhysicComponent.MASK_SENSOR);
         this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.SENSOR));
     }
 
@@ -32,7 +32,7 @@ public abstract class Sensor extends BaseStaticElement {
      * @param map the map containing the Sensor
      */
     public Sensor(Vector2 position, int radius, Map map) {
-        super(position, radius, map, PhysicComponent.GROUP_SENSOR);
+        super(position, radius, map, PhysicComponent.CATEGORY_SENSOR, PhysicComponent.MASK_DEAD);
         this.physicComponent.configureUserData(new StaticElementUserData(this, radius, radius, UserDataType.SENSOR));
     }
 

@@ -22,7 +22,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
     }
 
     @Override
-    public void configureBody(Vector2 position, int width, int height, World world, short group){
+    public void configureBody(Vector2 position, int width, int height, World world, short category, short mask){
         this.world = world;
 
         this.bodyDef = new BodyDef();
@@ -40,14 +40,16 @@ public class DynamicPhysicComponent extends PhysicComponent{
         this.fixtureDef = new FixtureDef();
         fixtureDef.density = DYNAMIC_ELEMENT_DENSITY;
         fixtureDef.shape = shape;
-        fixtureDef.filter.groupIndex = group;
+        //fixtureDef.filter.groupIndex = group;
+        fixtureDef.filter.maskBits = mask;
+        fixtureDef.filter.categoryBits = category;
         this.body.createFixture(fixtureDef);
 
         this.currentImpulse = new Vector2(0f,0f);
     }
 
     @Override
-    public void configureCircleBody(Vector2 position, int radius, World world, short group){
+    public void configureCircleBody(Vector2 position, int radius, World world, short category, short mask){
         this.world = world;
 
         this.bodyDef = new BodyDef();
@@ -65,7 +67,9 @@ public class DynamicPhysicComponent extends PhysicComponent{
         this.fixtureDef = new FixtureDef();
         fixtureDef.density = DYNAMIC_ELEMENT_DENSITY;
         fixtureDef.shape = shape;
-        fixtureDef.filter.groupIndex = group;
+        fixtureDef.filter.maskBits = mask;
+        fixtureDef.filter.categoryBits = category;
+        //fixtureDef.filter.groupIndex = group;
         this.body.createFixture(fixtureDef);
 
         this.currentImpulse = new Vector2(0f,0f);

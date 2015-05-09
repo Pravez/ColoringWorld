@@ -26,7 +26,7 @@ public class ColorFallingPlatform extends FallingPlatform implements BaseColorPl
     public void changeActivation() {
         // Desactivate by the player
         if (this.falling) {
-            super.desactivate();
+            super.deactivate();
             setTransparent(true);
         }
         // Make the platform fall

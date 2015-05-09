@@ -17,7 +17,7 @@ public class BaseDynamicPlatform extends BaseElement {
     public BaseDynamicPlatform(Vector2 position, int width, int height, Level level){
         super();
         this.physicComponent = new DynamicPlatformPhysicComponent(this);
-        this.physicComponent.configureBody(position, width, height, level.getWorld(), PhysicComponent.GROUP_SCENERY);
+        this.physicComponent.configureBody(position, width, height, level.getWorld(), PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);
         this.physicComponent.configureUserData(new DynamicPlatformUserData(this, width, height, UserDataType.DYNAMICPLATFORM));
         this.physicComponent.getBody().setGravityScale(0);
         this.initialPosition = position;
@@ -30,18 +30,12 @@ public class BaseDynamicPlatform extends BaseElement {
     public void respawn() {
         this.physicComponent.getBody().setActive(true);
         this.physicComponent.getBody().setTransform(this.initialPosition, 0);
-        ((DynamicPlatformPhysicComponent)this.physicComponent).setSceneryGroup();
+        this.physicComponent.enableCollisions();
         this.physicComponent.rebase();
     }
 
-    public void desactivate() {
-        ((DynamicPlatformPhysicComponent)this.physicComponent).setPlayerGroup();
+    public void deactivate() {
+        this.physicComponent.disableCollisions();
         this.physicComponent.getBody().setAwake(true);
-        //this.physicComponent.getBody().setActive(false);
-    }
-
-    @Override
-    public void act(float delta){
-        super.act(delta);
     }
 }

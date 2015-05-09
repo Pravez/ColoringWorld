@@ -22,7 +22,7 @@ public class Magnes extends BaseStaticElement {
     private ShapeRenderer shapeRenderer;
 
     public Magnes(Vector2 position, int radius, Map map) {
-        super(position, radius, map, PhysicComponent.GROUP_SENSOR);
+        super(position, radius, map, PhysicComponent.CATEGORY_SENSOR, PhysicComponent.MASK_DEAD);
         this.physicComponent.configureUserData(new StaticElementUserData(this, radius, radius, UserDataType.MAGNES));
 
         this.pushCommand = new PushCommand();

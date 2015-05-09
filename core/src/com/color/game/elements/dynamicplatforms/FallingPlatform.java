@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.levels.Level;
+import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
 
 public class FallingPlatform extends BaseDynamicPlatform {
@@ -38,7 +39,8 @@ public class FallingPlatform extends BaseDynamicPlatform {
     public void fall() {
         this.falling = true;
         this.physicComponent.getBody().setAwake(true);
-        this.physicComponent.getBody().setGravityScale(1);
+        this.physicComponent.getBody().setLinearVelocity(new Vector2(0, -50));
+        //this.physicComponent.getBody().setGravityScale(1);
     }
 
     @Override

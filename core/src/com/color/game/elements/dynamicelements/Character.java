@@ -33,7 +33,7 @@ public class Character extends BaseDynamicElement {
     private boolean onWall;
 
     public Character(Vector2 position, int width, int height, World world) {
-        super(position, width, height, world, PhysicComponent.GROUP_PLAYER);
+        super(position, width, height, world, PhysicComponent.CATEGORY_PLAYER, PhysicComponent.MASK_PLAYER);
 
         this.physicComponent.configureUserData(new DynamicElementUserData(this, width, height, UserDataType.CHARACTER));
         this.shapeRenderer = new ShapeRenderer();

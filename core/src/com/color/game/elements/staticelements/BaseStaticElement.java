@@ -14,18 +14,18 @@ public abstract class BaseStaticElement extends BaseElement {
         super();
     }
 
-    public BaseStaticElement(Vector2 position, int width, int height, Map map, short group) {
+    public BaseStaticElement(Vector2 position, int width, int height, Map map, short category, short mask) {
         super();
         physicComponent = new StaticPhysicComponent(this);
-        physicComponent.configureBody(position, width, height, map.world, group);
+        physicComponent.configureBody(position, width, height, map.world, category, mask);
 
         map.addBlock(position.x, position.y, width * 2, height * 2);
     }
 
-    public BaseStaticElement(Vector2 position, int radius, Map map, short group) {
+    public BaseStaticElement(Vector2 position, int radius, Map map, short category, short mask) {
         super();
         physicComponent = new StaticPhysicComponent(this);
-        physicComponent.configureCircleBody(position, radius, map.world, group);
+        physicComponent.configureCircleBody(position, radius, map.world, category, mask);
 
         map.addBlock(position.x, position.y, radius * 2, radius * 2);
     }

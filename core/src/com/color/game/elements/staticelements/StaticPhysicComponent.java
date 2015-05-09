@@ -17,21 +17,7 @@ public class StaticPhysicComponent extends PhysicComponent{
     }
 
     @Override
-    public void disableCollisions() {
-        Filter filter = this.body.getFixtureList().first().getFilterData();
-        filter.groupIndex = GROUP_PLAYER;
-        this.body.getFixtureList().first().setFilterData(filter);
-    }
-
-    @Override
-    public void enableCollisions() {
-        Filter filter = this.body.getFixtureList().first().getFilterData();
-        filter.groupIndex = GROUP_SCENERY;
-        this.body.getFixtureList().first().setFilterData(filter);
-    }
-
-    @Override
-    public void configureBody(Vector2 position, int width, int height, World world, short group){
+    public void configureBody(Vector2 position, int width, int height, World world, short category, short mask){
         this.world = world;
 
         this.bodyDef = new BodyDef();
@@ -51,9 +37,10 @@ public class StaticPhysicComponent extends PhysicComponent{
 
         fixtureDef.density = STATIC_ELEMENT_DENSITY;
         fixtureDef.shape = shape;
-        fixtureDef.filter.groupIndex = group;
+        fixtureDef.filter.maskBits = mask;
+        fixtureDef.filter.categoryBits = category;
 
-        if (group == GROUP_SENSOR) {
+        if (category == CATEGORY_SENSOR) {
             fixtureDef.isSensor = true;
         }
 
@@ -62,7 +49,7 @@ public class StaticPhysicComponent extends PhysicComponent{
     }
 
     @Override
-    public void configureCircleBody(Vector2 position, int radius, World world, short group){
+    public void configureCircleBody(Vector2 position, int radius, World world, short category, short mask){
         this.world = world;
 
         this.bodyDef = new BodyDef();
@@ -82,9 +69,10 @@ public class StaticPhysicComponent extends PhysicComponent{
 
         fixtureDef.density = STATIC_ELEMENT_DENSITY;
         fixtureDef.shape = shape;
-        fixtureDef.filter.groupIndex = group;
+        fixtureDef.filter.maskBits = mask;
+        fixtureDef.filter.categoryBits = category;
 
-        if (group == GROUP_SENSOR) {
+        if (category == CATEGORY_SENSOR) {
             fixtureDef.isSensor = true;
         }
 

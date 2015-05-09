@@ -18,7 +18,7 @@ public class DynamicPlatformPhysicComponent extends PhysicComponent {
     }
 
     @Override
-    public void configureBody(Vector2 position, int width, int height, World world, short group) {
+    public void configureBody(Vector2 position, int width, int height, World world, short category, short mask) {
         this.world = world;
 
         this.bodyDef = new BodyDef();
@@ -36,12 +36,13 @@ public class DynamicPlatformPhysicComponent extends PhysicComponent {
         this.fixtureDef = new FixtureDef();
         fixtureDef.density = DYNAMIC_PLATFORM_DENSITY;
         fixtureDef.shape = shape;
-        fixtureDef.filter.groupIndex = group;
+        fixtureDef.filter.maskBits = mask;
+        fixtureDef.filter.categoryBits = category;
         this.body.createFixture(fixtureDef);
     }
 
     @Override
-    public void configureCircleBody(Vector2 position, int radius, World world, short group) {
+    public void configureCircleBody(Vector2 position, int radius, World world, short category, short mask) {
         this.world = world;
 
         this.bodyDef = new BodyDef();
@@ -59,25 +60,14 @@ public class DynamicPlatformPhysicComponent extends PhysicComponent {
         this.fixtureDef = new FixtureDef();
         fixtureDef.density = DYNAMIC_PLATFORM_DENSITY;
         fixtureDef.shape = shape;
-        fixtureDef.filter.groupIndex = group;
+        fixtureDef.filter.maskBits = mask;
+        fixtureDef.filter.categoryBits = category;
         this.body.createFixture(fixtureDef);
     }
 
     @Override
     public void move(float max_vel) {
         this.body.setLinearVelocity(linearVelocity.scl(max_vel));
-    }
-
-    public void setPlayerGroup() {
-        Filter filter = new Filter();
-        filter.groupIndex = GROUP_PLAYER;
-        this.body.getFixtureList().first().setFilterData(filter);
-    }
-
-    public void setSceneryGroup() {
-        Filter filter = new Filter();
-        filter.groupIndex = GROUP_SCENERY;
-        this.body.getFixtureList().first().setFilterData(filter);
     }
 
     public void setNextPath(Vector2 nextPoint){

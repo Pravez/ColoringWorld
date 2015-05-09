@@ -22,7 +22,7 @@ public class Exit extends BaseStaticElement {
     private ShapeRenderer shapeRenderer;
 
     public Exit(Vector2 position, int width, int height, Map map, int levelIndex) {
-        super(position, width, height, map, PhysicComponent.GROUP_SENSOR);
+        super(position, width, height, map, PhysicComponent.CATEGORY_SENSOR, PhysicComponent.MASK_SENSOR);
         this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.EXIT));
         this.levelIndex = levelIndex;
 

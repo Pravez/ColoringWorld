@@ -4,7 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.color.game.elements.BaseColorPlatform;
+import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
+import com.color.game.elements.dynamicplatforms.BaseDynamicPlatform;
 import com.color.game.elements.staticelements.platforms.ColorPlatform;
 import com.color.game.elements.staticelements.platforms.PlatformColor;
 
@@ -30,9 +33,14 @@ public class Level extends Stage {
     public Vector2 characterPos;
 
     /**
-     * The list of the {@link ColorPlatform} of the level
+     * The list of the {@link BaseColorPlatform} of the level
      */
-    private Array<ColorPlatform> colorPlatforms;
+    private Array<BaseColorPlatform> colorPlatforms;
+
+    /**
+     * The list of the {@link BaseDynamicPlatform} of the level
+     */
+    private Array<BaseDynamicPlatform> dynamicPlatforms;
 
     /**
      * The list of the {@link Enemy} of the level
@@ -47,8 +55,9 @@ public class Level extends Stage {
         this.map          = new Map(Map.WORLD_GRAVITY, true);
         this.characterPos = characterPos.scl(2);
 
-        this.colorPlatforms = new Array<>();
-        this.enemies        = new Array<>();
+        this.colorPlatforms   = new Array<>();
+        this.dynamicPlatforms = new Array<>();
+        this.enemies          = new Array<>();
     }
 
     /**
@@ -57,6 +66,9 @@ public class Level extends Stage {
     public void restart() {
         for (Enemy enemy : this.enemies) {
             enemy.respawn();
+        }
+        for (BaseDynamicPlatform dynamicPlatform : this.dynamicPlatforms) {
+            dynamicPlatform.respawn();
         }
     }
 
@@ -85,11 +97,19 @@ public class Level extends Stage {
     }
 
     /**
-     * Method to add a {@link ColorPlatform} to the Level (adding it to the list)
-     * @param colorPlatform the {@link ColorPlatform} to add
+     * Method to add a {@link BaseColorPlatform} to the Level (adding it to the list)
+     * @param colorPlatform the {@link BaseColorPlatform} to add
      */
-    public void addColorPlatform(ColorPlatform colorPlatform) {
+    public void addColorPlatform(BaseColorPlatform colorPlatform) {
         this.colorPlatforms.add(colorPlatform);
+    }
+
+    /**
+     * Method to add a {@link BaseDynamicPlatform} to the Level (adding it to the list)
+     * @param dynamicPlatform the {@link BaseDynamicPlatform} to add
+     */
+    public void addDynamicPlatform(BaseDynamicPlatform dynamicPlatform) {
+        this.dynamicPlatforms.add(dynamicPlatform);
     }
 
     /**
@@ -107,7 +127,7 @@ public class Level extends Stage {
      * @param color the {@link PlatformColor} of the {@link ColorPlatform} to activate or deactivate
      */
     public void changeColorPlatformsActivation(PlatformColor color) {
-        for (ColorPlatform colorPlatform : this.colorPlatforms) {
+        for (BaseColorPlatform colorPlatform : this.colorPlatforms) {
             if (colorPlatform.getPlatformColor() == color) {
                 colorPlatform.changeActivation();
             }

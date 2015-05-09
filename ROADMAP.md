@@ -51,7 +51,6 @@ With this, you will be able to have an overview of the game and its future.
 * enemy who kill the character
 * enemy who can move
 * enemy who can die
-* enemy who can fall and die
 * enemy who can jump
 * a boss at the end of a level such as an enemy who force the character to go in a certain direction and the time is limited
 * a script for each enemy, such as a pattern

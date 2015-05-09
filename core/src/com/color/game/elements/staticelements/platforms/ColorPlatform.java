@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.color.game.elements.BaseColorPlatform;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.staticelements.BaseStaticElement;
 import com.color.game.elements.userData.StaticElementUserData;
@@ -18,7 +19,7 @@ import com.color.game.screens.GameScreen;
  * means that they are in a certain group of elements or not. See the {@link com.color.game.elements.PhysicComponent}. They have
  * a color appearing when they are activated.
  */
-public class ColorPlatform extends BaseStaticElement {
+public class ColorPlatform extends BaseStaticElement implements BaseColorPlatform {
 
     private PlatformColor color;
     private boolean activated;

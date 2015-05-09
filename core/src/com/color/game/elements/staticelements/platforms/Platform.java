@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.staticelements.BaseStaticElement;
@@ -45,8 +46,8 @@ public class Platform extends BaseStaticElement {
         shapeRenderer.end();
         batch.begin();
     }
-
-    public static boolean isWall(BaseStaticElement platform, BaseDynamicElement de){
+    
+    public static boolean isWall(BaseElement platform, BaseDynamicElement de){
         boolean wall = false;
 
         Rectangle bounds = platform.getBounds();

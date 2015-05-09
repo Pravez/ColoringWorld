@@ -44,7 +44,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     /**
      * The main character of the game
      */
-    public Character character;
+    public static Character character;
 
     /**
      * The User Interface Stage containing all the informations during the play
@@ -79,8 +79,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         renderer = new Box2DDebugRenderer();
         setupCamera();
 
-        this.character = new Character(LevelManager.getCurrentLevel().characterPos, Character.CHARACTER_WIDTH, Character.CHARACTER_HEIGHT, LevelManager.getCurrentLevel().getWorld());
-        LevelManager.getCurrentLevel().addActor(this.character);
+        character = new Character(LevelManager.getCurrentLevel().characterPos, Character.CHARACTER_WIDTH, Character.CHARACTER_HEIGHT, LevelManager.getCurrentLevel().getWorld());
+        LevelManager.getCurrentLevel().addActor(character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
 
         this.runningLevel = LevelManager.getCurrentLevelNumber();
@@ -99,10 +99,10 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      */
     public void changeLevel() {
         respawn();
-        this.character.remove();
+        character.remove();
         LevelManager.changeLevel(this.runningLevel);
-        this.character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
-        LevelManager.getCurrentLevel().addActor(this.character);
+        character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
+        LevelManager.getCurrentLevel().addActor(character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
     }
 
@@ -110,7 +110,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      * Method to restart the level if the Character dies
      */
     private void restart() {
-        this.character.reset(LevelManager.getCurrentLevel().characterPos);
+        character.reset(LevelManager.getCurrentLevel().characterPos);
         LevelManager.getCurrentLevel().restart();
         respawn();
         this.restart = false;
@@ -145,7 +145,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      *  - stop the graphic gauges
      */
     private void respawn() {
-        this.character.clearCommands();
+        character.clearCommands();
 
         this.redCommand.stop();
         this.blueCommand.stop();
@@ -159,9 +159,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      * Method to end all the Start Commands the character could have
      */
     private void endCommands() {
-        this.character.addCommand(new EndJumpCommand());
-        this.character.addCommand(new EndMoveCommand());
-        this.character.addCommand(new EndSquatCommand());
+        character.addCommand(new EndJumpCommand());
+        character.addCommand(new EndMoveCommand());
+        character.addCommand(new EndSquatCommand());
     }
 
     /**
@@ -256,20 +256,20 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     private void handleInputs() {
 
         if (Gdx.input.isKeyJustPressed(this.game.keys.jumpCode)) {
-            this.character.addCommand(new StartJumpCommand());
+            character.addCommand(new StartJumpCommand());
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.squatCode)) {
-            this.character.addCommand(new StartSquatCommand());
+            character.addCommand(new StartSquatCommand());
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.rightCode)) {
-            this.character.addCommand(new StartMoveCommand(MovementDirection.RIGHT));
+            character.addCommand(new StartMoveCommand(MovementDirection.RIGHT));
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.leftCode)) {
-            this.character.addCommand(new StartMoveCommand(MovementDirection.LEFT));
+            character.addCommand(new StartMoveCommand(MovementDirection.LEFT));
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.magnesCode)) {
             if (this.currentMagnes != null) {
-                this.currentMagnes.act(this.character);
+                this.currentMagnes.act(character);
             }
         }
 
@@ -287,7 +287,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      */
     private void handleColorCommand(int keyCode, ColorCommand command, ColorGauge gauge) {
         if (Gdx.input.isKeyJustPressed(keyCode) && command.isFinished()) {
-            this.character.addCommand(command);
+            character.addCommand(command);
             gauge.restart();
         }
     }
@@ -340,9 +340,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     @Override
     public boolean keyUp(int keycode) {
         if (keycode == this.game.keys.jumpCode) {
-            this.character.addCommand(new EndJumpCommand());
+            character.addCommand(new EndJumpCommand());
         } else if (keycode == this.game.keys.squatCode) {
-            this.character.addCommand(new EndSquatCommand());
+            character.addCommand(new EndSquatCommand());
         }
         if (keycode == this.game.keys.magnesCode) {
             if (this.currentMagnes != null) {
@@ -350,12 +350,12 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             }
         }
         if(keycode == this.game.keys.leftCode || keycode == this.game.keys.rightCode){
-            this.character.addCommand(new EndMoveCommand());
+            character.addCommand(new EndMoveCommand());
             if(Gdx.input.isKeyPressed(this.game.keys.leftCode)){
-                this.character.addCommand(new StartMoveCommand(MovementDirection.LEFT));
+                character.addCommand(new StartMoveCommand(MovementDirection.LEFT));
             }
             if(Gdx.input.isKeyPressed(this.game.keys.rightCode)){
-                this.character.addCommand(new StartMoveCommand(MovementDirection.RIGHT));
+                character.addCommand(new StartMoveCommand(MovementDirection.RIGHT));
             }
         }
         return false;
@@ -372,7 +372,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         if (button == Input.Buttons.LEFT) {
             Vector3 worldCoordinates = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(worldCoordinates);
-            this.character.teleport(new Vector2(worldCoordinates.x / BaseElement.WORLD_TO_SCREEN, worldCoordinates.y / BaseElement.WORLD_TO_SCREEN));
+            character.teleport(new Vector2(worldCoordinates.x / BaseElement.WORLD_TO_SCREEN, worldCoordinates.y / BaseElement.WORLD_TO_SCREEN));
         }
         return false;
     }
@@ -442,7 +442,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         if(UserData.isDynamicBody(b.getBody())){
             BaseDynamicElement de = ((BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement());
             if(UserData.isPlatform(a.getBody())) {
-                BaseStaticElement p = (BaseStaticElement)((UserData)a.getBody().getUserData()).getElement();
+                BaseElement p = ((UserData)a.getBody().getUserData()).getElement();
                 if(!Platform.isWall(p, de)){
                     ((DynamicElementUserData)b.getBody().getUserData()).addContact();
                     de.setAloftState(new LandedState());
@@ -497,7 +497,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
 
         if(UserData.isDynamicBody(b.getBody()) && UserData.isPlatform(a.getBody())){
-            if(!Platform.isWall((BaseStaticElement) ((UserData) a.getBody().getUserData()).getElement(), (BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement())) {
+            if(!Platform.isWall(((UserData) a.getBody().getUserData()).getElement(), (BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement())) {
                 ((DynamicElementUserData) b.getBody().getUserData()).removeContact();
             }
             if(((DynamicElementUserData)b.getBody().getUserData()).getContactsNumber() <= 0){

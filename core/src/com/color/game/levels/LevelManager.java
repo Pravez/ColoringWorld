@@ -3,6 +3,7 @@ package com.color.game.levels;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.dynamicelements.enemies.JumpingEnemy;
 import com.color.game.elements.dynamicelements.enemies.MovingEnemy;
+import com.color.game.elements.dynamicplatforms.ColorFallingPlatform;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.platforms.*;
 import com.color.game.elements.staticelements.sensors.Notice;
@@ -232,9 +233,14 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(55,6),25,1,level.map));
         level.addActor(new Platform(new Vector2(105,6),25,1,level.map));
 
+        // Falling platforms
+        level.addActor(new ColorFallingPlatform(new Vector2(15, 30), 10, 2, level, PlatformColor.RED, true));
+        level.addActor(new ColorFallingPlatform(new Vector2(30, 10), 5, 1, level, PlatformColor.BLUE, false));
+
         // Enemies
-        level.addActor(new MovingEnemy(new Vector2(53, 1), 2, 2, level, true));
+        level.addActor(new MovingEnemy(new Vector2(53, 1), 2, 2, level, false));
         level.addActor(new JumpingEnemy(new Vector2(85, 1), 2, 2, level, true));
+        level.addActor(new MovingEnemy(new Vector2(60, 7), 2, 2, level, false));
 
         levels.add(level);
 

@@ -18,6 +18,8 @@ import java.util.Iterator;
  */
 public abstract class BaseDynamicElement extends BaseElement {
 
+    public static final Vector2 DYNAMIC_ELEMENT_BASE_JUMP = new Vector2(0, 550f);
+
     protected State movingState;
     protected State aloftState;
 
@@ -124,4 +126,9 @@ public abstract class BaseDynamicElement extends BaseElement {
     public Vector2 getStandVector2(){
         return null;
     }
+
+    public Vector2 getJumpVelocity(){
+        return BaseDynamicElement.DYNAMIC_ELEMENT_BASE_JUMP;
+    }
+
 }

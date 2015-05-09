@@ -81,6 +81,16 @@ public abstract class UserData {
         return userData != null && (userData.getUserDataType() == UserDataType.COLORPLATFORM || userData.getUserDataType() == UserDataType.PLATFORM);
     }
 
+    public static boolean isDeadly(Body body){
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && userData.getUserDataType() == UserDataType.DEADLY;
+    }
+
+    public static boolean isDynamicBody(Body body){
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && (userData.getUserDataType() == UserDataType.ENEMY || userData.getUserDataType() == UserDataType.CHARACTER);
+    }
+
     public static boolean isEnemy(Body body){
         UserData userData = (UserData) body.getUserData();
         return userData != null && userData.getUserDataType() == UserDataType.ENEMY;

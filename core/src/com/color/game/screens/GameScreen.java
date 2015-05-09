@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.color.game.ColorGame;
 import com.color.game.command.*;
 import com.color.game.elements.BaseElement;
+import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.dynamicelements.states.AloftState;
@@ -405,31 +406,46 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             this.runnables.add(new Runnable() {
                 @Override
                 public void run() {
-                    ((Enemy) ((UserData) a.getBody().getUserData()).getElement()).act((BaseStaticElement) ((UserData) b.getBody().getUserData()).getElement());
+                    ((Enemy) ((UserData) a.getBody().getUserData()).getElement()).act(((UserData) b.getBody().getUserData()).getElement());
                 }
             });
         } else if (UserData.isEnemy(b.getBody()) && UserData.isPlatform(a.getBody())) {
             this.runnables.add(new Runnable() {
                 @Override
                 public void run() {
-                    ((Enemy) ((UserData) b.getBody().getUserData()).getElement()).act((BaseStaticElement) ((UserData) a.getBody().getUserData()).getElement());
+                    ((Enemy) ((UserData) b.getBody().getUserData()).getElement()).act(((UserData) a.getBody().getUserData()).getElement());
+                }
+            });
+        }else if (UserData.isEnemy(a.getBody()) && UserData.isDynamicBody(b.getBody())){
+            this.runnables.add(new Runnable() {
+                @Override
+                public void run() {
+                    ((Enemy) ((UserData) a.getBody().getUserData()).getElement()).act(((UserData) b.getBody().getUserData()).getElement());
+                }
+            });
+        }else if (UserData.isEnemy(b.getBody()) && UserData.isDynamicBody(a.getBody())) {
+            this.runnables.add(new Runnable() {
+                @Override
+                public void run() {
+                    ((Enemy) ((UserData) b.getBody().getUserData()).getElement()).act(((UserData) a.getBody().getUserData()).getElement());
                 }
             });
         }
 
         if (UserData.isCharacter(b.getBody())) {
-
             // Character touching an enemy
-            if (UserData.isEnemy(a.getBody())) {
+            if (UserData.isDeadly(a.getBody())) {
                 this.restart = true;
             }
+        }
 
-            // Character touching a platform
+        if(UserData.isDynamicBody(b.getBody())){
+            BaseDynamicElement de = ((BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement());
             if(UserData.isPlatform(a.getBody())) {
                 BaseStaticElement p = (BaseStaticElement)((UserData)a.getBody().getUserData()).getElement();
-                if(!Platform.isWall(p, character)){
+                if(!Platform.isWall(p, de)){
                     ((DynamicElementUserData)b.getBody().getUserData()).addContact();
-                    character.setAloftState(new LandedState());
+                    de.setAloftState(new LandedState());
                 }
             }
         }
@@ -480,14 +496,16 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             this.currentMagnes = null;
         }
 
-        if(UserData.isCharacter(b.getBody()) && UserData.isPlatform(a.getBody())){
-            if(!Platform.isWall((BaseStaticElement) ((UserData) a.getBody().getUserData()).getElement(), (Character) ((UserData) b.getBody().getUserData()).getElement())) {
+        if(UserData.isDynamicBody(b.getBody()) && UserData.isPlatform(a.getBody())){
+            if(!Platform.isWall((BaseStaticElement) ((UserData) a.getBody().getUserData()).getElement(), (BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement())) {
                 ((DynamicElementUserData) b.getBody().getUserData()).removeContact();
             }
             if(((DynamicElementUserData)b.getBody().getUserData()).getContactsNumber() <= 0){
-                character.setAloftState(new AloftState());
+                ((BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement()).setAloftState(new AloftState());
             }
         }
+
+
     }
 
     @Override

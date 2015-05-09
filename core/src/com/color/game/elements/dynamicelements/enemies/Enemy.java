@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.color.game.command.MovementDirection;
+import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
-import com.color.game.elements.staticelements.BaseStaticElement;
 import com.color.game.elements.userData.DynamicElementUserData;
-import com.color.game.command.MovementDirection;
 import com.color.game.elements.userData.UserDataType;
 import com.color.game.levels.Level;
 import com.color.game.screens.GameScreen;
@@ -63,6 +63,8 @@ public abstract class Enemy extends BaseDynamicElement {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.OLIVE);
         shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.rect(this.getPhysicComponent().getBody().getPosition().x*WORLD_TO_SCREEN, this.getPhysicComponent().getBody().getPosition().y*WORLD_TO_SCREEN, 5,5);
         shapeRenderer.end();
         batch.begin();
     }
@@ -87,5 +89,5 @@ public abstract class Enemy extends BaseDynamicElement {
 
     }
 
-    public abstract void act(BaseStaticElement element);
+    public abstract void act(BaseElement element);
 }

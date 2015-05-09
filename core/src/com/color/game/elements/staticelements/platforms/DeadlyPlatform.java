@@ -21,7 +21,7 @@ public class DeadlyPlatform extends BaseStaticElement {
     public DeadlyPlatform(Vector2 position, int width, int height, Map map) {
         super(position, width, height, map, PhysicComponent.GROUP_SCENERY);
 
-        this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.ENEMY));
+        this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.DEADLY));
 
         this.shapeRenderer = new ShapeRenderer();
     }

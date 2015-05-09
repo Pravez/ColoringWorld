@@ -1,6 +1,7 @@
 package com.color.game.levels;
 
 import com.badlogic.gdx.math.Vector2;
+import com.color.game.elements.dynamicelements.enemies.JumpingEnemy;
 import com.color.game.elements.dynamicelements.enemies.MovingEnemy;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.platforms.*;
@@ -218,11 +219,11 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(0, 0), 200, 1, level.map));
 
         //Walls
-        level.addActor(new Platform(new Vector2(50,1),1,2,level.map));
-        level.addActor(new Platform(new Vector2(75,1),1,2,level.map));
-        level.addActor(new Platform(new Vector2(100,1),1,2,level.map));
-        level.addActor(new Platform(new Vector2(125,1),1,2,level.map));
-        level.addActor(new Platform(new Vector2(150,1),1,2,level.map));
+        level.addActor(new Platform(new Vector2(50,1),1,1,level.map));
+        level.addActor(new Platform(new Vector2(75,1),1,1,level.map));
+        level.addActor(new Platform(new Vector2(100,1),1,1,level.map));
+        level.addActor(new Platform(new Vector2(125,1),1,1,level.map));
+        level.addActor(new Platform(new Vector2(150,1),1,1,level.map));
 
         level.addActor(new Platform(new Vector2(0,1),1,32,level.map));
         level.addActor(new Platform(new Vector2(199,1),1,32,level.map));
@@ -232,8 +233,8 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(105,6),25,1,level.map));
 
         // Enemies
-        level.addActor(new MovingEnemy(new Vector2(53, 1), 2, 2, level));
-        level.addActor(new MovingEnemy(new Vector2(60, 7), 2, 2, level));
+        level.addActor(new MovingEnemy(new Vector2(53, 1), 2, 2, level, true));
+        level.addActor(new JumpingEnemy(new Vector2(85, 1), 2, 2, level, true));
 
         levels.add(level);
 

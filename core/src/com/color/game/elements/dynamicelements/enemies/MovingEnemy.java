@@ -2,7 +2,12 @@ package com.color.game.elements.dynamicelements.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.color.game.elements.BaseElement;
+import com.color.game.elements.dynamicelements.BaseDynamicElement;
+import com.color.game.elements.dynamicelements.states.LandedState;
+import com.color.game.elements.dynamicelements.states.RunningState;
 import com.color.game.elements.staticelements.BaseStaticElement;
+import com.color.game.elements.staticelements.platforms.Platform;
 import com.color.game.elements.userData.UserDataType;
 import com.color.game.levels.Level;
 
@@ -12,7 +17,7 @@ public class MovingEnemy extends Enemy {
     public static final float SLOW_MOVING_VELOCITY = 10f;
     public static final float FAST_MOVING_VELOCITY = 30f;
 
-    private int current_direction;
+    protected int current_direction;
 
     private BaseStaticElement floorElement;
 
@@ -36,6 +41,9 @@ public class MovingEnemy extends Enemy {
         super(position, width, height, level);
         this.canFall = canFall;
         this.current_direction = -1;
+
+        this.setAloftState(new LandedState());
+        this.setMovingState(new RunningState());
     }
 
     /**
@@ -51,19 +59,35 @@ public class MovingEnemy extends Enemy {
     }
 
     @Override
-    public void act(BaseStaticElement element) {
+    public void act(BaseElement element) {
+
+        boolean changeDir = false;
+
         if (!this.canFall) {
-            selectFloorElement(element);
+            if(element instanceof BaseStaticElement) {
+                selectFloorElement((BaseStaticElement) element);
+            }
         }
 
         // Kill the enemy with a Deadly Platform
         if (element.getPhysicComponent().getUserData().getUserDataType() == UserDataType.ENEMY) {
             this.physicComponent.getBody().setActive(false);
-        } else { // Collision with a wall : change direction
+        }
+
+        if(element instanceof BaseStaticElement) {
+            if (Platform.isWall((BaseStaticElement) element, this)) {
+                changeDir = true;
+            }
+        }
+        if(element instanceof BaseDynamicElement){
+            changeDir = true;
+        }
+        if(changeDir){
             this.current_direction = -1 * this.current_direction;
             this.physicComponent.setMove(this.current_direction);
             this.preventRight = false;
             this.preventLeft = false;
+            this.physicComponent.move(MovingEnemy.ENEMY_MOVING_VELOCITY);
         }
     }
 
@@ -91,6 +115,7 @@ public class MovingEnemy extends Enemy {
         if (!this.canFall && this.floorElement != null ) {
             preventFalling();
         }
+
     }
 
     @Override

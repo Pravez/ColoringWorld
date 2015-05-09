@@ -6,12 +6,16 @@ Game featuring a strange man using colors to live his life
 * enemies who kill the character
 * enemies who can die
 * enemies who can move
+* bugfix of the character's jump
+* bugfix of the contact between dynamic and static bodies 
 
 ##### TO DO :
-- Corriger bug des plateformes dynamiques pour qu'elles restent tout le temps "statiques", même si le personnage est dessus
-- Corriger le bug de saut du personnage sur les plateformes
-- Revoir les contacts et autres entre les bodies dynamiques et les statiques/définis comme pour bien manager le saut
-- Améliorer le déplacement des ennemis, et notamment le saut, détection de quand il est possible de sauter
+- improve the enemies' move
+- check the enemies' jump
+- check the jump detection of jumping enemies
+- check the jump and collisions mechanic of dynamic bodies
+- prevent kinematic platforms from passing through static elements
+- kill the elements when a kinematic platform falls on it
 
 
 # Version 0.2 released :

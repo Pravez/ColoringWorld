@@ -1,3 +1,8 @@
+# May 9, 2015
+* Added the jumping enemies who can jump on platforms
+* Changed a bit how physics access datas concerning how the bodies can move
+* Changed the way enemies change their directions
+
 # May 8, 2015
 * Lost time in merges
 * Added the squat command

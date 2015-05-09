@@ -1,3 +1,8 @@
+# 0.2.2 (May 9, 2015)
+Features :
+- Enemies can jump
+- Changed how enemies detect "collisions", meaning of they change direction
+
 # 0.2.1 (May 8, 2015)
 Features :
 - Enemies can die

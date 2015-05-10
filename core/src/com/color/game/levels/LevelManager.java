@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.dynamicelements.enemies.JumpingEnemy;
 import com.color.game.elements.dynamicelements.enemies.MovingEnemy;
 import com.color.game.elements.dynamicplatforms.ColorFallingPlatform;
+import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.dynamicplatforms.MovingPlatform;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.platforms.*;
@@ -235,8 +236,9 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(105,6),25,1,level.map));
 
         // Falling platforms
-        level.addActor(new ColorFallingPlatform(new Vector2(15, 30), 10, 2, level, PlatformColor.RED, true));
-        level.addActor(new ColorFallingPlatform(new Vector2(30, 10), 5, 1, level, PlatformColor.BLUE, false));
+        level.addActor(new ColorFallingPlatform(new Vector2(15, 20), 10, 2, level, PlatformColor.RED, true));
+        //level.addActor(new ColorFallingPlatform(new Vector2(10, 8), 5, 1, level, PlatformColor.BLUE, false));
+        level.addActor(new FallingPlatform(new Vector2(32, 20), 10, 1, level, true));
 
         // Enemies
         level.addActor(new MovingEnemy(new Vector2(53, 1), 2, 2, level, false));
@@ -244,9 +246,9 @@ public class LevelManager {
         level.addActor(new MovingEnemy(new Vector2(60, 7), 2, 2, level, false));
 
         //Moving platforms
-        level.addActor(new MovingPlatform(new Vector2(10, 5), 3,1,level, new Vector2(20,5)));
+        //level.addActor(new MovingPlatform(new Vector2(15, 5), 3,1,level, new Vector2(25,5)));
 
-        level.addActor(new Platform(new Vector2(25,5), 2, 1, level.map));
+        //level.addActor(new Platform(new Vector2(25,5), 2, 1, level.map));
 
         levels.add(level);
 

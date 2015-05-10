@@ -41,7 +41,7 @@ public class MovingEnemy extends Enemy {
     public MovingEnemy(Vector2 position, int width, int height, Level level, boolean canFall) {
         super(position, width, height, level);
         this.canFall = canFall;
-        this.current_direction = -1;
+        this.current_direction = 1;
 
         this.setAloftState(new LandedState());
         this.setMovingState(new RunningState());
@@ -72,11 +72,11 @@ public class MovingEnemy extends Enemy {
 
         // Kill the enemy with a Deadly Platform
         if (element.getPhysicComponent().getUserData().getUserDataType() == UserDataType.ENEMY) {
-            this.physicComponent.getBody().setActive(false);
+            kill();
         }
 
         if(element instanceof BaseStaticElement) {
-            if (Platform.isWall((BaseStaticElement) element, this)) {
+            if (Platform.isWall(element, this)) {
                 changeDir = true;
             }
         }

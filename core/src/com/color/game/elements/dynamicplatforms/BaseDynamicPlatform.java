@@ -8,7 +8,7 @@ import com.color.game.elements.userData.UserDataType;
 import com.color.game.levels.Level;
 
 public class BaseDynamicPlatform extends BaseElement {
-
+    
     /**
      * The initial position of the dynamic platform in the level
      */
@@ -20,7 +20,7 @@ public class BaseDynamicPlatform extends BaseElement {
         this.physicComponent.configureBody(position, width, height, level.getWorld(), PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);
         this.physicComponent.configureUserData(new DynamicPlatformUserData(this, width, height, UserDataType.DYNAMICPLATFORM));
         this.physicComponent.getBody().setGravityScale(0);
-        this.initialPosition = position;
+        this.initialPosition = new Vector2(this.physicComponent.getBody().getPosition());
         level.addDynamicPlatform(this);
     }
 

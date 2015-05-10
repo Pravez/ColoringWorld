@@ -2,6 +2,7 @@ package com.color.game.elements.userData;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.color.game.elements.BaseElement;
+import com.color.game.elements.dynamicplatforms.FallingPlatform;
 
 /**
  * UserData, the userdatas class usefull to stock every information we need in each body part of the world.
@@ -101,5 +102,10 @@ public abstract class UserData {
     public static boolean isDynamicPlatform(Body body){
         UserData userData = (UserData) body.getUserData();
         return userData != null && userData.getUserDataType() == UserDataType.DYNAMICPLATFORM;
+    }
+
+    public static boolean isFallingPlatform(Body body){
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && userData.getUserDataType() == UserDataType.DYNAMICPLATFORM && userData.getElement() instanceof FallingPlatform;
     }
 }

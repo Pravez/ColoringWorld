@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.color.game.elements.dynamicelements.BaseDynamicElement;
+import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.levels.Level;
 import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
@@ -28,6 +31,10 @@ public class FallingPlatform extends BaseDynamicPlatform {
         this.shapeRenderer = new ShapeRenderer();
     }
 
+    public boolean isFallingOntoElement(BaseDynamicElement element) {
+        return this.falling && element.getAloftState() instanceof LandedState && this.getBounds().y > element.getBounds().y;
+    }
+
     public void setColor(Color color) {
         this.color = color;
     }
@@ -39,22 +46,32 @@ public class FallingPlatform extends BaseDynamicPlatform {
     public void fall() {
         this.falling = true;
         this.physicComponent.getBody().setAwake(true);
-        this.physicComponent.getBody().setLinearVelocity(new Vector2(0, -50));
-        //this.physicComponent.getBody().setGravityScale(1);
+        this.physicComponent.getBody().setType(BodyDef.BodyType.DynamicBody);
+        this.physicComponent.getBody().setGravityScale(1);
+    }
+
+    protected void touchFloor() {
+        // Reactivate the jump on the platform
+        this.physicComponent.getBody().setType(BodyDef.BodyType.KinematicBody);
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
 
-        if (Math.abs(GameScreen.character.getCenter().x - this.getCenter().x) < FALLING_GAP && this.fall) {
+        if (Math.abs(GameScreen.character.getCenter().x - this.getCenter().x) < FALLING_GAP && this.fall && !this.falling) {
             fall();
+        } else if (this.falling && this.physicComponent.getBody().getLinearVelocity().y == 0) {
+            touchFloor();
         }
     }
 
     @Override
     public void respawn() {
+        System.out.println("RESPAWN");
         super.respawn();
+        this.physicComponent.getBody().setType(BodyDef.BodyType.KinematicBody);
+        this.physicComponent.getBody().setLinearVelocity(new Vector2(0, 0));
         this.physicComponent.getBody().setGravityScale(0);
         this.falling = false;
     }

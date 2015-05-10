@@ -14,7 +14,6 @@ public class DynamicPlatformPhysicComponent extends PhysicComponent {
     public DynamicPlatformPhysicComponent(BaseElement element) {
         super(element);
         this.linearVelocity = new Vector2(0f, 0f);
-
     }
 
     @Override
@@ -23,6 +22,8 @@ public class DynamicPlatformPhysicComponent extends PhysicComponent {
 
         this.bodyDef = new BodyDef();
         this.bodyDef.type = BodyDef.BodyType.KinematicBody;
+
+        position.scl(2); // Multiply by two because of the half size boxes
 
         //To keep from rotations
         this.bodyDef.fixedRotation = true;
@@ -47,6 +48,8 @@ public class DynamicPlatformPhysicComponent extends PhysicComponent {
 
         this.bodyDef = new BodyDef();
         this.bodyDef.type = BodyDef.BodyType.KinematicBody;
+
+        position.scl(2); // Multiply by two because of the half size boxes
 
         //To keep from rotations
         this.bodyDef.fixedRotation = true;

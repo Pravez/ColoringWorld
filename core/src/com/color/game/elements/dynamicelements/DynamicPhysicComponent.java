@@ -28,6 +28,8 @@ public class DynamicPhysicComponent extends PhysicComponent{
         this.bodyDef = new BodyDef();
         this.bodyDef.type = BodyDef.BodyType.DynamicBody;
 
+        //position.scl(2); // Multiply by two because of the half size boxes
+
         //To keep from rotations
         this.bodyDef.fixedRotation = true;
         this.bodyDef.position.set(new Vector2(position.x + width, position.y + height));

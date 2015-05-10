@@ -70,6 +70,12 @@ public abstract class Enemy extends BaseDynamicElement {
     }
 
     @Override
+    public void kill() {
+        System.out.println("KILL");
+        this.physicComponent.getBody().setActive(false);
+    }
+
+    @Override
     public void jump() {
 
     }

@@ -21,6 +21,7 @@ public class MovingPlatform extends BaseDynamicPlatform{
 
     public MovingPlatform(Vector2 position, int width, int height, Level level, Vector2 point) {
         super(position, width, height, level);
+        point.scl(2);
 
         this.points = new ArrayList<>();
 
@@ -33,6 +34,9 @@ public class MovingPlatform extends BaseDynamicPlatform{
 
     public MovingPlatform(Vector2 position, int width, int height, Level level, ArrayList<Vector2> points) {
         super(position, width, height, level);
+        for (Vector2 point : points) {
+            point.scl(2);
+        }
 
         this.points = new ArrayList<>();
 

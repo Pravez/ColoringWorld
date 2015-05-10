@@ -46,6 +46,11 @@ public abstract class BaseDynamicElement extends BaseElement {
     }
 
     /**
+     * Abstract method used to kill the BaseDynamicElement
+     */
+    public abstract void kill();
+
+    /**
      * Abstract method used to make the element jump (means applying a force on the y axis)
      */
     public abstract void jump();

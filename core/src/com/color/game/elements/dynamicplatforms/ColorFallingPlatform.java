@@ -23,6 +23,12 @@ public class ColorFallingPlatform extends FallingPlatform implements BaseColorPl
     }
 
     @Override
+    protected void touchFloor() {
+        super.deactivate();
+        setTransparent(true);
+    }
+
+    @Override
     public void changeActivation() {
         // Desactivate by the player
         if (this.falling) {

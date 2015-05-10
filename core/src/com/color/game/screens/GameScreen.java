@@ -19,6 +19,7 @@ import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.dynamicelements.states.AloftState;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicplatforms.ColorFallingPlatform;
+import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.staticelements.BaseStaticElement;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.platforms.Platform;
@@ -66,7 +67,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
     private boolean run = true;
 
-    private boolean restart = false;
+    public boolean restart = false;
 
     private Magnes currentMagnes;
 
@@ -80,7 +81,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         renderer = new Box2DDebugRenderer();
         setupCamera();
 
-        character = new Character(LevelManager.getCurrentLevel().characterPos, Character.CHARACTER_WIDTH, Character.CHARACTER_HEIGHT, LevelManager.getCurrentLevel().getWorld());
+        character = new Character(this, LevelManager.getCurrentLevel().characterPos, Character.CHARACTER_WIDTH, Character.CHARACTER_HEIGHT, LevelManager.getCurrentLevel().getWorld());
         LevelManager.getCurrentLevel().addActor(character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
 
@@ -442,9 +443,21 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         // Contact between an enemy or a character and a platform
         if(UserData.isDynamicBody(b.getBody())) {
-            BaseDynamicElement de = ((BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement());
+            final BaseDynamicElement de = ((BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement());
             if(UserData.isPlatform(a.getBody())) {
                 BaseElement p = ((UserData)a.getBody().getUserData()).getElement();
+                // the platform is a falling platform
+                if (UserData.isFallingPlatform(a.getBody())) {
+                    // The platform hits a dynamic body
+                    if (((FallingPlatform)((UserData) a.getBody().getUserData()).getElement()).isFallingOntoElement(de)) {
+                        this.runnables.add(new Runnable() {
+                            @Override
+                            public void run() {
+                                de.kill();
+                            }
+                        });
+                    }
+                }
                 if(!Platform.isWall(p, de)){
                     ((DynamicElementUserData)b.getBody().getUserData()).addContact();
                     de.setAloftState(new LandedState());

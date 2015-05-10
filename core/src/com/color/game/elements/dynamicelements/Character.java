@@ -29,13 +29,17 @@ public class Character extends BaseDynamicElement {
     public static final int CHARACTER_SQUAT_HEIGHT = 1;
     public static final int CHARACTER_WIDTH = 1;
 
+    private GameScreen gameScreen;
+
     private ShapeRenderer shapeRenderer;
     private boolean onWall;
 
-    public Character(Vector2 position, int width, int height, World world) {
+    public Character(GameScreen gameScreen, Vector2 position, int width, int height, World world) {
         super(position, width, height, world, PhysicComponent.CATEGORY_PLAYER, PhysicComponent.MASK_PLAYER);
 
         this.physicComponent.configureUserData(new DynamicElementUserData(this, width, height, UserDataType.CHARACTER));
+
+        this.gameScreen = gameScreen;
         this.shapeRenderer = new ShapeRenderer();
 
         onWall = false;
@@ -72,6 +76,11 @@ public class Character extends BaseDynamicElement {
         if((this.getMovingState() instanceof WalkingState) && (this.physicComponent.getBody().getLinearVelocity().x == CHARACTER_RUNNING_VELOCITY || this.physicComponent.getBody().getLinearVelocity().x == -CHARACTER_RUNNING_VELOCITY)){
             this.setMovingState(new RunningState());
         }
+    }
+
+    @Override
+    public void kill() {
+        this.gameScreen.restart = true;
     }
 
     @Override

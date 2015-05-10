@@ -1,3 +1,8 @@
+# May 10, 2015
+* bugfix of falling platforms
+* falling platforms can kill dynamic bodies
+* bugfix of moving platforms
+
 # May 9, 2015
 * Added the jumping enemies who can jump on platforms
 * Changed a bit how physics access datas concerning how the bodies can move

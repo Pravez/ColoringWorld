@@ -23,9 +23,9 @@ public abstract class Enemy extends BaseDynamicElement {
     /**
      * The initial position of the enemy in the level
      */
-    private Vector2 initialPosition;
+    final private Vector2 initialPosition;
 
-    private ShapeRenderer shapeRenderer;
+    final private ShapeRenderer shapeRenderer;
 
     /**
      * Enemy constructor
@@ -34,7 +34,7 @@ public abstract class Enemy extends BaseDynamicElement {
      * @param height the height of the enemy
      * @param level the level of the enemy
      */
-    public Enemy(Vector2 position, int width, int height, Level level) {
+    Enemy(Vector2 position, int width, int height, Level level) {
         super(position, width, height, level.getWorld(), PhysicComponent.CATEGORY_MONSTER, PhysicComponent.MASK_MONSTER);
         level.addEnemy(this);
         this.initialPosition = position.scl(2);
@@ -71,7 +71,6 @@ public abstract class Enemy extends BaseDynamicElement {
 
     @Override
     public void kill() {
-        System.out.println("KILL");
         this.physicComponent.getBody().setActive(false);
     }
 

@@ -7,7 +7,7 @@ import com.color.game.command.MovementDirection;
  */
 public class WalkingState implements State {
 
-    private MovementDirection direction;
+    final private MovementDirection direction;
 
     public WalkingState(MovementDirection direction) {
         this.direction = direction;

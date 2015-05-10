@@ -9,7 +9,7 @@ public class MusicManager {
 
     private float volume = 0.1f;
 
-    public Music music;
+    private Music music;
 
     public MusicManager() {
         init();

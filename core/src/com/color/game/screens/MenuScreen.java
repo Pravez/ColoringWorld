@@ -21,7 +21,7 @@ public class MenuScreen extends BaseScreen {
 
     /**
      * Constructor of the MenuScreen
-     * @param game
+     * @param game the ColorGame
      */
     public MenuScreen(final ColorGame game) {
         super(game);

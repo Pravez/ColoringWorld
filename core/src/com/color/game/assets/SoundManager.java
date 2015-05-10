@@ -9,10 +9,10 @@ public class SoundManager {
 
     private float volume = 0.1f;
 
-    public Sound clickSound;
-    public Sound jumpSound;
-    public Sound landSound;
-    public Sound testSound;
+    private Sound clickSound;
+    private Sound jumpSound;
+    private Sound landSound;
+    private Sound testSound;
 
     public SoundManager() {
         init();

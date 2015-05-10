@@ -16,7 +16,7 @@ import com.color.game.screens.GameScreen;
  */
 public class DeadlyPlatform extends BaseStaticElement {
 
-    private ShapeRenderer shapeRenderer;
+    final private ShapeRenderer shapeRenderer;
 
     public DeadlyPlatform(Vector2 position, int width, int height, Map map) {
         super(position, width, height, map, PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);

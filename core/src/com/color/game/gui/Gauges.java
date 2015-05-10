@@ -12,9 +12,9 @@ import com.color.game.gui.ColorGauge;
  */
 public class Gauges extends Actor {
 
-    public ColorGauge redGauge;
-    public ColorGauge blueGauge;
-    public ColorGauge yellowGauge;
+    final public ColorGauge redGauge;
+    final public ColorGauge blueGauge;
+    final public ColorGauge yellowGauge;
 
     /**
      * Constructor of the Gauges
@@ -34,7 +34,7 @@ public class Gauges extends Actor {
 
     /**
      * Act method called to run the {@link ColorGauge} animations
-     * @param delta
+     * @param delta the delta time since the last act call
      */
     @Override
     public void act(float delta) {
@@ -46,8 +46,8 @@ public class Gauges extends Actor {
 
     /**
      * Draw method called to draw the Gauges and the {@link ColorGauge} inside
-     * @param batch
-     * @param parentAlpha
+     * @param batch the parent's spriteBatch
+     * @param parentAlpha the alpha transparency of the parent
      */
     @Override
     public void draw(Batch batch, float parentAlpha) {

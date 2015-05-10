@@ -10,13 +10,13 @@ import com.color.game.elements.dynamicplatforms.FallingPlatform;
  */
 public abstract class UserData {
 
-    protected BaseElement element;
+    private BaseElement element;
 
-    protected int width;
-    protected int height;
-    protected UserDataType userDataType;
+    private int width;
+    private int height;
+    private UserDataType userDataType;
 
-    public UserData(BaseElement element, int width, int height, UserDataType userDataType) {
+    UserData(BaseElement element, int width, int height, UserDataType userDataType) {
         this.element = element;
         this.width = width * 2;
         this.height = height * 2;

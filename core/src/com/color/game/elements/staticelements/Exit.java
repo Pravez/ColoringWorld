@@ -17,9 +17,9 @@ import com.color.game.screens.GameScreen;
  */
 public class Exit extends BaseStaticElement {
 
-    private int levelIndex;
+    final private int levelIndex;
 
-    private ShapeRenderer shapeRenderer;
+    final private ShapeRenderer shapeRenderer;
 
     public Exit(Vector2 position, int width, int height, Map map, int levelIndex) {
         super(position, width, height, map, PhysicComponent.CATEGORY_SENSOR, PhysicComponent.MASK_SENSOR);

@@ -7,7 +7,7 @@ import com.color.game.levels.Level;
 
 public class ColorFallingPlatform extends FallingPlatform implements BaseColorPlatform {
 
-    private PlatformColor color;
+    final private PlatformColor color;
 
     public ColorFallingPlatform(Vector2 position, int width, int height, Level level, PlatformColor color, boolean fall) {
         super(position, width, height, level, fall);

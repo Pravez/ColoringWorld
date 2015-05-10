@@ -8,7 +8,7 @@ import com.color.game.elements.dynamicelements.BaseDynamicElement;
  */
 public class StartMoveCommand implements Command {
 
-    private MovementDirection direction;
+    final private MovementDirection direction;
 
     public StartMoveCommand(MovementDirection direction) {
         this.direction = direction;

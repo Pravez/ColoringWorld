@@ -31,7 +31,7 @@ public class Assets {
     private static FileHandle bebasFont;
     private static FileHandle groboldFont;
 
-    public static AssetManager manager  = new AssetManager();
+    final public static AssetManager manager  = new AssetManager();
     public static Skin         menuSkin;
 
     /**

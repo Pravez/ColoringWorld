@@ -1,6 +1,5 @@
 package com.color.game.command;
 
-import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 
 /**

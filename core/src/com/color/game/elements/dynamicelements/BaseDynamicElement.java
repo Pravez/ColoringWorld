@@ -18,14 +18,14 @@ import java.util.Iterator;
  */
 public abstract class BaseDynamicElement extends BaseElement {
 
-    public static final Vector2 DYNAMIC_ELEMENT_BASE_JUMP = new Vector2(0, 550f);
+    private static final Vector2 DYNAMIC_ELEMENT_BASE_JUMP = new Vector2(0, 550f);
 
-    protected State movingState;
-    protected State aloftState;
+    State movingState;
+    private State aloftState;
 
-    private Array<Command> commands;
+    final private Array<Command> commands;
 
-    public BaseDynamicElement(Vector2 position, int width, int height, World world, short category, short mask){
+    protected BaseDynamicElement(Vector2 position, int width, int height, World world, short category, short mask){
         super();
         physicComponent = new DynamicPhysicComponent(this);
         physicComponent.configureBody(position, width, height, world, category, mask);
@@ -108,11 +108,11 @@ public abstract class BaseDynamicElement extends BaseElement {
         this.commands.clear();
     }
 
-    public State getMovingState() {
+    State getMovingState() {
         return movingState;
     }
 
-    public void setMovingState(State movingState) {
+    protected void setMovingState(State movingState) {
         this.movingState = movingState;
     }
 

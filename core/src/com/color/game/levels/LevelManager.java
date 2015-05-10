@@ -70,18 +70,18 @@ public class LevelManager {
      * Method to init the different {@link Level} of the Game, should load the {@link Level} from files
      */
     public static void init() {
-        levels = new ArrayList<Level>();
-        /*addFirstLevel();
+        levels = new ArrayList<>();
+        addFirstLevel();
         addSecondLevel();
         addThirdLevel();
         addForthLevel();
-        addFifthLevel();*/
+        addFifthLevel();
         addSixthLevel();
         addSeventhLevel();
     }
 
     // Color platforms
-    public static void addFirstLevel() {
+    private static void addFirstLevel() {
         Level level = new Level(new Vector2(4, 1));
         level.unlock();
 
@@ -110,7 +110,7 @@ public class LevelManager {
     }
 
     // Activate - Desactivated platforms
-    public static void addSecondLevel() {
+    private static void addSecondLevel() {
         Level level = new Level(new Vector2(4, 1));
         level.unlock();
 
@@ -137,7 +137,7 @@ public class LevelManager {
     }
 
     // Altering Platforms
-    public static void addThirdLevel() {
+    private static void addThirdLevel() {
         Level level = new Level(new Vector2(4, 1));
         level.unlock();
 
@@ -161,7 +161,7 @@ public class LevelManager {
     }
 
     // Teleporter & Deadly platforms
-    public static void addForthLevel() {
+    private static void addForthLevel() {
         Level level = new Level(new Vector2(4, 1));
         level.unlock();
 
@@ -186,7 +186,7 @@ public class LevelManager {
     }
 
     // Wind blowers
-    public static void addFifthLevel() {
+    private static void addFifthLevel() {
         Level level = new Level(new Vector2(4, 1));
         level.unlock();
 
@@ -214,7 +214,7 @@ public class LevelManager {
     }
 
     // Magnes & Magnet
-    public static void addSixthLevel() {
+    private static void addSixthLevel() {
         Level level = new Level(new Vector2(4, 1));
         level.unlock();
 
@@ -254,7 +254,7 @@ public class LevelManager {
 
     }
 
-    public static void addSeventhLevel() {
+    private static void addSeventhLevel() {
 
     }
 

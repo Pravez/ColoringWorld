@@ -11,10 +11,10 @@ public class Map {
 
     public static final Vector2 WORLD_GRAVITY = new Vector2(0, -150f);
 
-    public World world;
+    final public World world;
 
-    public Vector2 start;
-    public Vector2 end;
+    private final Vector2 start;
+    private final Vector2 end;
 
     /**
      * Constructor of the Map

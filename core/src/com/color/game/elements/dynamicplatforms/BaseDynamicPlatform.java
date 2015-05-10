@@ -12,9 +12,9 @@ public class BaseDynamicPlatform extends BaseElement {
     /**
      * The initial position of the dynamic platform in the level
      */
-    private Vector2 initialPosition;
+    final private Vector2 initialPosition;
 
-    public BaseDynamicPlatform(Vector2 position, int width, int height, Level level){
+    BaseDynamicPlatform(Vector2 position, int width, int height, Level level){
         super();
         this.physicComponent = new DynamicPlatformPhysicComponent(this);
         this.physicComponent.configureBody(position, width, height, level.getWorld(), PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);
@@ -34,7 +34,7 @@ public class BaseDynamicPlatform extends BaseElement {
         this.physicComponent.rebase();
     }
 
-    public void deactivate() {
+    void deactivate() {
         this.physicComponent.disableCollisions();
         this.physicComponent.getBody().setAwake(true);
     }

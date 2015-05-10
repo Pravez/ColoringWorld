@@ -1,22 +1,20 @@
 package com.color.game.elements.dynamicelements.enemies;
 
-
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.command.EndJumpCommand;
 import com.color.game.command.StartJumpCommand;
-import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.userData.UserData;
 import com.color.game.levels.Level;
 
 public class JumpingEnemy extends MovingEnemy{
 
-    public static final Vector2 JUMPING_VELOCITY = new Vector2(0,750f);
+    private static final Vector2 JUMPING_VELOCITY = new Vector2(0,750f);
 
-    Array<Body> bodies;
+    private final Array<Body> bodies;
 
     public JumpingEnemy(Vector2 position, int width, int height, Level level, boolean canFall) {
         super(position, width, height, level, canFall);
@@ -30,11 +28,6 @@ public class JumpingEnemy extends MovingEnemy{
                 bodies.add(b);
             }
         }
-    }
-
-    @Override
-    public void act(BaseElement element){
-        super.act(element);
     }
 
     @Override
@@ -53,7 +46,7 @@ public class JumpingEnemy extends MovingEnemy{
         return JUMPING_VELOCITY;
     }
 
-    public void preventJump(){
+    private void preventJump(){
         float dy = this.physicComponent.getBody().getPosition().y;
         float dx = this.physicComponent.getBody().getPosition().x;
 

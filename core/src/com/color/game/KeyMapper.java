@@ -7,11 +7,11 @@ import com.badlogic.gdx.Input;
  * in order to change them easily
  */
 public class KeyMapper {
-    public int leftCode, rightCode;
-    public int squatCode, jumpCode;
-    public int redCode, blueCode, yellowCode;
-    public int runCode;
-    public int magnesCode;
+    final public int leftCode, rightCode;
+    final public int squatCode, jumpCode;
+    final public int redCode, blueCode, yellowCode;
+    final public int runCode;
+    final public int magnesCode;
 
     public KeyMapper() {
         this.leftCode   = Input.Keys.LEFT;

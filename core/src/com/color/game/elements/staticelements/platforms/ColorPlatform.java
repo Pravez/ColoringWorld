@@ -21,10 +21,10 @@ import com.color.game.screens.GameScreen;
  */
 public class ColorPlatform extends BaseStaticElement implements BaseColorPlatform {
 
-    private PlatformColor color;
+    final private PlatformColor color;
     private boolean activated;
 
-    private ShapeRenderer shapeRenderer;
+    final private ShapeRenderer shapeRenderer;
 
     public ColorPlatform(Vector2 position, int width, int height, Level level, PlatformColor color, boolean activated) {
         super(position, width, height, level.map, PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);

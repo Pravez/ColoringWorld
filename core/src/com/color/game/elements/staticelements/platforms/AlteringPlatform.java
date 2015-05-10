@@ -14,7 +14,7 @@ import com.color.game.screens.GameScreen;
 
 public class AlteringPlatform extends BaseStaticElement {
 
-    private ShapeRenderer shapeRenderer;
+    final private ShapeRenderer shapeRenderer;
 
     public AlteringPlatform(Vector2 position, int width, int height, Map map, float alteration){
         super(position, width, height, map, PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);

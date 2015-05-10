@@ -11,9 +11,9 @@ import com.color.game.screens.GameScreen;
 
 public class UIStage extends Stage {
 
-    public Gauges colorGauges;
+    final public Gauges colorGauges;
 
-    private TextButton playButton;
+    final private TextButton playButton;
 
     public UIStage(final GameScreen gameScreen) {
         this.colorGauges = new Gauges(new Rectangle(10, 500, 50, 50));
@@ -25,10 +25,10 @@ public class UIStage extends Stage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (gameScreen.isPaused()) {
-                    gameScreen.resume();
+                    gameScreen.resumeGame();
                     updateButton("Pause");
                 } else {
-                    gameScreen.pause();
+                    gameScreen.pauseGame();
                     updateButton("Resume");
                 }
             }

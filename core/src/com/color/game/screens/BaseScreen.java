@@ -10,18 +10,18 @@ import com.color.game.ColorGame;
  * BaseScreen, the base class of all the screens of the Game
  * It has a reference to the {@link ColorGame} class and contains all common attributes between the screens
  */
-public class BaseScreen implements Screen {
+class BaseScreen implements Screen {
 
-    protected ColorGame game;
+    final ColorGame game;
 
-    protected Texture   texture;
-    protected Stage     stage;
+    Texture   texture;
+    Stage     stage;
 
     /**
      * Constructor of the BaseScreen
      * @param game the {@link ColorGame}
      */
-    public BaseScreen(ColorGame game) {
+    BaseScreen(ColorGame game) {
         this.game  = game;
         this.stage = new Stage();
     }
@@ -36,7 +36,7 @@ public class BaseScreen implements Screen {
 
     /**
      * Render method called every delta time when the screen is rendering
-     * @param delta
+     * @param delta the delta time since the last render call
      */
     @Override
     public void render(float delta) {

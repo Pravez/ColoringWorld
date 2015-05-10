@@ -8,7 +8,7 @@ public class ColorCommand implements Command {
 
     public static final float COLOR_DELAY = 5.0f;
 
-    PlatformColor color;
+    private final PlatformColor color;
     private boolean activated = false;
     private boolean desactivated = false;
 
@@ -23,7 +23,7 @@ public class ColorCommand implements Command {
         return !this.activated && !this.desactivated;
     }
 
-    public void restart() {
+    private void restart() {
         this.activated = false;
         this.desactivated = false;
         this.time = 0;

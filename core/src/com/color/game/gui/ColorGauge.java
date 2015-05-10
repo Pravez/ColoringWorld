@@ -13,12 +13,12 @@ import com.color.game.command.ColorCommand;
  */
 public class ColorGauge {
 
-    private Rectangle bounds;
-    private Color color;
+    final private Rectangle bounds;
+    final private Color color;
 
     private float time;
 
-    private ShapeRenderer shapeRenderer;
+    final private ShapeRenderer shapeRenderer;
 
     /**
      * Constructor of the ColorGauge

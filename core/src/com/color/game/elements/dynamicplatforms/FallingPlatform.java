@@ -10,18 +10,17 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.levels.Level;
-import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
 
 public class FallingPlatform extends BaseDynamicPlatform {
 
-    public static final int FALLING_GAP = 200;
+    private static final int FALLING_GAP = 200;
 
-    protected boolean fall = false;
-    protected boolean falling = false;
+    boolean fall = false;
+    boolean falling = false;
     private boolean transparent = false;
 
-    private ShapeRenderer shapeRenderer;
+    final private ShapeRenderer shapeRenderer;
     private Color color = Color.MAROON;
 
     public FallingPlatform(Vector2 position, int width, int height, Level level, boolean fall) {
@@ -39,18 +38,18 @@ public class FallingPlatform extends BaseDynamicPlatform {
         this.color = color;
     }
 
-    public void setTransparent(boolean transparent) {
+    void setTransparent(boolean transparent) {
         this.transparent = transparent;
     }
 
-    public void fall() {
+    void fall() {
         this.falling = true;
         this.physicComponent.getBody().setAwake(true);
         this.physicComponent.getBody().setType(BodyDef.BodyType.DynamicBody);
         this.physicComponent.getBody().setGravityScale(1);
     }
 
-    protected void touchFloor() {
+    void touchFloor() {
         // Reactivate the jump on the platform
         this.physicComponent.getBody().setType(BodyDef.BodyType.KinematicBody);
     }

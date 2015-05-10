@@ -17,10 +17,10 @@ import com.color.game.screens.GameScreen;
 public class WindBlower extends Sensor {
 
     private static final float PUSH_FORCE = 60f;
-    private PushCommand pushCommand;
-    private Vector2 force;
+    final private PushCommand pushCommand;
+    final private Vector2 force;
 
-    private ShapeRenderer shapeRenderer;
+    final private ShapeRenderer shapeRenderer;
 
     public WindBlower(Vector2 position, int width, int height, Map map, WindDirection direction) {
         super(position, width, height, map);

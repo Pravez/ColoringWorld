@@ -19,12 +19,12 @@ import com.color.game.assets.Assets;
  */
 public class OptionScreen extends BaseScreen {
 
-    private Label soundValue;
-    private Label musicValue;
+    final private Label soundValue;
+    final private Label musicValue;
 
     /**
      * Constructor of the OptionScreen
-     * @param game
+     * @param game the ColorGame
      */
     public OptionScreen(final ColorGame game) {
         super(game);

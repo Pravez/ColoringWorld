@@ -15,9 +15,9 @@ import com.color.game.screens.GameScreen;
  */
 public class Teleporter extends Sensor {
 
-    private Vector2 teleportPosition;
+    final private Vector2 teleportPosition;
 
-    private ShapeRenderer shapeRenderer;
+    final private ShapeRenderer shapeRenderer;
 
     public Teleporter(Vector2 position, int width, int height, Map map, Vector2 teleportPosition) {
         super(position, width, height, map);

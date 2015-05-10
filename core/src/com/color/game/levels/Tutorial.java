@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Array;
  * Tutorial, containing all the different texts of the tutorial
  */
 public class Tutorial {
-    public static Array<String> texts;
+    private static Array<String> texts;
 
     /**
      * Init method to init the Tutorial

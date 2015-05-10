@@ -18,9 +18,7 @@ import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.dynamicelements.states.AloftState;
 import com.color.game.elements.dynamicelements.states.LandedState;
-import com.color.game.elements.dynamicplatforms.ColorFallingPlatform;
 import com.color.game.elements.dynamicplatforms.FallingPlatform;
-import com.color.game.elements.staticelements.BaseStaticElement;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.platforms.Platform;
 import com.color.game.elements.staticelements.platforms.PlatformColor;
@@ -37,11 +35,11 @@ import com.color.game.levels.LevelManager;
  */
 public class GameScreen extends BaseScreen implements InputProcessor, ContactListener {
 
-    public Box2DDebugRenderer renderer;
+    private final Box2DDebugRenderer renderer;
     public static OrthographicCamera camera;
-    public static OrthographicCamera camera2;
+    private static OrthographicCamera camera2;
 
-    private Array<Runnable> runnables;
+    final private Array<Runnable> runnables;
 
     /**
      * The main character of the game
@@ -51,14 +49,14 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     /**
      * The User Interface Stage containing all the informations during the play
      */
-    public UIStage uiStage;
+    private final UIStage uiStage;
 
     /**
      * The different ColorCommands
      */
-    private ColorCommand redCommand;
-    private ColorCommand blueCommand;
-    private ColorCommand yellowCommand;
+    final private ColorCommand redCommand;
+    final private ColorCommand blueCommand;
+    final private ColorCommand yellowCommand;
 
     /**
      * The number of the level which should be played
@@ -99,7 +97,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     /**
      * Method called when changing the level to remove the character body from the world, and place it in the new Level's world
      */
-    public void changeLevel() {
+    private void changeLevel() {
         respawn();
         character.remove();
         LevelManager.changeLevel(this.runningLevel);
@@ -121,14 +119,14 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     /**
      * Method to pause the game
      */
-    public void pause() {
+    public void pauseGame() {
         this.run = false;
     }
 
     /**
      * Method to resume the game
      */
-    public void resume() {
+    public void resumeGame() {
         this.run = true;
     }
 
@@ -204,6 +202,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         renderer.render(LevelManager.getCurrentLevel().map.world, camera2.combined);
+
+        //System.out.println("Running ? : " + this.run + ", " + delta);
 
         // If the game is in running mode
         if (this.run) {
@@ -328,9 +328,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      * Method called to handle specific events including the character
      */
     private void handleCharacter() {
-        // Prevent character from falling
-        if (character.getBounds().y < LevelManager.getCurrentLevel().map.getPixelBottom()) {
-            this.restart = true;
+        if (character.getBounds().y < LevelManager.getCurrentLevel().map.getPixelBottom()) { // Falling
+            character.kill();
         }
     }
 
@@ -435,9 +434,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
 
         if (UserData.isCharacter(b.getBody())) {
-            // Character touching an enemy
-            if (UserData.isDeadly(a.getBody())) {
-                this.restart = true;
+            if (UserData.isDeadly(a.getBody())) { // Character touching an enemy
+                character.kill();
             }
         }
 

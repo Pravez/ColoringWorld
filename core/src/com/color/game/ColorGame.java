@@ -80,7 +80,7 @@ public class ColorGame extends Game {
 		/*if (BaseStage.character.getDeathState() == DeathState.PIKES) {
             cause.setText("Aouch, it is prickly !");
         } else {*/
-		ArrayList<String> sentences = new ArrayList<String>();
+		ArrayList<String> sentences = new ArrayList<>();
 		sentences.add("You have fallen into a puddle...");
 		sentences.add("Maybe you thought you could fly ?");
 		sentences.add("Nice try ! But not...");
@@ -99,7 +99,7 @@ public class ColorGame extends Game {
 		/*if (BaseStage.character.getDeathState() == DeathState.PIKES) {
             cause.setText("Aouch, it is prickly !");
         } else {*/
-		ArrayList<String> sentences = new ArrayList<String>();
+		ArrayList<String> sentences = new ArrayList<>();
 		sentences.add("You have fallen into a puddle...");
 		sentences.add("Maybe you thought you could fly ?");
 		sentences.add("Nice try ! But not...");
@@ -134,7 +134,7 @@ public class ColorGame extends Game {
 		/*if (BaseStage.character.getDeathState() == DeathState.PIKES) {
             cause.setText("Aouch, it is prickly !");
         } else {*/
-		ArrayList<String> sentences = new ArrayList<String>();
+		ArrayList<String> sentences = new ArrayList<>();
 		sentences.add("You have fallen into a puddle...");
 		sentences.add("Maybe you thought you could fly ?");
 		sentences.add("Nice try ! But not...");

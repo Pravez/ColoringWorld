@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 public class MovingPlatform extends BaseDynamicPlatform{
 
-    public static final float MOVING_PLATFORM_VELOCITY = 1f;
+    private static final float MOVING_PLATFORM_VELOCITY = 1f;
 
-    private ArrayList<Vector2> points;
+    final private ArrayList<Vector2> points;
     private int nextPointIndex;
-    private ShapeRenderer shapeRenderer;
+    final private ShapeRenderer shapeRenderer;
 
     public MovingPlatform(Vector2 position, int width, int height, Level level, Vector2 point) {
         super(position, width, height, level);
@@ -83,7 +83,7 @@ public class MovingPlatform extends BaseDynamicPlatform{
         this.nextPointIndex = 0;
     }
 
-    public boolean destinationReached(){
+    private boolean destinationReached(){
 
         Vector2 lastPoint;
         if(this.nextPointIndex == 0){

@@ -10,7 +10,7 @@ import com.color.game.elements.PhysicComponent;
  */
 public class StaticPhysicComponent extends PhysicComponent{
 
-    public static final float STATIC_ELEMENT_DENSITY = 1f;
+    private static final float STATIC_ELEMENT_DENSITY = 1f;
 
     public StaticPhysicComponent(BaseElement element) {
         super(element);

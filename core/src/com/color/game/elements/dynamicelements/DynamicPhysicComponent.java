@@ -10,10 +10,10 @@ import com.color.game.elements.PhysicComponent;
  */
 public class DynamicPhysicComponent extends PhysicComponent{
 
-    public static final float DYNAMIC_ELEMENT_DENSITY = 1f;
-    public static final float DYNAMIC_ELEMENT_SQUAT_DENSITY = 4f;
+    private static final float DYNAMIC_ELEMENT_DENSITY = 1f;
+    private static final float DYNAMIC_ELEMENT_SQUAT_DENSITY = 4f;
 
-    public static final float DYNAMIC_ELEMENT_BASE_VELOCITY = 25f;
+    private static final float DYNAMIC_ELEMENT_BASE_VELOCITY = 25f;
 
     private Vector2 currentImpulse;
 

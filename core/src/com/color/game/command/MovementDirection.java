@@ -7,7 +7,7 @@ public enum MovementDirection {
 
     private final int value;
 
-    private MovementDirection(final int newValue) {
+    MovementDirection(final int newValue) {
         value = newValue;
     }
 

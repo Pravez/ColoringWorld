@@ -26,9 +26,9 @@ public class Notice extends Sensor {
 
     private boolean display = false;
 
-    private ShapeRenderer shapeRenderer;
+    final private ShapeRenderer shapeRenderer;
 
-    private BitmapFontCache cache;
+    final private BitmapFontCache cache;
 
     public Notice(Vector2 position, int width, int height, Map map, int tutorialIndex) {
         super(position, width, height, map);

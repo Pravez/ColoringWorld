@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,16 +14,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
 
-import java.util.ArrayList;
-
 /**
  * TransitionSreen when the character dies, or when the level is complete
  */
 public class TransitionScreen extends BaseScreen {
 
-    private Label title;
-    private Label message;
-    private Label space;
+    final private Label title;
+    final private Label message;
+    final private Label space;
 
     public TransitionScreen(ColorGame game) {
         super(game);
@@ -80,10 +77,5 @@ public class TransitionScreen extends BaseScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             this.game.setGameScreen();
         }
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 }

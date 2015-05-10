@@ -25,13 +25,13 @@ public abstract class PhysicComponent {
 
     protected UserData userData;
     protected Body body;
-    protected BaseElement element;
+    final protected BaseElement element;
     protected World world;
 
     protected BodyDef bodyDef;
     protected FixtureDef fixtureDef;
 
-    public PhysicComponent(BaseElement element) {
+    protected PhysicComponent(BaseElement element) {
         this.userData = null;
         this.body = null;
         this.element = element;
@@ -97,7 +97,7 @@ public abstract class PhysicComponent {
         return userData;
     }
 
-    public void destroyFixture() {
+    protected void destroyFixture() {
         if (this.body.getFixtureList().size != 0) {
             this.body.destroyFixture(this.body.getFixtureList().first());
         }

@@ -7,11 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.command.PushCommand;
-import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
-import com.color.game.elements.staticelements.BaseStaticElement;
-import com.color.game.elements.userData.StaticElementUserData;
-import com.color.game.elements.userData.UserDataType;
 import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
 
@@ -22,9 +18,9 @@ import com.color.game.screens.GameScreen;
 public class Magnet extends Sensor {
 
     private static final float ATTRACT_FORCE = 10f;
-    private PushCommand pushCommand;
+    final private PushCommand pushCommand;
 
-    private ShapeRenderer shapeRenderer;
+    final private ShapeRenderer shapeRenderer;
 
     public Magnet(Vector2 position, int radius, Map map) {
         super(position, radius, map);
@@ -52,7 +48,7 @@ public class Magnet extends Sensor {
         this.pushCommand.end();
     }
 
-    public Vector2 calculateForce(Vector2 dynamicElement){
+    private Vector2 calculateForce(Vector2 dynamicElement){
         Vector2 center = this.getCenter();
         Vector2 force = new Vector2(0,0);
         if(dynamicElement.x > center.x){

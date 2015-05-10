@@ -14,19 +14,19 @@ import com.color.game.levels.Level;
 
 public class MovingEnemy extends Enemy {
 
-    public static final float ENEMY_MOVING_VELOCITY = 20f;
+    private static final float ENEMY_MOVING_VELOCITY = 20f;
     public static final float SLOW_MOVING_VELOCITY = 10f;
     public static final float FAST_MOVING_VELOCITY = 30f;
 
-    protected int current_direction;
+    int current_direction;
 
     private BaseStaticElement floorElement;
 
     /**
      * Falling parameters
      */
-    public static final float FALL_GAP = 30f;
-    private boolean canFall;
+    private static final float FALL_GAP = 30f;
+    final private boolean canFall;
     private boolean preventLeft  = false;
     private boolean preventRight = false;
 

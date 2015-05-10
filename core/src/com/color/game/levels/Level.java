@@ -5,7 +5,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.elements.BaseColorPlatform;
-import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.dynamicplatforms.BaseDynamicPlatform;
 import com.color.game.elements.staticelements.platforms.ColorPlatform;
@@ -16,13 +15,13 @@ import com.color.game.elements.staticelements.platforms.PlatformColor;
  */
 public class Level extends Stage {
 
-    public static float accumulator = 0f;
-    public static final float TIME_STEP = 1/300f;
+    private static float accumulator = 0f;
+    private static final float TIME_STEP = 1/300f;
 
     /**
      * The map containg the world of the Level
      */
-    public Map map;
+    final public Map map;
     /**
      * If the level is locked or not
      */
@@ -30,22 +29,22 @@ public class Level extends Stage {
     /**
      * The position of the {@link com.color.game.elements.dynamicelements.Character} at the beginning of the level
      */
-    public Vector2 characterPos;
+    final public Vector2 characterPos;
 
     /**
      * The list of the {@link BaseColorPlatform} of the level
      */
-    private Array<BaseColorPlatform> colorPlatforms;
+    final private Array<BaseColorPlatform> colorPlatforms;
 
     /**
      * The list of the {@link BaseDynamicPlatform} of the level
      */
-    private Array<BaseDynamicPlatform> dynamicPlatforms;
+    final private Array<BaseDynamicPlatform> dynamicPlatforms;
 
     /**
      * The list of the {@link Enemy} of the level
      */
-    private Array<Enemy> enemies;
+    final private Array<Enemy> enemies;
 
     /**
      * The Constructor of the Level

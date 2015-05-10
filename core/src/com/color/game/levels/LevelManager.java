@@ -246,7 +246,7 @@ public class LevelManager {
         level.addActor(new MovingEnemy(new Vector2(60, 7), 2, 2, level, false));
 
         //Moving platforms
-        //level.addActor(new MovingPlatform(new Vector2(15, 5), 3,1,level, new Vector2(25,5)));
+        level.addActor(new MovingPlatform(new Vector2(15, 5), 3,1,level, new Vector2(25,5)));
 
         //level.addActor(new Platform(new Vector2(25,5), 2, 1, level.map));
 

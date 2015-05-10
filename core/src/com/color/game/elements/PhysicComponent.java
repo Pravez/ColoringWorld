@@ -107,5 +107,7 @@ public abstract class PhysicComponent {
         return body;
     }
 
-
+    public Vector2 getWorldPosition() {
+        return new Vector2(this.body.getPosition().x - this.userData.getWidth()/2, this.body.getPosition().y - this.userData.getHeight()/2);
+    }
 }

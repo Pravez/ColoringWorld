@@ -25,7 +25,7 @@ public class MovingPlatform extends BaseDynamicPlatform{
 
         this.points = new ArrayList<>();
 
-        this.points.add(position);
+        this.points.add(this.physicComponent.getWorldPosition());
         this.points.add(point);
 
         this.nextPointIndex = 0;
@@ -93,7 +93,7 @@ public class MovingPlatform extends BaseDynamicPlatform{
         }
 
         Vector2 nextPoint = points.get(this.nextPointIndex);
-        Vector2 position = this.physicComponent.getBody().getPosition();
+        Vector2 position = this.physicComponent.getWorldPosition();
 
         boolean xreached = false;
         boolean yreached = false;

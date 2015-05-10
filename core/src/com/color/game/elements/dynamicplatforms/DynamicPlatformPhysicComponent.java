@@ -74,8 +74,8 @@ public class DynamicPlatformPhysicComponent extends PhysicComponent {
     }
 
     public void setNextPath(Vector2 nextPoint){
-        float dx = nextPoint.x - this.body.getPosition().x;
-        float dy = nextPoint.y - this.body.getPosition().y;
+        float dx = nextPoint.x - this.getWorldPosition().x;
+        float dy = nextPoint.y - this.getWorldPosition().y;
 
         linearVelocity.x = dx;
         linearVelocity.y = dy;

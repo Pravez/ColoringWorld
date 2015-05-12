@@ -1,3 +1,13 @@
+# May 12, 2015
+* Sent messages to some people to ask them to test
+* Prepared four stages to test
+* Continued work on changing collision detection
+
+# May 11, 2015
+* Meeting and update of what to do
+* Started to think about stages and testers
+* Created a new Branch, 0.2.3-dev-collisions to work on collisions
+
 # May 10, 2015
 * bugfix of falling platforms
 * falling platforms can kill dynamic bodies

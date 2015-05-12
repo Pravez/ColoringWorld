@@ -1,13 +1,19 @@
 package com.color.game.elements.dynamicelements;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.command.Command;
+import com.color.game.command.MovementDirection;
 import com.color.game.elements.BaseElement;
+import com.color.game.elements.dynamicelements.states.AloftState;
+import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.SlidingState;
 import com.color.game.elements.dynamicelements.states.State;
-import com.color.game.command.MovementDirection;
+import com.color.game.elements.staticelements.platforms.Platform;
+import com.color.game.elements.userData.UserData;
 
 import java.util.Iterator;
 
@@ -24,12 +30,16 @@ public abstract class BaseDynamicElement extends BaseElement {
     private State aloftState;
 
     final private Array<Command> commands;
+    final private Array<Contact> contacts;
+    private boolean contactsUpdated;
 
     protected BaseDynamicElement(Vector2 position, int width, int height, World world, short category, short mask){
         super();
+        contactsUpdated = false;
         physicComponent = new DynamicPhysicComponent(this);
         physicComponent.configureBody(position, width, height, world, category, mask);
         this.commands = new Array<>();
+        this.contacts = new Array<>();
     }
 
     @Override
@@ -41,6 +51,18 @@ public abstract class BaseDynamicElement extends BaseElement {
             Command command = iterator.next();
             if (command.execute(this, delta)) {
                 iterator.remove();
+            }
+        }
+
+        if (this.hasContacts() && !(this.aloftState instanceof LandedState)) {
+            this.setAloftState(new LandedState());
+        } else if (!this.hasContacts()) {
+            this.setAloftState(new AloftState());
+        }
+
+        for(Contact c : contacts){
+            if(!c.isTouching()){
+                contacts.removeValue(c, true);
             }
         }
     }
@@ -92,6 +114,34 @@ public abstract class BaseDynamicElement extends BaseElement {
         this.physicComponent.stopMove();
     }
 
+    public void addContact(Contact c){
+        contacts.add(c);
+    }
+
+    public void removeContact(Contact c){
+        contacts.removeValue(c, true);
+    }
+
+    public boolean hasContacts(){
+        return this.contacts.size > 0;
+    }
+
+    public void removeContacts(){
+        contacts.clear();
+    }
+
+    public void dumpContacts(){
+
+        for(Contact c : this.physicComponent.getBody().getWorld().getContactList())
+        System.out.println("World " + c.toString());
+
+        for(Contact c : contacts){
+            System.out.println("contacts : " + c.toString());
+            System.out.println("Body a " + c.getFixtureA().getBody().getPosition());
+            System.out.println("Body b " + c.getFixtureB().getBody().getPosition());
+            System.out.println(c.isTouching());
+        }
+    }
     /**
      * Method to teleport the element to a specific position
      * @param position the position where to teleport the element
@@ -134,6 +184,14 @@ public abstract class BaseDynamicElement extends BaseElement {
 
     public Vector2 getJumpVelocity(){
         return BaseDynamicElement.DYNAMIC_ELEMENT_BASE_JUMP;
+    }
+
+    public void handleContact(Contact c, Body touched){
+        if(UserData.isPlatform(touched)) {
+            if (!Platform.isWall(((UserData) touched.getUserData()).getElement(), this)) {
+                this.addContact(c);
+            }
+        }
     }
 
 }

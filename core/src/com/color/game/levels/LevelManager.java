@@ -8,10 +8,7 @@ import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.dynamicplatforms.MovingPlatform;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.platforms.*;
-import com.color.game.elements.staticelements.sensors.Notice;
-import com.color.game.elements.staticelements.sensors.Teleporter;
-import com.color.game.elements.staticelements.sensors.WindBlower;
-import com.color.game.elements.staticelements.sensors.WindDirection;
+import com.color.game.elements.staticelements.sensors.*;
 
 import java.util.ArrayList;
 
@@ -102,6 +99,8 @@ public class LevelManager {
 
         // Notices
         level.addActor(new Notice(new Vector2(4, 1), 3, 3, level.map, 0));
+
+        level.addActor(new Magnet(new Vector2(6,3), 6, level.map));
 
         // Exit
         level.addActor(new Exit(new Vector2(89, 1), 1, 3, level.map, 1));
@@ -208,7 +207,7 @@ public class LevelManager {
         level.addActor(new WindBlower(new Vector2(40, 22), 10, 12, level.map, WindDirection.SOUTH));
 
         // Exit
-        level.addActor(new Exit(new Vector2(59, 21), 1, 3, level.map, 4));
+        level.addActor(new Exit(new Vector2(59, 21), 1, 3, level.map, 5));
 
         levels.add(level);
     }
@@ -246,9 +245,15 @@ public class LevelManager {
         level.addActor(new MovingEnemy(new Vector2(60, 7), 2, 2, level, false));
 
         //Moving platforms
-        level.addActor(new MovingPlatform(new Vector2(15, 5), 3,1,level, new Vector2(25,5)));
+        ArrayList<Vector2> v = new ArrayList<>();
+        v.add(new Vector2(20,5));
+        v.add(new Vector2(20,15));
+        v.add(new Vector2(10,15));
+        level.addActor(new MovingPlatform(new Vector2(10, 5), 3,1,level, v));
 
         //level.addActor(new Platform(new Vector2(25,5), 2, 1, level.map));
+        level.addActor(new Exit(new Vector2(195, 1), 1, 3, level.map, 5));
+
 
         levels.add(level);
 

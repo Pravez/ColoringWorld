@@ -118,6 +118,7 @@ public class Character extends BaseDynamicElement {
      * @param position The position in the new world
      */
     public void changeWorld(World world, Vector2 position) {
+        this.removeContacts();
         this.physicComponent.changeWorld(world, position);
     }
 
@@ -128,6 +129,7 @@ public class Character extends BaseDynamicElement {
     public void reset(Vector2 position) {
         this.physicComponent.getBody().setTransform(position.x, position.y, 0);
         this.physicComponent.rebase();
+        this.removeContacts();
     }
 
     public Vector2 getSquatVector2(){

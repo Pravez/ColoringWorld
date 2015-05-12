@@ -16,15 +16,10 @@ import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
-import com.color.game.elements.dynamicelements.states.AloftState;
-import com.color.game.elements.dynamicelements.states.LandedState;
-import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.staticelements.Exit;
-import com.color.game.elements.staticelements.platforms.Platform;
 import com.color.game.elements.staticelements.platforms.PlatformColor;
 import com.color.game.elements.staticelements.sensors.Magnes;
 import com.color.game.elements.staticelements.sensors.Sensor;
-import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.UserData;
 import com.color.game.gui.ColorGauge;
 import com.color.game.gui.UIStage;
@@ -203,8 +198,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         renderer.render(LevelManager.getCurrentLevel().map.world, camera2.combined);
 
-        //System.out.println("Running ? : " + this.run + ", " + delta);
-
         // If the game is in running mode
         if (this.run) {
             runRunnables();
@@ -273,6 +266,10 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             if (this.currentMagnes != null) {
                 this.currentMagnes.act(character);
             }
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.W)){
+            character.dumpContacts();
         }
 
         // Here the code to activate colors
@@ -440,7 +437,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
 
         // Contact between an enemy or a character and a platform
-        if(UserData.isDynamicBody(b.getBody())) {
+        /*if(UserData.isDynamicBody(b.getBody())) {
             final BaseDynamicElement de = ((BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement());
             if(UserData.isPlatform(a.getBody())) {
                 BaseElement p = ((UserData)a.getBody().getUserData()).getElement();
@@ -461,6 +458,12 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
                     de.setAloftState(new LandedState());
                 }
             }
+        }*/
+
+        if(UserData.isDynamicBody(a.getBody())){
+            ((BaseDynamicElement)((UserData) a.getBody().getUserData()).getElement()).handleContact(contact, b.getBody());
+        }else if(UserData.isDynamicBody(b.getBody())){
+             ((BaseDynamicElement)((UserData) b.getBody().getUserData()).getElement()).handleContact(contact, a.getBody());
         }
 
         // Sensors with the character
@@ -509,17 +512,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         if (UserData.isMagnes(b.getBody()) && UserData.isCharacter(a.getBody())) {
             this.currentMagnes = null;
         }
-
-        // End Contact between an enemy or a character and a platform
-        if(UserData.isDynamicBody(b.getBody()) && UserData.isPlatform(a.getBody())){
-            if(!Platform.isWall(((UserData) a.getBody().getUserData()).getElement(), (BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement())) {
-                ((DynamicElementUserData) b.getBody().getUserData()).removeContact();
-            }
-            if(((DynamicElementUserData)b.getBody().getUserData()).getContactsNumber() <= 0){
-                ((BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement()).setAloftState(new AloftState());
-            }
-        }
-
 
     }
 

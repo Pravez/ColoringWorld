@@ -7,6 +7,7 @@
 * Added the jumping enemies who can jump on platforms
 * Changed a bit how physics access datas concerning how the bodies can move
 * Changed the way enemies change their directions
+* Added moving platforms
 
 # May 8, 2015
 * Lost time in merges

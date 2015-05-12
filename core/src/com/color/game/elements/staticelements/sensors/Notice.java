@@ -52,8 +52,8 @@ public class Notice extends Sensor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 
-        int width = this.physicComponent.getUserData().getWidth() * WORLD_TO_SCREEN;
-        int height = this.physicComponent.getUserData().getHeight() * WORLD_TO_SCREEN;
+        float width = this.physicComponent.getUserData().getWidth() * WORLD_TO_SCREEN;
+        float height = this.physicComponent.getUserData().getHeight() * WORLD_TO_SCREEN;
         int x = (int) (this.physicComponent.getBody().getPosition().x - this.physicComponent.getUserData().getWidth() / 2) * WORLD_TO_SCREEN;
         int y = (int) (this.physicComponent.getBody().getPosition().y - this.physicComponent.getUserData().getHeight() / 2) * WORLD_TO_SCREEN;
 

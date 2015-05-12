@@ -25,7 +25,7 @@ public abstract class BaseDynamicElement extends BaseElement {
 
     final private Array<Command> commands;
 
-    protected BaseDynamicElement(Vector2 position, int width, int height, World world, short category, short mask){
+    protected BaseDynamicElement(Vector2 position, float width, float height, World world, short category, short mask){
         super();
         physicComponent = new DynamicPhysicComponent(this);
         physicComponent.configureBody(position, width, height, world, category, mask);

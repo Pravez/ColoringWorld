@@ -25,8 +25,8 @@ public class Character extends BaseDynamicElement {
 
     private static final float CHARACTER_RUNNING_VELOCITY = 35f;
     public static final float CHARACTER_WALKING_VELOCITY = 15f;
-    public static final int CHARACTER_HEIGHT = 2;
-    private static final int CHARACTER_SQUAT_HEIGHT = 1;
+    public static final float CHARACTER_HEIGHT = 1.9f;
+    private static final float CHARACTER_SQUAT_HEIGHT = 0.9f;
     public static final int CHARACTER_WIDTH = 1;
 
     final private GameScreen gameScreen;
@@ -34,7 +34,7 @@ public class Character extends BaseDynamicElement {
     final private ShapeRenderer shapeRenderer;
     private boolean onWall;
 
-    public Character(GameScreen gameScreen, Vector2 position, int width, int height, World world) {
+    public Character(GameScreen gameScreen, Vector2 position, float width, float height, World world) {
         super(position, width, height, world, PhysicComponent.CATEGORY_PLAYER, PhysicComponent.MASK_PLAYER);
 
         this.physicComponent.configureUserData(new DynamicElementUserData(this, width, height, UserDataType.CHARACTER));

@@ -22,7 +22,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
     }
 
     @Override
-    public void configureBody(Vector2 position, int width, int height, World world, short category, short mask){
+    public void configureBody(Vector2 position, float width, float height, World world, short category, short mask){
         this.world = world;
 
         this.bodyDef = new BodyDef();
@@ -153,7 +153,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
 
         this.body.setTransform(this.body.getPosition().x, this.body.getPosition().y - shapesize.y, 0f);
 
-        this.userData.setHeight((int)shapesize.y*2);
+        this.userData.setHeight(shapesize.y * 2);
 
     }
 
@@ -171,6 +171,6 @@ public class DynamicPhysicComponent extends PhysicComponent{
         this.fixtureDef.density = DYNAMIC_ELEMENT_DENSITY;
         this.body.createFixture(this.fixtureDef);
 
-        this.userData.setHeight((int)shapesize.y*2);
+        this.userData.setHeight(shapesize.y * 2);
     }
 }

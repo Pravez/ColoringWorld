@@ -8,6 +8,7 @@ import com.color.game.elements.PhysicComponent;
 public class DynamicPlatformPhysicComponent extends PhysicComponent {
 
     private static final float DYNAMIC_PLATFORM_DENSITY = 1000f;
+    private static final float VELOCITY_MAX = 14f;
 
     final private Vector2 linearVelocity;
 
@@ -17,7 +18,7 @@ public class DynamicPlatformPhysicComponent extends PhysicComponent {
     }
 
     @Override
-    public void configureBody(Vector2 position, int width, int height, World world, short category, short mask) {
+    public void configureBody(Vector2 position, float width, float height, World world, short category, short mask) {
         this.world = world;
 
         this.bodyDef = new BodyDef();
@@ -77,7 +78,7 @@ public class DynamicPlatformPhysicComponent extends PhysicComponent {
         float dx = nextPoint.x - this.getWorldPosition().x;
         float dy = nextPoint.y - this.getWorldPosition().y;
 
-        linearVelocity.x = dx;
-        linearVelocity.y = dy;
+        linearVelocity.x = VELOCITY_MAX * dx / (Math.abs(dx) + Math.abs(dy));
+        linearVelocity.y = VELOCITY_MAX * dy / (Math.abs(dx) + Math.abs(dy));
     }
 }

@@ -2,10 +2,7 @@ package com.color.game.elements;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.color.game.elements.userData.DynamicElementUserData;
-import com.color.game.elements.userData.UserData;
 
 /**
  * Class BaseElement which one is part of the Scene2D "world". It will be extended by every static or dynamic
@@ -24,8 +21,8 @@ public abstract class BaseElement extends Actor {
     }
 
     public Rectangle getBounds() {
-        int width = this.physicComponent.getUserData().getWidth();
-        int height = this.physicComponent.getUserData().getHeight();
+        float width = this.physicComponent.getUserData().getWidth();
+        float height = this.physicComponent.getUserData().getHeight();
         float x = (this.physicComponent.getBody().getPosition().x) - this.physicComponent.getUserData().getWidth()/2;
         float y = (this.physicComponent.getBody().getPosition().y) - this.physicComponent.getUserData().getHeight()/2;
         return new Rectangle(x * WORLD_TO_SCREEN, y * WORLD_TO_SCREEN, width * WORLD_TO_SCREEN, height * WORLD_TO_SCREEN);

@@ -17,7 +17,7 @@ public class StaticPhysicComponent extends PhysicComponent{
     }
 
     @Override
-    public void configureBody(Vector2 position, int width, int height, World world, short category, short mask){
+    public void configureBody(Vector2 position, float width, float height, World world, short category, short mask){
         this.world = world;
 
         this.bodyDef = new BodyDef();

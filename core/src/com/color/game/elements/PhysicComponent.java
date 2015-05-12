@@ -46,7 +46,7 @@ public abstract class PhysicComponent {
      * @param category Body's category
      * @param mask Body's collision mask
      */
-    public abstract void configureBody(Vector2 position, int width, int height, World world, short category, short mask);
+    public abstract void configureBody(Vector2 position, float width, float height, World world, short category, short mask);
 
     /**
      * Main method to initialize the corpse, the body of the element when it is a circle.

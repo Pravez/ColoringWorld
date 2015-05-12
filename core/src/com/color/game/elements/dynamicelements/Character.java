@@ -6,14 +6,18 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
 import com.color.game.elements.dynamicelements.states.StandingState;
 import com.color.game.elements.dynamicelements.states.WalkingState;
+import com.color.game.elements.staticelements.sensors.Sensor;
 import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.command.MovementDirection;
+import com.color.game.elements.userData.UserData;
 import com.color.game.elements.userData.UserDataType;
 import com.color.game.screens.GameScreen;
 
@@ -25,24 +29,21 @@ public class Character extends BaseDynamicElement {
 
     private static final float CHARACTER_RUNNING_VELOCITY = 35f;
     public static final float CHARACTER_WALKING_VELOCITY = 15f;
-    public static final int CHARACTER_HEIGHT = 2;
-    private static final int CHARACTER_SQUAT_HEIGHT = 1;
+    public static final float CHARACTER_HEIGHT = 1.9f;
+    private static final float CHARACTER_SQUAT_HEIGHT = 0.9f;
     public static final int CHARACTER_WIDTH = 1;
 
     final private GameScreen gameScreen;
 
     final private ShapeRenderer shapeRenderer;
-    private boolean onWall;
 
-    public Character(GameScreen gameScreen, Vector2 position, int width, int height, World world) {
+    public Character(GameScreen gameScreen, Vector2 position, float width, float height, World world) {
         super(position, width, height, world, PhysicComponent.CATEGORY_PLAYER, PhysicComponent.MASK_PLAYER);
 
         this.physicComponent.configureUserData(new DynamicElementUserData(this, width, height, UserDataType.CHARACTER));
 
         this.gameScreen = gameScreen;
         this.shapeRenderer = new ShapeRenderer();
-
-        onWall = false;
 
         this.setMovingState(new StandingState());
         this.setAloftState(new LandedState());
@@ -140,11 +141,17 @@ public class Character extends BaseDynamicElement {
         return new Vector2(CHARACTER_WIDTH, CHARACTER_HEIGHT);
     }
 
-    public boolean isOnWall() {
-        return onWall;
-    }
-
-    public void setOnWall(boolean onWall) {
-        this.onWall = onWall;
+    @Override
+    public void handleContact(Contact c, Body touched) {
+        super.handleContact(c, touched);
+        if(UserData.isDeadly(touched)){
+            this.kill();
+        }
+        if(UserData.isSensor(touched)){
+            ((Sensor) ((UserData) touched.getUserData()).getElement()).act(this);
+        }
+        if(UserData.isExit(touched)){
+            gameScreen.reachExit(touched);
+        }
     }
 }

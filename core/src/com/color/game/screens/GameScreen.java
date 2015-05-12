@@ -430,12 +430,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             });
         }
 
-        if (UserData.isCharacter(b.getBody())) {
-            if (UserData.isDeadly(a.getBody())) { // Character touching an enemy
-                character.kill();
-            }
-        }
-
         // Contact between an enemy or a character and a platform
         /*if(UserData.isDynamicBody(b.getBody())) {
             final BaseDynamicElement de = ((BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement());
@@ -487,13 +481,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         if (UserData.isMagnes(b.getBody()) && UserData.isCharacter(a.getBody())) {
             this.currentMagnes = (Magnes)((UserData)b.getBody().getUserData()).getElement();
         }
-
-        // The character reaches the exit
-        if (UserData.isExit(a.getBody()) && UserData.isCharacter(b.getBody())) {
-            this.runningLevel = ((Exit) ((UserData) a.getBody().getUserData()).getElement()).getLevelIndex();
-            endCommands();
-            this.game.setWinScreen();
-        }
     }
 
     @Override
@@ -523,5 +510,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     @Override
     public void postSolve(Contact contact, ContactImpulse contactImpulse) {
 
+    }
+
+    public void reachExit(Body exit){
+        this.runningLevel = ((Exit) ((UserData) exit.getUserData()).getElement()).getLevelIndex();
+        endCommands();
+        this.game.setWinScreen();
     }
 }

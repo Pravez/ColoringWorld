@@ -11,9 +11,7 @@ public class DynamicElementUserData extends UserData{
 
     private int contactsNumber;
 
-    private boolean inContact;
-
-    public DynamicElementUserData(BaseDynamicElement element, int width, int height, UserDataType userDataType) {
+    public DynamicElementUserData(BaseDynamicElement element, float width, float height, UserDataType userDataType) {
         super(element, width, height, userDataType);
         contactsNumber = 0;
     }
@@ -31,7 +29,6 @@ public class DynamicElementUserData extends UserData{
             }
         }
 
-        inContact = oneContact;
 
         return oneContact;
     }

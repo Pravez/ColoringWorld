@@ -12,11 +12,11 @@ public abstract class UserData {
 
     private BaseElement element;
 
-    private int width;
-    private int height;
+    private float width;
+    private float height;
     private UserDataType userDataType;
 
-    UserData(BaseElement element, int width, int height, UserDataType userDataType) {
+    UserData(BaseElement element, float width, float height, UserDataType userDataType) {
         this.element = element;
         this.width = width * 2;
         this.height = height * 2;
@@ -28,19 +28,19 @@ public abstract class UserData {
         this.height = height;
     }
 
-    public int getWidth() {
+    public float getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(float width) {
         this.width = width;
     }
 
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(float height) {
         this.height = height;
     }
 

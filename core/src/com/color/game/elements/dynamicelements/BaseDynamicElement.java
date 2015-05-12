@@ -31,11 +31,9 @@ public abstract class BaseDynamicElement extends BaseElement {
 
     final private Array<Command> commands;
     final private Array<Contact> contacts;
-    private boolean contactsUpdated;
 
-    protected BaseDynamicElement(Vector2 position, int width, int height, World world, short category, short mask){
+    protected BaseDynamicElement(Vector2 position, float width, float height, World world, short category, short mask){
         super();
-        contactsUpdated = false;
         physicComponent = new DynamicPhysicComponent(this);
         physicComponent.configureBody(position, width, height, world, category, mask);
         this.commands = new Array<>();
@@ -116,10 +114,6 @@ public abstract class BaseDynamicElement extends BaseElement {
 
     public void addContact(Contact c){
         contacts.add(c);
-    }
-
-    public void removeContact(Contact c){
-        contacts.removeValue(c, true);
     }
 
     public boolean hasContacts(){

@@ -30,7 +30,7 @@ public class ColorCommand implements Command {
     }
 
     public void stop() {
-        if (this.activated) {
+        if (this.activated && !this.desactivated) {
             LevelManager.getCurrentLevel().changeColorPlatformsActivation(this.color);
         }
         restart();

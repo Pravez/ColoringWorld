@@ -250,14 +250,14 @@ public class LevelManager {
         Level level = new Level(new Vector2());
         level.unlock();
 
-        LevelManager.levels.add(level);
+        //LevelManager.levels.add(level);
     }
 
     private static void addSeventhLevel() {
         Level level = new Level(new Vector2());
         level.unlock();
 
-        LevelManager.levels.add(level);
+        //LevelManager.levels.add(level);
     }
 
     // Color platforms
@@ -282,8 +282,6 @@ public class LevelManager {
 
         // Notices
         level.addActor(new Notice(new Vector2(4, 1), 3, 3, level.map, 0));
-
-        level.addActor(new Magnet(new Vector2(6,3), 6, level.map));
 
         // Exit
         level.addActor(new Exit(new Vector2(89, 1), 1, 3, level.map, 1));

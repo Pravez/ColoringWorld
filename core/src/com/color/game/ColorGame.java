@@ -36,13 +36,13 @@ public class ColorGame extends Game {
 		//noinspection StatementWithEmptyBody
 		while(!Assets.update());
 
-		Tutorial.init();
-		LevelManager.init();
-
 		this.soundManager = new SoundManager();
 		this.musicManager = new MusicManager();
 
 		this.keys         = new KeyMapper();
+
+		Tutorial.init(this.keys);
+		LevelManager.init();
 
 		this.gameScreen           = new GameScreen(this);
 		this.levelSelectionScreen = new LevelSelectionScreen(this);

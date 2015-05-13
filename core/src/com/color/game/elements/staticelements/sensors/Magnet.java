@@ -17,7 +17,7 @@ import com.color.game.screens.GameScreen;
  */
 public class Magnet extends Sensor {
 
-    private static final float ATTRACT_FORCE = 10f;
+    private static final float ATTRACT_FORCE = 20f;
     final private PushCommand pushCommand;
 
     final private ShapeRenderer shapeRenderer;
@@ -36,7 +36,6 @@ public class Magnet extends Sensor {
         this.pushCommand.setRunnable(new Runnable() {
             @Override
             public void run() {
-
                 element.applyLinearForce(calculateForce(element.getCenter()));
             }
         });

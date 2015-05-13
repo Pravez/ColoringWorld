@@ -59,7 +59,7 @@ public class StaticPhysicComponent extends PhysicComponent{
 
         //To keep from rotations
         this.bodyDef.fixedRotation = true;
-        this.bodyDef.position.set(new Vector2(position.x + radius, position.y + radius));
+        this.bodyDef.position.set(new Vector2(position.x, position.y));
 
         CircleShape shape = new CircleShape();
         shape.setRadius(radius);

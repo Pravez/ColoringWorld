@@ -51,7 +51,9 @@ public class FallingPlatform extends BaseDynamicPlatform {
 
     void touchFloor() {
         // Reactivate the jump on the platform
-        this.physicComponent.getBody().setType(BodyDef.BodyType.KinematicBody);
+        //this.physicComponent.getBody().setType(BodyDef.BodyType.KinematicBody);
+        super.deactivate();
+        setTransparent(true);
     }
 
     @Override
@@ -67,12 +69,12 @@ public class FallingPlatform extends BaseDynamicPlatform {
 
     @Override
     public void respawn() {
-        System.out.println("RESPAWN");
         super.respawn();
         this.physicComponent.getBody().setType(BodyDef.BodyType.KinematicBody);
         this.physicComponent.getBody().setLinearVelocity(new Vector2(0, 0));
         this.physicComponent.getBody().setGravityScale(0);
         this.falling = false;
+        setTransparent(false);
     }
 
     @Override

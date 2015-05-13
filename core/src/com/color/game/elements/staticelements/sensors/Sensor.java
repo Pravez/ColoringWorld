@@ -32,8 +32,8 @@ public abstract class Sensor extends BaseStaticElement {
      * @param map the map containing the Sensor
      */
     Sensor(Vector2 position, int radius, Map map) {
-        super(position, radius, map, PhysicComponent.CATEGORY_SENSOR, PhysicComponent.MASK_DEAD);
-        this.physicComponent.configureUserData(new StaticElementUserData(this, radius, radius, UserDataType.SENSOR));
+        super(position, radius, map, PhysicComponent.CATEGORY_SENSOR, PhysicComponent.MASK_SENSOR);
+        this.physicComponent.configureUserData(new StaticElementUserData(this, radius * 2, radius * 2, UserDataType.SENSOR));
     }
 
     public abstract void act(BaseDynamicElement element);

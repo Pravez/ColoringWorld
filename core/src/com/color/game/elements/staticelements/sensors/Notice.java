@@ -20,8 +20,8 @@ import com.color.game.screens.GameScreen;
  */
 public class Notice extends Sensor {
 
-    private static final int FONT_SIZE = 14;
-    private static final int TEXT_WIDTH = 200;
+    private static final int FONT_SIZE = 18;//14;
+    private static final int TEXT_WIDTH = 260;//200;
     private static final int TEXT_GAP = 20;
 
     private boolean display = false;

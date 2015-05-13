@@ -2,10 +2,7 @@ package com.color.game.elements;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.color.game.elements.userData.DynamicElementUserData;
-import com.color.game.elements.userData.UserData;
 
 /**
  * Class BaseElement which one is part of the Scene2D "world". It will be extended by every static or dynamic

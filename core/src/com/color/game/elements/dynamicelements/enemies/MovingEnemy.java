@@ -2,13 +2,15 @@ package com.color.game.elements.dynamicelements.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Contact;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
 import com.color.game.elements.dynamicplatforms.BaseDynamicPlatform;
 import com.color.game.elements.staticelements.BaseStaticElement;
-import com.color.game.elements.staticelements.platforms.Platform;
+import com.color.game.elements.userData.UserData;
 import com.color.game.elements.userData.UserDataType;
 import com.color.game.levels.Level;
 
@@ -76,7 +78,7 @@ public class MovingEnemy extends Enemy {
         }
 
         if(element instanceof BaseStaticElement) {
-            if (Platform.isWall(element, this)) {
+            if (UserData.isWall(element, this)) {
                 changeDir = true;
             }
         }
@@ -116,6 +118,11 @@ public class MovingEnemy extends Enemy {
         if (!this.canFall && this.floorElement != null ) {
             preventFalling();
         }
+
+    }
+
+    @Override
+    public void handleSpecificContacts(Contact c, Body touched) {
 
     }
 

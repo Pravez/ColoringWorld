@@ -13,18 +13,12 @@ import com.badlogic.gdx.utils.Array;
 import com.color.game.ColorGame;
 import com.color.game.command.*;
 import com.color.game.elements.BaseElement;
-import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
-import com.color.game.elements.dynamicelements.states.AloftState;
-import com.color.game.elements.dynamicelements.states.LandedState;
-import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.staticelements.Exit;
-import com.color.game.elements.staticelements.platforms.Platform;
 import com.color.game.elements.staticelements.platforms.PlatformColor;
 import com.color.game.elements.staticelements.sensors.Magnes;
 import com.color.game.elements.staticelements.sensors.Sensor;
-import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.UserData;
 import com.color.game.gui.ColorGauge;
 import com.color.game.gui.UIStage;
@@ -202,8 +196,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         renderer.render(LevelManager.getCurrentLevel().map.world, camera2.combined);
-
-        //System.out.println("Running ? : " + this.run + ", " + delta);
 
         // If the game is in running mode
         if (this.run) {
@@ -433,36 +425,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             });
         }
 
-        if (UserData.isCharacter(b.getBody())) {
-            if (UserData.isDeadly(a.getBody())) { // Character touching an enemy
-                character.kill();
-            }
-        }
-
-        // Contact between an enemy or a character and a platform
-        if(UserData.isDynamicBody(b.getBody())) {
-            final BaseDynamicElement de = ((BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement());
-            if(UserData.isPlatform(a.getBody())) {
-                BaseElement p = ((UserData)a.getBody().getUserData()).getElement();
-                // the platform is a falling platform
-                if (UserData.isFallingPlatform(a.getBody())) {
-                    // The platform hits a dynamic body
-                    if (((FallingPlatform)((UserData) a.getBody().getUserData()).getElement()).isFallingOntoElement(de)) {
-                        this.runnables.add(new Runnable() {
-                            @Override
-                            public void run() {
-                                de.kill();
-                            }
-                        });
-                    }
-                }
-                if(!Platform.isWall(p, de)){
-                    ((DynamicElementUserData)b.getBody().getUserData()).addContact();
-                    de.setAloftState(new LandedState());
-                }
-            }
-        }
-
         // Sensors with the character
         if (UserData.isSensor(a.getBody()) && UserData.isCharacter(b.getBody())) {
             this.runnables.add(new Runnable() {
@@ -484,13 +446,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         if (UserData.isMagnes(b.getBody()) && UserData.isCharacter(a.getBody())) {
             this.currentMagnes = (Magnes)((UserData)b.getBody().getUserData()).getElement();
         }
-
-        // The character reaches the exit
-        if (UserData.isExit(a.getBody()) && UserData.isCharacter(b.getBody())) {
-            this.runningLevel = ((Exit) ((UserData) a.getBody().getUserData()).getElement()).getLevelIndex();
-            endCommands();
-            this.game.setWinScreen();
-        }
     }
 
     @Override
@@ -510,17 +465,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             this.currentMagnes = null;
         }
 
-        // End Contact between an enemy or a character and a platform
-        if(UserData.isDynamicBody(b.getBody()) && UserData.isPlatform(a.getBody())){
-            if(!Platform.isWall(((UserData) a.getBody().getUserData()).getElement(), (BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement())) {
-                ((DynamicElementUserData) b.getBody().getUserData()).removeContact();
-            }
-            if(((DynamicElementUserData)b.getBody().getUserData()).getContactsNumber() <= 0){
-                ((BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement()).setAloftState(new AloftState());
-            }
-        }
-
-
     }
 
     @Override
@@ -531,5 +475,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     @Override
     public void postSolve(Contact contact, ContactImpulse contactImpulse) {
 
+    }
+
+    public void reachExit(Body exit){
+        this.runningLevel = ((Exit) ((UserData) exit.getUserData()).getElement()).getLevelIndex();
+        endCommands();
+        this.game.setWinScreen();
     }
 }

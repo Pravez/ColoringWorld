@@ -1,13 +1,18 @@
 package com.color.game.elements.dynamicelements;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.command.Command;
+import com.color.game.command.MovementDirection;
 import com.color.game.elements.BaseElement;
+import com.color.game.elements.dynamicelements.states.AloftState;
+import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.SlidingState;
 import com.color.game.elements.dynamicelements.states.State;
-import com.color.game.command.MovementDirection;
+import com.color.game.elements.userData.UserData;
 
 import java.util.Iterator;
 
@@ -24,12 +29,14 @@ public abstract class BaseDynamicElement extends BaseElement {
     private State aloftState;
 
     final private Array<Command> commands;
+    final private Array<Contact> contacts;
 
     protected BaseDynamicElement(Vector2 position, float width, float height, World world, short category, short mask){
         super();
         physicComponent = new DynamicPhysicComponent(this);
         physicComponent.configureBody(position, width, height, world, category, mask);
         this.commands = new Array<>();
+        this.contacts = new Array<>();
     }
 
     @Override
@@ -43,6 +50,15 @@ public abstract class BaseDynamicElement extends BaseElement {
                 iterator.remove();
             }
         }
+
+        if (this.hasContacts() && !(this.aloftState instanceof LandedState)) {
+            this.setAloftState(new LandedState());
+        } else if (!this.hasContacts()) {
+            this.setAloftState(new AloftState());
+        }
+
+        contacts.clear();
+        updateContacts();
     }
 
     /**
@@ -92,6 +108,13 @@ public abstract class BaseDynamicElement extends BaseElement {
         this.physicComponent.stopMove();
     }
 
+    public boolean hasContacts(){
+        return this.contacts.size > 0;
+    }
+
+    public void removeContacts(){
+        contacts.clear();
+    }
     /**
      * Method to teleport the element to a specific position
      * @param position the position where to teleport the element
@@ -134,6 +157,19 @@ public abstract class BaseDynamicElement extends BaseElement {
 
     public Vector2 getJumpVelocity(){
         return BaseDynamicElement.DYNAMIC_ELEMENT_BASE_JUMP;
+    }
+
+    public abstract void handleSpecificContacts(Contact c, Body touched);
+
+    public void updateContacts(){
+        for (Contact c : this.physicComponent.getBody().getWorld().getContactList()) {
+            if(UserData.isDynamicBodyPresent(c, this.physicComponent.getBody())){
+                if(c.isTouching() && UserData.isPlatformValid(c)) {
+                    contacts.add(c);
+                }
+                handleSpecificContacts(c, UserData.getOtherBody(c, this));
+            }
+        }
     }
 
 }

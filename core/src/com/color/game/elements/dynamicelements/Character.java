@@ -6,14 +6,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
+import com.color.game.command.MovementDirection;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
 import com.color.game.elements.dynamicelements.states.StandingState;
 import com.color.game.elements.dynamicelements.states.WalkingState;
 import com.color.game.elements.userData.DynamicElementUserData;
-import com.color.game.command.MovementDirection;
+import com.color.game.elements.userData.UserData;
 import com.color.game.elements.userData.UserDataType;
 import com.color.game.screens.GameScreen;
 
@@ -32,7 +35,6 @@ public class Character extends BaseDynamicElement {
     final private GameScreen gameScreen;
 
     final private ShapeRenderer shapeRenderer;
-    private boolean onWall;
 
     public Character(GameScreen gameScreen, Vector2 position, float width, float height, World world) {
         super(position, width, height, world, PhysicComponent.CATEGORY_PLAYER, PhysicComponent.MASK_PLAYER);
@@ -41,8 +43,6 @@ public class Character extends BaseDynamicElement {
 
         this.gameScreen = gameScreen;
         this.shapeRenderer = new ShapeRenderer();
-
-        onWall = false;
 
         this.setMovingState(new StandingState());
         this.setAloftState(new LandedState());
@@ -118,6 +118,7 @@ public class Character extends BaseDynamicElement {
      * @param position The position in the new world
      */
     public void changeWorld(World world, Vector2 position) {
+        this.removeContacts();
         this.physicComponent.changeWorld(world, position);
     }
 
@@ -128,6 +129,7 @@ public class Character extends BaseDynamicElement {
     public void reset(Vector2 position) {
         this.physicComponent.getBody().setTransform(position.x, position.y, 0);
         this.physicComponent.rebase();
+        this.removeContacts();
     }
 
     public Vector2 getSquatVector2(){
@@ -138,11 +140,16 @@ public class Character extends BaseDynamicElement {
         return new Vector2(CHARACTER_WIDTH, CHARACTER_HEIGHT);
     }
 
-    public boolean isOnWall() {
-        return onWall;
-    }
-
-    public void setOnWall(boolean onWall) {
-        this.onWall = onWall;
+    @Override
+    public void handleSpecificContacts(Contact c, Body touched) {
+        if (UserData.isDeadly(touched)) {
+            this.kill();
+        }
+        if (UserData.isExit(touched)) {
+            gameScreen.reachExit(touched);
+        }
+        if (UserData.isFallingPlatform(touched)) {
+            this.kill();
+        }
     }
 }

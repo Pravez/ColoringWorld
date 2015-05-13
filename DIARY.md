@@ -1,3 +1,10 @@
+# May 13, 2015
+* Got for now 4-5 testers. Will try to get a little bit more
+* Finished work on changing collisions. Merged the branch on which the work was done to 0.2-dev
+    * Go and see Experience Notes for further information
+* Added some levels to test
+* Started to create form to let testers write their opinion
+
 # May 12, 2015
 * Sent messages to some people to ask them to test
 * Prepared four stages to test

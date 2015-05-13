@@ -1,4 +1,4 @@
-# Roadmap of our game
+# Roadmap of the game
 
 ## Introduction
 

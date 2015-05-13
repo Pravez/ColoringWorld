@@ -108,6 +108,10 @@ public abstract class BaseDynamicElement extends BaseElement {
         this.physicComponent.stopMove();
     }
 
+    /**
+     * Method to test if the element has contacts
+     * @return true if the size of the array containing contacts is at least 1, false else
+     */
     public boolean hasContacts(){
         return this.contacts.size > 0;
     }
@@ -159,8 +163,17 @@ public abstract class BaseDynamicElement extends BaseElement {
         return BaseDynamicElement.DYNAMIC_ELEMENT_BASE_JUMP;
     }
 
+    /**
+     * Method to handle contacts with specific elements of the game - everythin' which is not a static element/a platform
+     * @param c The contact concerned
+     * @param touched The body who touched the element
+     */
     public abstract void handleSpecificContacts(Contact c, Body touched);
 
+    /**
+     * After clearing the contacts Array in the update loop, we update contacts. Means that we are seeking for contacts
+     * between the element which calls this method and every other elements in the world's contacts list.
+     */
     public void updateContacts(){
         for (Contact c : this.physicComponent.getBody().getWorld().getContactList()) {
             if(UserData.isDynamicBodyPresent(c, this.physicComponent.getBody())){

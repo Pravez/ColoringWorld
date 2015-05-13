@@ -14,9 +14,6 @@ Game featuring a strange man using colors to live his life
 * kill the elements with falling platforms
 
 ##### TO DO :
-- Concerning the collision detection
-    - When a color platform disappears it is always in contact, maybe do something with the groups ? dunno
-    - Always a problem with the wall, let's see on worldmanifold and points of contact
 
 - improve the enemies' move
 - check the enemies' jump

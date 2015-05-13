@@ -9,14 +9,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
+import com.color.game.command.MovementDirection;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
 import com.color.game.elements.dynamicelements.states.StandingState;
 import com.color.game.elements.dynamicelements.states.WalkingState;
-import com.color.game.elements.staticelements.sensors.Sensor;
 import com.color.game.elements.userData.DynamicElementUserData;
-import com.color.game.command.MovementDirection;
 import com.color.game.elements.userData.UserData;
 import com.color.game.elements.userData.UserDataType;
 import com.color.game.screens.GameScreen;
@@ -142,13 +141,9 @@ public class Character extends BaseDynamicElement {
     }
 
     @Override
-    public void handleContact(Contact c, Body touched) {
-        super.handleContact(c, touched);
+    public void handleSpecificContacts(Contact c, Body touched) {
         if(UserData.isDeadly(touched)){
             this.kill();
-        }
-        if(UserData.isSensor(touched)){
-            ((Sensor) ((UserData) touched.getUserData()).getElement()).act(this);
         }
         if(UserData.isExit(touched)){
             gameScreen.reachExit(touched);

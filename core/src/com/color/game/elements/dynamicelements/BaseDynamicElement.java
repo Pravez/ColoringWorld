@@ -12,7 +12,6 @@ import com.color.game.elements.dynamicelements.states.AloftState;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.SlidingState;
 import com.color.game.elements.dynamicelements.states.State;
-import com.color.game.elements.staticelements.platforms.Platform;
 import com.color.game.elements.userData.UserData;
 
 import java.util.Iterator;
@@ -58,11 +57,8 @@ public abstract class BaseDynamicElement extends BaseElement {
             this.setAloftState(new AloftState());
         }
 
-        for(Contact c : contacts){
-            if(!c.isTouching()){
-                contacts.removeValue(c, true);
-            }
-        }
+        contacts.clear();
+        updateContacts();
     }
 
     /**
@@ -112,29 +108,12 @@ public abstract class BaseDynamicElement extends BaseElement {
         this.physicComponent.stopMove();
     }
 
-    public void addContact(Contact c){
-        contacts.add(c);
-    }
-
     public boolean hasContacts(){
         return this.contacts.size > 0;
     }
 
     public void removeContacts(){
         contacts.clear();
-    }
-
-    public void dumpContacts(){
-
-        for(Contact c : this.physicComponent.getBody().getWorld().getContactList())
-        System.out.println("World " + c.toString());
-
-        for(Contact c : contacts){
-            System.out.println("contacts : " + c.toString());
-            System.out.println("Body a " + c.getFixtureA().getBody().getPosition());
-            System.out.println("Body b " + c.getFixtureB().getBody().getPosition());
-            System.out.println(c.isTouching());
-        }
     }
     /**
      * Method to teleport the element to a specific position
@@ -180,10 +159,15 @@ public abstract class BaseDynamicElement extends BaseElement {
         return BaseDynamicElement.DYNAMIC_ELEMENT_BASE_JUMP;
     }
 
-    public void handleContact(Contact c, Body touched){
-        if(UserData.isPlatform(touched)) {
-            if (!Platform.isWall(((UserData) touched.getUserData()).getElement(), this)) {
-                this.addContact(c);
+    public abstract void handleSpecificContacts(Contact c, Body touched);
+
+    public void updateContacts(){
+        for (Contact c : this.physicComponent.getBody().getWorld().getContactList()) {
+            if(UserData.isDynamicBodyPresent(c, this.physicComponent.getBody())){
+                if(c.isTouching() && UserData.isPlatformValid(c)) {
+                    contacts.add(c);
+                }
+                handleSpecificContacts(c, UserData.getOtherBody(c, this));
             }
         }
     }

@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.Array;
 import com.color.game.ColorGame;
 import com.color.game.command.*;
 import com.color.game.elements.BaseElement;
-import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.staticelements.Exit;
@@ -268,10 +267,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             }
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.W)){
-            character.dumpContacts();
-        }
-
         // Here the code to activate colors
         handleColorCommand(this.game.keys.redCode, this.redCommand, this.uiStage.colorGauges.redGauge);
         handleColorCommand(this.game.keys.blueCode, this.blueCommand, this.uiStage.colorGauges.blueGauge);
@@ -454,11 +449,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             }
         }*/
 
-        if(UserData.isDynamicBody(a.getBody())){
-            ((BaseDynamicElement)((UserData) a.getBody().getUserData()).getElement()).handleContact(contact, b.getBody());
-        }else if(UserData.isDynamicBody(b.getBody())){
-             ((BaseDynamicElement)((UserData) b.getBody().getUserData()).getElement()).handleContact(contact, a.getBody());
-        }
+
 
         // Sensors with the character
         if (UserData.isSensor(a.getBody()) && UserData.isCharacter(b.getBody())) {

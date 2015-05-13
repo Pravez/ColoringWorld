@@ -425,32 +425,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             });
         }
 
-        // Contact between an enemy or a character and a platform
-        /*if(UserData.isDynamicBody(b.getBody())) {
-            final BaseDynamicElement de = ((BaseDynamicElement) ((UserData) b.getBody().getUserData()).getElement());
-            if(UserData.isPlatform(a.getBody())) {
-                BaseElement p = ((UserData)a.getBody().getUserData()).getElement();
-                // the platform is a falling platform
-                if (UserData.isFallingPlatform(a.getBody())) {
-                    // The platform hits a dynamic body
-                    if (((FallingPlatform)((UserData) a.getBody().getUserData()).getElement()).isFallingOntoElement(de)) {
-                        this.runnables.add(new Runnable() {
-                            @Override
-                            public void run() {
-                                de.kill();
-                            }
-                        });
-                    }
-                }
-                if(!Platform.isWall(p, de)){
-                    ((DynamicElementUserData)b.getBody().getUserData()).addContact();
-                    de.setAloftState(new LandedState());
-                }
-            }
-        }*/
-
-
-
         // Sensors with the character
         if (UserData.isSensor(a.getBody()) && UserData.isCharacter(b.getBody())) {
             this.runnables.add(new Runnable() {

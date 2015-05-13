@@ -142,11 +142,14 @@ public class Character extends BaseDynamicElement {
 
     @Override
     public void handleSpecificContacts(Contact c, Body touched) {
-        if(UserData.isDeadly(touched)){
+        if (UserData.isDeadly(touched)) {
             this.kill();
         }
-        if(UserData.isExit(touched)){
+        if (UserData.isExit(touched)) {
             gameScreen.reachExit(touched);
+        }
+        if (UserData.isFallingPlatform(touched)) {
+            this.kill();
         }
     }
 }

@@ -32,7 +32,7 @@ public class MenuScreen extends BaseScreen {
         table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
 
         // Title of the game
-        Label title = new Label("Coloring World", new Label.LabelStyle(Assets.getBasicFont(32), new Color(142f/255, 188f/255, 224f/255, 1)));
+        Label title = new Label("WELT FARBEN ACH YA !", new Label.LabelStyle(Assets.getBasicFont(32), new Color(142f/255, 188f/255, 224f/255, 1)));
 
         // Buttons of the menu
         TextButton buttonPlay    = new TextButton("Play", Assets.menuSkin);

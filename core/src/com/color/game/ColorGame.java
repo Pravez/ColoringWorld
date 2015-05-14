@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class ColorGame extends Game {
 
-	public static final String TITLE="Coloring World";
+	public static final String TITLE="DEUTSCH SPIEL";
 	public static final int WIDTH=1000, HEIGHT=800;
 
 	public SoundManager soundManager;

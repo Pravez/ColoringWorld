@@ -1,11 +1,23 @@
 package com.color.game.elements.staticelements.platforms;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 
 public enum PlatformColor {
     RED,
     BLUE,
     YELLOW;
+
+    public static PlatformColor rand() {
+        int index = MathUtils.random(0, 2);
+        if (index == 0) {
+            return PlatformColor.RED;
+        } else if (index == 1) {
+            return PlatformColor.BLUE;
+        } else {
+            return PlatformColor.YELLOW;
+        }
+    }
 
     public Color getColor() {
         switch(this) {

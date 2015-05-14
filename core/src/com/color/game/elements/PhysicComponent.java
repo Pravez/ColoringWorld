@@ -16,12 +16,14 @@ public abstract class PhysicComponent {
     public static final short CATEGORY_SCENERY = 0x0004; // 0000000000000100 in binary
     public static final short CATEGORY_SENSOR = 0x0008; // 0000000000001000 in binary
     public static final short CATEGORY_DEAD = 0x0016; // 0000000000010000 in binary
+    public static final short CATEGORY_PLATFORM = 0x0032;
 
-    public static final short MASK_PLAYER = CATEGORY_MONSTER | CATEGORY_SCENERY | CATEGORY_SENSOR;
-    public static final short MASK_MONSTER = CATEGORY_PLAYER | CATEGORY_SCENERY;
-    public static final short MASK_DEAD = CATEGORY_SCENERY;
+    public static final short MASK_PLAYER = CATEGORY_MONSTER | CATEGORY_SCENERY | CATEGORY_PLATFORM | CATEGORY_SENSOR;
+    public static final short MASK_MONSTER = CATEGORY_PLAYER | CATEGORY_SCENERY | CATEGORY_PLATFORM;
+    public static final short MASK_DEAD = 0;// = CATEGORY_SCENERY;
     public static final short MASK_SENSOR = CATEGORY_PLAYER;
-    public static final short MASK_SCENERY = -1;
+    public static final short MASK_SCENERY = CATEGORY_PLAYER | CATEGORY_MONSTER | CATEGORY_SCENERY;
+    public static final short MASK_PLATFORM = CATEGORY_SCENERY | CATEGORY_MONSTER | CATEGORY_PLAYER;
 
     protected UserData userData;
     protected Body body;
@@ -63,8 +65,8 @@ public abstract class PhysicComponent {
      */
     public void enableCollisions() {
         Filter filter = this.body.getFixtureList().first().getFilterData();
-        filter.categoryBits = PhysicComponent.CATEGORY_SCENERY;
-        filter.maskBits = PhysicComponent.MASK_SCENERY;
+        filter.categoryBits = PhysicComponent.CATEGORY_PLATFORM;
+        filter.maskBits = PhysicComponent.MASK_PLATFORM;
         this.body.getFixtureList().first().setFilterData(filter);
     }
 

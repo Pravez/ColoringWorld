@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class SaveManager {
 
     public static void save() {
-        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("log.txt", true)))) {
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(System.getProperty("user.home") + "/WF_log_"+System.getProperty("user.name")+".txt", true)))) {
             ArrayList<Level> levels = LevelManager.getLevels();
             writer.write("New Game :\n");
             for (int i = 0 ; i < levels.size() ; i++) {

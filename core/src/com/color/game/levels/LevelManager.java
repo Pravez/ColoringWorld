@@ -267,7 +267,7 @@ public class LevelManager {
         LevelManager.levels.add(level);
     }
 
-    private static void addSixthLevel() {
+    private static void addSeventhLevel() {
         Level level = new Level(new Vector2(2,11));
         level.unlock();
 
@@ -315,7 +315,7 @@ public class LevelManager {
         LevelManager.levels.add(level);
     }
 
-    private static void  addSeventhLevel() {
+    private static void  addSixthLevel() {
         Level level = new Level(new Vector2(10,1));
         level.unlock();
 

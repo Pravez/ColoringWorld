@@ -172,7 +172,7 @@ public class Character extends BaseDynamicElement {
         }
         if (UserData.isFallingPlatform(touched)) {
             FallingPlatform fp = (FallingPlatform) ((UserData)touched.getUserData()).getElement();
-            fp.characterStanding();
+            fp.characterStanding(this);
             if (fp.isFallingOntoElement(this))
                 this.kill();
         }

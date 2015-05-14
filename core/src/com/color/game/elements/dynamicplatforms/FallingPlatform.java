@@ -21,7 +21,7 @@ public class FallingPlatform extends BaseDynamicPlatform {
     boolean transparent = false;
 
     final private ShapeRenderer shapeRenderer;
-    private Color color = Color.MAROON;
+    private Color color = Color.ORANGE;
 
     public FallingPlatform(Vector2 position, int width, int height, Level level, boolean fall) {
         super(position, width, height, level);
@@ -49,8 +49,8 @@ public class FallingPlatform extends BaseDynamicPlatform {
         this.physicComponent.getBody().setGravityScale(1);
     }
 
-    public void characterStanding() {
-        if (!this.fall && !this.falling) {
+    public void characterStanding(BaseDynamicElement element) {
+        if (!this.fall && !this.falling && this.getBounds().y + this.getBounds().height <= element.getBounds().y) {
             fall();
         }
     }

@@ -178,7 +178,9 @@ public abstract class BaseDynamicElement extends BaseElement {
         for (Contact c : this.physicComponent.getBody().getWorld().getContactList()) {
             if(UserData.isDynamicBodyPresent(c, this.physicComponent.getBody())){
                 if(c.isTouching() && UserData.isPlatformValid(c)) {
-                    contacts.add(c);
+                    if(UserData.isContactWithPlatform(c)) {
+                        contacts.add(c);
+                    }
                 }
                 handleSpecificContacts(c, UserData.getOtherBody(c, this));
             }

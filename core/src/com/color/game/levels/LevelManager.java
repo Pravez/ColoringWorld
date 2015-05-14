@@ -242,16 +242,55 @@ public class LevelManager {
         level.addActor(new FallingPlatform(new Vector2(14, 25), 5, 1, level, false));
 
         // Exit
-        level.addActor(new Exit(new Vector2(84, 1), 1, 2, level.map, 4));
+        level.addActor(new Exit(new Vector2(84, 1), 1, 2, level.map, 5));
 
         LevelManager.levels.add(level);
     }
 
     private static void addSixthLevel() {
-        Level level = new Level(new Vector2());
+        Level level = new Level(new Vector2(2,11));
         level.unlock();
 
-        //LevelManager.levels.add(level);
+        //Walls
+        level.addActor(new Platform(new Vector2(0,0), 1, 100, level.map));
+        level.addActor(new Platform(new Vector2(50,0), 1, 100, level.map));
+
+        //Colored platforms
+        level.addActor(new ColorPlatform(new Vector2(1,10), 5,1, level, PlatformColor.RED, true));
+        level.addActor(new ColorPlatform(new Vector2(45,12), 5,1, level, PlatformColor.RED, false));
+        level.addActor(new ColorPlatform(new Vector2(45,15), 5,1, level, PlatformColor.BLUE, true));
+        level.addActor(new ColorPlatform(new Vector2(1,22), 5,1, level, PlatformColor.BLUE, true));
+        level.addActor(new ColorPlatform(new Vector2(1,26), 5,1, level, PlatformColor.BLUE, false));
+        level.addActor(new ColorPlatform(new Vector2(1,30), 5,1, level, PlatformColor.RED, true));
+
+
+        //Falling platforms
+        level.addActor(new FallingPlatform(new Vector2(10,10), 8, 1, level, false));
+        level.addActor(new FallingPlatform(new Vector2(22,10), 8, 1, level, false));
+        level.addActor(new FallingPlatform(new Vector2(34,10), 8, 1, level, false));
+        level.addActor(new FallingPlatform(new Vector2(35,17), 5, 1, level, false));
+        level.addActor(new FallingPlatform(new Vector2(27,19), 5, 1, level, false));
+        level.addActor(new FallingPlatform(new Vector2(20,20), 5, 1, level, false));
+        level.addActor(new FallingPlatform(new Vector2(10,32), 8, 1, level, false));
+        level.addActor(new FallingPlatform(new Vector2(21,33), 5, 1, level, false));
+        level.addActor(new FallingPlatform(new Vector2(29,35), 8, 1, level, false));
+        level.addActor(new FallingPlatform(new Vector2(37,37), 2,1,level, false));
+        level.addActor(new FallingPlatform(new Vector2(8, 60), 7, 1, level, false));
+
+        //Static platforms
+        level.addActor(new Platform(new Vector2(10, 20), 7, 1, level.map));
+        level.addActor(new Platform(new Vector2(40,40),10,1,level.map));
+        level.addActor(new Platform(new Vector2(15,60),20,1,level.map));
+
+
+        //Sensors
+        level.addActor(new Magnes(new Vector2(4,35), 7, level.map));
+        level.addActor(new Teleporter(new Vector2(48,41), 2,2,level.map, new Vector2(7, 70)));
+
+        //Exit
+        level.addActor(new Exit(new Vector2(24, 61), 3, 4, level.map, 5));
+
+        LevelManager.levels.add(level);
     }
 
     private static void  addSeventhLevel() {

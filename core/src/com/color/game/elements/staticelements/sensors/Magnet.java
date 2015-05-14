@@ -17,7 +17,7 @@ import com.color.game.screens.GameScreen;
  */
 public class Magnet extends Sensor {
 
-    private static final float ATTRACT_FORCE = 20f;
+    private static final float ATTRACT_FORCE = 25f;
     final private PushCommand pushCommand;
 
     final private ShapeRenderer shapeRenderer;

@@ -252,8 +252,8 @@ public class LevelManager {
         level.unlock();
 
         //Walls
-        level.addActor(new Platform(new Vector2(0,0), 1, 100, level.map));
-        level.addActor(new Platform(new Vector2(50,0), 1, 100, level.map));
+        level.addActor(new Platform(new Vector2(0,0), 1, 100, level));
+        level.addActor(new Platform(new Vector2(50,0), 1, 100, level));
 
         //Colored platforms
         level.addActor(new ColorPlatform(new Vector2(1,10), 5,1, level, PlatformColor.RED, true));
@@ -278,9 +278,9 @@ public class LevelManager {
         level.addActor(new FallingPlatform(new Vector2(8, 60), 7, 1, level, false));
 
         //Static platforms
-        level.addActor(new Platform(new Vector2(10, 20), 7, 1, level.map));
-        level.addActor(new Platform(new Vector2(40,40),10,1,level.map));
-        level.addActor(new Platform(new Vector2(15,60),20,1,level.map));
+        level.addActor(new Platform(new Vector2(10, 20), 7, 1, level));
+        level.addActor(new Platform(new Vector2(40,40),10,1,level));
+        level.addActor(new Platform(new Vector2(15,60),20,1,level));
 
 
         //Sensors

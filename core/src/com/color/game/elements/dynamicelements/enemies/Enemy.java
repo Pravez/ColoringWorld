@@ -90,6 +90,11 @@ public abstract class Enemy extends BaseDynamicElement {
     }
 
     @Override
+    public boolean canStopSquat() {
+        return true;
+    }
+
+    @Override
     public void stopSquat() {
 
     }

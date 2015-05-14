@@ -29,6 +29,11 @@ public class ColorFallingPlatform extends FallingPlatform implements BaseColorPl
     }
 
     @Override
+    public boolean isActivated() {
+        return !this.transparent;
+    }
+
+    @Override
     public void changeActivation() {
         // Desactivate by the player
         if (this.falling) {

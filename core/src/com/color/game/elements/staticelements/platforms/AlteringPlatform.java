@@ -9,6 +9,7 @@ import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.staticelements.BaseStaticElement;
 import com.color.game.elements.userData.StaticElementUserData;
 import com.color.game.elements.userData.UserDataType;
+import com.color.game.levels.Level;
 import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
 
@@ -16,13 +17,12 @@ public class AlteringPlatform extends BaseStaticElement {
 
     final private ShapeRenderer shapeRenderer;
 
-    public AlteringPlatform(Vector2 position, int width, int height, Map map, float alteration){
-        super(position, width, height, map, PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);
-
+    public AlteringPlatform(Vector2 position, int width, int height, Level level, float alteration){
+        super(position, width, height, level.map, PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);
         this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.PLATFORM));
         this.physicComponent.configureAltering(alteration);
+        level.addPlatform(this);
         shapeRenderer = new ShapeRenderer();
-
     }
 
 

@@ -18,7 +18,7 @@ public class FallingPlatform extends BaseDynamicPlatform {
 
     boolean fall = false;
     boolean falling = false;
-    private boolean transparent = false;
+    boolean transparent = false;
 
     final private ShapeRenderer shapeRenderer;
     private Color color = Color.MAROON;

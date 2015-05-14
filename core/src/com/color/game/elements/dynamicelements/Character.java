@@ -10,7 +10,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.color.game.command.MovementDirection;
+import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
@@ -20,6 +22,7 @@ import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.UserData;
 import com.color.game.elements.userData.UserDataType;
+import com.color.game.levels.LevelManager;
 import com.color.game.screens.GameScreen;
 
 /**
@@ -108,6 +111,23 @@ public class Character extends BaseDynamicElement {
         physicComponent.squat();
     }
 
+    /**
+     * Method to see if the character can stop squatting
+     * @return the answer as a boolean
+     */
+    @Override
+    public boolean canStopSquat() {
+        if (this.getAloftState() instanceof LandedState) {
+            Array<BaseElement> platforms = LevelManager.getCurrentLevel().getPlatforms();
+            Rectangle characterBounds = new Rectangle(getBounds().x, getBounds().y, getBounds().width, 2 * CHARACTER_HEIGHT * WORLD_TO_SCREEN);
+            for (BaseElement platform : platforms) {
+                if (platform.getBounds().overlaps(new Rectangle(characterBounds)))
+                    return false;
+            }
+        }
+        return true ;
+    }
+
     @Override
     public void stopSquat(){
         physicComponent.stopSquat();
@@ -153,8 +173,7 @@ public class Character extends BaseDynamicElement {
         if (UserData.isFallingPlatform(touched)) {
             FallingPlatform fp = (FallingPlatform) ((UserData)touched.getUserData()).getElement();
             fp.characterStanding();
-            if (this.getAloftState() instanceof StandingState && fp.getBounds().y > this.getBounds().y &&
-                    new Rectangle(fp.getBounds().x, 0, fp.getBounds().width, 1).overlaps(new Rectangle(this.getBounds().x, 0, fp.getBounds().width, 1)))
+            if (fp.isFallingOntoElement(this))
                 this.kill();
         }
     }

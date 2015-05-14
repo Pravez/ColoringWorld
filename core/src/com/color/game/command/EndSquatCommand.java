@@ -10,7 +10,10 @@ public class EndSquatCommand implements Command{
 
     @Override
     public boolean execute(BaseDynamicElement element, float delta) {
-        element.stopSquat();
-        return true;
+        if (element.canStopSquat()) {
+            element.stopSquat();
+            return true;
+        }
+        return false;
     }
 }

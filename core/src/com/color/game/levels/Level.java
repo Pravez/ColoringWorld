@@ -5,8 +5,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.elements.BaseColorPlatform;
+import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.dynamicplatforms.BaseDynamicPlatform;
+import com.color.game.elements.dynamicplatforms.ColorFallingPlatform;
 import com.color.game.elements.staticelements.platforms.ColorPlatform;
 import com.color.game.elements.staticelements.platforms.PlatformColor;
 
@@ -42,6 +44,11 @@ public class Level extends Stage {
     final private Array<BaseDynamicPlatform> dynamicPlatforms;
 
     /**
+     * The list of the platforms of the level
+     */
+    final private Array<BaseElement> platforms;
+
+    /**
      * The list of the {@link Enemy} of the level
      */
     final private Array<Enemy> enemies;
@@ -56,6 +63,7 @@ public class Level extends Stage {
 
         this.colorPlatforms   = new Array<>();
         this.dynamicPlatforms = new Array<>();
+        this.platforms        = new Array<>();
         this.enemies          = new Array<>();
     }
 
@@ -108,6 +116,7 @@ public class Level extends Stage {
      * @param dynamicPlatform the {@link BaseDynamicPlatform} to add
      */
     public void addDynamicPlatform(BaseDynamicPlatform dynamicPlatform) {
+        this.platforms.add(dynamicPlatform);
         this.dynamicPlatforms.add(dynamicPlatform);
     }
 
@@ -117,6 +126,14 @@ public class Level extends Stage {
      */
     public void addEnemy(Enemy enemy) {
         this.enemies.add(enemy);
+    }
+
+    /**
+     * Method to add a platform to the Level (adding it to the list)
+     * @param platform the platform to add
+     */
+    public void addPlatform(BaseElement platform) {
+        this.platforms.add(platform);
     }
 
     /**
@@ -131,6 +148,20 @@ public class Level extends Stage {
                 colorPlatform.changeActivation();
             }
         }
+    }
+
+    public Array<BaseElement> getPlatforms() {
+        Array<BaseElement> platforms = new Array<>(this.platforms);
+        for (BaseColorPlatform colorPlatform : this.colorPlatforms) {
+            if (colorPlatform.isActivated()) {
+                if (colorPlatform instanceof ColorPlatform)
+                    platforms.add((ColorPlatform)colorPlatform);
+                else if (colorPlatform instanceof ColorFallingPlatform) {
+                    platforms.add((ColorFallingPlatform)colorPlatform);
+                }
+            }
+        }
+        return platforms;
     }
 
     public World getWorld() {

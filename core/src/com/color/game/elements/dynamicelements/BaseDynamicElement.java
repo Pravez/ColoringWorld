@@ -100,6 +100,8 @@ public abstract class BaseDynamicElement extends BaseElement {
 
     public abstract void stopSquat();
 
+    public abstract boolean canStopSquat();
+
     /**
      * Method to stop the element, and so will let the damping do his job : the element will be in a sliding state.
      */

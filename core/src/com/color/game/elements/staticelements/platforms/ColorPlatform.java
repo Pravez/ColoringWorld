@@ -38,6 +38,10 @@ public class ColorPlatform extends BaseStaticElement implements BaseColorPlatfor
         shapeRenderer = new ShapeRenderer();
     }
 
+    public boolean isActivated() {
+        return this.activated;
+    }
+
     public void changeActivation() {
         this.activated = !this.activated;
         if (this.activated) {

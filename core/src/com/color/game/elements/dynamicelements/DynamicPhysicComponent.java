@@ -154,7 +154,6 @@ public class DynamicPhysicComponent extends PhysicComponent{
         this.body.setTransform(this.body.getPosition().x, this.body.getPosition().y - shapesize.y, 0f);
 
         this.userData.setHeight(shapesize.y * 2);
-
     }
 
     @Override

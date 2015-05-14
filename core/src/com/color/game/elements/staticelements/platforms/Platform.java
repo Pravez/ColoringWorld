@@ -10,7 +10,7 @@ import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.staticelements.BaseStaticElement;
 import com.color.game.elements.userData.StaticElementUserData;
 import com.color.game.elements.userData.UserDataType;
-import com.color.game.levels.Map;
+import com.color.game.levels.Level;
 import com.color.game.screens.GameScreen;
 
 
@@ -22,11 +22,10 @@ public class Platform extends BaseStaticElement {
 
     final private ShapeRenderer shapeRenderer;
 
-    public Platform(Vector2 position, int width, int height, Map map) {
-        super(position, width, height, map, PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);
-
+    public Platform(Vector2 position, int width, int height, Level level) {
+        super(position, width, height, level.map, PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);
         this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.PLATFORM));
-
+        level.addPlatform(this);
         this.shapeRenderer = new ShapeRenderer();
     }
 

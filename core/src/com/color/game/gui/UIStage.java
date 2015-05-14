@@ -52,7 +52,7 @@ public class UIStage extends Stage {
         this.addActor(restartButton);
     }
 
-    private void updateButton(String text) {
+    public void updateButton(String text) {
         this.playButton.setText(text);
         this.playButton.pack();
         this.playButton.setPosition(Gdx.graphics.getWidth() - this.playButton.getWidth() - BUTTON_GAP,

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.assets.Assets;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
+import com.color.game.levels.LevelManager;
 import com.color.game.levels.Map;
 import com.color.game.levels.Tutorial;
 import com.color.game.screens.GameScreen;
@@ -60,7 +61,10 @@ public class Notice extends Sensor {
         if (this.display) {
             batch.setProjectionMatrix(GameScreen.camera.combined);
             batch.setColor(Color.WHITE);
-            this.cache.setPosition(x + width / 2 - this.cache.getBounds().width / 2, y + height + 2 * this.cache.getBounds().height + TEXT_GAP);
+            float textX = x + width / 2 - this.cache.getBounds().width / 2;
+            if (textX < 0)
+                textX = 0;
+            this.cache.setPosition(textX, y + height + 2 * this.cache.getBounds().height + TEXT_GAP);
             this.cache.draw(batch);
         }
         batch.end();

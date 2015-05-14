@@ -299,19 +299,23 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         //position.y += (character.getBounds().y - position.y) * lerp;
         /** **/
 
+        float level_width  = LevelManager.getCurrentLevel().map.getPixelWidth();
+        float level_height = LevelManager.getCurrentLevel().map.getPixelHeight();
+
         camera.position.x = character.getBounds().x;
-        camera.position.y = character.getBounds().y + camera.viewportHeight/4;
+        if (camera.viewportHeight < level_height)
+            camera.position.y = character.getBounds().y + camera.viewportHeight/4;
         if (camera.position.x < camera.viewportWidth / 2f) {
             camera.position.x = camera.viewportWidth / 2f;
         }
         if (camera.position.y < camera.viewportHeight / 2f) {
             camera.position.y = camera.viewportHeight / 2f;
         }
-        if (camera.position.x > LevelManager.getCurrentLevel().map.getPixelWidth() - camera.viewportWidth / 2f) {
-            camera.position.x = LevelManager.getCurrentLevel().map.getPixelWidth() - camera.viewportWidth / 2f;
+        if (camera.position.x > level_width - camera.viewportWidth / 2f) {
+            camera.position.x = level_width - camera.viewportWidth / 2f;
         }
-        if (camera.position.y > LevelManager.getCurrentLevel().map.getPixelHeight() - camera.viewportHeight / 2f) {
-            camera.position.y = LevelManager.getCurrentLevel().map.getPixelHeight() - camera.viewportHeight / 2f;
+        if (camera.position.y > level_height - camera.viewportHeight / 2f && camera.viewportHeight < level_height) {
+            camera.position.y = level_height - camera.viewportHeight / 2f;
         }
         camera.update();
     }

@@ -29,9 +29,7 @@ import com.color.game.levels.LevelManager;
  */
 public class GameScreen extends BaseScreen implements InputProcessor, ContactListener {
 
-    private final Box2DDebugRenderer renderer;
     public static OrthographicCamera camera;
-    private static OrthographicCamera camera2;
 
     final private Array<Runnable> runnables;
 
@@ -71,7 +69,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     public GameScreen(ColorGame game) {
         super(game);
 
-        renderer = new Box2DDebugRenderer();
         setupCamera();
 
         character = new Character(this, LevelManager.getCurrentLevel().characterPos, Character.CHARACTER_WIDTH, Character.CHARACTER_HEIGHT, LevelManager.getCurrentLevel().getWorld());
@@ -104,12 +101,24 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     /**
      * Method to restart the level if the Character dies
      */
-    private void restart() {
+    public void restart() {
         LevelManager.getCurrentLevel().addDeath();
         character.reset(LevelManager.getCurrentLevel().characterPos);
         LevelManager.getCurrentLevel().restart();
         respawn();
         this.restart = false;
+    }
+
+    /**
+     * Method to call to reset the game
+     */
+    public void reset() {
+        runningLevel = LevelManager.getCurrentLevelNumber();
+        respawn();
+        character.remove();
+        character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
+        LevelManager.getCurrentLevel().addActor(character);
+        LevelManager.getCurrentLevel().getWorld().setContactListener(this);
     }
 
     /**
@@ -170,11 +179,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         camera = new OrthographicCamera(w, h);//w * (h / w));
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.update();
-
-        /** **/
-        camera2 = new OrthographicCamera(w/4, h/4);
-        camera2.position.set(w / 9, h / 12, 0);
-        camera2.update();
     }
 
     /**
@@ -199,8 +203,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         camera.update();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        renderer.render(LevelManager.getCurrentLevel().map.world, camera2.combined);
 
         // If the game is in running mode
         if (this.run) {
@@ -495,6 +497,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     public void reachExit(Body exit){
         this.runningLevel = ((Exit) ((UserData) exit.getUserData()).getElement()).getLevelIndex();
         endCommands();
-        this.game.setWinScreen();
+        if (LevelManager.isLastLevel())
+            this.game.setEndScreen();
+        else
+            this.game.setWinScreen();
     }
 }

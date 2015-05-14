@@ -48,8 +48,8 @@ public class SplashScreen extends BaseScreen {
             this.background.addAction(Actions.sequence(Actions.fadeOut(0.75f), /*Actions.delay(0.2f),*/ Actions.run(new Runnable() {
                 @Override
                 public void run() {
-                    game.setGameScreen();
-                    // game.setMenuScreen();
+                    //game.setGameScreen();
+                    game.setMenuScreen();
                 }
             })));
         }

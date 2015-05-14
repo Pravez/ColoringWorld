@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class ColorGame extends Game {
 
 	public static final String TITLE="Coloring World";
-	public static final int WIDTH=800, HEIGHT=600;
+	public static final int WIDTH=1000, HEIGHT=800;
 
 	public SoundManager soundManager;
 	public MusicManager musicManager;
@@ -94,7 +94,12 @@ public class ColorGame extends Game {
 		sentences.add("Still playing at this game ?");
 
 		this.transitionScreen.setMessage(sentences.get(MathUtils.random(0, sentences.size() - 1)));
-		//}
+		this.transitionScreen.setEndRunnable(new Runnable() {
+			@Override
+			public void run() {
+				setGameScreen();
+			}
+		});
 		super.setScreen(this.transitionScreen);
 	}
 
@@ -106,7 +111,14 @@ public class ColorGame extends Game {
 		sentences.add("The chance of the beginner in every instance !");
 
 		this.transitionScreen.setMessage(sentences.get(MathUtils.random(0, sentences.size() - 1)));
-		//}
+		this.transitionScreen.setEndRunnable(new Runnable() {
+			@Override
+			public void run() {
+				LevelManager.restart();
+				gameScreen.reset();
+				setMenuScreen();
+			}
+		});
 		super.setScreen(this.transitionScreen);
 	}
 
@@ -137,6 +149,12 @@ public class ColorGame extends Game {
 		sentences.add("Are you happy ? It won't last !");
 
 		this.transitionScreen.setMessage(sentences.get(MathUtils.random(0, sentences.size() - 1)));
+		this.transitionScreen.setEndRunnable(new Runnable() {
+			@Override
+			public void run() {
+				setGameScreen();
+			}
+		});
 		super.setScreen(this.transitionScreen);
 	}
 }

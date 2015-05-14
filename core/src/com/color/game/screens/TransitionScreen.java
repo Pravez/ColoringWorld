@@ -22,6 +22,7 @@ public class TransitionScreen extends BaseScreen {
     final private Label title;
     final private Label message;
     final private Label space;
+    private Runnable nextRunnable;
 
     public TransitionScreen(ColorGame game) {
         super(game);
@@ -56,6 +57,10 @@ public class TransitionScreen extends BaseScreen {
         this.message.setText(message);
     }
 
+    public void setEndRunnable(Runnable runnable) {
+        this.nextRunnable = runnable;
+    }
+
     @Override
     public void show() {
         this.space.addAction(Actions.sequence(Actions.alpha(0), Actions.delay(0.4f), Actions.alpha(1, 1.2f)));
@@ -75,7 +80,7 @@ public class TransitionScreen extends BaseScreen {
         stage.draw();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            this.game.setGameScreen();
+            this.nextRunnable.run();
         }
     }
 }

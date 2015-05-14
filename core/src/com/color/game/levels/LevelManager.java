@@ -67,6 +67,11 @@ public class LevelManager {
         }
     }
 
+    public static void restart() {
+        currentLevel = 0;
+        isFinished = false;
+    }
+
     /**
      * Method to init the different {@link Level} of the Game, should load the {@link Level} from files
      */

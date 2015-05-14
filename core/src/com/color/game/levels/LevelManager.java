@@ -172,6 +172,10 @@ public class LevelManager {
         // Exit
         level.addActor(new Exit(new Vector2(1, 11), 1, 2, level.map, 3));
 
+        // Notice
+        level.addActor(new Notice(new Vector2(2, 1), 2, 2, level.map, 5));
+        level.addActor(new Notice(new Vector2(70, 1), 2, 2, level.map, 6));
+
         LevelManager.levels.add(level);
     }
 
@@ -206,6 +210,9 @@ public class LevelManager {
 
         // Exit
         level.addActor(new Exit(new Vector2(12, 16), 1, 2, level.map, 4));
+
+        // Notice
+        level.addActor(new Notice(new Vector2(16, 1), 2, 2, level.map, 7));
 
         LevelManager.levels.add(level);
     }
@@ -243,6 +250,10 @@ public class LevelManager {
 
         // Exit
         level.addActor(new Exit(new Vector2(84, 1), 1, 2, level.map, 5));
+
+        // Notice
+        level.addActor(new Notice(new Vector2(3, 31), 2, 2, level.map, 8));
+        level.addActor(new Notice(new Vector2(7, 31), 2, 2, level.map, 9));
 
         LevelManager.levels.add(level);
     }
@@ -282,13 +293,15 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(40,40),10,1,level));
         level.addActor(new Platform(new Vector2(15,60),20,1,level));
 
-
         //Sensors
         level.addActor(new Magnes(new Vector2(4,35), 7, level.map));
         level.addActor(new Teleporter(new Vector2(48,41), 2,2,level.map, new Vector2(7, 70)));
 
         //Exit
         level.addActor(new Exit(new Vector2(24, 61), 3, 4, level.map, 5));
+
+        // Notice
+        level.addActor(new Notice(new Vector2(3, 11), 2, 2, level.map, 10));
 
         LevelManager.levels.add(level);
     }

@@ -62,6 +62,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     public boolean restart = false;
 
     private Magnes currentMagnes;
+    private boolean magnetKeyPressed;
 
     /**
      * The constructor of the class GameScreen
@@ -147,6 +148,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         this.uiStage.colorGauges.stopAll();
         endCommands();
+        this.magnetKeyPressed = false;
     }
 
     /**
@@ -262,6 +264,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             character.addCommand(new StartMoveCommand(MovementDirection.LEFT));
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.magnesCode)) {
+            this.magnetKeyPressed = true;
             if (this.currentMagnes != null) {
                 this.currentMagnes.act(character);
             }
@@ -305,6 +308,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         camera.position.x = character.getBounds().x;
         if (camera.viewportHeight < level_height)
             camera.position.y = character.getBounds().y + camera.viewportHeight/4;
+        else
+            camera.position.y = camera.viewportHeight/4;
         if (camera.position.x < camera.viewportWidth / 2f) {
             camera.position.x = camera.viewportWidth / 2f;
         }
@@ -342,6 +347,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             character.addCommand(new EndSquatCommand());
         }
         if (keycode == this.game.keys.magnesCode) {
+            this.magnetKeyPressed = false;
             if (this.currentMagnes != null) {
                 this.currentMagnes.endAct();
             }
@@ -449,6 +455,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         // Magnes
         if (UserData.isMagnes(b.getBody()) && UserData.isCharacter(a.getBody())) {
             this.currentMagnes = (Magnes)((UserData)b.getBody().getUserData()).getElement();
+            if (this.magnetKeyPressed)
+                this.currentMagnes.act(character);
         }
     }
 

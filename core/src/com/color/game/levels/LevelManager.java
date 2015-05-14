@@ -239,6 +239,7 @@ public class LevelManager {
         level.addActor(new FallingPlatform(new Vector2(65, 13), 5, 1, level, true));
         level.addActor(new FallingPlatform(new Vector2(70, 13), 5, 1, level, true));
         level.addActor(new FallingPlatform(new Vector2(75, 13), 5, 1, level, true));
+        level.addActor(new FallingPlatform(new Vector2(14, 25), 5, 1, level, false));
 
         // Exit
         level.addActor(new Exit(new Vector2(84, 1), 1, 2, level.map, 4));

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -15,6 +16,7 @@ import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
 import com.color.game.elements.dynamicelements.states.StandingState;
 import com.color.game.elements.dynamicelements.states.WalkingState;
+import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.UserData;
 import com.color.game.elements.userData.UserDataType;
@@ -149,7 +151,11 @@ public class Character extends BaseDynamicElement {
             gameScreen.reachExit(touched);
         }
         if (UserData.isFallingPlatform(touched)) {
-            this.kill();
+            FallingPlatform fp = (FallingPlatform) ((UserData)touched.getUserData()).getElement();
+            fp.characterStanding();
+            if (this.getAloftState() instanceof StandingState && fp.getBounds().y > this.getBounds().y &&
+                    new Rectangle(fp.getBounds().x, 0, fp.getBounds().width, 1).overlaps(new Rectangle(this.getBounds().x, 0, fp.getBounds().width, 1)))
+                this.kill();
         }
     }
 }

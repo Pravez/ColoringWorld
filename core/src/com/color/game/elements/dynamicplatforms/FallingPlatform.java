@@ -49,6 +49,12 @@ public class FallingPlatform extends BaseDynamicPlatform {
         this.physicComponent.getBody().setGravityScale(1);
     }
 
+    public void characterStanding() {
+        if (!this.fall && !this.falling) {
+            fall();
+        }
+    }
+
     void touchFloor() {
         // Reactivate the jump on the platform
         //this.physicComponent.getBody().setType(BodyDef.BodyType.KinematicBody);

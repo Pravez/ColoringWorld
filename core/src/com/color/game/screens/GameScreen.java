@@ -204,6 +204,13 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+            if (this.isPaused())
+                resumeGame();
+            else
+                pauseGame();
+        }
+
         // If the game is in running mode
         if (this.run) {
             runRunnables();

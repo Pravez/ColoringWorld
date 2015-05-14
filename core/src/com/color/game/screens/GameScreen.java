@@ -105,6 +105,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      * Method to restart the level if the Character dies
      */
     private void restart() {
+        LevelManager.getCurrentLevel().addDeath();
         character.reset(LevelManager.getCurrentLevel().characterPos);
         LevelManager.getCurrentLevel().restart();
         respawn();
@@ -183,7 +184,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     public void show() {
         super.show();
         Gdx.input.setInputProcessor(new InputMultiplexer(this.uiStage, this));
-        restart();
+        if (this.restart) {
+            restart();
+        }
     }
 
     /**

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.MathUtils;
 import com.color.game.assets.Assets;
 import com.color.game.assets.MusicManager;
+import com.color.game.assets.SaveManager;
 import com.color.game.assets.SoundManager;
 import com.color.game.levels.LevelManager;
 import com.color.game.levels.Tutorial;
@@ -18,6 +19,7 @@ public class ColorGame extends Game {
 
 	public SoundManager soundManager;
 	public MusicManager musicManager;
+	private SaveManager saveManager;
 
 	public KeyMapper    keys;
 
@@ -38,6 +40,7 @@ public class ColorGame extends Game {
 
 		this.soundManager = new SoundManager();
 		this.musicManager = new MusicManager();
+		this.saveManager  = new SaveManager();
 
 		this.keys         = new KeyMapper();
 
@@ -69,6 +72,7 @@ public class ColorGame extends Game {
 	 */
 	@Override
 	public void dispose() {
+		SaveManager.save();
 		super.dispose();
 		Assets.dispose();
 		LevelManager.disposeLevels();
@@ -96,17 +100,10 @@ public class ColorGame extends Game {
 
 	public void setEndScreen() {
 		this.transitionScreen.setTitle("You finished the game");
-		/*if (BaseStage.character.getDeathState() == DeathState.PIKES) {
-            cause.setText("Aouch, it is prickly !");
-        } else {*/
 		ArrayList<String> sentences = new ArrayList<>();
-		sentences.add("You have fallen into a puddle...");
-		sentences.add("Maybe you thought you could fly ?");
-		sentences.add("Nice try ! But not...");
-		sentences.add("GAME OVER... You have to try again !");
-		sentences.add("Are you a dummy ? This was so easy !");
-		sentences.add("This game is such a pain !");
-		sentences.add("Still playing at this game ?");
+		sentences.add("Your parents must be proud of you !");
+		sentences.add("Have you cheated ?");
+		sentences.add("The chance of the beginner in every instance !");
 
 		this.transitionScreen.setMessage(sentences.get(MathUtils.random(0, sentences.size() - 1)));
 		//}
@@ -131,20 +128,15 @@ public class ColorGame extends Game {
 
 	public void setWinScreen() {
 		this.transitionScreen.setTitle("You win");
-		/*if (BaseStage.character.getDeathState() == DeathState.PIKES) {
-            cause.setText("Aouch, it is prickly !");
-        } else {*/
 		ArrayList<String> sentences = new ArrayList<>();
-		sentences.add("You have fallen into a puddle...");
-		sentences.add("Maybe you thought you could fly ?");
-		sentences.add("Nice try ! But not...");
-		sentences.add("GAME OVER... You have to try again !");
-		sentences.add("Are you a dummy ? This was so easy !");
-		sentences.add("This game is such a pain !");
-		sentences.add("Still playing at this game ?");
+		sentences.add("You are better than I thought...");
+		sentences.add("Will you beat it next time ?");
+		sentences.add("Keep going on and you will finish the game !");
+		sentences.add("Hey ! It was too easy, wasn't it ?");
+		sentences.add("I hope the next one will be a nightmare for you !");
+		sentences.add("Are you happy ? It won't last !");
 
 		this.transitionScreen.setMessage(sentences.get(MathUtils.random(0, sentences.size() - 1)));
-		//}
 		super.setScreen(this.transitionScreen);
 	}
 }

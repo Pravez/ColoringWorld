@@ -40,6 +40,10 @@ public class LevelManager {
         return isFinished ? levels.get(levels.size() - 1) : levels.get(currentLevel);
     }
 
+    public static ArrayList<Level> getLevels() {
+        return levels;
+    }
+
     public static void nextLevel() {
         currentLevel++;
         if (currentLevel == levels.size()) {

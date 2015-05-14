@@ -20,6 +20,9 @@ public class Level extends Stage {
     private static float accumulator = 0f;
     private static final float TIME_STEP = 1/300f;
 
+    private int deaths = 0;
+    private float time = 0;
+
     /**
      * The map containg the world of the Level
      */
@@ -96,6 +99,7 @@ public class Level extends Stage {
         super.act(delta);
 
         Level.accumulator += delta;
+        this.time += delta;
 
         while(Level.accumulator >= delta){
             LevelManager.getCurrentLevel().map.world.step(Level.TIME_STEP, 6, 2);
@@ -166,5 +170,17 @@ public class Level extends Stage {
 
     public World getWorld() {
         return map.world;
+    }
+
+    public void addDeath() {
+        this.deaths++;
+    }
+
+    public int getDeaths() {
+        return this.deaths;
+    }
+
+    public float getTime() {
+        return this.time;
     }
 }

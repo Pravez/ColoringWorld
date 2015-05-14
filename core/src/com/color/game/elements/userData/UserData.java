@@ -113,6 +113,19 @@ public abstract class UserData {
         return userData != null && userData.getUserDataType() == UserDataType.DYNAMICPLATFORM && userData.getElement() instanceof FallingPlatform;
     }
 
+    public static boolean isContactWithPlatform(Contact c){
+        Body a = c.getFixtureA().getBody();
+        Body b = c.getFixtureB().getBody();
+
+        if(isDynamicBody(a)) {
+            return isPlatform(b);
+        }else if(isDynamicBody(b)){
+            return isPlatform(a);
+        }
+
+        return false;
+    }
+
     public static boolean isPlatformValid(Contact c){
         WorldManifold worldManifold = c.getWorldManifold();
         float x = worldManifold.getNormal().x;

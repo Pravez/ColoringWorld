@@ -13,9 +13,11 @@ public class DynamicPhysicComponent extends PhysicComponent{
     private static final float DYNAMIC_ELEMENT_DENSITY = 1f;
     private static final float DYNAMIC_ELEMENT_SQUAT_DENSITY = 4f;
 
-    private static final float DYNAMIC_ELEMENT_BASE_VELOCITY = 25f;
+    private static final float DYNAMIC_ELEMENT_BASE_VELOCITY = 28f;
 
-    private Vector2 currentImpulse;
+    private Vector2 currentMovingImpulse;
+    private Vector2 currentJumpingImpulse;
+    private boolean jumping;
 
     public DynamicPhysicComponent(BaseElement element) {
         super(element);
@@ -47,7 +49,10 @@ public class DynamicPhysicComponent extends PhysicComponent{
         fixtureDef.filter.categoryBits = category;
         this.body.createFixture(fixtureDef);
 
-        this.currentImpulse = new Vector2(0f,0f);
+        this.currentMovingImpulse = new Vector2(0f,0f);
+        this.currentJumpingImpulse = new Vector2(((BaseDynamicElement)element).getJumpVelocity());
+        jumping = false;
+
     }
 
     @Override
@@ -76,7 +81,9 @@ public class DynamicPhysicComponent extends PhysicComponent{
         //fixtureDef.filter.groupIndex = group;
         this.body.createFixture(fixtureDef);
 
-        this.currentImpulse = new Vector2(0f,0f);
+        this.currentMovingImpulse = new Vector2(0f,0f);
+        this.currentJumpingImpulse = new Vector2(((BaseDynamicElement)element).getJumpVelocity());
+        jumping = false;
 
     }
 
@@ -106,7 +113,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
 
     @Override
     public void setMove(int direction) {
-        this.currentImpulse.x = (DYNAMIC_ELEMENT_BASE_VELOCITY*direction);
+        this.currentMovingImpulse.x = (DYNAMIC_ELEMENT_BASE_VELOCITY*direction);
     }
 
     /**
@@ -114,16 +121,21 @@ public class DynamicPhysicComponent extends PhysicComponent{
      */
     @Override
     public void stopMove(){
-        this.currentImpulse.x = 0;
+        this.currentMovingImpulse.x = 0;
     }
 
     /**
      * Just applies a linear impulse on the y axis
      */
     @Override
-    public void jump() {
-        System.out.println(body.getWorldCenter());
-        this.body.applyLinearImpulse(((BaseDynamicElement)element).getJumpVelocity(), body.getWorldCenter(), true);
+    public void startJump() {
+        jumping = true;
+    }
+
+    @Override
+    public void endJump() {
+        jumping = false;
+        this.currentJumpingImpulse.y = ((BaseDynamicElement)element).getJumpVelocity().y;
     }
 
     /**
@@ -137,7 +149,24 @@ public class DynamicPhysicComponent extends PhysicComponent{
         } else if(this.body.getLinearVelocity().x < -max_vel) {
             this.body.getLinearVelocity().x = -max_vel;
         }else{
-            this.body.applyLinearImpulse(currentImpulse, this.body.getWorldCenter(), true);
+            this.body.applyLinearImpulse(currentMovingImpulse, this.body.getWorldCenter(), true);
+        }
+
+
+        if(jumping){
+            proceedJump();
+        }
+    }
+
+    private void proceedJump(){
+        if(this.currentJumpingImpulse.y == ((BaseDynamicElement)this.element).getJumpVelocity().y) {
+            this.body.applyLinearImpulse(this.currentJumpingImpulse, body.getWorldCenter(), true);
+            this.currentJumpingImpulse.y /= 5;
+        }else if(this.currentJumpingImpulse.y > 10f) {
+            this.body.applyLinearImpulse(this.currentJumpingImpulse, body.getWorldCenter(), true);
+            this.currentJumpingImpulse.y /= 1.15f;
+        }else{
+            endJump();
         }
     }
 

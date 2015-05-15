@@ -4,6 +4,7 @@
 * Got first results of testers : some levels are too difficult and controls are awkward.
 * Started to modify the game according to results of testers, see files associated
 * Added Bouncing platforms according to a color
+* Added progressive jump
 
 # May 14,  2015
 * Got many testers

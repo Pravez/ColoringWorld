@@ -84,7 +84,8 @@ public abstract class PhysicComponent {
     public void setMove(int direction){}
     public void rebase(){}
     public void changeWorld(World world, Vector2 position){}
-    public void jump(){}
+    public void startJump(){}
+    public void endJump(){}
     public void move(float max_vel){}
     public void squat(){}
     public void stopSquat(){}

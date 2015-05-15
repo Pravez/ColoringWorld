@@ -75,7 +75,12 @@ public abstract class Enemy extends BaseDynamicElement {
     }
 
     @Override
-    public void jump() {
+    public void startJump() {
+
+    }
+
+    @Override
+    public void endJump(){
 
     }
 

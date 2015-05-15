@@ -5,10 +5,11 @@
 
 * Last levels are way too difficult (levels 7 - 8)
 * Character is just too slippery
+* Jumping while being on a falling platforms reduces the jump force. Real but annoying.
 * Changes have to be made on the using of colors : colors must have a greater impact on the game
 * Changes must be done on controls
 * Importance of some features, such as Magnet ? Needs to be more precise. Every feature must be useful and used.
 * What about the "Die and Retry" ?
 
-# What we did :
+### What we did :
     - Adjusted character friction factor with other elements

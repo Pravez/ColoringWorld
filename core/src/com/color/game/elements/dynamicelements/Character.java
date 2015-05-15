@@ -26,7 +26,7 @@ import com.color.game.screens.GameScreen;
 
 /**
  * Class Character, [extending] a dynamic element evolving in a {@link com.badlogic.gdx.physics.box2d.World}. It is the main
- * "character" of the game, and is the one that the player controls. It can move, jump, squat and do many things !
+ * "character" of the game, and is the one that the player controls. It can move, startJump, squat and do many things !
  */
 public class Character extends BaseDynamicElement {
 
@@ -91,8 +91,13 @@ public class Character extends BaseDynamicElement {
     }
 
     @Override
-    public void jump() {
-        this.physicComponent.jump();
+    public void startJump() {
+        this.physicComponent.startJump();
+    }
+
+    @Override
+    public void endJump() {
+        this.physicComponent.endJump();
     }
 
     /**

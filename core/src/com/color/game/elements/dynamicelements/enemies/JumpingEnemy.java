@@ -38,8 +38,8 @@ public class JumpingEnemy extends MovingEnemy{
     }
 
     @Override
-    public void jump(){
-        this.physicComponent.jump();
+    public void startJump(){
+        this.physicComponent.startJump();
     }
 
     @Override

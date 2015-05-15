@@ -10,6 +10,7 @@ import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.userData.UserData;
 import com.color.game.levels.Level;
 
+@Deprecated
 public class JumpingEnemy extends MovingEnemy{
 
     private static final Vector2 JUMPING_VELOCITY = new Vector2(0,500f);

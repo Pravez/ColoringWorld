@@ -5,6 +5,7 @@ import com.color.game.elements.BaseColorPlatform;
 import com.color.game.elements.staticelements.platforms.PlatformColor;
 import com.color.game.levels.Level;
 
+@Deprecated
 public class ColorFallingPlatform extends FallingPlatform implements BaseColorPlatform {
 
     final private PlatformColor color;

@@ -122,6 +122,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
      */
     @Override
     public void jump() {
+        System.out.println(body.getWorldCenter());
         this.body.applyLinearImpulse(((BaseDynamicElement)element).getJumpVelocity(), body.getWorldCenter(), true);
     }
 

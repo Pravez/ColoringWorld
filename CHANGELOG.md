@@ -1,3 +1,16 @@
+# 0.2.4 (May 14, 2015)
+- Bugfixes
+- Adapted game for testing
+- Added some levels
+
+# 0.2.3a (May 10, 2015)
+- Reworked completely collision detection
+- Reworked falling platforms
+
+# 0.2.3 (May 10, 2015)
+- Added moving platforms and falling platforms
+- Minor bugfixes
+
 # 0.2.2 (May 9, 2015)
 Features :
 - Enemies can jump

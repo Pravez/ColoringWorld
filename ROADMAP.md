@@ -47,34 +47,36 @@ With this, you will be able to have an overview of the game and its future.
 * slippery zones
 * zones that grip the character to the floor 
 
-## Version 0.3 - Enemies
+## Version 0.3 - Enemies and dynamic things
 * enemy who kill the character
 * enemy who can move
 * enemy who can die
 * enemy who can jump
-* a boss at the end of a level such as an enemy who force the character to go in a certain direction and the time is limited
-* a script for each enemy, such as a pattern
+* moving and falling platforms
 
-## Version 0.4 - User interface
+## Version 0.4 - User interface & level loader
 * score system (time, number of attempts, …)
-* hidden special items to find in each level (such as 3 stars) and which gives more points
-* the game can be resized
-* full screen mode of the game
-* sounds in the menu
-* buttons effects (hover, active, …)
+* Possibility to change controls
+* Possibility to select level
+    - (a map to select the level to play)
+* Fun in the menu
+    - sounds in the menu
+    - buttons effects (hover, active, …)
+* load a level from a file
 
-## Version 0.5 - Level design
+## Version 0.5 - Let's add some graphics
 * progressive tutorial with notices displaying sentences in the back spread in the level
 * sprites (character, blocks)
 * animations
 * animation of death : the game runs slower
 * definition of more complex level exit (code to enter, keys to find, color to activate, …)
-* load a level from a file
-* 10 more levels
+* (10 more levels)
 * hidden exits to secret levels that have to be found in order to play it
-* a map to select the level to play
 
 ## Version 0.6 - Bonuses
+* full screen mode of the game
+* the game can be resized
+* hidden special items to find in each level (such as 3 stars) and which gives more points
 * choice of the character to play with different characteristics for each of them (speed up, jump higher, reverse the gravity…)
 * make the camera moving when landing or dying, when the boss walks or whatever
 * adding a lot of sounds and effects
@@ -82,6 +84,8 @@ With this, you will be able to have an overview of the game and its future.
 * adding new maps of levels by dividing into different places
 * changing the language of the game
 * Add the secondary colors to the platforms - a green platform that is activated only when yellow gauge and blue gauge are activated
+* a boss at the end of a level such as an enemy who force the character to go in a certain direction and the time is limited
+* a script for each enemy, such as a pattern
 
 ## Version 0.7 - Super Bonuses
 * zones in the level which have special effect on the character when a color is activated or something else,

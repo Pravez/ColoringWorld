@@ -2,18 +2,13 @@ package com.color.game.levels;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Array;
 import com.color.game.elements.dynamicelements.enemies.JumpingEnemy;
 import com.color.game.elements.dynamicelements.enemies.MovingEnemy;
-import com.color.game.elements.dynamicplatforms.ColorFallingPlatform;
 import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.dynamicplatforms.MovingPlatform;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.platforms.*;
 import com.color.game.elements.staticelements.sensors.*;
-import com.color.game.elements.userData.UserData;
 
 import java.util.ArrayList;
 
@@ -88,6 +83,7 @@ public class LevelManager {
         addForthDebugLevel();
         addFifthDebugLevel();
         addSixthDebugLevel();
+        addSeventhDebugLevel();
         /*addFirstLevel();
         addSecondLevel();
         addThirdLevel();
@@ -624,10 +620,32 @@ public class LevelManager {
         level.addActor(new MovingPlatform(new Vector2(10, 5), 3,1,level, v));
 
         //level.addActor(new Platform(new Vector2(25,5), 2, 1, level.map));
-        level.addActor(new Exit(new Vector2(195, 1), 1, 3, level.map, 5));
+        level.addActor(new Exit(new Vector2(195, 1), 1, 3, level.map, 6));
 
 
         levels.add(level);
+
+    }
+
+    private static void addSeventhDebugLevel(){
+
+        Level level = new Level(new Vector2(4, 1));
+        level.unlock();
+
+        //Ground
+        level.addActor(new Platform(new Vector2(0, 0), 50, 1, level));
+        level.addActor(new Platform(new Vector2(0,1),1,32,level));
+        level.addActor(new Platform(new Vector2(49,1),1,32,level));
+        level.addActor(new Platform(new Vector2(25,1),1,1,level));
+
+
+        level.addActor(new JumpingEnemy(new Vector2(20, 1), 2, 2, level, true));
+        level.addActor(new MovingEnemy(new Vector2(30, 1), 2, 2, level, false));
+
+        level.addActor(new Exit(new Vector2(48, 1), 1, 3, level.map, 6));
+
+        levels.add(level);
+
 
     }
 

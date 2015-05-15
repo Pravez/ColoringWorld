@@ -34,3 +34,8 @@ public void updateContacts(){
     }
 }
 `
+
+## How are we supposed to pleasure the player ?
+Really hard question. For this game we have everything to create two different games : the first is dynamic, nervous and needs
+skill, technical skills. At the beginning it will be like "die and retry". The other way is to do a slowly game, but which needs
+reflexion, which needs the player to think about "how can I end this level ?", instead of just running forward and being reactive.

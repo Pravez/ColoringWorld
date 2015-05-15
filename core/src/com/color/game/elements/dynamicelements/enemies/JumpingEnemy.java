@@ -12,7 +12,7 @@ import com.color.game.levels.Level;
 
 public class JumpingEnemy extends MovingEnemy{
 
-    private static final Vector2 JUMPING_VELOCITY = new Vector2(0,750f);
+    private static final Vector2 JUMPING_VELOCITY = new Vector2(0,500f);
 
     private final Array<Body> bodies;
 

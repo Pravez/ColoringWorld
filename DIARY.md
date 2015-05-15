@@ -1,3 +1,18 @@
+# May 15, 2015
+* Updated collisions with enemies
+* Rectified some things about jumping enemies
+* Got first results of testers : some levels are too difficult and controls are awkward.
+
+# May 14,  2015
+* Got many testers
+* Created levels for testers. They are saved, and are 8.
+* Corrected collision bug with platforms
+* Corrected squat bug
+* Character can now stay on falling platforms without dying
+* Fixed some other minor bugs
+* Created metrics, to save player's datas (number of deaths, time played ...)
+* Generated a jar for version 2.4 and sent it with the form to testers.
+
 # May 13, 2015
 * Got for now 4-5 testers. Will try to get a little bit more
 * Finished work on changing collisions. Merged the branch on which the work was done to 0.2-dev

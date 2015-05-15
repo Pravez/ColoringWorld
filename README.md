@@ -1,6 +1,9 @@
 # ColoringWorld
 Game featuring a strange man using colors to live his life
 
+If you want to know exactly what is being done, please see the [changelog](CHANGELOG.md).
+Concerning daily work, see the [diary](DIARY.md).
+
 ## Version 0.2 in development :
 ### Done :
 * enemies who kill the character
@@ -15,10 +18,7 @@ Game featuring a strange man using colors to live his life
 
 ##### TO DO :
 
-- improve the enemies' move
-- check the enemies' jump
-- check the jump detection of jumping enemies
-
+- According to the TESTS RESULTS, adjust the game.
 
 # Version 0.2 released :
 * ColorPlatforms can have a default state (activated, or deactivated)

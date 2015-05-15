@@ -21,7 +21,8 @@ See here : [iforce2D collision anatomy](http://www.iforce2d.net/b2dtut/collision
 Finally, what we decided is to add collisions when they are up, in an Array specific to each element, and then at every update
 , clear the Array and reupdate it.
 In java it looks like this (with LibGDX and Box2D) :
-`
+
+```
 public void updateContacts(){
         for (Contact c : this.physicComponent.getBody().getWorld().getContactList()) {
             if(UserData.isDynamicBodyPresent(c, this.physicComponent.getBody())){
@@ -33,7 +34,12 @@ public void updateContacts(){
         }
     }
 }
-`
+```
+
+Collisions ARE WEIRD, it isn't easy AT ALL. There are many ways to implement this. We must do with what we have.
+If this game was made from scratch it would have been a verification of coordinates. It could have been another
+class concerning the platforms called "WALLS", and it would have been much easier (only concerning jumping on walls).
+Here we have LibGDX and Box2D managing the world. So we just use what they are doing.
 
 ## How are we supposed to pleasure the player ?
 Really hard question. For this game we have everything to create two different games : the first is dynamic, nervous and needs

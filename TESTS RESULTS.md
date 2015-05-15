@@ -9,3 +9,6 @@
 * Changes must be done on controls
 * Importance of some features, such as Magnet ? Needs to be more precise. Every feature must be useful and used.
 * What about the "Die and Retry" ?
+
+# What we did :
+    - Adjusted character friction factor with other elements

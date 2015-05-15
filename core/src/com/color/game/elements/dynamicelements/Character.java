@@ -49,8 +49,6 @@ public class Character extends BaseDynamicElement {
         this.gameScreen = gameScreen;
         this.shapeRenderer = new ShapeRenderer();
 
-        this.physicComponent.adjustFriction(CHARACTER_FRICTION);
-
         this.setMovingState(new StandingState());
         this.setAloftState(new LandedState());
     }

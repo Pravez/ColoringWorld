@@ -118,6 +118,10 @@ public abstract class PhysicComponent {
         this.fixtureDef.friction = friction;
     }
 
+    public void adjustLinearDamping(float damping){
+        this.body.setLinearDamping(damping);
+    }
+
     public void adjustRestitution(float restitution) {
         this.body.getFixtureList().get(0).setRestitution(restitution);
         this.fixtureDef.restitution = restitution;

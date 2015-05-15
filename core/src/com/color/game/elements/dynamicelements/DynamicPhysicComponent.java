@@ -28,11 +28,11 @@ public class DynamicPhysicComponent extends PhysicComponent{
         this.bodyDef = new BodyDef();
         this.bodyDef.type = BodyDef.BodyType.DynamicBody;
 
-        //position.scl(2); // Multiply by two because of the half size boxes
+        position.scl(2); // Multiply by two because of the half size boxes
 
         //To keep from rotations
         this.bodyDef.fixedRotation = true;
-        this.bodyDef.position.set(new Vector2(position.x + width, position.y + height));
+        this.bodyDef.position.set(new Vector2(position.x, position.y));
         this.bodyDef.linearDamping = 2.0f;
 
         PolygonShape shape = new PolygonShape();
@@ -56,6 +56,8 @@ public class DynamicPhysicComponent extends PhysicComponent{
 
         this.bodyDef = new BodyDef();
         this.bodyDef.type = BodyDef.BodyType.DynamicBody;
+
+        position.scl(2); // Multiply by two because of the half size boxes
 
         //To keep from rotations
         this.bodyDef.fixedRotation = true;

@@ -96,6 +96,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
         LevelManager.getCurrentLevel().addActor(character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
+        LevelManager.getCurrentLevel().restart();
     }
 
     /**
@@ -240,7 +241,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     }
 
     private void handlePause() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             if (this.isPaused()) {
                 this.uiStage.updateButton("Pause");
                 resumeGame();

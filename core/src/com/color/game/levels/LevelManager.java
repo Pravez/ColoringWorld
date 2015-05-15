@@ -612,7 +612,7 @@ public class LevelManager {
         level.addActor(new FallingPlatform(new Vector2(32, 20), 10, 1, level, true));
 
         // Enemies
-        level.addActor(new MovingEnemy(new Vector2(53, 1), 2, 2, level, false));
+        level.addActor(new MovingEnemy(new Vector2(53, 1), 2, 2, level, true));
         level.addActor(new JumpingEnemy(new Vector2(85, 1), 2, 2, level, true));
         level.addActor(new MovingEnemy(new Vector2(60, 7), 2, 2, level, false));
 

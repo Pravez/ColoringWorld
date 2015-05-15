@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.color.game.elements.BaseElement;
-import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
 import com.color.game.elements.dynamicplatforms.BaseDynamicPlatform;
@@ -27,7 +26,7 @@ public class MovingEnemy extends Enemy {
     /**
      * Falling parameters
      */
-    private static final float FALL_GAP = 30f;
+    private static final float FALL_GAP = 60f;//30f;
     final private boolean canFall;
     private boolean preventLeft  = false;
     private boolean preventRight = false;
@@ -42,6 +41,8 @@ public class MovingEnemy extends Enemy {
      */
     public MovingEnemy(Vector2 position, int width, int height, Level level, boolean canFall) {
         super(position, width, height, level);
+        this.physicComponent.getBody().setAwake(true);
+        this.physicComponent.getBody().setActive(true);
         this.canFall = canFall;
         this.current_direction = 1;
 
@@ -77,15 +78,15 @@ public class MovingEnemy extends Enemy {
             kill();
         }
 
-        if(element instanceof BaseStaticElement) {
+        if (element instanceof BaseStaticElement) {
             if (UserData.isWall(element, this)) {
                 changeDir = true;
             }
         }
-        if(/*element instanceof BaseDynamicElement ||*/ element instanceof BaseDynamicPlatform){
+        if (element instanceof BaseDynamicPlatform){
             changeDir = true;
         }
-        if(changeDir){
+        if (changeDir) {
             this.current_direction = -1 * this.current_direction;
             this.physicComponent.setMove(this.current_direction);
             this.preventRight = false;
@@ -118,7 +119,13 @@ public class MovingEnemy extends Enemy {
         if (!this.canFall && this.floorElement != null ) {
             preventFalling();
         }
+    }
 
+    @Override
+    public void respawn() {
+        super.respawn();
+        this.preventLeft = false;
+        this.preventRight = false;
     }
 
     @Override

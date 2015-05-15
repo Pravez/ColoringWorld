@@ -37,7 +37,7 @@ public abstract class Enemy extends BaseDynamicElement {
     Enemy(Vector2 position, int width, int height, Level level) {
         super(position, width, height, level.getWorld(), PhysicComponent.CATEGORY_MONSTER, PhysicComponent.MASK_MONSTER);
         level.addEnemy(this);
-        this.initialPosition = position.scl(2);
+        this.initialPosition = position;
 
         this.physicComponent.configureUserData(new DynamicElementUserData(this, width, height, UserDataType.ENEMY));
 

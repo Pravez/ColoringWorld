@@ -193,7 +193,7 @@ public abstract class BaseDynamicElement extends BaseElement {
     protected void handleFallingPlatform(Body touched) {
         if (UserData.isFallingPlatform(touched)) {
             FallingPlatform fp = (FallingPlatform) ((UserData)touched.getUserData()).getElement();
-            fp.characterStanding(this);
+            fp.dynamicElementStanding(this);
             if (fp.isFallingOntoElement(this))
                 this.kill();
         }

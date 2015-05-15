@@ -49,15 +49,20 @@ public class FallingPlatform extends BaseDynamicPlatform {
         this.physicComponent.getBody().setGravityScale(1);
     }
 
-    public void characterStanding(BaseDynamicElement element) {
+    /**
+     * Method called to when a BaseDynamicElement touches the FallingPlatform to check if the FallingOPlatform has to fall
+     * @param element the BaseDynamicElement which touches the FallingPlatform
+     */
+    public void dynamicElementStanding(BaseDynamicElement element) {
         if (!this.fall && !this.falling && this.getBounds().y + this.getBounds().height <= element.getBounds().y) {
             fall();
         }
     }
 
+    /**
+     * Method called when the falling platform touches the floor, deactivate the platform
+     */
     void touchFloor() {
-        // Reactivate the jump on the platform
-        //this.physicComponent.getBody().setType(BodyDef.BodyType.KinematicBody);
         super.deactivate();
         setTransparent(true);
     }

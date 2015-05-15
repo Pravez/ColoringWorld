@@ -18,7 +18,6 @@ import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
 import com.color.game.elements.dynamicelements.states.StandingState;
 import com.color.game.elements.dynamicelements.states.WalkingState;
-import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.UserData;
 import com.color.game.elements.userData.UserDataType;
@@ -32,7 +31,8 @@ import com.color.game.screens.GameScreen;
 public class Character extends BaseDynamicElement {
 
     private static final float CHARACTER_RUNNING_VELOCITY = 35f;
-    public static final float CHARACTER_WALKING_VELOCITY = 15f;
+    //public static final float CHARACTER_WALKING_VELOCITY = 15f;
+    public static final float CHARACTER_FRICTION = 1f;
     public static final float CHARACTER_HEIGHT = 1.9f;
     private static final float CHARACTER_SQUAT_HEIGHT = 0.9f;
     public static final int CHARACTER_WIDTH = 1;
@@ -48,6 +48,8 @@ public class Character extends BaseDynamicElement {
 
         this.gameScreen = gameScreen;
         this.shapeRenderer = new ShapeRenderer();
+
+        this.physicComponent.adjustFriction(CHARACTER_FRICTION);
 
         this.setMovingState(new StandingState());
         this.setAloftState(new LandedState());

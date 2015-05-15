@@ -33,7 +33,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
         //To keep from rotations
         this.bodyDef.fixedRotation = true;
         this.bodyDef.position.set(new Vector2(position.x, position.y));
-        this.bodyDef.linearDamping = 2.0f;
+        this.bodyDef.linearDamping = 2f;
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width, height);

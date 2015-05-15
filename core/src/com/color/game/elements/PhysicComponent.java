@@ -88,7 +88,6 @@ public abstract class PhysicComponent {
     public void move(float max_vel){}
     public void squat(){}
     public void stopSquat(){}
-    public void configureAltering(float alteration) {}
 
         public void configureUserData(UserData userData){
         this.userData = userData;
@@ -111,5 +110,15 @@ public abstract class PhysicComponent {
 
     public Vector2 getWorldPosition() {
         return new Vector2(this.body.getPosition().x - this.userData.getWidth()/2, this.body.getPosition().y - this.userData.getHeight()/2);
+    }
+
+    public void adjustFriction(float friction){
+        this.body.getFixtureList().get(0).setFriction(friction);
+        this.fixtureDef.friction = friction;
+    }
+
+    public void adjustRestitution(float restitution) {
+        this.body.getFixtureList().get(0).setRestitution(restitution);
+        this.fixtureDef.restitution = restitution;
     }
 }

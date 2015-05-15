@@ -517,8 +517,8 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(100, 1), 1, 32, level));
 
         // Altering Platforms
-        level.addActor(new AlteringPlatform(new Vector2(20, 0), 20, 1, level, 0f));
-        level.addActor(new AlteringPlatform(new Vector2(60, 0), 20, 1, level, 5f));
+        level.addActor(new AlteringPlatform(new Vector2(20, 0), 20, 1, level, true));
+        level.addActor(new AlteringPlatform(new Vector2(60, 0), 20, 1, level, true));
 
         // Exit
         level.addActor(new Exit(new Vector2(99, 1), 1, 3, level.map, 3));
@@ -639,8 +639,10 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(25,1),1,1,level));
 
 
-        level.addActor(new JumpingEnemy(new Vector2(20, 1), 2, 2, level, true));
+        //level.addActor(new JumpingEnemy(new Vector2(20, 1), 2, 2, level, true));
         level.addActor(new MovingEnemy(new Vector2(30, 1), 2, 2, level, false));
+
+        level.addActor(new BouncingColorPlatform(new Vector2(5,3), 5,1,level, PlatformColor.BLUE, false));
 
         level.addActor(new Exit(new Vector2(48, 1), 1, 3, level.map, 6));
 

@@ -170,11 +170,6 @@ public class Character extends BaseDynamicElement {
         if (UserData.isExit(touched)) {
             gameScreen.reachExit(touched);
         }
-        if (UserData.isFallingPlatform(touched)) {
-            FallingPlatform fp = (FallingPlatform) ((UserData)touched.getUserData()).getElement();
-            fp.characterStanding(this);
-            if (fp.isFallingOntoElement(this))
-                this.kill();
-        }
+        handleFallingPlatform(touched);
     }
 }

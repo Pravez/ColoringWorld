@@ -82,7 +82,7 @@ public class MovingEnemy extends Enemy {
                 changeDir = true;
             }
         }
-        if(element instanceof BaseDynamicElement || element instanceof BaseDynamicPlatform){
+        if(/*element instanceof BaseDynamicElement ||*/ element instanceof BaseDynamicPlatform){
             changeDir = true;
         }
         if(changeDir){
@@ -123,7 +123,7 @@ public class MovingEnemy extends Enemy {
 
     @Override
     public void handleSpecificContacts(Contact c, Body touched) {
-
+        handleFallingPlatform(touched);
     }
 
     @Override

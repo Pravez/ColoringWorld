@@ -12,6 +12,7 @@ import com.color.game.elements.dynamicelements.states.AloftState;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.SlidingState;
 import com.color.game.elements.dynamicelements.states.State;
+import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.userData.UserData;
 
 import java.util.Iterator;
@@ -137,7 +138,7 @@ public abstract class BaseDynamicElement extends BaseElement {
         this.commands.clear();
     }
 
-    State getMovingState() {
+    public State getMovingState() {
         return movingState;
     }
 
@@ -189,4 +190,12 @@ public abstract class BaseDynamicElement extends BaseElement {
         }
     }
 
+    protected void handleFallingPlatform(Body touched) {
+        if (UserData.isFallingPlatform(touched)) {
+            FallingPlatform fp = (FallingPlatform) ((UserData)touched.getUserData()).getElement();
+            fp.characterStanding(this);
+            if (fp.isFallingOntoElement(this))
+                this.kill();
+        }
+    }
 }

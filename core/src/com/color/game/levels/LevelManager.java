@@ -82,20 +82,20 @@ public class LevelManager {
      */
     public static void init() {
         levels = new ArrayList<>();
-        /*addFirstDebugLevel();
+        addFirstDebugLevel();
         addSecondDebugLevel();
         addThirdDebugLevel();
         addForthDebugLevel();
         addFifthDebugLevel();
-        addSixthDebugLevel();*/
-        addFirstLevel();
+        addSixthDebugLevel();
+        /*addFirstLevel();
         addSecondLevel();
         addThirdLevel();
         addForthLevel();
         addFifthLevel();
         addSixthLevel();
         addSeventhLevel();
-        addEighthLevel();
+        addEighthLevel();*/
     }
 
     private static void addFirstLevel() {
@@ -606,8 +606,9 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(105,6),25,1,level));
 
         // Falling platforms
-        level.addActor(new ColorFallingPlatform(new Vector2(15, 20), 10, 2, level, PlatformColor.RED, true));
+        //level.addActor(new ColorFallingPlatform(new Vector2(15, 20), 10, 2, level, PlatformColor.RED, true));
         //level.addActor(new ColorFallingPlatform(new Vector2(10, 8), 5, 1, level, PlatformColor.BLUE, false));
+        level.addActor(new FallingPlatform(new Vector2(15, 20), 10, 1, level, true));
         level.addActor(new FallingPlatform(new Vector2(32, 20), 10, 1, level, true));
 
         // Enemies

@@ -517,8 +517,7 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(100, 1), 1, 32, level));
 
         // Altering Platforms
-        level.addActor(new AlteringPlatform(new Vector2(20, 0), 20, 1, level, true));
-        level.addActor(new AlteringPlatform(new Vector2(60, 0), 20, 1, level, true));
+        level.addActor(new AlteringPlatform(new Vector2(20, 0), 20, 1, level));
 
         // Exit
         level.addActor(new Exit(new Vector2(99, 1), 1, 3, level.map, 3));

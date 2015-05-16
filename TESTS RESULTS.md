@@ -8,6 +8,8 @@
 * Jumping while being on a falling platforms reduces the jump force. Real but annoying.
 * Changes have to be made on the using of colors : colors must have a greater impact on the game
 * Changes must be done on controls
+* UI needs to be updated (possibility to go to the menu while in game, options while playing ...)
+* Idea of seeing the entire map before beginning the level ?
 * Importance of some features, such as Magnet ? Needs to be more precise. Every feature must be useful and used.
 * What about the "Die and Retry" ?
 

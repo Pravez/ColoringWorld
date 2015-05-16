@@ -190,6 +190,7 @@ public abstract class BaseDynamicElement extends BaseElement {
                         contacts.add(c);
                     }
                 }
+
                 handleSpecificContacts(c, UserData.getOtherBody(c, this));
             }
         }

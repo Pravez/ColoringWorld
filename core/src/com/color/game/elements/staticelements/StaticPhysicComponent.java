@@ -79,4 +79,6 @@ public class StaticPhysicComponent extends PhysicComponent{
         this.body.createFixture(fixtureDef);
         shape.dispose();
     }
+
+
 }

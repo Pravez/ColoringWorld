@@ -30,14 +30,15 @@ import com.color.game.screens.GameScreen;
  */
 public class Character extends BaseDynamicElement {
 
-    private static final float CHARACTER_RUNNING_VELOCITY = 35f;
-    //public static final float CHARACTER_WALKING_VELOCITY = 15f;
-    public static final float CHARACTER_FRICTION = 1f;
+    public static final float CHARACTER_RUNNING_VELOCITY = 35f;
     public static final float CHARACTER_HEIGHT = 1.9f;
-    private static final float CHARACTER_SQUAT_HEIGHT = 0.9f;
+    public static final float CHARACTER_SQUAT_HEIGHT = 0.9f;
     public static final int CHARACTER_WIDTH = 1;
+    public static final float JUMP_WHEN_FALLING_PLATFORM = 375f;
+
 
     final private GameScreen gameScreen;
+    private Vector2 currentJumpVelocity;
 
     final private ShapeRenderer shapeRenderer;
 
@@ -48,6 +49,8 @@ public class Character extends BaseDynamicElement {
 
         this.gameScreen = gameScreen;
         this.shapeRenderer = new ShapeRenderer();
+
+        this.currentJumpVelocity = new Vector2(BaseDynamicElement.DYNAMIC_ELEMENT_BASE_JUMP);
 
         this.setMovingState(new StandingState());
         this.setAloftState(new LandedState());
@@ -168,6 +171,15 @@ public class Character extends BaseDynamicElement {
     }
 
     @Override
+    public Vector2 getJumpVelocity() {
+        if(currentJumpVelocity != null) {
+            return currentJumpVelocity;
+        }else{
+            return BaseDynamicElement.DYNAMIC_ELEMENT_BASE_JUMP;
+        }
+    }
+
+    @Override
     public void handleSpecificContacts(Contact c, Body touched) {
         if (UserData.isDeadly(touched)) {
             this.kill();
@@ -175,6 +187,7 @@ public class Character extends BaseDynamicElement {
         if (UserData.isExit(touched)) {
             gameScreen.reachExit(touched);
         }
+
         handleFallingPlatform(touched);
     }
 }

@@ -14,13 +14,13 @@ public class KeyMapper {
     final public int magnesCode;
 
     public KeyMapper() {
-        this.leftCode   = Input.Keys.LEFT;
-        this.rightCode  = Input.Keys.RIGHT;
-        this.squatCode  = Input.Keys.DOWN;
+        this.leftCode   = Input.Keys.Q;
+        this.rightCode  = Input.Keys.D;
+        this.squatCode  = Input.Keys.S;
         this.jumpCode   = Input.Keys.SPACE;
-        this.redCode    = Input.Keys.A;
-        this.blueCode   = Input.Keys.E;
-        this.yellowCode = Input.Keys.Z;
+        this.redCode    = Input.Keys.U;
+        this.blueCode   = Input.Keys.O;
+        this.yellowCode = Input.Keys.I;
         this.runCode    = Input.Keys.SHIFT_LEFT;
         this.magnesCode = Input.Keys.X;
     }

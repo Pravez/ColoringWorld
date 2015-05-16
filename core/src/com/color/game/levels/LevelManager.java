@@ -77,21 +77,21 @@ public class LevelManager {
      */
     public static void init() {
         levels = new ArrayList<>();
-        addFirstDebugLevel();
+        /*addFirstDebugLevel();
         addSecondDebugLevel();
         addThirdDebugLevel();
         addForthDebugLevel();
         addFifthDebugLevel();
         addSixthDebugLevel();
-        addSeventhDebugLevel();
-        /*addFirstLevel();
+        addSeventhDebugLevel();*/
+        addFirstLevel();
         addSecondLevel();
         addThirdLevel();
         addForthLevel();
         addFifthLevel();
         addSixthLevel();
         addSeventhLevel();
-        addEighthLevel();*/
+        addEighthLevel();
     }
 
     private static void addFirstLevel() {

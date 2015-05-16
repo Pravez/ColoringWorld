@@ -19,6 +19,8 @@ public class DynamicPhysicComponent extends PhysicComponent{
     private Vector2 currentJumpingImpulse;
     private boolean jumping;
 
+    private float jumpingPercentageValue;
+
     public DynamicPhysicComponent(BaseElement element) {
         super(element);
     }
@@ -35,7 +37,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
         //To keep from rotations
         this.bodyDef.fixedRotation = true;
         this.bodyDef.position.set(new Vector2(position.x, position.y));
-        this.bodyDef.linearDamping = 3f;
+        this.bodyDef.linearDamping = 2f;
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width, height);
@@ -67,7 +69,8 @@ public class DynamicPhysicComponent extends PhysicComponent{
         //To keep from rotations
         this.bodyDef.fixedRotation = true;
         this.bodyDef.position.set(new Vector2(position.x + radius, position.y + radius));
-        this.bodyDef.linearDamping = 3f;
+        this.bodyDef.linearDamping = 2.0f;
+
 
         CircleShape shape = new CircleShape();
         shape.setRadius(radius);
@@ -152,7 +155,6 @@ public class DynamicPhysicComponent extends PhysicComponent{
             this.body.applyLinearImpulse(currentMovingImpulse, this.body.getWorldCenter(), true);
         }
 
-
         if(jumping){
             proceedJump();
         }
@@ -162,9 +164,10 @@ public class DynamicPhysicComponent extends PhysicComponent{
         if(this.currentJumpingImpulse.y == ((BaseDynamicElement)this.element).getJumpVelocity().y) {
             this.body.applyLinearImpulse(this.currentJumpingImpulse, body.getWorldCenter(), true);
             this.currentJumpingImpulse.y /= 5;
-        }else if(this.currentJumpingImpulse.y > 10f) {
+            this.jumpingPercentageValue = this.currentJumpingImpulse.y /100;
+        }else if(this.currentJumpingImpulse.y > (this.jumpingPercentageValue*94)) {
             this.body.applyLinearImpulse(this.currentJumpingImpulse, body.getWorldCenter(), true);
-            this.currentJumpingImpulse.y /= 1.15f;
+            this.currentJumpingImpulse.y -= this.jumpingPercentageValue;
         }else{
             endJump();
         }

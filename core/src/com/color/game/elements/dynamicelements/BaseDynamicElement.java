@@ -24,7 +24,7 @@ import java.util.Iterator;
  */
 public abstract class BaseDynamicElement extends BaseElement {
 
-    private static final Vector2 DYNAMIC_ELEMENT_BASE_JUMP = new Vector2(0, 350f);
+    public static final Vector2 DYNAMIC_ELEMENT_BASE_JUMP = new Vector2(0, 300f);
 
     State movingState;
     private State aloftState;
@@ -200,8 +200,9 @@ public abstract class BaseDynamicElement extends BaseElement {
         if (UserData.isFallingPlatform(touched)) {
             FallingPlatform fp = (FallingPlatform) ((UserData)touched.getUserData()).getElement();
             fp.dynamicElementStanding(this);
-            if (fp.isFallingOntoElement(this))
+            if (fp.isFallingOntoElement(this)) {
                 this.kill();
+            }
         }
     }
 }

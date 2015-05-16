@@ -14,4 +14,11 @@
 * What about the "Die and Retry" ?
 
 ### What we did :
-    - Adjusted character friction factor with other elements
+
+    - Adjusted character friction factor (finally linear dumping) with other elements
+    - Removed useless platforms, useless features.
+    - Added possibility when the game is paused to see the entire level.
+    - Updated and added useful platforms
+    - Added faculty for the character to jump higher with a longer press on spacebar
+        * This removed the problem of a real jumping on falling platforms
+    - Changed controls to "ZQSD" to move and "UIO" for colors

@@ -216,8 +216,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             uiStage.act(delta);
             handleInputs();
             handleCharacter();
+            handleCamera();
+        } else {
+            handleMovingCamera();
         }
-        handleCamera();
+
         //TO DEBUG
         handleDebugCodes();
 
@@ -343,6 +346,40 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
         if (camera.position.y > level_height - camera.viewportHeight / 2f && camera.viewportHeight < level_height) {
             camera.position.y = level_height - camera.viewportHeight / 2f;
+        }
+        camera.update();
+    }
+
+    private void handleMovingCamera() {
+        float level_width  = LevelManager.getCurrentLevel().map.getPixelWidth();
+        float level_height = LevelManager.getCurrentLevel().map.getPixelHeight();
+
+        if (Gdx.input.getX() > 2 * camera.viewportWidth/3) { // going to the right
+            camera.position.x += 10;
+        } else if (Gdx.input.getX() < camera.viewportWidth/3) { // going to the left
+            camera.position.x -= 10;
+        }
+
+        if (Gdx.input.getY() > 2 * camera.viewportHeight/3) { // going to the bottom
+            camera.position.y -= 10;
+        } else if (Gdx.input.getY() < camera.viewportHeight/3) { // going to the top
+            camera.position.y += 10;
+        }
+
+        if (camera.position.x < camera.viewportWidth / 2f) {
+            camera.position.x = camera.viewportWidth / 2f;
+        }
+        if (camera.position.y < camera.viewportHeight / 2f) {
+            camera.position.y = camera.viewportHeight / 2f;
+        }
+        if (camera.position.x > level_width - camera.viewportWidth / 2f) {
+            camera.position.x = level_width - camera.viewportWidth / 2f;
+        }
+        if (camera.position.y > level_height - camera.viewportHeight / 2f) {
+            if (camera.viewportHeight > level_height)
+                camera.position.y = camera.viewportHeight/2;
+            else
+                camera.position.y = level_height - camera.viewportHeight / 2f;
         }
         camera.update();
     }

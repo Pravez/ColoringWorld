@@ -114,7 +114,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      * Method to call to reset the game
      */
     public void reset() {
-        runningLevel = LevelManager.getCurrentLevelNumber();
+        this.runningLevel = LevelManager.getCurrentLevelNumber();
         respawn();
         character.remove();
         character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
@@ -191,6 +191,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         Gdx.input.setInputProcessor(new InputMultiplexer(this.uiStage, this));
         if (this.restart) {
             restart();
+        }
+        if (this.runningLevel != LevelManager.getCurrentLevelNumber()) {
+            reset();
         }
     }
 

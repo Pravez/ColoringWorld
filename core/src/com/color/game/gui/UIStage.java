@@ -4,12 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
+import com.color.game.levels.LevelManager;
 import com.color.game.screens.GameScreen;
 
 public class UIStage extends Stage {
+
+    final private Label levelNumber;
+    private int currentLevel;
 
     final public Gauges colorGauges;
 
@@ -17,6 +23,10 @@ public class UIStage extends Stage {
     private static final int BUTTON_GAP = 30;
 
     public UIStage(final GameScreen gameScreen) {
+        this.currentLevel = LevelManager.getCurrentLevelNumber();
+        this.levelNumber = new Label("Level " + (this.currentLevel + 1), Assets.menuSkin);
+        this.levelNumber.setPosition((Gdx.graphics.getWidth() - this.levelNumber.getWidth())/2, Gdx.graphics.getHeight() - this.levelNumber.getHeight());
+
         this.colorGauges = new Gauges(new Rectangle(20, Gdx.graphics.getHeight() - 65, 75, 50));
 
         this.playButton = new TextButton("Pause", Assets.menuSkin);
@@ -47,9 +57,22 @@ public class UIStage extends Stage {
             }
         });
 
+        TextButton menuButton = new TextButton("Menu", Assets.menuSkin);
+        menuButton.setPosition(Gdx.graphics.getWidth() - menuButton.getWidth() - BUTTON_GAP,
+                restartButton.getY() - menuButton.getHeight() - BUTTON_GAP / 3);
+
+        menuButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ((ColorGame)Gdx.app.getApplicationListener()).setMenuScreen();
+            }
+        });
+
+        this.addActor(this.levelNumber);
         this.addActor(this.colorGauges);
         this.addActor(this.playButton);
         this.addActor(restartButton);
+        this.addActor(menuButton);
     }
 
     public void updateButton(String text) {
@@ -57,5 +80,14 @@ public class UIStage extends Stage {
         this.playButton.pack();
         this.playButton.setPosition(Gdx.graphics.getWidth() - this.playButton.getWidth() - BUTTON_GAP,
                 Gdx.graphics.getHeight() - this.playButton.getHeight() - BUTTON_GAP);
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (this.currentLevel != LevelManager.getCurrentLevelNumber()) {
+            this.currentLevel = LevelManager.getCurrentLevelNumber();
+            this.levelNumber.setText("Level " + (this.currentLevel + 1));
+        }
     }
 }

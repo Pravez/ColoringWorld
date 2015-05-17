@@ -28,6 +28,7 @@ public class ColorGame extends Game {
 	private LevelSelectionScreen levelSelectionScreen;
 	private MenuScreen           menuScreen;
 	private OptionScreen         optionScreen;
+	private KeysScreen           keysScreen;
 	private TransitionScreen     transitionScreen;
 
 	/**
@@ -51,6 +52,7 @@ public class ColorGame extends Game {
 		this.levelSelectionScreen = new LevelSelectionScreen(this);
 		this.menuScreen           = new MenuScreen(this);
 		this.optionScreen 	      = new OptionScreen(this);
+		this.keysScreen           = new KeysScreen(this);
 		this.transitionScreen     = new TransitionScreen(this);
 
 		this.splashScreen.end();
@@ -136,6 +138,10 @@ public class ColorGame extends Game {
 
 	public void setOptionScreen() {
 		super.setScreen(this.optionScreen);
+	}
+
+	public void setKeysScreen() {
+		super.setScreen(this.keysScreen);
 	}
 
 	public void setWinScreen() {

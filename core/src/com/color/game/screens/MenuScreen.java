@@ -37,11 +37,13 @@ public class MenuScreen extends BaseScreen {
         // Buttons of the menu
         TextButton buttonPlay    = new TextButton("Play", Assets.menuSkin);
         TextButton buttonOptions = new TextButton("Options", Assets.menuSkin);
+        TextButton buttonKeys    = new TextButton("Keys", Assets.menuSkin);
         TextButton buttonExit    = new TextButton("Exit", Assets.menuSkin);
 
         table.add(title).padBottom(40).row();
         table.add(buttonPlay).size(250,60).padBottom(20).row();
         table.add(buttonOptions).size(250,60).padBottom(20).row();
+        table.add(buttonKeys).size(250,60).padBottom(20).row();
         table.add(buttonExit).size(250,60).padBottom(20).row();
 
         table.setFillParent(true);
@@ -51,13 +53,19 @@ public class MenuScreen extends BaseScreen {
         setButtonListener(buttonPlay, new Runnable() {
             @Override
             public void run() {
-                game.setGameScreen();
+                game.setLevelSelectionScreen();
             }
         });
         setButtonListener(buttonOptions, new Runnable() {
             @Override
             public void run() {
                 game.setOptionScreen();
+            }
+        });
+        setButtonListener(buttonKeys, new Runnable() {
+            @Override
+            public void run() {
+                game.setKeysScreen();
             }
         });
         setButtonListener(buttonExit, new Runnable() {

@@ -44,6 +44,10 @@ public class LevelManager {
         return levels;
     }
 
+    public static int getLevelCount() {
+        return LevelManager.levels.size();
+    }
+
     public static void nextLevel() {
         currentLevel++;
         if (currentLevel == levels.size()) {

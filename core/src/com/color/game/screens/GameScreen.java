@@ -93,6 +93,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         respawn();
         character.remove();
         LevelManager.changeLevel(this.runningLevel);
+        this.uiStage.changeLevelNumber();
         character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
         LevelManager.getCurrentLevel().addActor(character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
@@ -104,6 +105,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      */
     public void restart() {
         LevelManager.getCurrentLevel().addDeath();
+        this.uiStage.changeDeathNumber();
         character.reset(LevelManager.getCurrentLevel().characterPos);
         LevelManager.getCurrentLevel().restart();
         respawn();
@@ -115,6 +117,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      */
     public void reset() {
         this.runningLevel = LevelManager.getCurrentLevelNumber();
+        this.uiStage.changeLevelNumber();
         respawn();
         character.remove();
         character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);

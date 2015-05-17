@@ -15,7 +15,7 @@ import com.color.game.screens.GameScreen;
 public class UIStage extends Stage {
 
     final private Label levelNumber;
-    private int currentLevel;
+    final private Label deathNumber;
 
     final public Gauges colorGauges;
 
@@ -23,9 +23,11 @@ public class UIStage extends Stage {
     private static final int BUTTON_GAP = 30;
 
     public UIStage(final GameScreen gameScreen) {
-        this.currentLevel = LevelManager.getCurrentLevelNumber();
-        this.levelNumber = new Label("Level " + (this.currentLevel + 1), Assets.menuSkin);
+        this.levelNumber = new Label("Level " + (LevelManager.getCurrentLevelNumber() + 1), Assets.menuSkin);
         this.levelNumber.setPosition((Gdx.graphics.getWidth() - this.levelNumber.getWidth())/2, Gdx.graphics.getHeight() - this.levelNumber.getHeight());
+
+        this.deathNumber = new Label(LevelManager.getCurrentLevel().getDeaths() + " deaths", Assets.menuSkin);
+        this.deathNumber.setPosition((Gdx.graphics.getWidth() - this.deathNumber.getWidth())/2, this.levelNumber.getY() - this.deathNumber.getHeight());
 
         this.colorGauges = new Gauges(new Rectangle(20, Gdx.graphics.getHeight() - 65, 75, 50));
 
@@ -69,6 +71,7 @@ public class UIStage extends Stage {
         });
 
         this.addActor(this.levelNumber);
+        this.addActor(this.deathNumber);
         this.addActor(this.colorGauges);
         this.addActor(this.playButton);
         this.addActor(restartButton);
@@ -82,12 +85,13 @@ public class UIStage extends Stage {
                 Gdx.graphics.getHeight() - this.playButton.getHeight() - BUTTON_GAP);
     }
 
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-        if (this.currentLevel != LevelManager.getCurrentLevelNumber()) {
-            this.currentLevel = LevelManager.getCurrentLevelNumber();
-            this.levelNumber.setText("Level " + (this.currentLevel + 1));
-        }
+    public void changeLevelNumber() {
+        this.levelNumber.setText("Level " + (LevelManager.getCurrentLevelNumber() + 1));
+        changeDeathNumber();
+    }
+
+    public void changeDeathNumber() {
+        this.deathNumber.setText(LevelManager.getCurrentLevel().getDeaths() + " deaths");
+        this.deathNumber.setPosition((Gdx.graphics.getWidth() - this.deathNumber.getWidth())/2, this.levelNumber.getY() - this.deathNumber.getHeight());
     }
 }

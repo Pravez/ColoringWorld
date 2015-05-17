@@ -6,16 +6,22 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.ArrayMap;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
+import com.color.game.keys.Key;
+import com.color.game.keys.KeyEffect;
+import com.color.game.keys.KeyModifier;
 
 public class KeysScreen extends BaseScreen implements InputProcessor {
 
-    TextButton leftButton, rightButton;
+    KeyModifier currentModifier = null;
+    Label usedMessage;
 
     /**
      * Constructor of the BaseScreen
@@ -26,27 +32,38 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
 
         Table table = new Table();
 
-        leftButton  = new TextButton("" + Input.Keys.toString(this.game.keys.leftCode), Assets.menuSkin);
-        rightButton = new TextButton("" + Input.Keys.toString(this.game.keys.rightCode), Assets.menuSkin);
+        ArrayMap<KeyEffect, Key> keys = this.game.keys.getKeys();
+
+        for (Key key : keys.values()) {
+            final KeyModifier keyModifier = new KeyModifier(key);
+            keyModifier.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    if (currentModifier != null && currentModifier != keyModifier)
+                            currentModifier.select(false);
+                    currentModifier = currentModifier == keyModifier ? null : keyModifier;
+                    keyModifier.select(currentModifier == keyModifier);
+                }
+            });
+            table.add(keyModifier).row();
+        }
 
         TextButton buttonMenu = new TextButton("Menu", Assets.menuSkin);
-
-        table.add(new Label("Left  : ", Assets.menuSkin));
-        table.add(leftButton).row();
-
-        table.add(new Label("Right  : ", Assets.menuSkin));
-        table.add(rightButton).row();
-
         table.add(buttonMenu).colspan(2).size(250, 60).padTop(80).row();
+
+        this.usedMessage = new Label("This key is already used", Assets.menuSkin);
+        this.usedMessage.setPosition((Gdx.graphics.getWidth() - this.usedMessage.getWidth())/2, this.usedMessage.getHeight());
 
         table.setFillParent(true);
         stage.addActor(table);
+        stage.addActor(this.usedMessage);
 
-        setButtonListener(buttonMenu, new Runnable (){ @Override public void run() {
-            leftButton.setChecked(false);
-            rightButton.setChecked(false);
-            game.setMenuScreen();
-        } });
+        setButtonListener(buttonMenu, new Runnable() {
+            @Override
+            public void run() {
+                game.setMenuScreen();
+            }
+        });
     }
 
     /**
@@ -80,15 +97,22 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(new InputMultiplexer(this.stage, this));
+        this.usedMessage.addAction(Actions.alpha(0));
+        if (this.currentModifier != null) {
+            this.currentModifier.select(false);
+            this.currentModifier = null;
+        }
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if (this.leftButton.isChecked()) {
-            this.leftButton.setText(Input.Keys.toString(keycode));
-        }
-        if (this.rightButton.isChecked()) {
-            this.rightButton.setText(Input.Keys.toString(keycode));
+        if (this.currentModifier != null) {
+            if (!this.game.keys.isCodeUsed(keycode, this.currentModifier.getKey()))
+                this.currentModifier.changeKeyCode(keycode);
+            else {
+                this.usedMessage.addAction(Actions.sequence(Actions.alpha(1), Actions.delay(1), Actions.fadeOut(1)));
+            }
+
         }
         return false;
     }

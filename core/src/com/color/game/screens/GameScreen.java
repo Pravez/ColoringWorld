@@ -22,6 +22,7 @@ import com.color.game.elements.staticelements.sensors.Sensor;
 import com.color.game.elements.userData.UserData;
 import com.color.game.gui.ColorGauge;
 import com.color.game.gui.UIStage;
+import com.color.game.keys.KeyEffect;
 import com.color.game.levels.LevelManager;
 
 /**
@@ -282,19 +283,19 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      */
     private void handleInputs() {
 
-        if (Gdx.input.isKeyJustPressed(this.game.keys.jumpCode)) {
+        if (Gdx.input.isKeyJustPressed(this.game.keys.getKeyCode(KeyEffect.JUMP))) {
             character.addCommand(new StartJumpCommand());
         }
-        if (Gdx.input.isKeyJustPressed(this.game.keys.squatCode)) {
+        if (Gdx.input.isKeyJustPressed(this.game.keys.getKeyCode(KeyEffect.SQUAT))) {
             character.addCommand(new StartSquatCommand());
         }
-        if (Gdx.input.isKeyJustPressed(this.game.keys.rightCode)) {
+        if (Gdx.input.isKeyJustPressed(this.game.keys.getKeyCode(KeyEffect.RIGHT))) {
             character.addCommand(new StartMoveCommand(MovementDirection.RIGHT));
         }
-        if (Gdx.input.isKeyJustPressed(this.game.keys.leftCode)) {
+        if (Gdx.input.isKeyJustPressed(this.game.keys.getKeyCode(KeyEffect.LEFT))) {
             character.addCommand(new StartMoveCommand(MovementDirection.LEFT));
         }
-        if (Gdx.input.isKeyJustPressed(this.game.keys.magnesCode)) {
+        if (Gdx.input.isKeyJustPressed(this.game.keys.getKeyCode(KeyEffect.MAGNES))) {
             this.magnetKeyPressed = true;
             if (this.currentMagnes != null) {
                 this.currentMagnes.act(character);
@@ -302,9 +303,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
 
         // Here the code to activate colors
-        handleColorCommand(this.game.keys.redCode, this.redCommand, this.uiStage.colorGauges.redGauge);
-        handleColorCommand(this.game.keys.blueCode, this.blueCommand, this.uiStage.colorGauges.blueGauge);
-        handleColorCommand(this.game.keys.yellowCode, this.yellowCommand, this.uiStage.colorGauges.yellowGauge);
+        handleColorCommand(this.game.keys.getKeyCode(KeyEffect.RED), this.redCommand, this.uiStage.colorGauges.redGauge);
+        handleColorCommand(this.game.keys.getKeyCode(KeyEffect.BLUE), this.blueCommand, this.uiStage.colorGauges.blueGauge);
+        handleColorCommand(this.game.keys.getKeyCode(KeyEffect.YELLOW), this.yellowCommand, this.uiStage.colorGauges.yellowGauge);
     }
 
     /**
@@ -406,23 +407,23 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
     @Override
     public boolean keyUp(int keycode) {
-        if (keycode == this.game.keys.jumpCode) {
+        if (keycode == this.game.keys.getKeyCode(KeyEffect.JUMP)) {
             character.addCommand(new EndJumpCommand());
-        } else if (keycode == this.game.keys.squatCode) {
+        } else if (keycode == this.game.keys.getKeyCode(KeyEffect.SQUAT)) {
             character.addCommand(new EndSquatCommand());
         }
-        if (keycode == this.game.keys.magnesCode) {
+        if (keycode == this.game.keys.getKeyCode(KeyEffect.MAGNES)) {
             this.magnetKeyPressed = false;
             if (this.currentMagnes != null) {
                 this.currentMagnes.endAct();
             }
         }
-        if(keycode == this.game.keys.leftCode || keycode == this.game.keys.rightCode){
+        if(keycode == this.game.keys.getKeyCode(KeyEffect.LEFT) || keycode == this.game.keys.getKeyCode(KeyEffect.RIGHT)){
             character.addCommand(new EndMoveCommand());
-            if(Gdx.input.isKeyPressed(this.game.keys.leftCode)){
+            if(Gdx.input.isKeyPressed(this.game.keys.getKeyCode(KeyEffect.LEFT))){
                 character.addCommand(new StartMoveCommand(MovementDirection.LEFT));
             }
-            if(Gdx.input.isKeyPressed(this.game.keys.rightCode)){
+            if(Gdx.input.isKeyPressed(this.game.keys.getKeyCode(KeyEffect.RIGHT))){
                 character.addCommand(new StartMoveCommand(MovementDirection.RIGHT));
             }
         }

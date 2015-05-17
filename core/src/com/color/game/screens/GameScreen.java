@@ -358,19 +358,22 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     }
 
     private void handleMovingCamera() {
+        int moveGap    = 4;
+        int moveAmount = 10;
+
         float level_width  = LevelManager.getCurrentLevel().map.getPixelWidth();
         float level_height = LevelManager.getCurrentLevel().map.getPixelHeight();
 
-        if (Gdx.input.getX() > 2 * camera.viewportWidth/3) { // going to the right
-            camera.position.x += 10;
-        } else if (Gdx.input.getX() < camera.viewportWidth/3) { // going to the left
-            camera.position.x -= 10;
+        if (Gdx.input.getX() > (moveGap - 1) * camera.viewportWidth/moveGap) { // going to the right
+            camera.position.x += moveAmount;
+        } else if (Gdx.input.getX() < camera.viewportWidth/moveGap) { // going to the left
+            camera.position.x -= moveAmount;
         }
 
-        if (Gdx.input.getY() > 2 * camera.viewportHeight/3) { // going to the bottom
-            camera.position.y -= 10;
-        } else if (Gdx.input.getY() < camera.viewportHeight/3) { // going to the top
-            camera.position.y += 10;
+        if (Gdx.input.getY() > (moveGap - 1) * camera.viewportHeight/moveGap) { // going to the bottom
+            camera.position.y -= moveAmount;
+        } else if (Gdx.input.getY() < camera.viewportHeight/moveGap) { // going to the top
+            camera.position.y += moveAmount;
         }
 
         if (camera.position.x < camera.viewportWidth / 2f) {

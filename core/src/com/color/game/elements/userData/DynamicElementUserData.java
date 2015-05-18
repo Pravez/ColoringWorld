@@ -34,11 +34,9 @@ public class DynamicElementUserData extends UserData{
     }
 
     public void addContact(){
-        System.out.println(contactsNumber);
     }
 
     public void removeContact(){
-        System.out.println(contactsNumber);
     }
     public int getContactsNumber() {
         return contactsNumber;

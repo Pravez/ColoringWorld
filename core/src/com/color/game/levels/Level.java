@@ -4,13 +4,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.color.game.elements.BaseColorPlatform;
+import com.color.game.elements.BaseColorElement;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.dynamicplatforms.BaseDynamicPlatform;
 import com.color.game.elements.dynamicplatforms.ColorFallingPlatform;
 import com.color.game.elements.staticelements.platforms.ColorPlatform;
-import com.color.game.elements.staticelements.platforms.PlatformColor;
+import com.color.game.elements.staticelements.platforms.ElementColor;
 
 /**
  * Level class containing everything needed for the Levels of the game
@@ -37,9 +37,9 @@ public class Level extends Stage {
     final public Vector2 characterPos;
 
     /**
-     * The list of the {@link BaseColorPlatform} of the level
+     * The list of the {@link com.color.game.elements.BaseColorElement} of the level
      */
-    final private Array<BaseColorPlatform> colorPlatforms;
+    final private Array<BaseColorElement> colorElements;
 
     /**
      * The list of the {@link BaseDynamicPlatform} of the level
@@ -64,7 +64,7 @@ public class Level extends Stage {
         this.map          = new Map(Map.WORLD_GRAVITY, true);
         this.characterPos = characterPos.scl(2);
 
-        this.colorPlatforms   = new Array<>();
+        this.colorElements = new Array<>();
         this.dynamicPlatforms = new Array<>();
         this.platforms        = new Array<>();
         this.enemies          = new Array<>();
@@ -108,11 +108,11 @@ public class Level extends Stage {
     }
 
     /**
-     * Method to add a {@link BaseColorPlatform} to the Level (adding it to the list)
-     * @param colorPlatform the {@link BaseColorPlatform} to add
+     * Method to add a {@link com.color.game.elements.BaseColorElement} to the Level (adding it to the list)
+     * @param colorElement the {@link com.color.game.elements.BaseColorElement} to add
      */
-    public void addColorPlatform(BaseColorPlatform colorPlatform) {
-        this.colorPlatforms.add(colorPlatform);
+    public void addColorElement(BaseColorElement colorElement) {
+        this.colorElements.add(colorElement);
     }
 
     /**
@@ -144,19 +144,17 @@ public class Level extends Stage {
      * Method called to change the activation state of the {@link ColorPlatform} of the Level according to their color
      *  - if they are activated, they are deactivated
      *  - if they are deactivated, they are activated
-     * @param color the {@link PlatformColor} of the {@link ColorPlatform} to activate or deactivate
+     * @param color the {@link com.color.game.elements.staticelements.platforms.ElementColor} of the {@link ColorPlatform} to activate or deactivate
      */
-    public void changeColorPlatformsActivation(PlatformColor color) {
-        for (BaseColorPlatform colorPlatform : this.colorPlatforms) {
-            if (colorPlatform.getPlatformColor() == color) {
-                colorPlatform.changeActivation();
-            }
+    public void changeColorPlatformsActivation(ElementColor color) {
+        for (BaseColorElement colorElement : this.colorElements) {
+            colorElement.changeActivation(color);
         }
     }
 
     public Array<BaseElement> getPlatforms() {
         Array<BaseElement> platforms = new Array<>(this.platforms);
-        for (BaseColorPlatform colorPlatform : this.colorPlatforms) {
+        for (BaseColorElement colorPlatform : this.colorElements) {
             if (colorPlatform.isActivated()) {
                 if (colorPlatform instanceof ColorPlatform)
                     platforms.add((ColorPlatform)colorPlatform);

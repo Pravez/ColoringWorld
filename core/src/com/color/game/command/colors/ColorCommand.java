@@ -1,20 +1,23 @@
-package com.color.game.command;
+package com.color.game.command.colors;
 
+import com.color.game.command.Command;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
-import com.color.game.elements.staticelements.platforms.PlatformColor;
+import com.color.game.elements.staticelements.platforms.ElementColor;
 import com.color.game.levels.LevelManager;
 
 public class ColorCommand implements Command {
 
     public static final float COLOR_DELAY = 5.0f;
 
-    private final PlatformColor color;
-    private boolean activated = false;
+    protected final ElementColor color;
+    protected boolean activated = false;
     private boolean desactivated = false;
 
-    private float time = 0;
+    private boolean pressed = false;
 
-    public ColorCommand (PlatformColor color) {
+    protected float time = 0;
+
+    public ColorCommand (ElementColor color) {
         this.color = color;
         restart();
     }
@@ -23,10 +26,11 @@ public class ColorCommand implements Command {
         return !this.activated && !this.desactivated;
     }
 
-    private void restart() {
+    public void restart() {
         this.activated = false;
         this.desactivated = false;
         this.time = 0;
+        this.pressed = false;
     }
 
     public void stop() {
@@ -47,10 +51,32 @@ public class ColorCommand implements Command {
         if (!this.desactivated && this.time >= 4f * ColorCommand.COLOR_DELAY / 5) {
             LevelManager.getCurrentLevel().changeColorPlatformsActivation(this.color);
             this.desactivated = true;
+            this.pressed = false;
         }
         if (this.time >= ColorCommand.COLOR_DELAY) {
             restart();
         }
+
         return isFinished();
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public boolean isDesactivated() {
+        return desactivated;
+    }
+
+    public ElementColor getColor() {
+        return color;
+    }
+
+    public boolean isPressed() {
+        return pressed;
+    }
+
+    public void setPressed(boolean pressed) {
+        this.pressed = pressed;
     }
 }

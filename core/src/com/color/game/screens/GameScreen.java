@@ -11,12 +11,13 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.ColorGame;
-import com.color.game.command.*;
+import com.color.game.command.colors.ColorCommand;
+import com.color.game.command.colors.ColorCommandManager;
+import com.color.game.command.elements.*;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.staticelements.Exit;
-import com.color.game.elements.staticelements.platforms.PlatformColor;
 import com.color.game.elements.staticelements.sensors.Magnes;
 import com.color.game.elements.staticelements.sensors.Sensor;
 import com.color.game.elements.userData.UserData;
@@ -47,9 +48,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     /**
      * The different ColorCommands
      */
-    final private ColorCommand redCommand;
-    final private ColorCommand blueCommand;
-    final private ColorCommand yellowCommand;
+    private final ColorCommandManager colorCommandManager;
 
     /**
      * The number of the level which should be played
@@ -80,9 +79,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         this.uiStage = new UIStage(this);
 
-        this.redCommand    = new ColorCommand(PlatformColor.RED);
-        this.blueCommand   = new ColorCommand(PlatformColor.BLUE);
-        this.yellowCommand = new ColorCommand(PlatformColor.YELLOW);
+        this.colorCommandManager = new ColorCommandManager();
 
         this.runnables = new Array<>();
     }
@@ -157,9 +154,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     private void respawn() {
         character.clearCommands();
 
-        this.redCommand.stop();
-        this.blueCommand.stop();
-        this.yellowCommand.stop();
+        colorCommandManager.stopCommands();
 
         this.uiStage.colorGauges.stopAll();
         endCommands();
@@ -303,20 +298,24 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
 
         // Here the code to activate colors
-        handleColorCommand(this.game.keys.getKeyCode(KeyEffect.RED), this.redCommand, this.uiStage.colorGauges.redGauge);
-        handleColorCommand(this.game.keys.getKeyCode(KeyEffect.BLUE), this.blueCommand, this.uiStage.colorGauges.blueGauge);
-        handleColorCommand(this.game.keys.getKeyCode(KeyEffect.YELLOW), this.yellowCommand, this.uiStage.colorGauges.yellowGauge);
+        handleColorCommand(this.game.keys.getKeyCode(KeyEffect.RED), this.colorCommandManager.getRedCommand(), this.uiStage.colorGauges.redGauge);
+        handleColorCommand(this.game.keys.getKeyCode(KeyEffect.BLUE), this.colorCommandManager.getBlueCommand(), this.uiStage.colorGauges.blueGauge);
+        handleColorCommand(this.game.keys.getKeyCode(KeyEffect.YELLOW), this.colorCommandManager.getYellowCommand(), this.uiStage.colorGauges.yellowGauge);
     }
 
     /**
-     * Method called to handle a specific {@link ColorCommand }
-     * @param keyCode the keyboard code to activate the {@link ColorCommand }
-     * @param command the corresponding {@link ColorCommand }
+     * Method called to handle a specific {@link com.color.game.command.colors.ColorCommand }
+     * @param keyCode the keyboard code to activate the {@link com.color.game.command.colors.ColorCommand }
+     * @param command the corresponding {@link com.color.game.command.colors.ColorCommand }
      * @param gauge the {@link ColorGauge} rendering the ColorCommand delay
      */
-    private void handleColorCommand(int keyCode, ColorCommand command, ColorGauge gauge) {
+    private void handleColorCommand(int keyCode, final ColorCommand command, ColorGauge gauge) {
         if (Gdx.input.isKeyJustPressed(keyCode) && command.isFinished()) {
             character.addCommand(command);
+            command.setPressed(true);
+            colorCommandManager.addCommandToCharacter(command, character);
+
+
             gauge.restart();
         }
     }

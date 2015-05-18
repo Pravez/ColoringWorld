@@ -17,7 +17,7 @@ public class BouncingColorPlatform extends ColorPlatform{
     final private ShapeRenderer shapeRenderer;
 
 
-    public BouncingColorPlatform(Vector2 position, int width, int height, Level level, PlatformColor color, boolean activated) {
+    public BouncingColorPlatform(Vector2 position, int width, int height, Level level, ElementColor color, boolean activated) {
         super(position, width, height, level, color, activated);
 
         this.physicComponent.adjustRestitution(platformRestitution);

@@ -1,18 +1,18 @@
 package com.color.game.elements.dynamicplatforms;
 
 import com.badlogic.gdx.math.Vector2;
-import com.color.game.elements.BaseColorPlatform;
-import com.color.game.elements.staticelements.platforms.PlatformColor;
+import com.color.game.elements.BaseColorElement;
+import com.color.game.elements.staticelements.platforms.ElementColor;
 import com.color.game.levels.Level;
 
 @Deprecated
-public class ColorFallingPlatform extends FallingPlatform implements BaseColorPlatform {
+public class ColorFallingPlatform extends FallingPlatform implements BaseColorElement {
 
-    final private PlatformColor color;
+    final private ElementColor color;
 
-    public ColorFallingPlatform(Vector2 position, int width, int height, Level level, PlatformColor color, boolean fall) {
+    public ColorFallingPlatform(Vector2 position, int width, int height, Level level, ElementColor color, boolean fall) {
         super(position, width, height, level, fall);
-        level.addColorPlatform(this);
+        level.addColorElement(this);
         this.color = color;
         setColor(this.color.getColor());
     }
@@ -35,20 +35,22 @@ public class ColorFallingPlatform extends FallingPlatform implements BaseColorPl
     }
 
     @Override
-    public void changeActivation() {
-        // Desactivate by the player
-        if (this.falling) {
-            super.deactivate();
-            setTransparent(true);
-        }
-        // Make the platform fall
-        if (!this.fall && !this.falling) {
-            fall();
+    public void changeActivation(ElementColor color) {
+        if(this.color == color) {
+            // Desactivate by the player
+            if (this.falling) {
+                super.deactivate();
+                setTransparent(true);
+            }
+            // Make the platform fall
+            if (!this.fall && !this.falling) {
+                fall();
+            }
         }
     }
 
     @Override
-    public PlatformColor getPlatformColor() {
+    public ElementColor getElementColor() {
         return this.color;
     }
 }

@@ -5,7 +5,7 @@ import com.color.game.elements.dynamicelements.BaseDynamicElement;
 /**
  * Interface command, according to the command pattern. It will be used to assign commands in a list of commands for each dynamic
  * body, and will do the body evolute in his world. Every command is called with a start and is ended with an end, see for
- * example {@link com.color.game.command.StartJumpCommand} and {@link com.color.game.command.EndJumpCommand}.
+ * example {@link com.color.game.command.elements.StartJumpCommand} and {@link com.color.game.command.elements.EndJumpCommand}.
  */
 public interface Command {
 

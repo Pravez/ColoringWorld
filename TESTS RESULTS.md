@@ -16,6 +16,7 @@
 ### What we did :
 
     - Adjusted character friction factor (finally linear dumping) with other elements
+        * Is it really important ?
     - Removed useless platforms, useless features.
     - Added possibility when the game is paused to see the entire level.
     - Updated and added useful platforms

@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.command.Command;
-import com.color.game.command.MovementDirection;
+import com.color.game.command.elements.MovementDirection;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.states.AloftState;
 import com.color.game.elements.dynamicelements.states.LandedState;

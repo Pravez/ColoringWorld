@@ -1,4 +1,19 @@
+# May 18, 2015
+* Some bugfixes and correctives
+
+
+# May 17, 2015
+* Completed keymapper, needs some work by the way
+* Created in the menu the level selector
+
+# May 16, 2015
+* Started work on updating management of colors
+* Started work on implementation of secondary colors (for arts)
+* Created new commands ... others according to the secondary colors. Modified current enemies
+* Started work on keymapper
+
 # May 15, 2015
+* Possibility to move the view during pause
 * Updated collisions with enemies
 * Rectified some things about jumping enemies
 * Got first results of testers : some levels are too difficult and controls are awkward.

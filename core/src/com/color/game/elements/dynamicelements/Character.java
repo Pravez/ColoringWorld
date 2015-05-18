@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.color.game.command.MovementDirection;
+import com.color.game.command.elements.MovementDirection;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.states.LandedState;

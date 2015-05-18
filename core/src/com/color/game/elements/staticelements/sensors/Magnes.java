@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.color.game.command.PushCommand;
+import com.color.game.command.elements.PushCommand;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.staticelements.BaseStaticElement;

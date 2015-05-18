@@ -2,6 +2,7 @@ package com.color.game.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
@@ -9,6 +10,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
@@ -69,6 +72,15 @@ public class Assets {
         manager.load("sprites/spike.png", Texture.class);
 
         //manager.load("sprites/colors.png", Texture.class);
+
+        // Colors
+        manager.load("colors/red.png", Texture.class);
+        manager.load("colors/blue.png", Texture.class);
+        manager.load("colors/yellow.png", Texture.class);
+        manager.load("colors/purple.png", Texture.class);
+        manager.load("colors/green.png", Texture.class);
+        manager.load("colors/orange.png", Texture.class);
+        manager.load("colors/black.png", Texture.class);
 
         // Levels
         //manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));

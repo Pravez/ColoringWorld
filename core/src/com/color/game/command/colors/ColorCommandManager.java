@@ -1,5 +1,6 @@
 package com.color.game.command.colors;
 
+import com.badlogic.gdx.utils.Array;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.staticelements.platforms.ElementColor;
 
@@ -16,15 +17,15 @@ public class ColorCommandManager {
     private ComposedColorCommand blackCommand;
 
     public ColorCommandManager(){
-        redCommand = new ColorCommand(ElementColor.RED);
-        blueCommand = new ColorCommand(ElementColor.BLUE);
+        redCommand    = new ColorCommand(ElementColor.RED);
+        blueCommand   = new ColorCommand(ElementColor.BLUE);
         yellowCommand = new ColorCommand(ElementColor.YELLOW);
 
-        greenCommand = new ComposedColorCommand(ElementColor.GREEN, blueCommand, yellowCommand);
+        greenCommand  = new ComposedColorCommand(ElementColor.GREEN, blueCommand, yellowCommand);
         purpleCommand = new ComposedColorCommand(ElementColor.PURPLE, redCommand, blueCommand);
         orangeCommand = new ComposedColorCommand(ElementColor.ORANGE, redCommand, yellowCommand);
 
-        blackCommand = new ComposedColorCommand(ElementColor.BLACK, blueCommand, redCommand, yellowCommand);
+        blackCommand  = new ComposedColorCommand(ElementColor.BLACK, blueCommand, redCommand, yellowCommand);
     }
 
     public ColorCommand getRedCommand() {
@@ -55,60 +56,69 @@ public class ColorCommandManager {
     }
 
     public ComposedColorCommand activateComposedColor(ColorCommand command){
-        if(allActivated()){
+        if (allActivated()) {
             return blackCommand;
-        }else {
+        } else {
             switch (command.getColor()) {
                 case RED:
-                    if (blueCommand.isPressed()){
-                        return purpleCommand;
-                    }
-                    if(yellowCommand.isPressed()){
-                        return orangeCommand;
-                    }
-                    break;
+                    return composedColorActivated(this.blueCommand, this.purpleCommand, this.yellowCommand, this.orangeCommand);
                 case BLUE:
-                    if(yellowCommand.isPressed()){
-                        return greenCommand;
-                    }
-                    if(redCommand.isPressed()){
-                        return purpleCommand;
-                    }
-                    break;
+                    return composedColorActivated(this.yellowCommand, this.greenCommand, this.redCommand, this.purpleCommand);
                 case YELLOW:
-                    if(redCommand.isPressed()){
-                        return orangeCommand;
-                    }
-                    if(blueCommand.isPressed()) {
-                        return greenCommand;
-                    }
-                    break;
+                    return composedColorActivated(this.redCommand, this.orangeCommand, this.blueCommand, this.greenCommand);
+                default:
+                    return null;
             }
         }
+    }
 
-        return null;
+    private ComposedColorCommand composedColorActivated(ColorCommand c1, ComposedColorCommand co1, ColorCommand c2, ComposedColorCommand co2) {
+        if (c1.isPressed())
+            return co1;
+        else if (c2.isPressed())
+            return co2;
+        else
+            return null;
     }
 
     public void addCommandToCharacter(ColorCommand command, Character character) {
-
         ComposedColorCommand composedColorCommand = activateComposedColor(command);
-        if(composedColorCommand != null){
+
+        if (composedColorCommand != null) {
             character.addCommand(composedColorCommand);
             composedColorCommand.setPressed(true);
-            if(composedColorCommand.getColor() == ElementColor.BLACK){
-                if(!purpleCommand.isPressed()){
-                    character.addCommand(purpleCommand);
-                    purpleCommand.setPressed(true);
-                }
-                if(!orangeCommand.isPressed()){
-                    character.addCommand(orangeCommand);
-                    orangeCommand.setPressed(true);
-                }
-                if(!greenCommand.isPressed()){
-                    character.addCommand(greenCommand);
-                    greenCommand.setPressed(true);
-                }
+            if (composedColorCommand.getColor() == ElementColor.BLACK) {
+                pressComposedColors(this.purpleCommand, character);
+                pressComposedColors(this.orangeCommand, character);
+                pressComposedColors(this.greenCommand, character);
             }
+        }
+    }
+
+    private void pressComposedColors(ComposedColorCommand composedColorCommand, Character character) {
+        if (!composedColorCommand.isPressed()) {
+            character.addCommand(composedColorCommand);
+            composedColorCommand.setPressed(true);
+        }
+    }
+
+    public Array<ElementColor> getActivatedColors() {
+        Array<ElementColor> colors = new Array<>();
+
+        addActivatedColor(colors, this.redCommand);
+        addActivatedColor(colors, this.blueCommand);
+        addActivatedColor(colors, this.yellowCommand);
+        addActivatedColor(colors, this.orangeCommand);
+        addActivatedColor(colors, this.purpleCommand);
+        addActivatedColor(colors, this.greenCommand);
+        addActivatedColor(colors, this.blackCommand);
+
+        return colors;
+    }
+
+    public void addActivatedColor(Array<ElementColor> colors, ColorCommand command) {
+        if (command.isPressed()) {
+            colors.add(command.getColor());
         }
     }
 }

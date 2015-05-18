@@ -26,17 +26,24 @@ public class UIStage extends Stage {
     private static final double TIME_PRECISION = 10.0;
 
     public UIStage(final GameScreen gameScreen) {
+        // The number of the Level
         this.levelNumber = new Label("Level " + (LevelManager.getCurrentLevelNumber() + 1), new Label.LabelStyle(Assets.getBasicFont(32), Color.WHITE));
         this.levelNumber.setPosition((Gdx.graphics.getWidth() - this.levelNumber.getWidth())/2, Gdx.graphics.getHeight() - this.levelNumber.getHeight());
 
+        // The number of deaths in the Level
         this.deathNumber = new Label(LevelManager.getCurrentLevel().getDeaths() + " death", Assets.menuSkin);
         this.deathNumber.setPosition((Gdx.graphics.getWidth() - this.deathNumber.getWidth())/2, this.levelNumber.getY() - this.deathNumber.getHeight());
 
         //this.timePassed = new Label("-- " + LevelManager.getCurrentLevel().getTime() + " --", Assets.menuSkin);
         //this.timePassed.setPosition((Gdx.graphics.getWidth() - this.timePassed.getWidth())/2, this.deathNumber.getY() - this.timePassed.getHeight());
 
+        // Color Gauges
         this.colorGauges = new Gauges(new Rectangle(20, Gdx.graphics.getHeight() - 65, 75, 50));
 
+        // The Primary Colors
+        ColorFigure colorFigure = new ColorFigure(gameScreen, new Rectangle(this.colorGauges.getWidth() + 10, Gdx.graphics.getHeight() - 200, 100, 100));
+
+        // Buttons : Play, Restart, Menu
         this.playButton = new TextButton("Pause", Assets.menuSkin);
         this.playButton.setPosition(Gdx.graphics.getWidth() - this.playButton.getWidth() - BUTTON_GAP,
                 Gdx.graphics.getHeight() - this.playButton.getHeight() - BUTTON_GAP);
@@ -80,6 +87,7 @@ public class UIStage extends Stage {
         this.addActor(this.deathNumber);
         //this.addActor(this.timePassed);
         this.addActor(this.colorGauges);
+        this.addActor(colorFigure);
         this.addActor(this.playButton);
         this.addActor(restartButton);
         this.addActor(menuButton);

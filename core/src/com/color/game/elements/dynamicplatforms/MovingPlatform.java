@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class MovingPlatform extends BaseDynamicPlatform{
 
     private static final float MOVING_PLATFORM_VELOCITY = 1f;
+    private static final float MOVING_PLATFORM_VELOCITY_NEAR_POINT=0.5f;
 
     final private ArrayList<Vector2> points;
     private int nextPointIndex;
@@ -43,6 +44,8 @@ public class MovingPlatform extends BaseDynamicPlatform{
         this.points.add(position);
         this.points.addAll(points);
 
+        this.physicComponent.adjustFriction(1.0f);
+
         this.nextPointIndex = 0;
         this.shapeRenderer = new ShapeRenderer();
     }
@@ -59,7 +62,6 @@ public class MovingPlatform extends BaseDynamicPlatform{
             }
             ((DynamicPlatformPhysicComponent)this.getPhysicComponent()).setNextPath(points.get(nextPointIndex));
         }
-
     }
 
     @Override
@@ -121,4 +123,43 @@ public class MovingPlatform extends BaseDynamicPlatform{
 
         return xreached && yreached;
     }
+
+    //LATER
+    /*private boolean nearDestination(){
+        Vector2 lastPoint;
+        if(this.nextPointIndex == 0){
+            lastPoint = points.get(this.points.size()-1);
+        }else{
+            lastPoint = points.get(this.nextPointIndex-1);
+        }
+
+        Vector2 nextPoint = points.get(this.nextPointIndex);
+        Vector2 position = this.physicComponent.getWorldPosition();
+
+        boolean xreached = false;
+        boolean yreached = false;
+
+        if(lastPoint.x <= nextPoint.x-5){
+            if(position.x >= nextPoint.x){
+                xreached = true;
+            }
+        }
+        if(lastPoint.x >= nextPoint.x){
+            if(position.x <= nextPoint.x){
+                xreached = true;
+            }
+        }
+        if(lastPoint.y <= nextPoint.y){
+            if(position.y >= nextPoint.y){
+                yreached = true;
+            }
+        }
+        if(lastPoint.y >= nextPoint.y){
+            if(position.y <= nextPoint.y){
+                yreached = true;
+            }
+        }
+
+        return xreached && yreached;
+    }*/
 }

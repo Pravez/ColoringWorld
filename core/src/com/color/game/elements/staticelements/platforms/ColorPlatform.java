@@ -66,15 +66,37 @@ public class ColorPlatform extends BaseStaticElement implements BaseColorElement
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
-        Color c = color.getColor();
-        shapeRenderer.setColor(c.r, c.g, c.b, this.activated ? 1.0f : 0.5f);
+        if(color == ElementColor.BLACK){
+            float width = this.physicComponent.getUserData().getWidth() * WORLD_TO_SCREEN;
+            float height = this.physicComponent.getUserData().getHeight() * WORLD_TO_SCREEN;
+            float x = this.physicComponent.getBody().getPosition().x * WORLD_TO_SCREEN - width/2;
+            float y = this.physicComponent.getBody().getPosition().y * WORLD_TO_SCREEN - height/2;
 
-        float width = this.physicComponent.getUserData().getWidth() * WORLD_TO_SCREEN;
-        float height = this.physicComponent.getUserData().getHeight() * WORLD_TO_SCREEN;
-        float x = this.physicComponent.getBody().getPosition().x * WORLD_TO_SCREEN - width/2;
-        float y = this.physicComponent.getBody().getPosition().y * WORLD_TO_SCREEN - height/2;
+            shapeRenderer.setColor(Color.WHITE.r, Color.WHITE.g, Color.WHITE.b, 0.5f);
+            shapeRenderer.rect(x, y, width, height);
 
-        shapeRenderer.rect(x, y, width, height);
+            Color c = color.getColor();
+            shapeRenderer.setColor(c.r, c.g, c.b, this.activated ? 1.0f : 0.5f);
+
+            float width2 = this.physicComponent.getUserData().getWidth() * WORLD_TO_SCREEN-2;
+            float height2 = this.physicComponent.getUserData().getHeight() * WORLD_TO_SCREEN-2;
+            float x2 = this.physicComponent.getBody().getPosition().x * WORLD_TO_SCREEN - width2/2;
+            float y2 = this.physicComponent.getBody().getPosition().y * WORLD_TO_SCREEN - height2/2;
+
+            shapeRenderer.rect(x2, y2, width2, height2);
+        }else{
+
+            Color c = color.getColor();
+            shapeRenderer.setColor(c.r, c.g, c.b, this.activated ? 1.0f : 0.5f);
+
+            float width = this.physicComponent.getUserData().getWidth() * WORLD_TO_SCREEN;
+            float height = this.physicComponent.getUserData().getHeight() * WORLD_TO_SCREEN;
+            float x = this.physicComponent.getBody().getPosition().x * WORLD_TO_SCREEN - width/2;
+            float y = this.physicComponent.getBody().getPosition().y * WORLD_TO_SCREEN - height/2;
+
+            shapeRenderer.rect(x, y, width, height);
+        }
+
         shapeRenderer.end();
 
         batch.begin();

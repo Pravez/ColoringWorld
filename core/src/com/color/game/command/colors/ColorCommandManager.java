@@ -44,7 +44,7 @@ public class ColorCommandManager {
         this.blueCommand.stop();
         this.yellowCommand.stop();
 
-        this.greenCommand.stop();
+        this.purpleCommand.stop();
         this.blackCommand.stop();
         this.orangeCommand.stop();
         this.greenCommand.stop();
@@ -102,11 +102,11 @@ public class ColorCommandManager {
                 }
                 if(!orangeCommand.isPressed()){
                     character.addCommand(orangeCommand);
-                    purpleCommand.setPressed(true);
+                    orangeCommand.setPressed(true);
                 }
                 if(!greenCommand.isPressed()){
                     character.addCommand(greenCommand);
-                    purpleCommand.setPressed(true);
+                    greenCommand.setPressed(true);
                 }
             }
         }

@@ -4,12 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
 
@@ -31,7 +29,7 @@ public class MenuScreen extends BaseScreen {
         Table table = new Table();
         // Background of the MenuScreen
         this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
-        this.colorTexture = Assets.manager.get("sprites/colors.png", Texture.class);
+        //this.colorTexture = Assets.manager.get("sprites/colors.png", Texture.class);
         //table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
 
         // Title of the game

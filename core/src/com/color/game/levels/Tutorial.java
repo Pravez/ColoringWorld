@@ -37,6 +37,14 @@ public class Tutorial {
         Tutorial.texts.add("Purple magnets have to be activate by holding " + Input.Keys.toString(mapper.getKeyCode(KeyEffect.MAGNES)));
 
         Tutorial.texts.add("Let's practice a bit, welcome to your nightmare !n");
+
+        Tutorial.texts.add("Okay ! Now you know that you can activate primary colors. But, you can \n activate secondary colors.");
+        Tutorial.texts.add("The fact is that to activate them, you have to create them with your primary colors.");
+        Tutorial.texts.add("Blue and red gives you purple, blue and yellow gives you green ...");
+        Tutorial.texts.add("But be careful ! If the primary color is deactivated, every secondary color \n made with it will be deactivated");
+        //TUTORIAL NUMBER 15
+        Tutorial.texts.add("This black thing is the black platform ! You need to activate everything to be able to jump on it !");
+
     }
 
     /**

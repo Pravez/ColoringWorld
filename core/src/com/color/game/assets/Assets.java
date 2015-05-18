@@ -45,6 +45,7 @@ public class Assets {
         // Backgrounds
         manager.load("backgrounds/background0.png", Texture.class);
         manager.load("backgrounds/background1.png", Texture.class);
+        manager.load("backgrounds/white.png", Texture.class);
 
         // Fonts
         basicFont = new FileHandle("fonts/Future-Earth.ttf");

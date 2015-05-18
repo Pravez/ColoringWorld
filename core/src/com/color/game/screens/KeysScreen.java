@@ -6,12 +6,10 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.color.game.ColorGame;
@@ -33,6 +31,7 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
         super(game);
 
         Table table = new Table();
+        //table.debugAll();
         // Background of the MenuScreen
         this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
         table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
@@ -43,17 +42,20 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
         ArrayMap<KeyEffect, Key> keys = this.game.keys.getKeys();
 
         for (Key key : keys.values()) {
+            if (keys.getKey(key, true) == KeyEffect.RUN)
+                break;
             final KeyModifier keyModifier = new KeyModifier(key);
-            keyModifier.addListener(new ClickListener() {
+            keyModifier.addClickListener(new Runnable() {
                 @Override
-                public void clicked(InputEvent event, float x, float y) {
+                public void run() {
                     if (currentModifier != null && currentModifier != keyModifier)
                         currentModifier.select(false);
                     currentModifier = currentModifier == keyModifier ? null : keyModifier;
                     keyModifier.select(currentModifier == keyModifier);
+
                 }
             });
-            table.add(keyModifier).row();
+            keyModifier.addToTable(table);
         }
 
         TextButton buttonMenu = new TextButton("Menu", Assets.menuSkin);

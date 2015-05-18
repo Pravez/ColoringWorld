@@ -1,8 +1,10 @@
 package com.color.game.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -21,7 +23,8 @@ public class LevelSelectionScreen extends BaseScreen {
     public LevelSelectionScreen(final ColorGame game) {
         super(game);
         Table table = new Table();
-        // Background of the MenuScreen
+
+        // Background of the Screen
         this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
         table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
 
@@ -30,8 +33,9 @@ public class LevelSelectionScreen extends BaseScreen {
 
         int levelSize = LevelManager.getLevelCount();
         Table levelTable = new Table();
+        int size = Gdx.graphics.getWidth()/(NB_LEVEL_WIDTH + 3);
         for (int i = 0 ; i < levelSize ; i++) {
-            TextButton levelButton = new TextButton("  " + (i + 1) + "  ", Assets.menuSkin);
+            Button levelButton = new TextButton("" + (i + 1), Assets.menuSkin);
             final int level = i;
             setButtonListener(levelButton, new Runnable() {
                 @Override
@@ -40,7 +44,7 @@ public class LevelSelectionScreen extends BaseScreen {
                     game.setGameScreen();
                 }
             });
-            levelTable.add(levelButton).pad(20).width(30);
+            levelTable.add(levelButton).pad(20).height(size).width(size);
             if (i % NB_LEVEL_WIDTH == NB_LEVEL_WIDTH - 1) {
                 levelTable.row();
             }

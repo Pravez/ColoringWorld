@@ -31,7 +31,7 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
         super(game);
 
         Table table = new Table();
-        //table.debugAll();
+
         // Background of the MenuScreen
         this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
         table.setBackground(new SpriteDrawable(new Sprite(this.texture)));

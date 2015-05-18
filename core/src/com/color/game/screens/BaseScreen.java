@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.color.game.ColorGame;
@@ -84,11 +85,11 @@ class BaseScreen implements Screen, InputProcessor {
     }
 
     /**
-     * Method called to set the {@link TextButton}'s {@link ClickListener}
-     * @param button the corresponding {@link TextButton}
+     * Method called to set the {@link Button}'s {@link ClickListener}
+     * @param button the corresponding {@link Button}
      * @param runnable the {@link Runnable} called when the ClickEvent is being fired
      */
-    protected void setButtonListener(TextButton button, final Runnable runnable) {
+    protected void setButtonListener(Button button, final Runnable runnable) {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

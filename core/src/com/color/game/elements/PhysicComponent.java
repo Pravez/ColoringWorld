@@ -12,18 +12,18 @@ import com.color.game.elements.userData.UserData;
 public abstract class PhysicComponent {
 
     public static final short CATEGORY_PLAYER = 0x0001;  // 0000000000000001 in binary
-    public static final short CATEGORY_MONSTER = 0x0002; // 0000000000000010 in binary
+    public static final short CATEGORY_ENEMY = 0x0002; // 0000000000000010 in binary
     public static final short CATEGORY_SCENERY = 0x0004; // 0000000000000100 in binary
     public static final short CATEGORY_SENSOR = 0x0008; // 0000000000001000 in binary
     public static final short CATEGORY_DEAD = 0x0016; // 0000000000010000 in binary
     public static final short CATEGORY_PLATFORM = 0x0032;
 
-    public static final short MASK_PLAYER = CATEGORY_MONSTER | CATEGORY_SCENERY | CATEGORY_PLATFORM | CATEGORY_SENSOR;
-    public static final short MASK_MONSTER = CATEGORY_PLAYER | CATEGORY_SCENERY | CATEGORY_PLATFORM;
+    public static final short MASK_PLAYER = CATEGORY_ENEMY | CATEGORY_SCENERY | CATEGORY_PLATFORM | CATEGORY_SENSOR;
+    public static final short MASK_ENEMY = CATEGORY_PLAYER | CATEGORY_SCENERY | CATEGORY_PLATFORM;
     public static final short MASK_DEAD = 0;// = CATEGORY_SCENERY;
     public static final short MASK_SENSOR = CATEGORY_PLAYER;
-    public static final short MASK_SCENERY = CATEGORY_PLAYER | CATEGORY_MONSTER | CATEGORY_SCENERY;
-    public static final short MASK_PLATFORM = CATEGORY_SCENERY | CATEGORY_MONSTER | CATEGORY_PLAYER;
+    public static final short MASK_SCENERY = CATEGORY_PLAYER | CATEGORY_ENEMY | CATEGORY_SCENERY;
+    public static final short MASK_PLATFORM = CATEGORY_SCENERY | CATEGORY_ENEMY | CATEGORY_PLAYER;
 
     protected UserData userData;
     protected Body body;
@@ -59,6 +59,26 @@ public abstract class PhysicComponent {
      * @param mask Body's collision mask
      */
     public abstract void configureCircleBody(Vector2 position, int radius, World world, short category, short mask);
+
+    /**
+     * Method to move an enemy to the Player Category Collision Filtering
+     */
+    public void toPlayerCategory() {
+        Filter filter = this.body.getFixtureList().first().getFilterData();
+        filter.categoryBits = PhysicComponent.CATEGORY_PLAYER;
+        filter.maskBits = PhysicComponent.MASK_ENEMY;
+        this.body.getFixtureList().first().setFilterData(filter);
+    }
+
+    /**
+     * Method to move an enemy to the Enemy Category Collision Filtering
+     */
+    public void toEnemyCategory() {
+        Filter filter = this.body.getFixtureList().first().getFilterData();
+        filter.categoryBits = PhysicComponent.CATEGORY_ENEMY;
+        filter.maskBits = PhysicComponent.MASK_ENEMY;
+        this.body.getFixtureList().first().setFilterData(filter);
+    }
 
     /**
      * Method to enable collision with other bodies

@@ -43,7 +43,7 @@ public abstract class Enemy extends BaseDynamicElement implements BaseColorEleme
      * @param level the level of the enemy
      */
     Enemy(Vector2 position, int width, int height, Level level, ElementColor elementColor) {
-        super(position, width, height, level.getWorld(), PhysicComponent.CATEGORY_MONSTER, PhysicComponent.MASK_MONSTER);
+        super(position, width, height, level.getWorld(), PhysicComponent.CATEGORY_ENEMY, PhysicComponent.MASK_ENEMY);
         level.addEnemy(this);
         this.initialPosition = position;
 
@@ -57,7 +57,7 @@ public abstract class Enemy extends BaseDynamicElement implements BaseColorEleme
             this.color = new Color(ColorMixManager.getGDXColorFromElement(this.elementColor));
         }
 
-        this.colorActivation = true;
+        this.colorActivation = false;
 
         this.physicComponent.configureUserData(new DynamicElementUserData(this, width, height, UserDataType.ENEMY));
         this.shapeRenderer = new ShapeRenderer();
@@ -67,6 +67,7 @@ public abstract class Enemy extends BaseDynamicElement implements BaseColorEleme
      * Method called when restarting the level to reset the enemy in the level
      */
     public void respawn() {
+        this.physicComponent.toEnemyCategory();
         this.physicComponent.getBody().setActive(true);
         this.physicComponent.getBody().setTransform(this.initialPosition, 0);
         this.physicComponent.rebase();
@@ -80,7 +81,7 @@ public abstract class Enemy extends BaseDynamicElement implements BaseColorEleme
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(color.r, color.g, color.b, colorActivation ? 1f : 0.1f);
+        shapeRenderer.setColor(color.r, color.g, color.b, this.colorActivation ? 0.5f : 1f);
         shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.rect(this.getPhysicComponent().getBody().getPosition().x*WORLD_TO_SCREEN, this.getPhysicComponent().getBody().getPosition().y*WORLD_TO_SCREEN, 5,5);
@@ -132,8 +133,12 @@ public abstract class Enemy extends BaseDynamicElement implements BaseColorEleme
 
     @Override
     public void changeActivation(ElementColor color) {
-        if(this.elementColor == color) {
-            colorActivation = !colorActivation;
+        if (this.elementColor == color) {
+            this.colorActivation = !this.colorActivation;
+            if (this.colorActivation)
+                this.physicComponent.toPlayerCategory();
+            else
+                this.physicComponent.toEnemyCategory();
         }
     }
 

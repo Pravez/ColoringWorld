@@ -71,6 +71,8 @@ public class Assets {
         manager.load("sprites/ground.png", Texture.class);
         manager.load("sprites/spike.png", Texture.class);
 
+        manager.load("sprites/colors.png", Texture.class);
+
         // Levels
         //manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
         //manager.load("level1.tmx", TiledMap.class);

@@ -2,21 +2,16 @@ package com.color.game.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
 import com.color.game.levels.LevelManager;
 import com.color.game.screens.GameScreen;
-import com.uwsoft.editor.renderer.actor.SpriterActor;
 
 public class UIStage extends Stage {
 
@@ -25,10 +20,6 @@ public class UIStage extends Stage {
     //final private Label timePassed;
 
     final public Gauges colorGauges;
-
-    /** **/
-    final private ColorFigure colorFigure;
-    /** **/
 
     final private TextButton playButton;
     private static final int BUTTON_GAP = 30;
@@ -50,12 +41,7 @@ public class UIStage extends Stage {
         this.colorGauges = new Gauges(new Rectangle(20, Gdx.graphics.getHeight() - 65, 75, 50));
 
         // The Primary Colors
-        /*Image colorImage = new Image(new SpriteDrawable(new Sprite(Assets.manager.get("sprites/colors.png", Texture.class))));
-        colorImage.setBounds(this.colorGauges.getWidth() + 10, Gdx.graphics.getHeight() - 100, 180, 100);
-        this.addActor(colorImage);*/
-        /** **/
-        this.colorFigure = new ColorFigure(gameScreen, new Rectangle(this.colorGauges.getWidth() + 10, Gdx.graphics.getHeight() - 200, 100, 100));
-        /** **/
+        ColorFigure colorFigure = new ColorFigure(gameScreen, new Rectangle(this.colorGauges.getWidth() + 10, Gdx.graphics.getHeight() - 200, 100, 100));
 
         // Buttons : Play, Restart, Menu
         this.playButton = new TextButton("Pause", Assets.menuSkin);
@@ -101,7 +87,7 @@ public class UIStage extends Stage {
         this.addActor(this.deathNumber);
         //this.addActor(this.timePassed);
         this.addActor(this.colorGauges);
-        this.addActor(this.colorFigure);
+        this.addActor(colorFigure);
         this.addActor(this.playButton);
         this.addActor(restartButton);
         this.addActor(menuButton);

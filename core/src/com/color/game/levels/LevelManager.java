@@ -1,5 +1,7 @@
 package com.color.game.levels;
 
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.dynamicelements.enemies.JumpingEnemy;
@@ -90,12 +92,49 @@ public class LevelManager {
         addSeventhDebugLevel();*/
         addFirstLevel();
         addSecondLevel();
+        addSecondBisLevel();
         addThirdLevel();
         addForthLevel();
         addFifthLevel();
         addSixthLevel();
         addSeventhLevel();
         addEighthLevel();
+
+        /** **/
+        /*TiledMap map = new TiledMap();
+        TiledMapTileSet tileset =  tiledMap.getTileSets().getTileSet("Water");
+        waterTiles = new HashMap<String,TiledMapTile>();
+        for(TiledMapTile tile:tileset){
+            Object property = tile.getProperties().get("WaterFrame");
+            if(property != null)
+                waterTiles.put((String)property,tile);
+        }
+        waterCellsInScene = new ArrayList<TiledMapTileLayer.Cell>();
+        TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
+        for(int x = 0; x < layer.getWidth();x++){
+            for(int y = 0; y < layer.getHeight();y++){
+                TiledMapTileLayer.Cell cell = layer.getCell(x,y);
+                Object property = cell.getTile().getProperties().get("WaterFrame");
+                if(property != null){
+                    waterCellsInScene.add(cell);
+                }
+            }
+        }
+        private void updateWaterAnimations() {
+            for(TiledMapTileLayer.Cell cell : waterCellsInScene){
+                String property = (String) cell.getTile().getProperties().get("WaterFrame");
+                Integer currentAnimationFrame = Integer.parseInt(property);
+
+                currentAnimationFrame++;
+                if(currentAnimationFrame > waterTiles.size())
+                    currentAnimationFrame = 1;
+
+                TiledMapTile newTile = waterTiles.get(currentAnimationFrame.toString());
+                cell.setTile(newTile);
+            }
+        }*/
+        //
+        /** **/
     }
 
     private static void addFirstLevel() {
@@ -127,6 +166,37 @@ public class LevelManager {
     }
 
     private static void addSecondLevel() {
+        Level level = new Level(new Vector2(29, 1));
+        level.unlock();
+
+        // Ground & Walls
+        level.addActor(new Platform(new Vector2(20, 0), 20, 1, level));
+        level.addActor(new Platform(new Vector2(0, 1), 1, 34, level));
+        level.addActor(new Platform(new Vector2(59, 1), 1, 34, level));
+        level.addActor(new Platform(new Vector2(20, 20), 20, 1, level));
+
+        // Color platforms
+        level.addActor(new ColorPlatform(new Vector2(12, 4), 6, 1, level, PlatformColor.RED, true));
+        level.addActor(new ColorPlatform(new Vector2(9, 8), 6, 1, level, PlatformColor.RED, false));
+        level.addActor(new ColorPlatform(new Vector2(42, 12), 6, 1, level, PlatformColor.RED, true));
+
+        level.addActor(new ColorPlatform(new Vector2(42, 4), 6, 1, level, PlatformColor.BLUE, true));
+        level.addActor(new ColorPlatform(new Vector2(12, 12), 6, 1, level, PlatformColor.BLUE, true));
+        level.addActor(new ColorPlatform(new Vector2(9, 16), 6, 1, level, PlatformColor.BLUE, false));
+
+        level.addActor(new ColorPlatform(new Vector2(45, 8), 6, 1, level, PlatformColor.YELLOW, false));
+        level.addActor(new ColorPlatform(new Vector2(45, 16), 6, 1, level, PlatformColor.YELLOW, false));
+
+        // Exit
+        level.addActor(new Exit(new Vector2(29, 21), 2, 3, level.map, 2));
+
+        // Notice
+        level.addActor(new Notice(new Vector2(32, 1), 2, 2, level.map, 4));
+
+        LevelManager.levels.add(level);
+    }
+
+    private static void addSecondBisLevel() {
         Level level = new Level(new Vector2(29, 1));
         level.unlock();
 
@@ -417,35 +487,28 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(0, 0), 10, 1, level));
 
         // Color Platforms
-        int begin = 15;
-        int gap = 8;
+        int platformCount = 20;
+        int begin         = 15;
+        int gap           = 8;
+        int platformWidth = 5;
 
-        for (int x = 0 ; x < 30 ; x++ ) {
-            level.addActor(new ColorPlatform(new Vector2(begin + x * (5 + gap), 2), 5, 1, level, PlatformColor.rand(), MathUtils.randomBoolean()));
+        for (int x = 0 ; x < platformCount ; x++ ) {
+            level.addActor(new ColorPlatform(new Vector2(begin + x * (platformWidth + gap), 2), platformWidth, 1, level, PlatformColor.rand(), MathUtils.randomBoolean()));
             if (MathUtils.randomBoolean(0.7f))
-                level.addActor(new ColorPlatform(new Vector2(begin + gap + x * (5 + gap), 6), 5, 1, level, PlatformColor.rand(), MathUtils.randomBoolean()));
+                level.addActor(new ColorPlatform(new Vector2(begin + gap + x * (platformWidth + gap), 6), platformWidth, 1, level, PlatformColor.rand(), MathUtils.randomBoolean()));
             if (MathUtils.randomBoolean(0.7f))
-                level.addActor(new ColorPlatform(new Vector2(begin + x * (5 + gap), 10), 5, 1, level, PlatformColor.rand(), MathUtils.randomBoolean()));
+                level.addActor(new ColorPlatform(new Vector2(begin + x * (platformWidth + gap), 10), platformWidth, 1, level, PlatformColor.rand(), MathUtils.randomBoolean()));
             if (x > 10 && MathUtils.randomBoolean(0.2f)) {
-                level.addActor(new FallingPlatform(new Vector2(begin + 2 + x * (5 + gap), 40), 6, 1, level, true));
+                level.addActor(new FallingPlatform(new Vector2(begin + 2 + x * (platformWidth + gap), 40), 6, 1, level, true));
             }
         }
 
-        level.addActor(new Platform(new Vector2(410, 0), 1, 20, level));
-        level.addActor(new Platform(new Vector2(411, 0), 10, 1, level));
+        int afterX = begin + platformCount * (gap + platformWidth);
 
-        // Moving Platform
-        level.addActor(new MovingPlatform(new Vector2(404, 2), 5, 1, level, new Vector2(404, 20)));
-
-        // WindBlower
-        level.addActor(new WindBlower(new Vector2(402, 21), 15, 5, level.map, WindDirection.EAST));
-
-        // Deadly Platform
-        level.addActor(new DeadlyPlatform(new Vector2(418, 20), 1, 5, level));
-        level.addActor(new ColorPlatform(new Vector2(417, 20), 1, 5, level, PlatformColor.RED, false));
+        level.addActor(new Platform(new Vector2(afterX, 0), 10, 1, level));
 
         // Exit
-        level.addActor(new Exit(new Vector2(415, 1), 2, 2, level.map, 8));
+        level.addActor(new Exit(new Vector2(afterX + 5, 1), 2, 2, level.map, 8));
 
         LevelManager.levels.add(level);
     }

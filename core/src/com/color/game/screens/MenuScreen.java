@@ -2,14 +2,11 @@ package com.color.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
@@ -82,33 +79,5 @@ public class MenuScreen extends BaseScreen {
                 Gdx.app.exit();
             }
         });
-    }
-
-    /**
-     * Method called to set the {@link TextButton}'s {@link ClickListener}
-     * @param button the corresponding {@link TextButton}
-     * @param runnable the {@link Runnable} called when the ClickEvent is being fired
-     */
-    private void setButtonListener(TextButton button, final Runnable runnable) {
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.soundManager.playClickSound();
-                runnable.run();
-            }
-        });
-    }
-
-    /**
-     * Method called to render the screen
-     * @param delta the delta time since the last rendering call
-     */
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        stage.act(delta);
-        stage.draw();
     }
 }

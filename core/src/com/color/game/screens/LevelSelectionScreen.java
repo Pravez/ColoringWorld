@@ -1,11 +1,12 @@
 package com.color.game.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
 import com.color.game.levels.LevelManager;
@@ -15,11 +16,17 @@ import com.color.game.levels.LevelManager;
  */
 public class LevelSelectionScreen extends BaseScreen {
 
-    private static final int NB_LEVEL_WIDTH = 4;
+    private static final int NB_LEVEL_WIDTH = 6;
 
     public LevelSelectionScreen(final ColorGame game) {
         super(game);
         Table table = new Table();
+        // Background of the MenuScreen
+        this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
+        table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
+
+        Label title = new Label("Level Selection", new Label.LabelStyle(Assets.getBasicFont(32), new Color(142f/255, 188f/255, 224f/255, 1)));
+        table.add(title).row();
 
         int levelSize = LevelManager.getLevelCount();
         Table levelTable = new Table();
@@ -34,7 +41,7 @@ public class LevelSelectionScreen extends BaseScreen {
                 }
             });
             levelTable.add(levelButton).pad(20).width(30);
-            if (i % NB_LEVEL_WIDTH == 0 && i > 0) {
+            if (i % NB_LEVEL_WIDTH == NB_LEVEL_WIDTH - 1) {
                 levelTable.row();
             }
         }
@@ -53,33 +60,5 @@ public class LevelSelectionScreen extends BaseScreen {
 
         table.setFillParent(true);
         stage.addActor(table);
-    }
-
-    /**
-     * Method called to set the {@link TextButton}'s {@link ClickListener}
-     * @param button the corresponding {@link TextButton}
-     * @param runnable the {@link Runnable} called when the ClickEvent is being fired
-     */
-    private void setButtonListener(TextButton button, final Runnable runnable) {
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.soundManager.playClickSound();
-                runnable.run();
-            }
-        });
-    }
-
-    /**
-     * Method called to render the screen
-     * @param delta the delta time since the last rendering call
-     */
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        stage.act(delta);
-        stage.draw();
     }
 }

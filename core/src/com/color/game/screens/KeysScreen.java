@@ -3,13 +3,16 @@ package com.color.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
@@ -20,7 +23,7 @@ import com.color.game.keys.KeyModifier;
 public class KeysScreen extends BaseScreen implements InputProcessor {
 
     KeyModifier currentModifier = null;
-    Label usedMessage;
+    Label       usedMessage;
 
     /**
      * Constructor of the BaseScreen
@@ -30,6 +33,12 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
         super(game);
 
         Table table = new Table();
+        // Background of the MenuScreen
+        this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
+        table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
+
+        Label title = new Label("Key Controls", new Label.LabelStyle(Assets.getBasicFont(32), Color.WHITE));
+        table.add(title).row();
 
         ArrayMap<KeyEffect, Key> keys = this.game.keys.getKeys();
 
@@ -39,7 +48,7 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     if (currentModifier != null && currentModifier != keyModifier)
-                            currentModifier.select(false);
+                        currentModifier.select(false);
                     currentModifier = currentModifier == keyModifier ? null : keyModifier;
                     keyModifier.select(currentModifier == keyModifier);
                 }
@@ -65,32 +74,9 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
         });
     }
 
-    /**
-     * Method called to set the {@link TextButton}'s {@link ClickListener}
-     * @param button the corresponding {@link TextButton}
-     * @param runnable the {@link Runnable} called when the ClickEvent is being fired
-     */
-    private void setButtonListener(TextButton button, final Runnable runnable) {
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.soundManager.playClickSound();
-                runnable.run();
-            }
-        });
-    }
-
-    /**
-     * Method called to render the screen
-     * @param delta the delta time since the last rendering call
-     */
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        stage.act(delta);
-        stage.draw();
+    private void endCurrentModifier() {
+        this.currentModifier.select(false);
+        this.currentModifier = null;
     }
 
     @Override
@@ -98,8 +84,7 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
         Gdx.input.setInputProcessor(new InputMultiplexer(this.stage, this));
         this.usedMessage.addAction(Actions.alpha(0));
         if (this.currentModifier != null) {
-            this.currentModifier.select(false);
-            this.currentModifier = null;
+            endCurrentModifier();
         }
     }
 
@@ -110,28 +95,8 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
                 this.currentModifier.changeKeyCode(keycode);
             else
                 this.usedMessage.addAction(Actions.sequence(Actions.alpha(1), Actions.delay(1), Actions.fadeOut(1)));
+            endCurrentModifier();
         }
         return false;
     }
-
-    @Override
-    public boolean keyUp(int keycode) { return false; }
-
-    @Override
-    public boolean keyTyped(char character) { return false; }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) { return false; }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) { return false; }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) { return false; }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) { return false; }
-
-    @Override
-    public boolean scrolled(int amount) { return false; }
 }

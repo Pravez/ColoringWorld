@@ -1,7 +1,7 @@
 package com.color.game.gui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,7 +17,7 @@ public class UIStage extends Stage {
 
     final private Label levelNumber;
     final private Label deathNumber;
-    final private Label timePassed;
+    //final private Label timePassed;
 
     final public Gauges colorGauges;
 
@@ -26,14 +26,14 @@ public class UIStage extends Stage {
     private static final double TIME_PRECISION = 10.0;
 
     public UIStage(final GameScreen gameScreen) {
-        this.levelNumber = new Label("Level " + (LevelManager.getCurrentLevelNumber() + 1), Assets.menuSkin);
+        this.levelNumber = new Label("Level " + (LevelManager.getCurrentLevelNumber() + 1), new Label.LabelStyle(Assets.getBasicFont(32), Color.WHITE));
         this.levelNumber.setPosition((Gdx.graphics.getWidth() - this.levelNumber.getWidth())/2, Gdx.graphics.getHeight() - this.levelNumber.getHeight());
 
-        this.deathNumber = new Label(LevelManager.getCurrentLevel().getDeaths() + " deaths", Assets.menuSkin);
+        this.deathNumber = new Label(LevelManager.getCurrentLevel().getDeaths() + " death", Assets.menuSkin);
         this.deathNumber.setPosition((Gdx.graphics.getWidth() - this.deathNumber.getWidth())/2, this.levelNumber.getY() - this.deathNumber.getHeight());
 
-        this.timePassed = new Label("-- " + LevelManager.getCurrentLevel().getTime() + " --", Assets.menuSkin);
-        this.timePassed.setPosition((Gdx.graphics.getWidth() - this.timePassed.getWidth())/2, this.deathNumber.getY() - this.timePassed.getHeight());
+        //this.timePassed = new Label("-- " + LevelManager.getCurrentLevel().getTime() + " --", Assets.menuSkin);
+        //this.timePassed.setPosition((Gdx.graphics.getWidth() - this.timePassed.getWidth())/2, this.deathNumber.getY() - this.timePassed.getHeight());
 
         this.colorGauges = new Gauges(new Rectangle(20, Gdx.graphics.getHeight() - 65, 75, 50));
 
@@ -56,7 +56,7 @@ public class UIStage extends Stage {
 
         TextButton restartButton = new TextButton("Restart", Assets.menuSkin);
         restartButton.setPosition(Gdx.graphics.getWidth() - restartButton.getWidth() - BUTTON_GAP,
-                this.playButton.getY() - restartButton.getHeight() - BUTTON_GAP / 2);
+                this.playButton.getY() - restartButton.getHeight() - BUTTON_GAP/2);
 
         restartButton.addListener(new ClickListener() {
             @Override
@@ -67,7 +67,7 @@ public class UIStage extends Stage {
 
         TextButton menuButton = new TextButton("Menu", Assets.menuSkin);
         menuButton.setPosition(Gdx.graphics.getWidth() - menuButton.getWidth() - BUTTON_GAP,
-                restartButton.getY() - menuButton.getHeight() - BUTTON_GAP / 3);
+                restartButton.getY() - menuButton.getHeight() - BUTTON_GAP/2);
 
         menuButton.addListener(new ClickListener() {
             @Override
@@ -78,7 +78,7 @@ public class UIStage extends Stage {
 
         this.addActor(this.levelNumber);
         this.addActor(this.deathNumber);
-        this.addActor(this.timePassed);
+        //this.addActor(this.timePassed);
         this.addActor(this.colorGauges);
         this.addActor(this.playButton);
         this.addActor(restartButton);
@@ -95,24 +95,25 @@ public class UIStage extends Stage {
     public void changeLevelNumber() {
         this.levelNumber.setText("Level " + (LevelManager.getCurrentLevelNumber() + 1));
         changeDeathNumber();
-        changeTimePassed();
+        //changeTimePassed();
     }
 
     public void changeDeathNumber() {
-        this.deathNumber.setText(LevelManager.getCurrentLevel().getDeaths() + " deaths");
+        int deaths = LevelManager.getCurrentLevel().getDeaths();
+        this.deathNumber.setText(deaths + (deaths < 2 ? " death" : " deaths"));
         this.deathNumber.pack();
         this.deathNumber.setPosition((Gdx.graphics.getWidth() - this.deathNumber.getWidth())/2, this.levelNumber.getY() - this.deathNumber.getHeight());
     }
 
-    public void changeTimePassed() {
+    /*public void changeTimePassed() {
         this.timePassed.setText("-- " + Math.round(LevelManager.getCurrentLevel().getTime()*TIME_PRECISION)/TIME_PRECISION + " --");
         this.timePassed.pack();
         this.timePassed.setX((Gdx.graphics.getWidth() - this.timePassed.getWidth()) / 2);
-    }
+    }*/
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        changeTimePassed();
+        //changeTimePassed();
     }
 }

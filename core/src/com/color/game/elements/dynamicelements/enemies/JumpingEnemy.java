@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.color.game.command.elements.EndJumpCommand;
 import com.color.game.command.elements.StartJumpCommand;
 import com.color.game.elements.dynamicelements.states.LandedState;
+import com.color.game.elements.staticelements.platforms.ElementColor;
 import com.color.game.elements.userData.UserData;
 import com.color.game.levels.Level;
 
@@ -17,8 +18,8 @@ public class JumpingEnemy extends MovingEnemy{
 
     private final Array<Body> bodies;
 
-    public JumpingEnemy(Vector2 position, int width, int height, Level level, boolean canFall) {
-        super(position, width, height, level, canFall);
+    public JumpingEnemy(Vector2 position, int width, int height, Level level, boolean canFall, ElementColor color) {
+        super(position, width, height, level, canFall, color);
 
         Array<Body> tempbodies = new Array<>();
         bodies = new Array<>();

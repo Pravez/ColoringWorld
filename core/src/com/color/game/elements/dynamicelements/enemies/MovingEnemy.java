@@ -9,6 +9,7 @@ import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
 import com.color.game.elements.dynamicplatforms.BaseDynamicPlatform;
 import com.color.game.elements.staticelements.BaseStaticElement;
+import com.color.game.elements.staticelements.platforms.ElementColor;
 import com.color.game.elements.userData.UserData;
 import com.color.game.elements.userData.UserDataType;
 import com.color.game.levels.Level;
@@ -39,8 +40,8 @@ public class MovingEnemy extends Enemy {
      * @param level the level of the enemy
      * @param canFall if the enemy can fall from a platform or not
      */
-    public MovingEnemy(Vector2 position, int width, int height, Level level, boolean canFall) {
-        super(position, width, height, level);
+    public MovingEnemy(Vector2 position, int width, int height, Level level, boolean canFall, ElementColor color) {
+        super(position, width, height, level, color);
         this.physicComponent.getBody().setAwake(true);
         this.physicComponent.getBody().setActive(true);
         this.canFall = canFall;

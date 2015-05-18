@@ -1,6 +1,7 @@
 package com.color.game.elements.dynamicelements.enemies;
 
 import com.badlogic.gdx.math.Vector2;
+import com.color.game.elements.staticelements.platforms.ElementColor;
 import com.color.game.levels.Level;
 
 /**
@@ -17,8 +18,8 @@ public abstract class BaseBoss extends Enemy {
      * @param height   the height of the enemy
      * @param level    the level of the enemy
      */
-    public BaseBoss(Vector2 position, int width, int height, Level level) {
-        super(position, width, height, level);
+    public BaseBoss(Vector2 position, int width, int height, Level level, ElementColor color) {
+        super(position, width, height, level, color);
         this.level = level;
     }
 }

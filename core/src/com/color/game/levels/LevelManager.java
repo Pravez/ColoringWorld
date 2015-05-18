@@ -1,10 +1,7 @@
 package com.color.game.levels;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.color.game.elements.dynamicelements.enemies.JumpingEnemy;
 import com.color.game.elements.dynamicelements.enemies.MovingEnemy;
 import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.dynamicplatforms.MovingPlatform;
@@ -83,14 +80,14 @@ public class LevelManager {
      */
     public static void init() {
         levels = new ArrayList<>();
-        /*addFirstDebugLevel();
+        addFirstDebugLevel();
         addSecondDebugLevel();
         addThirdDebugLevel();
         addForthDebugLevel();
         addFifthDebugLevel();
         addSixthDebugLevel();
-        addSeventhDebugLevel();*/
-        addFirstLevel();
+        addSeventhDebugLevel();
+        /*addFirstLevel();
         addSecondLevel();
         addSecondBisLevel();
         addThirdLevel();
@@ -98,7 +95,7 @@ public class LevelManager {
         addFifthLevel();
         addSixthLevel();
         addSeventhLevel();
-        addEighthLevel();
+        addEighthLevel();*/
 
         /** **/
         /*TiledMap map = new TiledMap();
@@ -149,9 +146,9 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(49, 16), 10, 1, level));
 
         // Color platforms
-        level.addActor(new ColorPlatform(new Vector2(12, 4), 10, 1, level, PlatformColor.RED, false));
-        level.addActor(new ColorPlatform(new Vector2(24, 8), 10, 1, level, PlatformColor.YELLOW, false));
-        level.addActor(new ColorPlatform(new Vector2(36, 12), 10, 1, level, PlatformColor.BLUE, false));
+        level.addActor(new ColorPlatform(new Vector2(12, 4), 10, 1, level, ElementColor.RED, false));
+        level.addActor(new ColorPlatform(new Vector2(24, 8), 10, 1, level, ElementColor.YELLOW, false));
+        level.addActor(new ColorPlatform(new Vector2(36, 12), 10, 1, level, ElementColor.BLUE, false));
 
         // Exit
         level.addActor(new Exit(new Vector2(58, 17), 1, 3, level.map, 1));
@@ -176,16 +173,16 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(20, 20), 20, 1, level));
 
         // Color platforms
-        level.addActor(new ColorPlatform(new Vector2(12, 4), 6, 1, level, PlatformColor.RED, true));
-        level.addActor(new ColorPlatform(new Vector2(9, 8), 6, 1, level, PlatformColor.RED, false));
-        level.addActor(new ColorPlatform(new Vector2(42, 12), 6, 1, level, PlatformColor.RED, true));
+        level.addActor(new ColorPlatform(new Vector2(12, 4), 6, 1, level, ElementColor.RED, true));
+        level.addActor(new ColorPlatform(new Vector2(9, 8), 6, 1, level, ElementColor.RED, false));
+        level.addActor(new ColorPlatform(new Vector2(42, 12), 6, 1, level, ElementColor.RED, true));
 
-        level.addActor(new ColorPlatform(new Vector2(42, 4), 6, 1, level, PlatformColor.BLUE, true));
-        level.addActor(new ColorPlatform(new Vector2(12, 12), 6, 1, level, PlatformColor.BLUE, true));
-        level.addActor(new ColorPlatform(new Vector2(9, 16), 6, 1, level, PlatformColor.BLUE, false));
+        level.addActor(new ColorPlatform(new Vector2(42, 4), 6, 1, level, ElementColor.BLUE, true));
+        level.addActor(new ColorPlatform(new Vector2(12, 12), 6, 1, level, ElementColor.BLUE, true));
+        level.addActor(new ColorPlatform(new Vector2(9, 16), 6, 1, level, ElementColor.BLUE, false));
 
-        level.addActor(new ColorPlatform(new Vector2(45, 8), 6, 1, level, PlatformColor.YELLOW, false));
-        level.addActor(new ColorPlatform(new Vector2(45, 16), 6, 1, level, PlatformColor.YELLOW, false));
+        level.addActor(new ColorPlatform(new Vector2(45, 8), 6, 1, level, ElementColor.YELLOW, false));
+        level.addActor(new ColorPlatform(new Vector2(45, 16), 6, 1, level, ElementColor.YELLOW, false));
 
         // Exit
         level.addActor(new Exit(new Vector2(29, 21), 2, 3, level.map, 2));
@@ -207,16 +204,16 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(20, 20), 20, 1, level));
 
         // Color platforms
-        level.addActor(new ColorPlatform(new Vector2(12, 4), 6, 1, level, PlatformColor.RED, true));
-        level.addActor(new ColorPlatform(new Vector2(9, 8), 6, 1, level, PlatformColor.RED, false));
-        level.addActor(new ColorPlatform(new Vector2(42, 12), 6, 1, level, PlatformColor.RED, true));
+        level.addActor(new ColorPlatform(new Vector2(12, 4), 6, 1, level, ElementColor.RED, true));
+        level.addActor(new ColorPlatform(new Vector2(9, 8), 6, 1, level, ElementColor.RED, false));
+        level.addActor(new ColorPlatform(new Vector2(42, 12), 6, 1, level, ElementColor.RED, true));
 
-        level.addActor(new ColorPlatform(new Vector2(42, 4), 6, 1, level, PlatformColor.BLUE, true));
-        level.addActor(new ColorPlatform(new Vector2(12, 12), 6, 1, level, PlatformColor.BLUE, true));
-        level.addActor(new ColorPlatform(new Vector2(9, 16), 6, 1, level, PlatformColor.BLUE, false));
+        level.addActor(new ColorPlatform(new Vector2(42, 4), 6, 1, level, ElementColor.BLUE, true));
+        level.addActor(new ColorPlatform(new Vector2(12, 12), 6, 1, level, ElementColor.BLUE, true));
+        level.addActor(new ColorPlatform(new Vector2(9, 16), 6, 1, level, ElementColor.BLUE, false));
 
-        level.addActor(new ColorPlatform(new Vector2(45, 8), 6, 1, level, PlatformColor.YELLOW, false));
-        level.addActor(new ColorPlatform(new Vector2(45, 16), 6, 1, level, PlatformColor.YELLOW, false));
+        level.addActor(new ColorPlatform(new Vector2(45, 8), 6, 1, level, ElementColor.YELLOW, false));
+        level.addActor(new ColorPlatform(new Vector2(45, 16), 6, 1, level, ElementColor.YELLOW, false));
 
         // Exit
         level.addActor(new Exit(new Vector2(29, 21), 2, 3, level.map, 2));
@@ -287,8 +284,8 @@ public class LevelManager {
         level.addActor(new WindBlower(new Vector2(29, 9), 10, 10, level.map, WindDirection.WEST));
 
         // Color platform
-        level.addActor(new ColorPlatform(new Vector2(26, 27), 6, 1, level, PlatformColor.BLUE, true));
-        level.addActor(new ColorPlatform(new Vector2(29, 17), 1, 10, level, PlatformColor.BLUE, true));
+        level.addActor(new ColorPlatform(new Vector2(26, 27), 6, 1, level, ElementColor.BLUE, true));
+        level.addActor(new ColorPlatform(new Vector2(29, 17), 1, 10, level, ElementColor.BLUE, true));
 
         // Deadly platform
         level.addActor(new DeadlyPlatform(new Vector2(12, 8), 27, 1, level));
@@ -321,9 +318,9 @@ public class LevelManager {
         level.addActor(new Magnes(new Vector2(45, 2), 16, level.map));
 
         // ColorPlatforms
-        level.addActor(new ColorPlatform(new Vector2(30, 28), 5, 1, level, PlatformColor.BLUE, true));
-        level.addActor(new ColorPlatform(new Vector2(30, 24), 5, 1, level, PlatformColor.BLUE, false));
-        level.addActor(new ColorPlatform(new Vector2(30, 20), 5, 1, level, PlatformColor.BLUE, true));
+        level.addActor(new ColorPlatform(new Vector2(30, 28), 5, 1, level, ElementColor.BLUE, true));
+        level.addActor(new ColorPlatform(new Vector2(30, 24), 5, 1, level, ElementColor.BLUE, false));
+        level.addActor(new ColorPlatform(new Vector2(30, 20), 5, 1, level, ElementColor.BLUE, true));
 
         // Falling platforms
         level.addActor(new FallingPlatform(new Vector2(55, 13), 5, 1, level, true));
@@ -392,12 +389,12 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(35,81), 1, 1, level));
 
         //Colored platforms
-        level.addActor(new ColorPlatform(new Vector2(20,20),10,1,level, PlatformColor.BLUE, false));
-        level.addActor(new ColorPlatform(new Vector2(20,40),10,1,level, PlatformColor.RED, false));
-        level.addActor(new ColorPlatform(new Vector2(20,60),10,1,level, PlatformColor.YELLOW, false));
+        level.addActor(new ColorPlatform(new Vector2(20,20),10,1,level, ElementColor.BLUE, false));
+        level.addActor(new ColorPlatform(new Vector2(20,40),10,1,level, ElementColor.RED, false));
+        level.addActor(new ColorPlatform(new Vector2(20,60),10,1,level, ElementColor.YELLOW, false));
 
-        level.addActor(new ColorPlatform(new Vector2(163, 29),5,1,level,PlatformColor.BLUE,true));
-        level.addActor(new ColorPlatform(new Vector2(163,34),5,1,level,PlatformColor.BLUE,false));
+        level.addActor(new ColorPlatform(new Vector2(163, 29),5,1,level,ElementColor.BLUE,true));
+        level.addActor(new ColorPlatform(new Vector2(163,34),5,1,level,ElementColor.BLUE,false));
 
         //Teleporters
         level.addActor(new Teleporter(new Vector2(25,1), 2,2,level.map, new Vector2(25, 80)));
@@ -439,12 +436,12 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(50,0), 1, 100, level));
 
         //Colored platforms
-        level.addActor(new ColorPlatform(new Vector2(1,10), 5,1, level, PlatformColor.RED, true));
-        level.addActor(new ColorPlatform(new Vector2(45,12), 5,1, level, PlatformColor.RED, false));
-        level.addActor(new ColorPlatform(new Vector2(45,15), 5,1, level, PlatformColor.BLUE, true));
-        level.addActor(new ColorPlatform(new Vector2(1,22), 5,1, level, PlatformColor.BLUE, true));
-        level.addActor(new ColorPlatform(new Vector2(1,26), 5,1, level, PlatformColor.BLUE, false));
-        level.addActor(new ColorPlatform(new Vector2(1,30), 5,1, level, PlatformColor.RED, true));
+        level.addActor(new ColorPlatform(new Vector2(1,10), 5,1, level, ElementColor.RED, true));
+        level.addActor(new ColorPlatform(new Vector2(45,12), 5,1, level, ElementColor.RED, false));
+        level.addActor(new ColorPlatform(new Vector2(45,15), 5,1, level, ElementColor.BLUE, true));
+        level.addActor(new ColorPlatform(new Vector2(1,22), 5,1, level, ElementColor.BLUE, true));
+        level.addActor(new ColorPlatform(new Vector2(1,26), 5,1, level, ElementColor.BLUE, false));
+        level.addActor(new ColorPlatform(new Vector2(1,30), 5,1, level, ElementColor.RED, true));
 
 
         //Falling platforms
@@ -493,11 +490,11 @@ public class LevelManager {
         int platformWidth = 5;
 
         for (int x = 0 ; x < platformCount ; x++ ) {
-            level.addActor(new ColorPlatform(new Vector2(begin + x * (platformWidth + gap), 2), platformWidth, 1, level, PlatformColor.rand(), MathUtils.randomBoolean()));
+            level.addActor(new ColorPlatform(new Vector2(begin + x * (platformWidth + gap), 2), platformWidth, 1, level, ElementColor.rand(), MathUtils.randomBoolean()));
             if (MathUtils.randomBoolean(0.7f))
-                level.addActor(new ColorPlatform(new Vector2(begin + gap + x * (platformWidth + gap), 6), platformWidth, 1, level, PlatformColor.rand(), MathUtils.randomBoolean()));
+                level.addActor(new ColorPlatform(new Vector2(begin + gap + x * (platformWidth + gap), 6), platformWidth, 1, level, ElementColor.rand(), MathUtils.randomBoolean()));
             if (MathUtils.randomBoolean(0.7f))
-                level.addActor(new ColorPlatform(new Vector2(begin + x * (platformWidth + gap), 10), platformWidth, 1, level, PlatformColor.rand(), MathUtils.randomBoolean()));
+                level.addActor(new ColorPlatform(new Vector2(begin + x * (platformWidth + gap), 10), platformWidth, 1, level, ElementColor.rand(), MathUtils.randomBoolean()));
             if (x > 10 && MathUtils.randomBoolean(0.2f)) {
                 level.addActor(new FallingPlatform(new Vector2(begin + 2 + x * (platformWidth + gap), 40), 6, 1, level, true));
             }
@@ -529,9 +526,9 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(90, 1), 1, 32, level));
 
         // Color Platforms
-        level.addActor(new ColorPlatform(new Vector2(17, 4), 5, 1, level, PlatformColor.RED, false));
-        level.addActor(new ColorPlatform(new Vector2(42, 4), 5, 1, level, PlatformColor.YELLOW, false));
-        level.addActor(new ColorPlatform(new Vector2(67, 4), 5, 1, level, PlatformColor.BLUE, false));
+        level.addActor(new ColorPlatform(new Vector2(17, 4), 5, 1, level, ElementColor.RED, false));
+        level.addActor(new ColorPlatform(new Vector2(42, 4), 5, 1, level, ElementColor.YELLOW, false));
+        level.addActor(new ColorPlatform(new Vector2(67, 4), 5, 1, level, ElementColor.BLUE, false));
 
         // Notices
         level.addActor(new Notice(new Vector2(4, 1), 3, 3, level.map, 0));
@@ -556,12 +553,12 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(100, 1), 1, 32, level));
 
         // Color Platforms
-        level.addActor(new ColorPlatform(new Vector2(17, 4), 5, 1, level, PlatformColor.RED, false));
-        level.addActor(new ColorPlatform(new Vector2(25, 0), 16, 1, level, PlatformColor.RED, true));
-        level.addActor(new ColorPlatform(new Vector2(42, 4), 5, 1, level, PlatformColor.YELLOW, false));
-        level.addActor(new ColorPlatform(new Vector2(50, 0), 16, 1, level, PlatformColor.YELLOW, true));
-        level.addActor(new ColorPlatform(new Vector2(67, 4), 5, 1, level, PlatformColor.BLUE, false));
-        level.addActor(new ColorPlatform(new Vector2(75, 0), 10, 1, level, PlatformColor.BLUE, true));
+        level.addActor(new ColorPlatform(new Vector2(17, 4), 5, 1, level, ElementColor.RED, false));
+        level.addActor(new ColorPlatform(new Vector2(25, 0), 16, 1, level, ElementColor.RED, true));
+        level.addActor(new ColorPlatform(new Vector2(42, 4), 5, 1, level, ElementColor.YELLOW, false));
+        level.addActor(new ColorPlatform(new Vector2(50, 0), 16, 1, level, ElementColor.YELLOW, true));
+        level.addActor(new ColorPlatform(new Vector2(67, 4), 5, 1, level, ElementColor.BLUE, false));
+        level.addActor(new ColorPlatform(new Vector2(75, 0), 10, 1, level, ElementColor.BLUE, true));
 
         // Exit
         level.addActor(new Exit(new Vector2(99, 1), 1, 3, level.map, 2));
@@ -668,15 +665,15 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(105,6),25,1,level));
 
         // Falling platforms
-        //level.addActor(new ColorFallingPlatform(new Vector2(15, 20), 10, 2, level, PlatformColor.RED, true));
-        //level.addActor(new ColorFallingPlatform(new Vector2(10, 8), 5, 1, level, PlatformColor.BLUE, false));
+        //level.addActor(new ColorFallingPlatform(new Vector2(15, 20), 10, 2, level, ElementColor.RED, true));
+        //level.addActor(new ColorFallingPlatform(new Vector2(10, 8), 5, 1, level, ElementColor.BLUE, false));
         level.addActor(new FallingPlatform(new Vector2(15, 20), 10, 1, level, true));
         level.addActor(new FallingPlatform(new Vector2(32, 20), 10, 1, level, true));
 
         // Enemies
-        level.addActor(new MovingEnemy(new Vector2(53, 1), 2, 2, level, true));
-        level.addActor(new JumpingEnemy(new Vector2(85, 1), 2, 2, level, true));
-        level.addActor(new MovingEnemy(new Vector2(60, 7), 2, 2, level, false));
+        level.addActor(new MovingEnemy(new Vector2(53, 1), 2, 2, level, true, null));
+        level.addActor(new MovingEnemy(new Vector2(85, 1), 2, 2, level, true, null));
+        level.addActor(new MovingEnemy(new Vector2(60, 7), 2, 2, level, false, null));
 
         //Moving platforms
         ArrayList<Vector2> v = new ArrayList<>();
@@ -706,9 +703,9 @@ public class LevelManager {
 
 
         //level.addActor(new JumpingEnemy(new Vector2(20, 1), 2, 2, level, true));
-        level.addActor(new MovingEnemy(new Vector2(30, 1), 2, 2, level, false));
+        level.addActor(new MovingEnemy(new Vector2(30, 1), 2, 2, level, false, null));
 
-        level.addActor(new BouncingColorPlatform(new Vector2(5,3), 5,1,level, PlatformColor.BLUE, false));
+        level.addActor(new BouncingColorPlatform(new Vector2(5,3), 5,1,level, ElementColor.BLUE, false));
 
         level.addActor(new Exit(new Vector2(48, 1), 1, 3, level.map, 6));
 

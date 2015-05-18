@@ -64,6 +64,29 @@ public class ColorMixManager {
         return ElementColor.BLACK;
     }
 
+    public static Color getGDXColorFromElement(ElementColor elementColor){
+        if(Objects.equals(elementColor.getElementColor(), ElementColor.BLUE)){
+            return Color.BLUE;
+        }
+        if(Objects.equals(elementColor.getElementColor(), ElementColor.RED)){
+            return Color.RED;
+        }
+        if(Objects.equals(elementColor.getElementColor(), ElementColor.YELLOW)){
+            return Color.YELLOW;
+        }
+        if(Objects.equals(elementColor.getElementColor(), ElementColor.PURPLE)){
+            return Color.PURPLE;
+        }
+        if(Objects.equals(elementColor.getElementColor(), ElementColor.ORANGE)){
+            return Color.ORANGE;
+        }
+        if(Objects.equals(elementColor.getElementColor(), ElementColor.GREEN)){
+            return Color.GREEN;
+        }
+
+        return Color.BLACK;
+    }
+
     public static Color randomizeRYBColor(){
         ArrayList<Color> colors = new ArrayList<>();
         colors.add(Color.BLUE);

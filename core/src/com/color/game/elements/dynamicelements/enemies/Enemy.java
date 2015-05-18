@@ -42,17 +42,22 @@ public abstract class Enemy extends BaseDynamicElement implements BaseColorEleme
      * @param height the height of the enemy
      * @param level the level of the enemy
      */
-    Enemy(Vector2 position, int width, int height, Level level) {
+    Enemy(Vector2 position, int width, int height, Level level, ElementColor elementColor) {
         super(position, width, height, level.getWorld(), PhysicComponent.CATEGORY_MONSTER, PhysicComponent.MASK_MONSTER);
         level.addEnemy(this);
         this.initialPosition = position;
 
         level.addColorElement(this);
 
-        color = new Color(ColorMixManager.randomizeRYBColor());
-        elementColor = ColorMixManager.getElementColorFromGDX(color);
-        colorActivation = false;
+        if(elementColor == null) {
+            this.color = new Color(ColorMixManager.randomizeRYBColor());
+            this.elementColor = ColorMixManager.getElementColorFromGDX(color);
+        }else{
+            this.elementColor = elementColor;
+            this.color = new Color(ColorMixManager.getGDXColorFromElement(this.elementColor));
+        }
 
+        this.colorActivation = true;
 
         this.physicComponent.configureUserData(new DynamicElementUserData(this, width, height, UserDataType.ENEMY));
         this.shapeRenderer = new ShapeRenderer();

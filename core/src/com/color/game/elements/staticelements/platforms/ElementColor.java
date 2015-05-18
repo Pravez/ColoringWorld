@@ -43,24 +43,6 @@ public enum ElementColor {
         return new Color();
     }
 
-    public static ElementColor getElementColor(Color color) {
-        if (color == Color.RED)
-            return ElementColor.RED;
-        if (color == Color.BLUE)
-            return ElementColor.BLUE;
-        if (color == Color.YELLOW)
-            return ElementColor.YELLOW;
-        if (color == Color.GREEN)
-            return ElementColor.GREEN;
-        if (color == Color.ORANGE)
-            return ElementColor.ORANGE;
-        if (color == Color.PURPLE)
-            return ElementColor.PURPLE;
-        if(color == Color.BLACK)
-            return ElementColor.BLACK;
-        return null;
-    }
-
     public ElementColor next() {
         switch(this) {
             case RED:
@@ -71,5 +53,9 @@ public enum ElementColor {
                 return ElementColor.RED;
         }
         return ElementColor.RED;
+    }
+
+    public ElementColor getElementColor(){
+        return this;
     }
 }

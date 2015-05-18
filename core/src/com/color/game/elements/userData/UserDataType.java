@@ -4,7 +4,7 @@ package com.color.game.elements.userData;
 public enum UserDataType {
 
     SENSOR,
-    MAGNES,
+    COLOREDMAGNET,
     EXIT,
     PLATFORM,
     CHARACTER,

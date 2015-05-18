@@ -313,9 +313,9 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(85, 0), 1, 15, level));
         level.addActor(new Platform(new Vector2(41, 14), 44, 1, level));
 
-        // Magnes & Magnet
+        // ColoredMagnet & Magnet
         level.addActor(new Magnet(new Vector2(24, 36), 6, level.map));
-        level.addActor(new Magnes(new Vector2(45, 2), 16, level.map));
+        level.addActor(new ColoredMagnet(new Vector2(45, 2), 16, level));
 
         // ColorPlatforms
         level.addActor(new ColorPlatform(new Vector2(30, 28), 5, 1, level, ElementColor.BLUE, true));
@@ -463,7 +463,7 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(15,60),20,1,level));
 
         //Sensors
-        level.addActor(new Magnes(new Vector2(4,35), 7, level.map));
+        level.addActor(new ColoredMagnet(new Vector2(4,35), 7, level));
         level.addActor(new Teleporter(new Vector2(48,41), 2,2,level.map, new Vector2(7, 70)));
 
         //Exit
@@ -529,6 +529,8 @@ public class LevelManager {
         level.addActor(new ColorPlatform(new Vector2(17, 4), 5, 1, level, ElementColor.RED, false));
         level.addActor(new ColorPlatform(new Vector2(42, 4), 5, 1, level, ElementColor.YELLOW, false));
         level.addActor(new ColorPlatform(new Vector2(67, 4), 5, 1, level, ElementColor.BLUE, false));
+
+        level.addActor(new ColoredMagnet(new Vector2(10,5), 10, level));
 
         // Notices
         level.addActor(new Notice(new Vector2(4, 1), 3, 3, level.map, 0));
@@ -642,7 +644,7 @@ public class LevelManager {
         levels.add(level);
     }
 
-    // Magnes & Magnet
+    // ColoredMagnet & Magnet
     private static void addSixthDebugLevel() {
         Level level = new Level(new Vector2(4, 1));
         level.unlock();

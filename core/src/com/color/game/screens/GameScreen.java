@@ -18,7 +18,7 @@ import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.staticelements.Exit;
-import com.color.game.elements.staticelements.sensors.Magnes;
+import com.color.game.elements.staticelements.sensors.ColoredMagnet;
 import com.color.game.elements.staticelements.sensors.Sensor;
 import com.color.game.elements.userData.UserData;
 import com.color.game.gui.ColorGauge;
@@ -59,7 +59,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
     public boolean restart = false;
 
-    private Magnes currentMagnes;
+    private ColoredMagnet currentColoredMagnet;
     private boolean magnetKeyPressed;
 
     /**
@@ -292,8 +292,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
         if (Gdx.input.isKeyJustPressed(this.game.keys.getKeyCode(KeyEffect.MAGNES))) {
             this.magnetKeyPressed = true;
-            if (this.currentMagnes != null) {
-                this.currentMagnes.act(character);
+            if (this.currentColoredMagnet != null) {
+                this.currentColoredMagnet.act(character);
             }
         }
 
@@ -411,8 +411,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
         if (keycode == this.game.keys.getKeyCode(KeyEffect.MAGNES)) {
             this.magnetKeyPressed = false;
-            if (this.currentMagnes != null) {
-                this.currentMagnes.endAct();
+            if (this.currentColoredMagnet != null) {
+                this.currentColoredMagnet.endAct();
             }
         }
         if(keycode == this.game.keys.getKeyCode(KeyEffect.LEFT) || keycode == this.game.keys.getKeyCode(KeyEffect.RIGHT)){
@@ -491,12 +491,10 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             });
         }
 
-        // Magnes
-        if (UserData.isMagnes(b.getBody()) && UserData.isCharacter(a.getBody())) {
-            this.currentMagnes = (Magnes)((UserData)b.getBody().getUserData()).getElement();
-            if (this.magnetKeyPressed)
-                this.currentMagnes.act(character);
-        }
+        // ColoredMagnet
+       /* if (UserData.isColoredMagnet(b.getBody()) && UserData.isCharacter(a.getBody())) {
+            this.currentColoredMagnet = (ColoredMagnet)((UserData)b.getBody().getUserData()).getElement();
+        }*/
     }
 
     @Override
@@ -511,14 +509,16 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             ((Sensor)((UserData)b.getBody().getUserData()).getElement()).endAct();
         }
 
-        // Magnes
-        if (UserData.isMagnes(b.getBody()) && UserData.isCharacter(a.getBody())) {
-            this.currentMagnes = null;
-        }
+        // ColoredMagnet
+      /*  if (UserData.isColoredMagnet(b.getBody()) && UserData.isCharacter(a.getBody())) {
+            this.currentColoredMagnet = null;
+        }*/
     }
 
     @Override
-    public void preSolve(Contact contact, Manifold manifold) { }
+    public void preSolve(Contact contact, Manifold manifold) {
+
+    }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse contactImpulse) { }

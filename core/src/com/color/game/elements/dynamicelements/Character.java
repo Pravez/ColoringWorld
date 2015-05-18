@@ -18,6 +18,7 @@ import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
 import com.color.game.elements.dynamicelements.states.StandingState;
 import com.color.game.elements.dynamicelements.states.WalkingState;
+import com.color.game.elements.staticelements.sensors.ColoredMagnet;
 import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.UserData;
 import com.color.game.elements.userData.UserDataType;
@@ -186,6 +187,9 @@ public class Character extends BaseDynamicElement {
         }
         if (UserData.isExit(touched)) {
             gameScreen.reachExit(touched);
+        }
+        if(UserData.isColoredMagnet(touched)){
+            ((ColoredMagnet)(((UserData) touched.getUserData()).getElement())).act(this);
         }
 
         handleFallingPlatform(touched);

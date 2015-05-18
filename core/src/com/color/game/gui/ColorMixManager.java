@@ -125,4 +125,8 @@ public class ColorMixManager {
 
         return false;
     }
+
+    public static boolean isSecondaryColor(ElementColor color){
+        return color == ElementColor.PURPLE || color == ElementColor.GREEN || color == ElementColor.BLACK || color == ElementColor.ORANGE;
+    }
 }

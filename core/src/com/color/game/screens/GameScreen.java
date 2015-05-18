@@ -48,7 +48,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     /**
      * The different ColorCommands
      */
-    private final ColorCommandManager colorCommandManager;
+    public final ColorCommandManager colorCommandManager;
 
     /**
      * The number of the level which should be played
@@ -314,8 +314,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             character.addCommand(command);
             command.setPressed(true);
             colorCommandManager.addCommandToCharacter(command, character);
-
-
             gauge.restart();
         }
     }

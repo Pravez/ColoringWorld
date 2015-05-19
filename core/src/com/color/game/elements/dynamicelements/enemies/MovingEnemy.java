@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
-import com.color.game.elements.dynamicplatforms.BaseDynamicPlatform;
 import com.color.game.elements.staticelements.BaseStaticElement;
 import com.color.game.elements.staticelements.platforms.ElementColor;
 import com.color.game.elements.userData.UserData;
@@ -16,7 +15,7 @@ import com.color.game.levels.Level;
 
 public class MovingEnemy extends Enemy {
 
-    private static final float ENEMY_MOVING_VELOCITY = 20f;
+    private static final float ENEMY_MOVING_VELOCITY = 5f;
     public static final float SLOW_MOVING_VELOCITY = 10f;
     public static final float FAST_MOVING_VELOCITY = 30f;
 
@@ -27,10 +26,11 @@ public class MovingEnemy extends Enemy {
     /**
      * Falling parameters
      */
-    private static final float FALL_GAP = 60f;//30f;
+    private static final float FALL_GAP = 10f;//30f;
     final private boolean canFall;
     private boolean preventLeft  = false;
     private boolean preventRight = false;
+    private boolean changeDirection;
 
     /**
      * Moving Enemy constructor
@@ -45,7 +45,8 @@ public class MovingEnemy extends Enemy {
         this.physicComponent.getBody().setAwake(true);
         this.physicComponent.getBody().setActive(true);
         this.canFall = canFall;
-        this.current_direction = 1;
+        this.current_direction = -1;
+        this.changeDirection = false;
 
         this.setAloftState(new LandedState());
         this.setMovingState(new RunningState());
@@ -65,9 +66,6 @@ public class MovingEnemy extends Enemy {
 
     @Override
     public void act(BaseElement element) {
-
-        boolean changeDir = false;
-
         if (!this.canFall) {
             if(element instanceof BaseStaticElement) {
                 selectFloorElement((BaseStaticElement) element);
@@ -79,19 +77,12 @@ public class MovingEnemy extends Enemy {
             kill();
         }
 
-        if (element instanceof BaseStaticElement) {
-            if (UserData.isWall(element, this)) {
-                changeDir = true;
-            }
-        }
-        if (element instanceof BaseDynamicPlatform){
-            changeDir = true;
-        }
-        if (changeDir) {
+        if (changeDirection) {
             this.current_direction = -1 * this.current_direction;
             this.physicComponent.setMove(this.current_direction);
             this.preventRight = false;
             this.preventLeft = false;
+            this.changeDirection = false;
             this.physicComponent.move(MovingEnemy.ENEMY_MOVING_VELOCITY);
         }
     }
@@ -109,6 +100,8 @@ public class MovingEnemy extends Enemy {
             this.preventRight = true;
             this.preventLeft = false;
             this.current_direction = -1 * this.current_direction;
+            this.physicComponent.setMove(this.current_direction);
+        } else{
             this.physicComponent.setMove(this.current_direction);
         }
     }
@@ -131,6 +124,15 @@ public class MovingEnemy extends Enemy {
 
     @Override
     public void handleSpecificContacts(Contact c, Body touched) {
+
+        if(UserData.isWall(c)){
+            changeDirection = true;
+        }
+        if(UserData.isDynamicPlatform(touched)){
+            changeDirection = true;
+        }
+
+        act(((UserData)touched.getUserData()).getElement());
         handleFallingPlatform(touched);
     }
 

@@ -1,6 +1,5 @@
 package com.color.game.elements.userData;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.WorldManifold;
@@ -91,7 +90,7 @@ public abstract class UserData {
 
     public static boolean isDeadly(Body body){
         UserData userData = (UserData) body.getUserData();
-        return userData != null && userData.getUserDataType() == UserDataType.DEADLY;
+        return userData != null && (userData.getUserDataType() == UserDataType.DEADLY || userData.getUserDataType() == UserDataType.ENEMY);
     }
 
     public static boolean isDynamicBody(Body body){
@@ -135,22 +134,9 @@ public abstract class UserData {
         return (x != 1 && x!=-1) || y ==1;
     }
 
-    public static boolean isWall(BaseElement platform, BaseDynamicElement de){
-        boolean wall = false;
-
-        Rectangle bounds = platform.getBounds();
-        Rectangle charBounds = de.getBounds();
-
-        //There's a bug somewhere i dunno why
-
-        if(charBounds.y > bounds.y && charBounds.y < (bounds.y+bounds.height)){
-            wall = true;
-        }
-        if((charBounds.y+charBounds.height) < bounds.y && (charBounds.x > bounds.x && charBounds.x < (bounds.x + bounds.width))){
-            wall = true;
-        }
-
-        return wall;
+    public static boolean isWall(Contact c){
+        float y = c.getWorldManifold().getNormal().y;
+        return y < 0.5f && y > - 0.5f &&  c.isTouching();
     }
 
     public static boolean isDynamicBodyPresent(Contact c, Body body) {

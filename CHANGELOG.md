@@ -1,3 +1,21 @@
+# 0.2.5a (May 18, 2015)
+- Bugfixes
+- Level selector
+- Removed ColorMagnet, will have its place later
+- Enemies are sensible to colors
+
+# 0.2.5 (May 18, 2015)
+- Added secondary colors (purple, orange, green)
+- Updated way to manage colors
+- Added possibility to change keymap
+- Added ColorMagnet sensible to colors
+
+# 0.2.4a (May 15, 2015)
+- Bugfixes
+- Modified some features, due to testers comments
+- Started to correct the game to adapt and balance it
+- Added some platforms, removed some
+
 # 0.2.4 (May 14, 2015)
 - Bugfixes
 - Adapted game for testing

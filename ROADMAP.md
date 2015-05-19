@@ -47,12 +47,13 @@ With this, you will be able to have an overview of the game and its future.
 * slippery zones
 * zones that grip the character to the floor 
 
-## Version 0.3 - Enemies and dynamic things
-* enemy who kill the character
-* enemy who can move
-* enemy who can die
-* enemy who can jump
+## Version 0.3 - Enemies and dynamic things, secondary colors
+* Enemies (basic ones)
 * moving and falling platforms
+* enemies are sensible to colors
+* secondary colors (purple, green and orange)
+* secondary color platforms
+* Possibility to see the entire level while the game is paused
 
 ## Version 0.4 - User interface & level loader
 * score system (time, number of attempts, …)
@@ -83,7 +84,6 @@ With this, you will be able to have an overview of the game and its future.
 * add levers that can change segments of walls in order to access the exit or something else
 * adding new maps of levels by dividing into different places
 * changing the language of the game
-* Add the secondary colors to the platforms - a green platform that is activated only when yellow gauge and blue gauge are activated
 * a boss at the end of a level such as an enemy who force the character to go in a certain direction and the time is limited
 * a script for each enemy, such as a pattern
 

@@ -44,7 +44,8 @@ public class Tutorial {
         Tutorial.texts.add("But be careful ! If the primary color is deactivated, every secondary color \n made with it will be deactivated");
         //TUTORIAL NUMBER 15
         Tutorial.texts.add("This black thing is the black platform ! You need to activate everything to be able to jump on it !");
-
+        Tutorial.texts.add("Here are the enemies. If you activate their colors, they won't kill you. Else, they will ..., " +
+                "so you will need to have the purple activated to dodge purple enemies for example.");
     }
 
     /**

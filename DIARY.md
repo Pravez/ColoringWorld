@@ -1,6 +1,16 @@
+# May 19, 2015
+* Added level for testers
+* Rectified bug with enemies
+* Added enemies contact
+* Modified enemies contacts
+
 # May 18, 2015
 * Some bugfixes and correctives
-
+* Finished work on secondary colors
+* Changed magnets to ColoredMagnets, and started to work on it
+* Finished work on secondary colors with paltforms and enemies
+* Started work on a new graphic way to show color gauges
+* Added and modified some levels for testers
 
 # May 17, 2015
 * Completed keymapper, needs some work by the way

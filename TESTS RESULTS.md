@@ -1,6 +1,11 @@
 # RESULTS AND COMMENTS ON THE GAME MADE BY TESTERS
 
 
+## Tests results for version v0.3
+
+
+
+
 ## Tests results for version v0.2.4
 
 * Last levels are way too difficult (levels 7 - 8)
@@ -19,7 +24,10 @@
         * Is it really important ?
     - Removed useless platforms, useless features.
     - Added possibility when the game is paused to see the entire level.
-    - Updated and added useful platforms
+    - Updated and added platforms
     - Added faculty for the character to jump higher with a longer press on spacebar
         * This removed the problem of a real jumping on falling platforms
     - Changed controls to "ZQSD" to move and "UIO" for colors
+    - Added a level selector
+    - Added possibility to change keymap
+    - Complicated a bit the game with secondary colors

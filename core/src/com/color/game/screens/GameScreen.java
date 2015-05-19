@@ -16,7 +16,6 @@ import com.color.game.command.colors.ColorCommandManager;
 import com.color.game.command.elements.*;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.Character;
-import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.sensors.ColoredMagnet;
 import com.color.game.elements.staticelements.sensors.Sensor;
@@ -441,36 +440,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     public void beginContact(Contact contact) {
         final Fixture a = contact.getFixtureA();
         final Fixture b = contact.getFixtureB();
-
-        if (UserData.isEnemy(a.getBody()) && UserData.isPlatform(b.getBody())) {
-            this.runnables.add(new Runnable() {
-                @Override
-                public void run() {
-                    ((Enemy) ((UserData) a.getBody().getUserData()).getElement()).act(((UserData) b.getBody().getUserData()).getElement());
-                }
-            });
-        } else if (UserData.isEnemy(b.getBody()) && UserData.isPlatform(a.getBody())) {
-            this.runnables.add(new Runnable() {
-                @Override
-                public void run() {
-                    ((Enemy) ((UserData) b.getBody().getUserData()).getElement()).act(((UserData) a.getBody().getUserData()).getElement());
-                }
-            });
-        }else if (UserData.isEnemy(a.getBody()) && UserData.isDynamicBody(b.getBody())){
-            this.runnables.add(new Runnable() {
-                @Override
-                public void run() {
-                    ((Enemy) ((UserData) a.getBody().getUserData()).getElement()).act(((UserData) b.getBody().getUserData()).getElement());
-                }
-            });
-        }else if (UserData.isEnemy(b.getBody()) && UserData.isDynamicBody(a.getBody())) {
-            this.runnables.add(new Runnable() {
-                @Override
-                public void run() {
-                    ((Enemy) ((UserData) b.getBody().getUserData()).getElement()).act(((UserData) a.getBody().getUserData()).getElement());
-                }
-            });
-        }
 
         // Sensors with the character
         if (UserData.isSensor(a.getBody()) && UserData.isCharacter(b.getBody())) {

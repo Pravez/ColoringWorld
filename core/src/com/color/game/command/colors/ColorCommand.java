@@ -5,6 +5,10 @@ import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.staticelements.platforms.ElementColor;
 import com.color.game.levels.LevelManager;
 
+/**
+ * Main class concerning calling colors to activate them. It will manage to send request to color elements
+ * to set them active or not.
+ */
 public class ColorCommand implements Command {
 
     public static final float COLOR_DELAY = 5.0f;
@@ -17,15 +21,26 @@ public class ColorCommand implements Command {
 
     protected float time = 0;
 
+    /**
+     * Constructor
+     * @param color color of the ColorCommand
+     */
     public ColorCommand (ElementColor color) {
         this.color = color;
         restart();
     }
 
+    /**
+     * If the call of this command is totally finished (the {@link com.color.game.gui.ColorGauge} is supposed to be full
+     * @return
+     */
     public boolean isFinished() {
         return !this.activated && !this.desactivated;
     }
 
+    /**
+     * Restarts everything
+     */
     public void restart() {
         this.activated = false;
         this.desactivated = false;
@@ -33,6 +48,9 @@ public class ColorCommand implements Command {
         this.pressed = false;
     }
 
+    /**
+     * Stops the current command and sends to every color element a signal to change their activation
+     */
     public void stop() {
         if (this.activated && !this.desactivated) {
             LevelManager.getCurrentLevel().changeColorPlatformsActivation(this.color);

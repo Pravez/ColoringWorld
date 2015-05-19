@@ -4,6 +4,10 @@ import com.badlogic.gdx.utils.Array;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.staticelements.platforms.ElementColor;
 
+/**
+ * Manager of the colors commands, it will store every possible command, and manage the interaction between
+ * the gamescreen (user) and them.
+ */
 public class ColorCommandManager {
 
     private ColorCommand redCommand;
@@ -55,6 +59,11 @@ public class ColorCommandManager {
         return redCommand.isPressed() && blueCommand.isPressed() && yellowCommand.isPressed();
     }
 
+    /**
+     * Method to find if a composed color needs to be activated
+     * @param command
+     * @return
+     */
     public ComposedColorCommand activateComposedColor(ColorCommand command){
         if (allActivated()) {
             return blackCommand;
@@ -72,6 +81,14 @@ public class ColorCommandManager {
         }
     }
 
+    /**
+     * Method to find if a composed color is activated
+     * @param c1 first color
+     * @param co1 first composed color possible
+     * @param c2 second color
+     * @param co2 second possible composed color
+     * @return the good composed color, else null
+     */
     private ComposedColorCommand composedColorActivated(ColorCommand c1, ComposedColorCommand co1, ColorCommand c2, ComposedColorCommand co2) {
         if (c1.isPressed())
             return co1;
@@ -81,6 +98,11 @@ public class ColorCommandManager {
             return null;
     }
 
+    /**
+     * Method called to add a command to the character and verify if a composed color needs to be added too
+     * @param command initial command
+     * @param character
+     */
     public void addCommandToCharacter(ColorCommand command, Character character) {
         ComposedColorCommand composedColorCommand = activateComposedColor(command);
 
@@ -95,6 +117,11 @@ public class ColorCommandManager {
         }
     }
 
+    /**
+     * Method to test and add to the character a composed color command
+     * @param composedColorCommand
+     * @param character
+     */
     private void pressComposedColors(ComposedColorCommand composedColorCommand, Character character) {
         if (!composedColorCommand.isPressed()) {
             character.addCommand(composedColorCommand);
@@ -102,6 +129,10 @@ public class ColorCommandManager {
         }
     }
 
+    /**
+     *
+     * @return An array containing activated colors
+     */
     public Array<ElementColor> getActivatedColors() {
         Array<ElementColor> colors = new Array<>();
 

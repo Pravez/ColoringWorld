@@ -56,9 +56,13 @@ public class ColorGauge {
         batch.end();
 
         this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        this.shapeRenderer.setColor(this.color);
+        this.shapeRenderer.setColor(this.color.r, this.color.g, this.color.b, time <= 4 ? 1f : 0.4f);
         float height = (this.bounds.height - 2 * gapY) * time / ColorCommand.COLOR_DELAY;
         this.shapeRenderer.rect(bounds.x + gapX, bounds.y + gapY, bounds.width - 2 * gapX, height);
+        this.shapeRenderer.end();
+        this.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        this.shapeRenderer.setColor(Color.WHITE);
+        this.shapeRenderer.line(bounds.x + gapX, bounds.y + gapY + (this.bounds.height-2*gapY)/5*4, bounds.x + gapX + bounds.width-2*gapX,bounds.y + gapY + (this.bounds.height-2*gapY)/5*4 );
         this.shapeRenderer.end();
 
         batch.begin();

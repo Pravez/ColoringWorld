@@ -54,12 +54,13 @@ With this, you will be able to have an overview of the game and its future.
 * secondary colors (purple, green and orange)
 * secondary color platforms
 * Possibility to see the entire level while the game is paused
+* Possibility to change controls
+* Possibility to select level
 
 ## Version 0.4 - User interface & level loader
 * score system (time, number of attempts, …)
-* Possibility to change controls
-* Possibility to select level
     - (a map to select the level to play)
+    - save the score
 * Fun in the menu
     - sounds in the menu
     - buttons effects (hover, active, …)

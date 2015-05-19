@@ -1,3 +1,15 @@
+# 0.3 (May 18, 2015) - let's sum up
+- Added enemies which are deadly according to the color
+- Added secondary colors (purple, green, orange)
+- Added bumping platforms
+- Removed slowing platforms, Magnets
+- Changed physics concerning contacts
+- Added moving platforms
+- Added possibility to see the entire level while in pause
+- Added possibility to change controls from the main menu
+- Added possibility to select a level from the main menu
+- Added help for players concerning secondary colors, "chromatic circle"
+
 # 0.2.5a (May 18, 2015)
 - Bugfixes
 - Level selector

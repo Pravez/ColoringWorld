@@ -4,21 +4,26 @@ Game featuring a strange man using colors to live his life
 If you want to know exactly what is being done, please see the [changelog](CHANGELOG.md).
 Concerning daily work, see the [diary](DIARY.md).
 
-## Version 0.2 in development :
-### Done :
-* enemies who kill the character
-* enemies who can die
-* enemies who can move
-* falling platforms
-* moving platforms
-* bugfix of the character's jump
-* bugfix of the contact between dynamic and static bodies 
-* bugfix of kinematic platforms
-* kill the elements with falling platforms
+## Version 0.4 in development :
+* score system (time, number of attempts, …)
+    - (a map to select the level to play)
+    - save the score
+* Fun in the menu
+    - sounds in the menu
+    - buttons effects (hover, active, …)
+* load a level from a file
 
-##### TO DO :
-
-- According to the TESTS RESULTS, adjust the game.
+# Version 0.3 released :
+* Added enemies which are deadly according to the color
+* Added secondary colors (purple, green, orange)
+* Added bumping platforms
+* Removed slowing platforms, Magnets
+* Changed physics concerning contacts
+* Added moving platforms
+* Added possibility to see the entire level while in pause
+* Added possibility to change controls from the main menu
+* Added possibility to select a level from the main menu
+* Added help for players concerning secondary colors, "chromatic circle"
 
 # Version 0.2 released :
 * ColorPlatforms can have a default state (activated, or deactivated)

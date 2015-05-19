@@ -31,3 +31,4 @@
     - Added a level selector
     - Added possibility to change keymap
     - Complicated a bit the game with secondary colors
+    - Added help concerning secondary colors, with a "chromatic circle"

@@ -24,6 +24,7 @@ Concerning daily work, see the [diary](DIARY.md).
 * Added possibility to change controls from the main menu
 * Added possibility to select a level from the main menu
 * Added help for players concerning secondary colors, "chromatic circle"
+* Added progressive jump to the character
 
 # Version 0.2 released :
 * ColorPlatforms can have a default state (activated, or deactivated)

@@ -9,6 +9,7 @@
 - Added possibility to change controls from the main menu
 - Added possibility to select a level from the main menu
 - Added help for players concerning secondary colors, "chromatic circle"
+- Added progressive jump to the character
 
 # 0.2.5a (May 18, 2015)
 - Bugfixes

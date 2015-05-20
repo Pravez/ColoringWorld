@@ -65,6 +65,9 @@ public class ScoreHandler {
 
     public void setBestScore(int bestScore) {
         this.bestScore = bestScore;
+        this.bronzeRank.reached(this.bestScore);
+        this.silverRank.reached(this.bestScore);
+        this.goldRank.reached(this.bestScore);
     }
 
     public boolean isNewBestScore() {

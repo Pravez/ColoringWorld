@@ -10,6 +10,7 @@ import com.color.game.levels.mapcreator.elements.TiledColorPlatforms;
 import com.color.game.levels.mapcreator.elements.TiledElements;
 import com.color.game.levels.mapcreator.elements.TiledPlatforms;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class TiledMapLoader {
@@ -30,16 +31,22 @@ public class TiledMapLoader {
         this.orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         this.layers = tiledMap.getLayers();
 
-        this.tiledElements = new ArrayList<>();
-        this.tiledElements.add(new TiledPlatforms(level, (TiledMapTileLayer) this.layers.get("static")));
-        this.tiledElements.add(new TiledColorPlatforms(level, (TiledMapTileLayer) this.layers.get("red_activated")));
-        this.tiledElements.add(new TiledColorPlatforms(level, (TiledMapTileLayer) this.layers.get("red_deactivated")));
-
     }
 
     public void loadMap() {
-        for(TiledElements te : tiledElements){
-            te.loadElements();
+        try {
+
+            this.tiledElements = new ArrayList<>();
+            this.tiledElements.add(new TiledPlatforms(level, (TiledMapTileLayer) this.layers.get("static")));
+            this.tiledElements.add(new TiledColorPlatforms(level, (TiledMapTileLayer) this.layers.get("red_activated")));
+            this.tiledElements.add(new TiledColorPlatforms(level, (TiledMapTileLayer) this.layers.get("red_deactivated")));
+
+
+            for (TiledElements te : tiledElements) {
+                te.loadElements();
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "An error has occurred, please see the generated log.");
         }
     }
 

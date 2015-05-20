@@ -15,7 +15,7 @@
 "toggle": { "down": "default-round-down", "checked": "default-round-down", "up": "default-round" }
 },
 "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
-"default": { "down": "default-round-down", "up": "default-round", "over": "default-round-down", "font": "future", "fontColor": "white", "downFontColor": "skyblue"},
+"default": { "down": "default-round-down", "up": "default-round", "over": "default-round-down", "font": "future", "fontColor": "white", "downFontColor": "skyblue",  "disabled": "default-round-down" },
 "toggle": { "down": "default-round-down", "up": "default-round", "over": "default-round-down", "checked": "default-round-down", "font": "future", "fontColor": "white", "downFontColor": "red" }
 },
 "com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle": {

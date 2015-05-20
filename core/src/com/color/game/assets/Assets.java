@@ -72,6 +72,9 @@ public class Assets {
         manager.load("sprites/ground.png", Texture.class);
         manager.load("sprites/spike.png", Texture.class);
 
+        manager.load("sprites/star.png", Texture.class);
+        manager.load("sprites/star-empty.png", Texture.class);
+
         //manager.load("sprites/colors.png", Texture.class);
 
         // Colors

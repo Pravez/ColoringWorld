@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
 import com.color.game.levels.LevelManager;
@@ -17,6 +18,8 @@ import com.color.game.levels.LevelManager;
  * LevelSelectionScreen to choose which level to run
  */
 public class LevelSelectionScreen extends BaseScreen {
+
+    private Array<Button> levelButtons = new Array<>();
 
     private static final int NB_LEVEL_WIDTH = 6;
 
@@ -35,19 +38,24 @@ public class LevelSelectionScreen extends BaseScreen {
         Table levelTable = new Table();
         int size = Gdx.graphics.getWidth()/(NB_LEVEL_WIDTH + 3);
         for (int i = 0 ; i < levelSize ; i++) {
-            Button levelButton = new TextButton("" + (i + 1), Assets.menuSkin);
+            final Button levelButton = new TextButton("" + (i + 1), Assets.menuSkin);
+            if (LevelManager.isLock(i))
+                levelButton.setDisabled(true);
             final int level = i;
             setButtonListener(levelButton, new Runnable() {
                 @Override
                 public void run() {
+                if (!levelButton.isDisabled()) {
                     LevelManager.changeLevel(level);
                     game.setGameScreen();
+                }
                 }
             });
             levelTable.add(levelButton).pad(20).height(size).width(size);
             if (i % NB_LEVEL_WIDTH == NB_LEVEL_WIDTH - 1) {
                 levelTable.row();
             }
+            this.levelButtons.add(levelButton);
         }
 
         table.add(levelTable).row();
@@ -64,5 +72,12 @@ public class LevelSelectionScreen extends BaseScreen {
 
         table.setFillParent(true);
         stage.addActor(table);
+    }
+
+    public void update() {
+        for (int i = 0 ; i < this.levelButtons.size ; i++) {
+            if (!LevelManager.isLock(i))
+                levelButtons.get(i).setDisabled(false);
+        }
     }
 }

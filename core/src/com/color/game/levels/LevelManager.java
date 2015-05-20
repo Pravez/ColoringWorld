@@ -31,6 +31,8 @@ public class LevelManager {
 
     public static boolean isLastLevel() { return currentLevel == levels.size() - 1; }
 
+    public static boolean isLock(int level) { return LevelManager.levels.get(level).isLocked(); }
+
     public static int getCurrentLevelNumber() {
         return currentLevel;
     }
@@ -97,6 +99,8 @@ public class LevelManager {
         /*addSeventhLevel();
         addEighthLevel();*/
 
+        //unlockAll();
+
         /** **/
         /*TiledMap map = new TiledMap();
         TiledMapTileSet tileset =  tiledMap.getTileSets().getTileSet("Water");
@@ -134,8 +138,19 @@ public class LevelManager {
         /** **/
     }
 
+    public static void unlock(int index) {
+        LevelManager.levels.get(index).unlock();
+    }
+
+    private static void unlockAll() {
+        for (Level level: LevelManager.levels) {
+            level.unlock();
+        }
+    }
+
     private static void addFirstLevel() {
         Level level = new Level(new Vector2(2, 1));
+        level.setScoreHandler(new ScoreHandler(0, 150, 1000, 2000, 3000));
         level.unlock();
 
         // Ground & Walls
@@ -164,7 +179,8 @@ public class LevelManager {
 
     private static void addSecondLevel() {
         Level level = new Level(new Vector2(29, 1));
-        level.unlock();
+        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
+        //level.unlock();
 
         // Ground & Walls
         level.addActor(new Platform(new Vector2(20, 0), 20, 1, level));
@@ -195,7 +211,8 @@ public class LevelManager {
 
     private static void addSecondBisLevel() {
         Level level = new Level(new Vector2(2, 1));
-        level.unlock();
+        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
+        //level.unlock();
 
         // Ground & Walls
         level.addActor(new Platform(new Vector2(0, 0), 60, 1, level));
@@ -222,7 +239,8 @@ public class LevelManager {
 
     private static void addThirdLevel() {
         Level level = new Level(new Vector2(2, 1));
-        level.unlock();
+        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
+        //level.unlock();
 
         // Ground & Walls
         level.addActor(new Platform(new Vector2(0, 0), 50, 1, level));
@@ -250,7 +268,8 @@ public class LevelManager {
 
     private static void addForthLevel() {
         Level level = new Level(new Vector2(23, 5));
-        level.unlock();
+        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
+        //level.unlock();
 
         // Ground & Walls
         level.addActor(new Platform(new Vector2(0,0), 50, 1, level));
@@ -319,7 +338,8 @@ public class LevelManager {
 
     private static void addFifthLevel() {
         Level level = new Level(new Vector2(3, 2));
-        level.unlock();
+        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
+        //level.unlock();
 
         // Ground & Walls
         level.addActor(new Platform(new Vector2(0, 0), 10, 1, level));
@@ -369,7 +389,8 @@ public class LevelManager {
 
     private static void  addSixthLevel() {
         Level level = new Level(new Vector2(10,1));
-        level.unlock();
+        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
+        //level.unlock();
 
         //Walls and others
         level.addActor(new Platform(new Vector2(0,0), 101, 1, level));
@@ -421,7 +442,8 @@ public class LevelManager {
 
     private static void addSeventhLevel() {
         Level level = new Level(new Vector2(2,11));
-        level.unlock();
+        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
+        //level.unlock();
 
         //Walls
         level.addActor(new Platform(new Vector2(0,0), 1, 100, level));
@@ -469,7 +491,8 @@ public class LevelManager {
 
     private static void addEighthLevel() {
         Level level = new Level(new Vector2(5, 1));
-        level.unlock();
+        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
+        //level.unlock();
 
         // Ground & Walls
         level.addActor(new Platform(new Vector2(0, 1), 1, 34, level));
@@ -505,6 +528,7 @@ public class LevelManager {
     // Color platforms
     private static void addFirstDebugLevel() {
         Level level = new Level(new Vector2(4, 1));
+        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
         level.unlock();
 
         // Ground
@@ -536,6 +560,7 @@ public class LevelManager {
     // Activate - Desactivated platforms
     private static void addSecondDebugLevel() {
         Level level = new Level(new Vector2(4, 1));
+        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
         level.unlock();
 
         // Ground
@@ -563,6 +588,7 @@ public class LevelManager {
     // Altering Platforms
     private static void addThirdDebugLevel() {
         Level level = new Level(new Vector2(4, 1));
+        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
         level.unlock();
 
         // Ground
@@ -586,6 +612,7 @@ public class LevelManager {
     // Teleporter & Deadly platforms
     private static void addForthDebugLevel() {
         Level level = new Level(new Vector2(4, 1));
+        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
         level.unlock();
 
         // Ground
@@ -611,6 +638,7 @@ public class LevelManager {
     // Wind blowers
     private static void addFifthDebugLevel() {
         Level level = new Level(new Vector2(4, 1));
+        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
         level.unlock();
 
         // Ground
@@ -639,6 +667,7 @@ public class LevelManager {
     // ColoredMagnet & Magnet
     private static void addSixthDebugLevel() {
         Level level = new Level(new Vector2(4, 1));
+        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
         level.unlock();
 
         //Ground
@@ -679,14 +708,12 @@ public class LevelManager {
         //level.addActor(new Platform(new Vector2(25,5), 2, 1, level.map));
         level.addActor(new Exit(new Vector2(195, 1), 1, 3, level.map, 6));
 
-
         levels.add(level);
-
     }
 
     private static void addSeventhDebugLevel(){
-
         Level level = new Level(new Vector2(4, 1));
+        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
         level.unlock();
 
         //Ground
@@ -694,7 +721,6 @@ public class LevelManager {
         level.addActor(new Platform(new Vector2(0,1),1,32,level));
         level.addActor(new Platform(new Vector2(49,1),1,32,level));
         level.addActor(new Platform(new Vector2(25,1),1,1,level));
-
 
         //level.addActor(new JumpingEnemy(new Vector2(20, 1), 2, 2, level, true));
         level.addActor(new MovingEnemy(new Vector2(30, 1), 2, 2, level, false, null));
@@ -704,8 +730,6 @@ public class LevelManager {
         level.addActor(new Exit(new Vector2(48, 1), 1, 3, level.map, 6));
 
         levels.add(level);
-
-
     }
 
     public static void disposeLevels() {

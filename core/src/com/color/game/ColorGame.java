@@ -8,6 +8,7 @@ import com.color.game.assets.SaveManager;
 import com.color.game.assets.SoundManager;
 import com.color.game.keys.KeyMapper;
 import com.color.game.levels.LevelManager;
+import com.color.game.levels.ScoreHandler;
 import com.color.game.levels.Tutorial;
 import com.color.game.screens.*;
 
@@ -31,6 +32,7 @@ public class ColorGame extends Game {
 	private OptionScreen         optionScreen;
 	private KeysScreen           keysScreen;
 	private TransitionScreen     transitionScreen;
+	private WinScreen            winScreen;
 
 	/**
 	 * Method to init all the needed assets, the sounds, musics, and creating all the different screens
@@ -55,6 +57,7 @@ public class ColorGame extends Game {
 		this.optionScreen 	      = new OptionScreen(this);
 		this.keysScreen           = new KeysScreen(this);
 		this.transitionScreen     = new TransitionScreen(this);
+		this.winScreen            = new WinScreen(this);
 
 		this.splashScreen.end();
 	}
@@ -130,6 +133,7 @@ public class ColorGame extends Game {
 	}
 
 	public void setLevelSelectionScreen() {
+		this.levelSelectionScreen.update();
 		super.setScreen(this.levelSelectionScreen);
 	}
 
@@ -146,22 +150,10 @@ public class ColorGame extends Game {
 	}
 
 	public void setWinScreen() {
-		this.transitionScreen.setTitle("You win");
-		ArrayList<String> sentences = new ArrayList<>();
-		sentences.add("You are better than I thought...");
-		sentences.add("Will you beat it next time ?");
-		sentences.add("Keep going on and you will finish the game !");
-		sentences.add("Hey ! It was too easy, wasn't it ?");
-		sentences.add("I hope the next one will be a nightmare for you !");
-		sentences.add("Are you happy ? It won't last !");
+		super.setScreen(this.winScreen);
+	}
 
-		this.transitionScreen.setMessage(sentences.get(MathUtils.random(0, sentences.size() - 1)));
-		this.transitionScreen.setEndRunnable(new Runnable() {
-			@Override
-			public void run() {
-				setGameScreen();
-			}
-		});
-		super.setScreen(this.transitionScreen);
+	public void updateWinScreen(ScoreHandler score, int time, int deaths) {
+		this.winScreen.handle(score, time, deaths);
 	}
 }

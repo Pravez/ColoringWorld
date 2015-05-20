@@ -23,6 +23,9 @@ public class Level extends Stage {
     private int deaths = 0;
     private float time = 0;
 
+    // Score Handler
+    private ScoreHandler scoreHandler;
+
     /**
      * The map containg the world of the Level
      */
@@ -71,6 +74,33 @@ public class Level extends Stage {
     }
 
     /**
+     * Method to set the Level's ScoreHandler
+     * @param scoreHandler the ScoreHandler of the Level
+     */
+    public void setScoreHandler(ScoreHandler scoreHandler) {
+        this.scoreHandler = scoreHandler;
+    }
+
+    public ScoreHandler getScoreHandler() {
+        return this.scoreHandler;
+    }
+
+    /**
+     * Method called at the end of the Level to calculate the player's score
+     */
+    public void handleScore() {
+        this.scoreHandler.calculate(this.deaths, (int)this.time);
+    }
+
+    /**
+     * Method called to reset the Level, concerning the time passed and the number of deaths
+     */
+    public void reset() {
+        this.deaths = 0;
+        this.time   = 0;
+    }
+
+    /**
      * Method to call when restarting the Level in order to restart all the positions of the scenery and enemies
      */
     public void restart() {
@@ -83,7 +113,7 @@ public class Level extends Stage {
     }
 
     public boolean isLocked() {
-        return locked;
+        return this.locked;
     }
 
     public void unlock() {

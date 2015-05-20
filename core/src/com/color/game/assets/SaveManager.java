@@ -3,6 +3,7 @@ package com.color.game.assets;
 import com.color.game.levels.Level;
 import com.color.game.levels.LevelManager;
 
+import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -25,6 +26,16 @@ public class SaveManager {
             writer.write("\n");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void writeLog(String fileName, Exception exception){
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(fileName+".txt", true)))) {
+            exception.printStackTrace(writer);
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "IMPOSSIBLE TO WRITE LOG FILE.");
         }
     }
 }

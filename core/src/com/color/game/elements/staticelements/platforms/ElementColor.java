@@ -76,7 +76,7 @@ public enum ElementColor {
             case "BLACK":
                 return BLACK;
             default:
-                throw new ClassCastException();
+                throw new ClassCastException("Impossible to get the color of the platforms from the .tmx file");
         }
     }
 }

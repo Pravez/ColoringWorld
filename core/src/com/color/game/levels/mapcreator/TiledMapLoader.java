@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.color.game.assets.SaveManager;
 import com.color.game.levels.Level;
 import com.color.game.levels.mapcreator.elements.TiledColorPlatforms;
 import com.color.game.levels.mapcreator.elements.TiledElements;
@@ -45,8 +46,11 @@ public class TiledMapLoader {
             for (TiledElements te : tiledElements) {
                 te.loadElements();
             }
+
         }catch(Exception e){
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "An error has occurred, please see the generated log.");
+            SaveManager.writeLog("log_level", e);
         }
     }
 

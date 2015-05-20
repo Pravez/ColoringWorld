@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
 import com.color.game.levels.ScoreHandler;
@@ -39,6 +40,11 @@ public class WinScreen extends BaseScreen {
     private Label space;
 
     private Label newBestScore;
+
+    private Timer scoreTimer;
+    private int   scoreAmount;
+    private int   finalScore;
+    private final static int REPETITION_COUNT = 60;
 
     /**
      * Constructor of the BaseScreen
@@ -79,7 +85,8 @@ public class WinScreen extends BaseScreen {
         this.silverStar = new Image();
         this.goldStar   = new Image();
 
-        this.texture = new Texture(Gdx.files.internal("backgrounds/background0.png"));
+        this.texture    = new Texture(Gdx.files.internal("backgrounds/background0.png"));
+        this.scoreTimer = new Timer();
     }
 
     private void addLogs(Table table) {
@@ -139,6 +146,7 @@ public class WinScreen extends BaseScreen {
     @Override
     public void hide() {
         this.space.clearActions();
+        this.scoreTimer.stop();
     }
 
     public void initSentences() {
@@ -150,9 +158,11 @@ public class WinScreen extends BaseScreen {
         this.sentences.add("Are you happy ? It won't last !");
     }
 
-    public void handle(ScoreHandler score) {
+    public void handle(final ScoreHandler score) {
         this.message.setText(this.sentences.get(MathUtils.random(0, this.sentences.size - 1)));
-        this.score.setText("" + score.getScore());
+        this.finalScore = score.getScore();
+        launchScoreAnimation();
+        this.score.setText("" + this.scoreAmount);
         this.time.setText(score.getTime() + " seconds");
         this.deaths.setText("" + score.getDeaths());
         this.bestScore.setText("" + score.getBestScore());
@@ -165,6 +175,18 @@ public class WinScreen extends BaseScreen {
             this.newBestScore.addAction(Actions.sequence(Actions.alpha(0), Actions.alpha(1, 0.5f)));
         else
             this.newBestScore.addAction(Actions.alpha(0));
+    }
+
+    private void launchScoreAnimation() {
+        this.scoreAmount = 0;
+        this.scoreTimer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                scoreAmount = (scoreAmount + finalScore/REPETITION_COUNT) > finalScore ? finalScore : scoreAmount + finalScore/REPETITION_COUNT;
+                score.setText("" + scoreAmount);
+            }
+        }, 0.02f, 0.02f, REPETITION_COUNT);
+        this.scoreTimer.start();
     }
 
     private void handleStar(Image star, boolean reached) {

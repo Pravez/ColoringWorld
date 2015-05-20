@@ -223,10 +223,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
 
         //TO DEBUG
-        //handleDebugCodes();
+        handleDebugCodes();
 
         // Render the Game
         LevelManager.getCurrentLevel().draw();
+        LevelManager.getCurrentLevel().drawBackground();
         uiStage.draw();
 
         if (this.runningLevel != LevelManager.getCurrentLevelNumber()) {
@@ -235,6 +236,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         if (this.restart) {
             game.setDeathScreen();
         }
+
     }
 
     private void runRunnables() {

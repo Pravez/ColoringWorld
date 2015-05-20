@@ -12,6 +12,9 @@ public class ScoreHandler {
     private int maxDeaths;
     private int maxTime;
 
+    private int     bestScore = 0;
+    private boolean newBestScore = false;
+
     // Ranks
     private Rank bronzeRank;
     private Rank silverRank;
@@ -34,18 +37,38 @@ public class ScoreHandler {
     }
 
     public void calculate(int deaths, int time) {
-        this.score = 1000;
+        this.newBestScore = false;
+        this.score        = 1000;
+
         if (deaths < this.maxDeaths)
             this.score += 1000 * (this.maxDeaths - deaths);
         if (time < this.maxTime)
             this.score += 20 * (this.maxTime - time);
+
         this.bronzeRank.reached(this.score);
         this.silverRank.reached(this.score);
         this.goldRank.reached(this.score);
+
+        if (this.bestScore < this.score) {
+            this.bestScore = this.score;
+            this.newBestScore = true;
+        }
     }
 
     public int getScore() {
         return this.score;
+    }
+
+    public int getBestScore() {
+        return this.bestScore;
+    }
+
+    public void setBestScore(int bestScore) {
+        this.bestScore = bestScore;
+    }
+
+    public boolean isNewBestScore() {
+        return this.newBestScore;
     }
 
     public boolean isBronzeReached() {

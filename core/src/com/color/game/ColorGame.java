@@ -16,8 +16,8 @@ import java.util.ArrayList;
 
 public class ColorGame extends Game {
 
-	public static final String TITLE="DEUTSCH SPIEL";
-	public static final int WIDTH=1000, HEIGHT=800;
+	public static final String TITLE = "DEUTSCH SPIEL";
+	public static final int WIDTH = 1000, HEIGHT = 800;
 
 	public SoundManager soundManager;
 	public MusicManager musicManager;
@@ -50,6 +50,7 @@ public class ColorGame extends Game {
 
 		Tutorial.init(this.keys);
 		LevelManager.init();
+		this.saveManager.load();
 
 		this.gameScreen           = new GameScreen(this);
 		this.levelSelectionScreen = new LevelSelectionScreen(this);
@@ -78,7 +79,7 @@ public class ColorGame extends Game {
 	 */
 	@Override
 	public void dispose() {
-		SaveManager.save();
+		this.saveManager.save();
 		super.dispose();
 		Assets.dispose();
 		LevelManager.disposeLevels();

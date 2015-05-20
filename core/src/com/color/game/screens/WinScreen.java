@@ -35,8 +35,11 @@ public class WinScreen extends BaseScreen {
     private Label score;
     private Label time;
     private Label deaths;
+    private Label bestScore;
     private Label message;
     private Label space;
+
+    private Label newBestScore;
 
     /**
      * Constructor of the BaseScreen
@@ -67,6 +70,9 @@ public class WinScreen extends BaseScreen {
         this.time         = new Label("", new Label.LabelStyle(Assets.getBasicFont(18), Color.WHITE));
         Label deathsLabel = new Label("Number of deaths : ", new Label.LabelStyle(Assets.getBasicFont(14), blueColor));
         this.deaths       = new Label("", new Label.LabelStyle(Assets.getBasicFont(18), Color.WHITE));
+        Label bestLabel   = new Label("BestScore : ", new Label.LabelStyle(Assets.getBasicFont(12), blueColor));
+        this.bestScore    = new Label("", new Label.LabelStyle(Assets.getBasicFont(18), Color.WHITE));
+        this.newBestScore = new Label("New Best Score !", new Label.LabelStyle(Assets.getBasicFont(14), Color.ORANGE));
         this.message      = new Label("", new Label.LabelStyle(Assets.getBasicFont(16), blueColor));
         this.space        = new Label("Press SPACE to continue", new Label.LabelStyle(Assets.getBasicFont(18), blueColor));
 
@@ -78,6 +84,8 @@ public class WinScreen extends BaseScreen {
         table.add(this.time).row();
         table.add(deathsLabel).right();
         table.add(this.deaths).row();
+        table.add(bestLabel).right();
+        table.add(this.bestScore).row();
 
         // Star Table
         Table starTable = new Table();
@@ -86,8 +94,9 @@ public class WinScreen extends BaseScreen {
         starTable.add(this.goldStar).size(STAR_WIDTH, STAR_HEIGHT).pad(10);
         table.add(starTable).colspan(2).fill().padBottom(20).row();
 
+        table.add(this.newBestScore).colspan(2).row();
         table.add(this.message).padTop(30).colspan(2).row();
-        table.add(this.space).padTop(200).colspan(2);
+        table.add(this.space).padTop(100).colspan(2);
 
         table.setFillParent(true);
         stage.addActor(table);
@@ -132,10 +141,16 @@ public class WinScreen extends BaseScreen {
         this.score.setText("" + score.getScore());
         this.time.setText(time + " seconds");
         this.deaths.setText("" + deaths);
+        this.bestScore.setText("" + score.getBestScore());
 
         handleStar(this.bronzeStar, score.isBronzeReached());
         handleStar(this.silverStar, score.isSilverReached());
         handleStar(this.goldStar, score.isGoldReached());
+
+        if (score.isNewBestScore())
+            this.newBestScore.addAction(Actions.sequence(Actions.alpha(0), Actions.alpha(1, 0.5f)));
+        else
+            this.newBestScore.addAction(Actions.alpha(0));
     }
 
     private void handleStar(Image star, boolean reached) {

@@ -4,7 +4,7 @@ import com.color.game.elements.staticelements.BaseStaticElement;
 
 public class StaticElementUserData extends UserData{
 
-    public StaticElementUserData(BaseStaticElement element, int width, int height, UserDataType userDataType) {
+    public StaticElementUserData(BaseStaticElement element, float width, float height, UserDataType userDataType) {
         super(element, width, height, userDataType);
     }
 }

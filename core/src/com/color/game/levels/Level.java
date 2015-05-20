@@ -1,6 +1,11 @@
 package com.color.game.levels;
 
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -11,6 +16,10 @@ import com.color.game.elements.dynamicplatforms.BaseDynamicPlatform;
 import com.color.game.elements.dynamicplatforms.ColorFallingPlatform;
 import com.color.game.elements.staticelements.platforms.ColorPlatform;
 import com.color.game.elements.staticelements.platforms.ElementColor;
+import com.color.game.elements.staticelements.platforms.Platform;
+import com.color.game.screens.GameScreen;
+
+import static com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 
 /**
  * Level class containing everything needed for the Levels of the game
@@ -19,6 +28,10 @@ public class Level extends Stage {
 
     private static float accumulator = 0f;
     private static final float TIME_STEP = 1/300f;
+
+    private TiledMap tiledMap;
+    private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
+    private float tileSize;
 
     private int deaths = 0;
     private float time = 0;
@@ -70,6 +83,39 @@ public class Level extends Stage {
         this.enemies          = new Array<>();
     }
 
+    public Level(String path){
+        this.map          = new Map(Map.WORLD_GRAVITY, true);
+        this.characterPos = new Vector2(1, 1).scl(2);
+
+        this.colorElements = new Array<>();
+        this.dynamicPlatforms = new Array<>();
+        this.platforms        = new Array<>();
+        this.enemies          = new Array<>();
+
+        tiledMap = new TmxMapLoader().load(path);
+        orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+
+        TiledMapTileLayer tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get("static");
+        tileSize = tileLayer.getTileWidth();
+
+        for(int row = 0; row < tileLayer.getHeight(); row++) {
+            for (int col = 0; col < tileLayer.getWidth(); col++) {
+
+
+                //get cell
+                Cell cell = tileLayer.getCell(col, row);
+
+                if(cell == null) continue;
+                if(cell.getTile() == null) continue;
+
+                PolygonShape shape = new PolygonShape();
+                shape.setAsBox(tileSize/BaseElement.WORLD_TO_SCREEN, tileSize/BaseElement.WORLD_TO_SCREEN);
+
+                addActor(new Platform(new Vector2(col*(tileSize/2/10), row*(tileSize/2/10)), tileSize/2/10, tileSize/2/10, this));
+            }
+        }
+    }
+
     /**
      * Method to call when restarting the Level in order to restart all the positions of the scenery and enemies
      */
@@ -105,6 +151,14 @@ public class Level extends Stage {
             LevelManager.getCurrentLevel().map.world.step(Level.TIME_STEP, 6, 2);
             Level.accumulator -= Level.TIME_STEP;
         }
+    }
+
+    @Override
+    public void draw() {
+        super.draw();
+
+        orthogonalTiledMapRenderer.setView(GameScreen.camera);
+        orthogonalTiledMapRenderer.render();
     }
 
     /**

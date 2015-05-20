@@ -50,6 +50,8 @@ public abstract class PhysicComponent {
      */
     public abstract void configureBody(Vector2 position, float width, float height, World world, short category, short mask);
 
+    public abstract void configureBody(Vector2 position, float width, float height, World world, short category, short mask, Shape shape);
+
     /**
      * Main method to initialize the corpse, the body of the element when it is a circle.
      * @param position The position where will be located the body

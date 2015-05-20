@@ -58,6 +58,11 @@ public class DynamicPhysicComponent extends PhysicComponent{
     }
 
     @Override
+    public void configureBody(Vector2 position, float width, float height, World world, short category, short mask, Shape shape) {
+
+    }
+
+    @Override
     public void configureCircleBody(Vector2 position, int radius, World world, short category, short mask){
         this.world = world;
 

@@ -47,12 +47,14 @@ public class TiledMapLoader {
 
                         platforms.put(cell.vector2, platforms.get(previousCol.vector2));
                         platforms.get(previousCol.vector2).orientation = TiledCell.TileOrientation.WIDTH;
+
                     } else if (previousRow.cell != null && containsObject(platforms, previousRow) &&
                             (platforms.get(previousRow.vector2).orientation == TiledCell.TileOrientation.NONE ||
                                     platforms.get(previousRow.vector2).orientation == TiledCell.TileOrientation.HEIGHT)) {
 
                         platforms.put(cell.vector2, platforms.get(previousRow.vector2));
                         platforms.get(previousRow.vector2).orientation = TiledCell.TileOrientation.HEIGHT;
+
                     } else {
                         platforms.put(cell.vector2, cell);
                     }

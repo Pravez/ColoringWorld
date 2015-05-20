@@ -1,6 +1,7 @@
 # May 20, 2015
 * Started implementation of parser for reading .tmx files from Tiled
 * Concerning the parser, created a complicated way to create for example only 1 platform instead of 10
+* Continued implementation of the parser. Now possibility to extract from .tmx files platforms and color platforms
 * Implemented score system
 * Added some funny features concerning score
 
@@ -15,7 +16,7 @@
 * Some bugfixes and correctives
 * Finished work on secondary colors
 * Changed magnets to ColoredMagnets, and started to work on it
-* Finished work on secondary colors with paltforms and enemies
+* Finished work on secondary colors with platforms and enemies
 * Started work on a new graphic way to show color gauges
 * Added and modified some levels for testers
 
@@ -45,7 +46,7 @@
 * Corrected squat bug
 * Character can now stay on falling platforms without dying
 * Fixed some other minor bugs
-* Created metrics, to save player's datas (number of deaths, time played ...)
+* Created metrics, to save player's data (number of deaths, time played ...)
 * Generated a jar for version 2.4 and sent it with the form to testers.
 
 # May 13, 2015
@@ -72,7 +73,7 @@
 
 # May 9, 2015
 * Added the jumping enemies who can jump on platforms
-* Changed a bit how physics access datas concerning how the bodies can move
+* Changed a bit how physics access data concerning how the bodies can move
 * Changed the way enemies change their directions
 * Added moving platforms
 
@@ -81,7 +82,7 @@
 * Added the squat command
 * Added magnets to attract dynamic bodies on their center
 * Added platforms that can be slippery or that can slow the character (or the dynamic body on it)
-* Corrected bug of walljump
+* Corrected bug of wall jump
 * Added a collection of levels to test every element of gameplay
 * Released version 0.2
 * Version 0.2.1 with enemies who can die, move and prevent from falling

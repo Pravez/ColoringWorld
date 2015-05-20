@@ -5,9 +5,6 @@ If you want to know exactly what is being done, please see the [changelog](CHANG
 Concerning daily work, see the [diary](DIARY.md).
 
 ## Version 0.4 in development :
-* score system (time, number of attempts, …)
-    - (a map to select the level to play)
-    - save the score
 * Fun in the menu
     - sounds in the menu
     - buttons effects (hover, active, …)

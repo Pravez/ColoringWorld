@@ -3,7 +3,14 @@
 
 ## Tests results for version v0.3
 
+* There are some random bugs, for example a color that doesn't activate ...
+* Bug with the death screen when being killed by a enemy
+* Not enough levels to test
+* Waiting for more stuff
 
+### What we did :
+
+    - Corrected the bug with the death screen which was called twice
 
 
 ## Tests results for version v0.2.4

@@ -1,8 +1,15 @@
+# May 20, 2015
+* Started implementation of parser for reading .tmx files from Tiled
+* Concerning the parser, created a complicated way to create for example only 1 platform instead of 10
+* Implemented score system
+* Added some funny features concerning score
+
 # May 19, 2015
 * Added level for testers
 * Rectified bug with enemies
 * Added enemies contact
 * Modified enemies contacts
+* Released v0.3 and send it to test
 
 # May 18, 2015
 * Some bugfixes and correctives

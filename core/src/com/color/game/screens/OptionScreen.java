@@ -30,47 +30,33 @@ public class OptionScreen extends BaseScreen {
         this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
         table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
 
-        // Title of the OptionScreen
-        Label title = new Label("Options", new Label.LabelStyle(Assets.getBasicFont(32), Color.WHITE));
+        // Title of the Screen
+        table.add(createLabel("Options", 32, Color.WHITE)).colspan(2).row();
 
-        TextButton buttonMenu = new TextButton("Menu", Assets.menuSkin);
+        // Music and Sound Sliders
+        this.musicValue = new Label(" " + (int) (game.musicManager.getVolume() * 10), Assets.menuSkin);
+        this.soundValue = new Label(" " + (int)(game.soundManager.getVolume() * 10), Assets.menuSkin);
+        addSliders(table);
 
-        // The Music Volume Slider
-        Label music = new Label("Music Volume :", Assets.menuSkin);
-
-        table.add(title).colspan(2).row();
-        table.add(music);
-        Slider sliderMusic = new Slider(0.0f, 1.0f, 0.1f, false, Assets.menuSkin);
-        musicValue = new Label(" " + (int) (game.musicManager.getVolume() * 10), Assets.menuSkin);
-        table.add(sliderMusic);
-        music.invalidate();
-
-        table.add(musicValue).width(50f).row();
-
-        // The Sound Volume Slider
-        Label sound = new Label("Sound Volume :", Assets.menuSkin);
-        Slider sliderSound = new Slider(0.0f, 1.0f, 0.1f, false, Assets.menuSkin);
-        soundValue = new Label(" " + (int)(game.soundManager.getVolume() * 10), Assets.menuSkin);
-
-        table.add(sound);
-        table.add(sliderSound);
-        sound.invalidate();
-        table.add(soundValue).width(50f).row();
-
-        table.add(buttonMenu).colspan(2).size(250, 60).padTop(80).row();
+        // Menu Button
+        addMenuButton(table, 2, 80);
 
         table.setFillParent(true);
         stage.addActor(table);
+    }
 
-        // Setting all the different listeners
-        sliderMusic.addListener(new ChangeListener() {
+    private void addSliders(Table table) {
+        // The Music Volume Slider
+        addVolumeSlider(table, "Music Volume : ", this.musicValue, new ChangeListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 game.musicManager.setVolume(((Slider) actor).getValue());
                 musicValue.setText(" " + (int) (game.musicManager.getVolume() * 10));
             }
         });
-        sliderSound.addListener(new ChangeListener() {
+
+        // The Sound Volume Slider
+        addVolumeSlider(table, "Sound Volume : ", this.soundValue, new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.soundManager.setVolume(((Slider) actor).getValue());
@@ -78,6 +64,17 @@ public class OptionScreen extends BaseScreen {
                 soundValue.setText(" " + (int)(game.soundManager.getVolume() * 10));
             }
         });
-        setButtonListener(buttonMenu, new Runnable (){ @Override public void run() { game.setMenuScreen(); } });
+    }
+
+    private void addVolumeSlider(Table table, String text, Label value, ChangeListener changeListener) {
+        Label label = new Label(text, Assets.menuSkin);
+        table.add(label);
+        Slider slider = new Slider(0.0f, 1.0f, 0.1f, false, Assets.menuSkin);
+        table.add(slider);
+        label.invalidate();
+
+        table.add(value).width(50f).row();
+
+        slider.addListener(changeListener);
     }
 }

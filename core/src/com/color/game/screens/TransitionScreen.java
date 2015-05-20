@@ -28,7 +28,6 @@ public class TransitionScreen extends BaseScreen {
         super(game);
         this.texture = new Texture(Gdx.files.internal("backgrounds/background0.png"));
 
-        this.stage = new Stage();
         Table table = new Table();
         table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
 

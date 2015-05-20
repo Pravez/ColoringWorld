@@ -7,6 +7,9 @@ public class ScoreHandler {
 
     public static final int BRONZE_SCORE = 1000;
 
+    private int deaths = 0;
+    private float time = 0;
+
     // Score parameters
     private int score;
     private int maxDeaths;
@@ -36,14 +39,29 @@ public class ScoreHandler {
         this.goldRank   = new Rank(goldScore);
     }
 
-    public void calculate(int deaths, int time) {
+    /**
+     * Method called to reset the score after the level is completed
+     */
+    public void reset() {
+        this.deaths = 0;
+        this.time   = 0;
+
+        this.bronzeRank.reached(this.bestScore);
+        this.silverRank.reached(this.bestScore);
+        this.goldRank.reached(this.bestScore);
+    }
+
+    /**
+     * Method to calculate the score of the level in function of the time passed and the number of deaths
+     */
+    public void calculate() {
         this.newBestScore = false;
         this.score        = 1000;
 
-        if (deaths < this.maxDeaths)
+        if (this.deaths < this.maxDeaths)
             this.score += 1000 * (this.maxDeaths - deaths);
-        if (time < this.maxTime)
-            this.score += 20 * (this.maxTime - time);
+        if (this.time < this.maxTime)
+            this.score += 20 * (this.maxTime - this.time);
 
         this.bronzeRank.reached(this.score);
         this.silverRank.reached(this.score);
@@ -53,6 +71,22 @@ public class ScoreHandler {
             this.bestScore = this.score;
             this.newBestScore = true;
         }
+    }
+
+    public void addTime(float delta) {
+        this.time += delta;
+    }
+
+    public void addDeath() {
+        this.deaths ++;
+    }
+
+    public int getTime() {
+        return (int)this.time;
+    }
+
+    public int getDeaths() {
+        return this.deaths;
     }
 
     public int getScore() {

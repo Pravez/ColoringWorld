@@ -31,7 +31,7 @@ public class UIStage extends Stage {
         this.levelNumber.setPosition((Gdx.graphics.getWidth() - this.levelNumber.getWidth())/2, Gdx.graphics.getHeight() - this.levelNumber.getHeight());
 
         // The number of deaths in the Level
-        this.deathNumber = new Label(LevelManager.getCurrentLevel().getDeaths() + " death", Assets.menuSkin);
+        this.deathNumber = new Label(LevelManager.getCurrentLevel().getScoreHandler().getDeaths() + " death", Assets.menuSkin);
         this.deathNumber.setPosition((Gdx.graphics.getWidth() - this.deathNumber.getWidth())/2, this.levelNumber.getY() - this.deathNumber.getHeight());
 
         //this.timePassed = new Label("-- " + LevelManager.getCurrentLevel().getTime() + " --", Assets.menuSkin);
@@ -107,7 +107,7 @@ public class UIStage extends Stage {
     }
 
     public void changeDeathNumber() {
-        int deaths = LevelManager.getCurrentLevel().getDeaths();
+        int deaths = LevelManager.getCurrentLevel().getScoreHandler().getDeaths();
         this.deathNumber.setText(deaths + (deaths < 2 ? " death" : " deaths"));
         this.deathNumber.pack();
         this.deathNumber.setPosition((Gdx.graphics.getWidth() - this.deathNumber.getWidth())/2, this.levelNumber.getY() - this.deathNumber.getHeight());

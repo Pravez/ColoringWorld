@@ -20,9 +20,6 @@ public class Level extends Stage {
     private static float accumulator = 0f;
     private static final float TIME_STEP = 1/300f;
 
-    private int deaths = 0;
-    private float time = 0;
-
     // Score Handler
     private ScoreHandler scoreHandler;
 
@@ -89,16 +86,14 @@ public class Level extends Stage {
      * Method called at the end of the Level to calculate the player's score
      */
     public void handleScore() {
-        this.scoreHandler.calculate(this.deaths, (int)this.time);
+        this.scoreHandler.calculate();
     }
 
     /**
      * Method called to reset the Level, concerning the time passed and the number of deaths
      */
     public void reset() {
-        this.deaths = 0;
-        this.time   = 0;
-        this.scoreHandler.setBestScore(this.scoreHandler.getBestScore());
+        this.scoreHandler.reset();
     }
 
     /**
@@ -134,7 +129,7 @@ public class Level extends Stage {
         super.act(delta);
 
         Level.accumulator += delta;
-        this.time += delta;
+        this.scoreHandler.addTime(delta);
 
         while(Level.accumulator >= delta){
             LevelManager.getCurrentLevel().map.world.step(Level.TIME_STEP, 6, 2);
@@ -206,14 +201,6 @@ public class Level extends Stage {
     }
 
     public void addDeath() {
-        this.deaths++;
-    }
-
-    public int getDeaths() {
-        return this.deaths;
-    }
-
-    public float getTime() {
-        return this.time;
+        this.scoreHandler.addDeath();
     }
 }

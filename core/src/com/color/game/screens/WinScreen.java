@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -20,7 +19,7 @@ import com.color.game.levels.ScoreHandler;
 
 public class WinScreen extends BaseScreen {
 
-    private final static int STAR_WIDTH = 100;
+    private final static int STAR_WIDTH  = 100;
     private final static int STAR_HEIGHT = 100;
 
     private Texture starTexture;
@@ -49,6 +48,30 @@ public class WinScreen extends BaseScreen {
     public WinScreen(ColorGame game) {
         super(game);
 
+        init();
+
+        Table table  = new Table();
+        table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
+
+        // Title
+        table.add(createLabel("You won !", 28, TEXT_COLOR)).padBottom(30).colspan(2).row();
+
+        // Level logs
+        addLogs(table);
+
+        // Star Table
+        addStarTable(table);
+
+        // Over informations
+        addMessages(table);
+
+        table.setFillParent(true);
+        this.stage.addActor(table);
+
+        initSentences();
+    }
+
+    private void init() {
         this.starTexture      = Assets.manager.get("sprites/star.png", Texture.class);
         this.emptyStarTexture = Assets.manager.get("sprites/star-empty.png", Texture.class);
 
@@ -57,51 +80,42 @@ public class WinScreen extends BaseScreen {
         this.goldStar   = new Image();
 
         this.texture = new Texture(Gdx.files.internal("backgrounds/background0.png"));
-        this.stage   = new Stage();
-        Table table  = new Table();
-        table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
+    }
 
-        Color blueColor = new Color(142f/255, 188f/255, 224f/255, 1);
+    private void addLogs(Table table) {
+        this.score = createLabel("", 18, Color.WHITE);
+        this.time = createLabel("", 18, Color.WHITE);
+        this.deaths = createLabel("", 18, Color.WHITE);
+        this.bestScore = createLabel("", 18, Color.WHITE);
 
-        Label title       = new Label("You won !", new Label.LabelStyle(Assets.getBasicFont(28), blueColor));
-        Label scoreLabel  = new Label("Final Score : ", new Label.LabelStyle(Assets.getBasicFont(14), blueColor));
-        this.score        = new Label("", new Label.LabelStyle(Assets.getBasicFont(18), Color.WHITE));
-        Label timeLabel   = new Label("Time passed : ", new Label.LabelStyle(Assets.getBasicFont(14), blueColor));
-        this.time         = new Label("", new Label.LabelStyle(Assets.getBasicFont(18), Color.WHITE));
-        Label deathsLabel = new Label("Number of deaths : ", new Label.LabelStyle(Assets.getBasicFont(14), blueColor));
-        this.deaths       = new Label("", new Label.LabelStyle(Assets.getBasicFont(18), Color.WHITE));
-        Label bestLabel   = new Label("BestScore : ", new Label.LabelStyle(Assets.getBasicFont(12), blueColor));
-        this.bestScore    = new Label("", new Label.LabelStyle(Assets.getBasicFont(18), Color.WHITE));
-        this.newBestScore = new Label("New Best Score !", new Label.LabelStyle(Assets.getBasicFont(14), Color.ORANGE));
-        this.message      = new Label("", new Label.LabelStyle(Assets.getBasicFont(16), blueColor));
-        this.space        = new Label("Press SPACE to continue", new Label.LabelStyle(Assets.getBasicFont(18), blueColor));
+        addLog(table, "Final Score : ", 14, TEXT_COLOR, this.score);
+        addLog(table, "Time passed : ", 14, TEXT_COLOR, this.time);
+        addLog(table, "Number of deaths : ", 14, TEXT_COLOR, this.deaths);
+        addLog(table, "Best Score : ", 12, TEXT_COLOR, this.bestScore);
+    }
 
-        // Infos
-        table.add(title).padBottom(30).colspan(2).row();
-        table.add(scoreLabel).right();
-        table.add(this.score).row();
-        table.add(timeLabel).right();
-        table.add(this.time).row();
-        table.add(deathsLabel).right();
-        table.add(this.deaths).row();
-        table.add(bestLabel).right();
-        table.add(this.bestScore).row();
+    private void addLog(Table table, String label, int labelSize, Color labelColor, Label value) {
+        table.add(new Label(label, new Label.LabelStyle(Assets.getBasicFont(labelSize), labelColor))).right();
+        table.add(value).row();
+    }
 
-        // Star Table
+    private void addStarTable(Table table) {
+        float pad = 10;
         Table starTable = new Table();
-        starTable.add(this.bronzeStar).size(STAR_WIDTH, STAR_HEIGHT).pad(10);
-        starTable.add(this.silverStar).size(STAR_WIDTH, STAR_HEIGHT).pad(10);
-        starTable.add(this.goldStar).size(STAR_WIDTH, STAR_HEIGHT).pad(10);
+        starTable.add(this.bronzeStar).size(STAR_WIDTH, STAR_HEIGHT).pad(pad);
+        starTable.add(this.silverStar).size(STAR_WIDTH, STAR_HEIGHT).pad(pad);
+        starTable.add(this.goldStar).size(STAR_WIDTH, STAR_HEIGHT).pad(pad);
         table.add(starTable).colspan(2).fill().padBottom(20).row();
+    }
+
+    private void addMessages(Table table) {
+        this.newBestScore = createLabel("New Best Score !", 14, Color.ORANGE);
+        this.message      = createLabel("", 16, TEXT_COLOR);
+        this.space        = createLabel("Press SPACE to continue", 18, TEXT_COLOR);
 
         table.add(this.newBestScore).colspan(2).row();
         table.add(this.message).padTop(30).colspan(2).row();
         table.add(this.space).padTop(100).colspan(2);
-
-        table.setFillParent(true);
-        stage.addActor(table);
-
-        initSentences();
     }
 
     @Override
@@ -136,11 +150,11 @@ public class WinScreen extends BaseScreen {
         this.sentences.add("Are you happy ? It won't last !");
     }
 
-    public void handle(ScoreHandler score, int time, int deaths) {
+    public void handle(ScoreHandler score) {
         this.message.setText(this.sentences.get(MathUtils.random(0, this.sentences.size - 1)));
         this.score.setText("" + score.getScore());
-        this.time.setText(time + " seconds");
-        this.deaths.setText("" + deaths);
+        this.time.setText(score.getTime() + " seconds");
+        this.deaths.setText("" + score.getDeaths());
         this.bestScore.setText("" + score.getBestScore());
 
         handleStar(this.bronzeStar, score.isBronzeReached());

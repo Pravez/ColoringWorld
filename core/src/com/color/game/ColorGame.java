@@ -158,7 +158,7 @@ public class ColorGame extends Game {
 		super.setScreen(this.winScreen);
 	}
 
-	public void updateWinScreen(ScoreHandler score, int time, int deaths) {
-		this.winScreen.handle(score, time, deaths);
+	public void updateWinScreen(ScoreHandler score) {
+		this.winScreen.handle(score);
 	}
 }

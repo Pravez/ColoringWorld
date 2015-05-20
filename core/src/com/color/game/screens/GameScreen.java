@@ -485,9 +485,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     }
 
     @Override
-    public void preSolve(Contact contact, Manifold manifold) {
-
-    }
+    public void preSolve(Contact contact, Manifold manifold) { }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse contactImpulse) { }
@@ -495,7 +493,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     public void reachExit(Body exit) {
         Level level = LevelManager.getCurrentLevel();
         level.handleScore();
-        this.game.updateWinScreen(level.getScoreHandler(), (int)level.getTime(), level.getDeaths());
+        this.game.updateWinScreen(level.getScoreHandler());
         this.runningLevel = ((Exit) ((UserData) exit.getUserData()).getElement()).getLevelIndex();
         level.reset();
         LevelManager.unlock(this.runningLevel);

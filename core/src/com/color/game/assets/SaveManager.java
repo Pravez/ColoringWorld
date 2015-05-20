@@ -59,19 +59,5 @@ public class SaveManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        // Logs file
-        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(System.getProperty("user.home") + "/WF_log_"+System.getProperty("user.name")+".txt", true)))) {
-            ArrayList<Level> levels = LevelManager.getLevels();
-            writer.write("New Game :\n");
-            for (int i = 0 ; i < levels.size() ; i++) {
-                writer.write("Level " + (i + 1) + "\n");
-                writer.write("Deaths : " + levels.get(i).getDeaths() + "\n");
-                writer.write("Time : " + levels.get(i).getTime() + "\n");
-            }
-            writer.write("\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

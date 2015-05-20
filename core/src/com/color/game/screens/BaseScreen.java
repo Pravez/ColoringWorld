@@ -3,20 +3,26 @@ package com.color.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.color.game.ColorGame;
+import com.color.game.assets.Assets;
 
 /**
  * BaseScreen, the base class of all the screens of the Game
  * It has a reference to the {@link ColorGame} class and contains all common attributes between the screens
  */
 class BaseScreen implements Screen, InputProcessor {
+
+    protected final static Color TEXT_COLOR = new Color(142f/255, 188f/255, 224f/255, 1);
 
     final ColorGame game;
 
@@ -97,6 +103,35 @@ class BaseScreen implements Screen, InputProcessor {
                 runnable.run();
             }
         });
+    }
+
+    /**
+     * Method called to create a Label
+     * @param value the text to display
+     * @param size the size of the text
+     * @param color the color of the text
+     * @return the Label created
+     */
+    protected Label createLabel(String value, int size, Color color) {
+        return new Label(value, new Label.LabelStyle(Assets.getBasicFont(size), color));
+    }
+
+    /**
+     * Method called to add a Menu Button to the Table
+     * @param table the Table where to add the Button
+     * @param colspan the column span the button should take
+     * @param padTop the padding to the top
+     */
+    protected void addMenuButton(Table table, int colspan, float padTop) {
+        TextButton buttonMenu = new TextButton("Menu", Assets.menuSkin);
+        setButtonListener(buttonMenu, new Runnable() {
+            @Override
+            public void run() {
+                game.setMenuScreen();
+            }
+        });
+
+        table.add(buttonMenu).colspan(colspan).size(250, 60).padTop(padTop).row();
     }
 
     @Override

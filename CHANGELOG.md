@@ -1,3 +1,7 @@
+# 0.3.1a (May 20, 2015)
+- best scores
+- saving in a file the player's advancement
+
 # 0.3.1 (May 20, 2015)
 - Levels locked
 - Levels unlocked when reaching the exit

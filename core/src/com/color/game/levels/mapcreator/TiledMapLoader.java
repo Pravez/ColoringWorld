@@ -6,7 +6,11 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.color.game.levels.Level;
+import com.color.game.levels.mapcreator.elements.TiledColorPlatforms;
+import com.color.game.levels.mapcreator.elements.TiledElements;
 import com.color.game.levels.mapcreator.elements.TiledPlatforms;
+
+import java.util.ArrayList;
 
 public class TiledMapLoader {
 
@@ -15,7 +19,7 @@ public class TiledMapLoader {
 
     private MapLayers layers;
 
-    TiledPlatforms tiledPlatforms;
+    ArrayList<TiledElements> tiledElements;
 
     private Level level;
 
@@ -26,11 +30,17 @@ public class TiledMapLoader {
         this.orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         this.layers = tiledMap.getLayers();
 
-        this.tiledPlatforms = new TiledPlatforms(level, (TiledMapTileLayer) this.layers.get("static"));
+        this.tiledElements = new ArrayList<>();
+        this.tiledElements.add(new TiledPlatforms(level, (TiledMapTileLayer) this.layers.get("static")));
+        this.tiledElements.add(new TiledColorPlatforms(level, (TiledMapTileLayer) this.layers.get("red_activated")));
+        this.tiledElements.add(new TiledColorPlatforms(level, (TiledMapTileLayer) this.layers.get("red_deactivated")));
+
     }
 
     public void loadMap() {
-        this.tiledPlatforms.loadElements();
+        for(TiledElements te : tiledElements){
+            te.loadElements();
+        }
     }
 
     public TiledMap getTiledMap() {

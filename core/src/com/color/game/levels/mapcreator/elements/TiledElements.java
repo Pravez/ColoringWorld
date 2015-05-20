@@ -1,6 +1,7 @@
 package com.color.game.levels.mapcreator.elements;
 
 
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.BaseElement;
@@ -12,6 +13,7 @@ public abstract class TiledElements {
 
     protected Level level;
     protected HashMap<TiledCell, Vector2> finalElements;
+    protected MapProperties properties;
     protected TiledMapTileLayer layer;
     protected float tileSize;
     protected float unitSize;
@@ -37,13 +39,23 @@ public abstract class TiledElements {
         this.layer = layer;
         this.tileSize = layer.getTileWidth();
         this.unitSize = (tileSize /2)/ BaseElement.WORLD_TO_SCREEN;
+        this.properties = layer.getProperties();
     }
 
+    /**
+     * Method to load everything, manages the loading.
+     */
     public void loadElements(){
         allocateCells();
         createBodies();
     }
 
+    /**
+     * Method to know if a tiledCell is contained in a HashMap, thanks to its coordinates
+     * @param cells the HashMap <Vector2, TiledCell>
+     * @param tiledCell the tiledCell to test
+     * @return true or false
+     */
     protected boolean containsObject(HashMap<Vector2, TiledCell> cells, TiledCell tiledCell) {
         for (Vector2 c : cells.keySet()) {
             if (c.x == tiledCell.posX && c.y == tiledCell.posY) {

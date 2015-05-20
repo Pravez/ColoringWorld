@@ -26,7 +26,7 @@ public class ColorPlatform extends BaseStaticElement implements BaseColorElement
 
     final private ShapeRenderer shapeRenderer;
 
-    public ColorPlatform(Vector2 position, int width, int height, Level level, ElementColor color, boolean activated) {
+    public ColorPlatform(Vector2 position, float width, float height, Level level, ElementColor color, boolean activated) {
         super(position, width, height, level.map, PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);
         this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.COLORPLATFORM));
         this.color = color;

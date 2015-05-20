@@ -19,6 +19,7 @@ public class TiledPlatforms extends TiledElements {
      * a vector2, in a map.
      * @return The HashMap created
      */
+    @Override
     protected HashMap<Vector2, TiledCell> loadCells() {
         HashMap<Vector2, TiledCell> platforms = new HashMap<>();
 
@@ -65,6 +66,7 @@ public class TiledPlatforms extends TiledElements {
     /**
      * Here we allocate cells, we sort them and allocate them to be ready for being treated.
      */
+    @Override
     protected void allocateCells(){
         HashMap<Vector2, TiledCell> cells = loadCells();
         HashMap<TiledCell, Vector2> cellsWidth = new HashMap<>();
@@ -92,6 +94,7 @@ public class TiledPlatforms extends TiledElements {
     /**
      * Finally we create bodies using the HashMap created before
      */
+    @Override
     protected void createBodies(){
         for(TiledCell cell : finalElements.keySet()){
             Vector2 datas = finalElements.get(cell);

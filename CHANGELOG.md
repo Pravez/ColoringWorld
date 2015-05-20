@@ -1,3 +1,10 @@
+# 0.3.1 (May 20, 2015)
+- Levels locked
+- Levels unlocked when reaching the exit
+- Score handler on deaths number and time
+- Ranking System with stars
+- Displaying the score on the WinScreen
+
 # 0.3 (May 18, 2015) - let's sum up
 - Added enemies which are deadly according to the color
 - Added secondary colors (purple, green, orange)

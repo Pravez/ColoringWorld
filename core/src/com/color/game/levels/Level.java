@@ -98,6 +98,7 @@ public class Level extends Stage {
     public void reset() {
         this.deaths = 0;
         this.time   = 0;
+        this.scoreHandler.setBestScore(this.scoreHandler.getBestScore());
     }
 
     /**
@@ -118,6 +119,10 @@ public class Level extends Stage {
 
     public void unlock() {
         this.locked = false;
+    }
+
+    public void lock() {
+        this.locked = true;
     }
 
     /**

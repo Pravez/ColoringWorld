@@ -142,7 +142,28 @@ public class LevelManager {
         LevelManager.levels.get(index).unlock();
     }
 
-    private static void unlockAll() {
+    /**
+     * Method to reset the game
+     */
+    public static void reset() {
+        for (Level level: LevelManager.levels) {
+            level.reset();
+            level.getScoreHandler().setBestScore(0);
+            level.lock();
+        }
+        LevelManager.currentLevel = 0;
+        getCurrentLevel().unlock();
+    }
+
+    public static void lockAll() {
+        for (Level level: LevelManager.levels) {
+            level.unlock();
+        }
+        LevelManager.currentLevel = 0;
+        getCurrentLevel().unlock();
+    }
+
+    public static void unlockAll() {
         for (Level level: LevelManager.levels) {
             level.unlock();
         }
@@ -150,7 +171,7 @@ public class LevelManager {
 
     private static void addFirstLevel() {
         Level level = new Level(new Vector2(2, 1));
-        level.setScoreHandler(new ScoreHandler(0, 150, 1000, 2000, 3000));
+        level.setScoreHandler(new ScoreHandler(0, 150, 1000, 2000, 3900));
         level.unlock();
 
         // Ground & Walls
@@ -179,7 +200,7 @@ public class LevelManager {
 
     private static void addSecondLevel() {
         Level level = new Level(new Vector2(29, 1));
-        level.setScoreHandler(new ScoreHandler(10, 350, 1000, 2000, 3000));
+        level.setScoreHandler(new ScoreHandler(4, 100, 1000, 3000, 6000));
         //level.unlock();
 
         // Ground & Walls

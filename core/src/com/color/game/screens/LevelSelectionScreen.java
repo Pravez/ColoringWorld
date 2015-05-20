@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -66,10 +67,10 @@ public class LevelSelectionScreen extends BaseScreen {
         setButtonListener(levelButton, new Runnable() {
             @Override
             public void run() {
-                if (!levelButton.isDisabled()) {
-                    LevelManager.changeLevel(index);
-                    game.setGameScreen();
-                }
+            if (!levelButton.isDisabled()) {
+                LevelManager.changeLevel(index);
+                game.setGameScreen();
+            }
             }
         });
 
@@ -100,10 +101,8 @@ public class LevelSelectionScreen extends BaseScreen {
 
     public void update() {
         for (int i = 0 ; i < this.levelButtons.size ; i++) {
-            if (!LevelManager.isLock(i)) {
-                levelButtons.get(i).setDisabled(false);
-                setStars(this.starsTable.get(i), LevelManager.getLevels().get(i).getScoreHandler());
-            }
+            levelButtons.get(i).setDisabled(LevelManager.isLock(i));
+            setStars(this.starsTable.get(i), LevelManager.getLevels().get(i).getScoreHandler());
         }
     }
 
@@ -111,14 +110,13 @@ public class LevelSelectionScreen extends BaseScreen {
         float padRight = 2;
         float padLeft  = 2;
         starTable.clear();
-        if (scoreHandler.isBronzeReached()) {
+        if (scoreHandler.isBronzeReached())
             starTable.add(new Image(this.starDrawable)).size(STAR_SIZE, STAR_SIZE).padRight(padRight).padLeft(padLeft);
-        }
-        if (scoreHandler.isSilverReached()) {
+        else
+            starTable.add(new Actor()).size(STAR_SIZE, STAR_SIZE).padRight(padRight).padLeft(padLeft);
+        if (scoreHandler.isSilverReached())
             starTable.add(new Image(this.starDrawable)).size(STAR_SIZE, STAR_SIZE).padRight(padRight).padLeft(padLeft);
-        }
-        if (scoreHandler.isGoldReached()) {
+        if (scoreHandler.isGoldReached())
             starTable.add(new Image(this.starDrawable)).size(STAR_SIZE, STAR_SIZE).padRight(padRight).padLeft(padLeft);
-        }
     }
 }

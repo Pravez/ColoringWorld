@@ -18,6 +18,10 @@ import com.color.game.assets.Assets;
  */
 public class MenuScreen extends BaseScreen {
 
+    private static final float BUTTON_WIDTH  = 250;
+    private static final float BUTTON_HEIGHT = 60;
+    private static final float BUTTON_GAP    = 20;
+
     /**
      * Constructor of the MenuScreen
      * @param game the ColorGame
@@ -31,55 +35,58 @@ public class MenuScreen extends BaseScreen {
         table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
 
         // Title of the game
-        Label title = new Label("WELT FARBEN ACH YA !", new Label.LabelStyle(Assets.getBasicFont(32), new Color(142f/255, 188f/255, 224f/255, 1)));
+        addTitle(table, "WELT FARBEN ACH YA !");
 
         // Buttons of the menu
-        TextButton buttonPlay    = new TextButton("Play", Assets.menuSkin);
-        TextButton buttonLevel   = new TextButton("Levels", Assets.menuSkin);
-        TextButton buttonOptions = new TextButton("Options", Assets.menuSkin);
-        TextButton buttonKeys    = new TextButton("Keys", Assets.menuSkin);
-        TextButton buttonExit    = new TextButton("Exit", Assets.menuSkin);
-
-        table.add(title).padBottom(40).row();
-        table.add(buttonPlay).size(250,60).padBottom(20).row();
-        table.add(buttonLevel).size(250,60).padBottom(20).row();
-        table.add(buttonOptions).size(250,60).padBottom(20).row();
-        table.add(buttonKeys).size(250,60).padBottom(20).row();
-        table.add(buttonExit).size(250,60).padBottom(20).row();
-
-        table.setFillParent(true);
-        stage.addActor(table);
-
-        // Button listeners
-        setButtonListener(buttonPlay, new Runnable() {
+        addButton(table, "Play", new Runnable() {
             @Override
             public void run() {
                 game.setGameScreen();
             }
         });
-        setButtonListener(buttonLevel, new Runnable() {
+        addButton(table, "Levels", new Runnable() {
             @Override
             public void run() {
                 game.setLevelSelectionScreen();
             }
         });
-        setButtonListener(buttonOptions, new Runnable() {
+        addButton(table, "Options", new Runnable() {
             @Override
             public void run() {
                 game.setOptionScreen();
             }
         });
-        setButtonListener(buttonKeys, new Runnable() {
+        addButton(table, "Keys", new Runnable() {
             @Override
             public void run() {
                 game.setKeysScreen();
             }
         });
-        setButtonListener(buttonExit, new Runnable() {
+        addButton(table, "Reset", new Runnable() {
+            @Override
+            public void run() {
+                game.reset();
+            }
+        });
+        addButton(table, "Exit", new Runnable() {
             @Override
             public void run() {
                 Gdx.app.exit();
             }
         });
+
+        table.setFillParent(true);
+        stage.addActor(table);
+    }
+
+    private void addTitle(Table table, String text) {
+        Label title = new Label(text, new Label.LabelStyle(Assets.getBasicFont(32), new Color(142f/255, 188f/255, 224f/255, 1)));
+        table.add(title).padBottom(40).row();
+    }
+
+    private void addButton(Table table, String text, Runnable runnable) {
+        TextButton textButton = new TextButton(text, Assets.menuSkin);
+        table.add(textButton).size(BUTTON_WIDTH, BUTTON_HEIGHT).padBottom(BUTTON_GAP).row();
+        setButtonListener(textButton, runnable);
     }
 }

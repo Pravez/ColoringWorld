@@ -85,6 +85,10 @@ public class ColorGame extends Game {
 		LevelManager.disposeLevels();
 	}
 
+	public void reset() {
+		LevelManager.reset();
+	}
+
 	// Screens
 	public void setDeathScreen() {
 		this.transitionScreen.setTitle("You die");

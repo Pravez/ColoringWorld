@@ -131,7 +131,7 @@ public class Level extends Stage {
         Level.accumulator += delta;
         this.scoreHandler.addTime(delta);
 
-        while(Level.accumulator >= delta){
+        while(Level.accumulator >= delta) {
             LevelManager.getCurrentLevel().map.world.step(Level.TIME_STEP, 6, 2);
             Level.accumulator -= Level.TIME_STEP;
         }

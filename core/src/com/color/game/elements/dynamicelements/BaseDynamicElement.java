@@ -125,7 +125,7 @@ public abstract class BaseDynamicElement extends BaseElement {
     }
 
     public void removeContacts(){
-        contacts.clear();
+        this.contacts.clear();
     }
     /**
      * Method to teleport the element to a specific position
@@ -182,7 +182,7 @@ public abstract class BaseDynamicElement extends BaseElement {
      * After clearing the contacts Array in the update loop, we update contacts. Means that we are seeking for contacts
      * between the element which calls this method and every other elements in the world's contacts list.
      */
-    public void updateContacts(){
+    public void updateContacts() {
         for (Contact c : this.physicComponent.getBody().getWorld().getContactList()) {
             if(UserData.isDynamicBodyPresent(c, this.physicComponent.getBody())){
                 if(c.isTouching() && UserData.isPlatformValid(c)) {
@@ -190,7 +190,6 @@ public abstract class BaseDynamicElement extends BaseElement {
                         contacts.add(c);
                     }
                 }
-
                 handleSpecificContacts(c, UserData.getOtherBody(c, this));
             }
         }

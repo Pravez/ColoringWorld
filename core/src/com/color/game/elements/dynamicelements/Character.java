@@ -153,16 +153,6 @@ public class Character extends BaseDynamicElement {
         this.physicComponent.changeWorld(world, position);
     }
 
-    /**
-     * Resets the character at the beginning of the level.
-     * @param position Position where the character will be replaced
-     */
-    public void reset(Vector2 position) {
-        this.physicComponent.getBody().setTransform(position.x, position.y, 0);
-        this.physicComponent.rebase();
-        this.removeContacts();
-    }
-
     public Vector2 getSquatVector2(){
         return new Vector2(CHARACTER_WIDTH, CHARACTER_SQUAT_HEIGHT);
     }
@@ -186,7 +176,7 @@ public class Character extends BaseDynamicElement {
             BaseElement killing = ((UserData)touched.getUserData()).getElement();
             float x = this.getBounds().x;
             float width = this.getBounds().width;
-            if (this.getCenter().y > killing.getCenter().y) {
+            if (this.getCenter().y > killing.getCenter().y && !UserData.isEnemy(touched)) {
                 if (!(x < killing.getBounds().x && x + width/2 < killing.getBounds().x) &&
                         !(x > killing.getBounds().x && x + width/2 > killing.getBounds().x + killing.getBounds().width)) {
                     this.kill();

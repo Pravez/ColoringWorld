@@ -183,7 +183,16 @@ public class Character extends BaseDynamicElement {
     @Override
     public void handleSpecificContacts(Contact c, Body touched) {
         if (UserData.isDeadly(touched)) {
-            this.kill();
+            BaseElement killing = ((UserData)touched.getUserData()).getElement();
+            float x = this.getBounds().x;
+            float width = this.getBounds().width;
+            if (this.getCenter().y > killing.getCenter().y) {
+                if (!(x < killing.getBounds().x && x + width/2 < killing.getBounds().x) &&
+                        !(x > killing.getBounds().x && x + width/2 > killing.getBounds().x + killing.getBounds().width)) {
+                    this.kill();
+                }
+            } else
+                this.kill();
         }
         if (UserData.isExit(touched)) {
             gameScreen.reachExit(touched);

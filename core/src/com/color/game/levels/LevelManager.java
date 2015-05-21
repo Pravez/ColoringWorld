@@ -82,8 +82,8 @@ public class LevelManager {
      */
     public static void init() {
         levels = new ArrayList<>();
-        /*addFirstDebugLevel();
-        addSecondDebugLevel();
+        addFirstDebugLevel();
+        /*addSecondDebugLevel();
         addThirdDebugLevel();
         addForthDebugLevel();
         addFifthDebugLevel();

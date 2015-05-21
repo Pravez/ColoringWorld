@@ -67,7 +67,7 @@ public abstract class UserData {
 
     public static boolean isSensor(Body body) {
         UserData userData = (UserData) body.getUserData();
-        return userData != null && userData.getUserDataType() == UserDataType.SENSOR;
+        return userData != null && userData.getUserDataType() == UserDataType.SENSOR || userData.getUserDataType() == UserDataType.COLOREDMAGNET;
     }
 
     public static boolean isColoredMagnet(Body body) {

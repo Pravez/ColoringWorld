@@ -23,7 +23,7 @@ public class FallingPlatform extends BaseDynamicPlatform {
     final private ShapeRenderer shapeRenderer;
     private Color color = Color.ORANGE;
 
-    public FallingPlatform(Vector2 position, int width, int height, Level level, boolean fall) {
+    public FallingPlatform(Vector2 position, float width, float height, Level level, boolean fall) {
         super(position, width, height, level);
         this.fall = fall;
 

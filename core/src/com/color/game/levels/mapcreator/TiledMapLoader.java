@@ -9,6 +9,7 @@ import com.color.game.assets.SaveManager;
 import com.color.game.levels.Level;
 import com.color.game.levels.mapcreator.elements.TiledElements;
 import com.color.game.levels.mapcreator.elements.specials.TiledEndObjects;
+import com.color.game.levels.mapcreator.elements.specials.TiledFallingPlatforms;
 import com.color.game.levels.mapcreator.elements.specials.TiledMovingPlatforms;
 import com.color.game.levels.mapcreator.elements.specials.TiledTeleporters;
 import com.color.game.levels.mapcreator.elements.statics.TiledColorPlatforms;
@@ -24,7 +25,7 @@ public class TiledMapLoader {
                                          "blue", "blue_deactivated", "yellow", "yellow_deactivated",
                                          "purple", "purple_deactivated", "orange", "orange_deactivated",
                                          "green", "green_deactivated", "black", "black_deactivated",
-                                         "character", "exit", "teleporter"};
+                                         "character", "exit", "teleporter", "falling"};
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
@@ -89,6 +90,9 @@ public class TiledMapLoader {
                     break;
                 case "teleporter":
                     this.tiledElements.add(new TiledTeleporters(level, this.layers.get("teleporter")));
+                    break;
+                case "falling":
+                    this.tiledElements.add(new TiledFallingPlatforms(level, this.layers.get("falling")));
                     break;
             }
         }

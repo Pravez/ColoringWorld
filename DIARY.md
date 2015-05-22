@@ -1,9 +1,21 @@
+# May 22, 2015
+* Continuing and finishing work on ColoredMagnets
+* Released v0.3.2
+* Continuing work on .tmx files, now completely finished work on game MapObjects, from Tiled.
+* Implemented interpretation of MovingPlatforms
+
+# May 21, 2015
+* Finished implementing static platforms into our conception from .tmx files
+* Created some UI for user when a problem occurs on the loading of a level
+* Started work on ColoredMagnets
+
 # May 20, 2015
 * Started implementation of parser for reading .tmx files from Tiled
 * Concerning the parser, created a complicated way to create for example only 1 platform instead of 10
 * Continued implementation of the parser. Now possibility to extract from .tmx files platforms and color platforms
 * Implemented score system
 * Added some funny features concerning score
+* Released v0.3.1 and v0.3.1a with scores adjustments
 
 # May 19, 2015
 * Added level for testers

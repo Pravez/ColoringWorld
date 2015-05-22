@@ -16,7 +16,7 @@ public abstract class PhysicComponent {
     public static final short CATEGORY_SCENERY = 0x0004; // 0000000000000100 in binary
     public static final short CATEGORY_SENSOR = 0x0008; // 0000000000001000 in binary
     public static final short CATEGORY_DEAD = 0x0016; // 0000000000010000 in binary
-    public static final short CATEGORY_PLATFORM = 0x0032;
+    public static final short CATEGORY_PLATFORM = 0x0064;
 
     public static final short MASK_PLAYER = CATEGORY_ENEMY | CATEGORY_SCENERY | CATEGORY_PLATFORM | CATEGORY_SENSOR;
     public static final short MASK_ENEMY = CATEGORY_PLAYER | CATEGORY_SCENERY | CATEGORY_PLATFORM | CATEGORY_SENSOR;

@@ -8,6 +8,7 @@ import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
 import com.color.game.elements.staticelements.BaseStaticElement;
+import com.color.game.elements.staticelements.platforms.DeadlyPlatform;
 import com.color.game.elements.staticelements.platforms.ElementColor;
 import com.color.game.elements.staticelements.sensors.ColoredMagnet;
 import com.color.game.elements.userData.UserData;
@@ -58,25 +59,20 @@ public class MovingEnemy extends Enemy {
      * @param element the potential floor platform of the enemy
      */
     private void selectFloorElement(BaseStaticElement element) {
-        if (this.floorElement == null) {
+        if (this.floorElement == null)
             this.floorElement = element;
-        } else if (element.getBounds().y + element.getBounds().height < this.getBounds().y) {
+        else if (element.getBounds().y + element.getBounds().height < this.getBounds().y)
             this.floorElement = element;
-        }
     }
 
     @Override
     public void act(BaseElement element) {
-        if (!this.canFall) {
-            if(element instanceof BaseStaticElement) {
-                selectFloorElement((BaseStaticElement) element);
-            }
-        }
+        if (!this.canFall && element.isPlatform())
+            selectFloorElement((BaseStaticElement) element);
 
         // Kill the enemy with a Deadly Platform
-        if (element.getPhysicComponent().getUserData().getUserDataType() == UserDataType.ENEMY) {
+        if (element instanceof DeadlyPlatform)
             kill();
-        }
 
         if (this.changeDirection) {
             this.current_direction = -1 * this.current_direction;
@@ -102,18 +98,16 @@ public class MovingEnemy extends Enemy {
             this.preventLeft = false;
             this.current_direction = -1 * this.current_direction;
             this.physicComponent.setMove(this.current_direction);
-        } else{
+        } else
             this.physicComponent.setMove(this.current_direction);
-        }
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
         this.physicComponent.move(MovingEnemy.ENEMY_MOVING_VELOCITY);
-        if (!this.canFall && this.floorElement != null ) {
+        if (!this.canFall && this.floorElement != null )
             preventFalling();
-        }
     }
 
     @Override
@@ -126,16 +120,11 @@ public class MovingEnemy extends Enemy {
 
     @Override
     public void handleSpecificContacts(Contact c, Body touched) {
+        if(UserData.isWall(c) || UserData.isDynamicPlatform(touched))
+            this.changeDirection = true;
 
-        if(UserData.isWall(c)) {
-            changeDirection = true;
-        }
-        if(UserData.isDynamicPlatform(touched)){
-            changeDirection = true;
-        }
-        if(UserData.isColoredMagnet(touched)){
+        if(UserData.isColoredMagnet(touched))
             ((ColoredMagnet)(((UserData) touched.getUserData()).getElement())).act(this);
-        }
 
         act(((UserData)touched.getUserData()).getElement());
         handleFallingPlatform(touched);

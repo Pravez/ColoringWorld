@@ -570,6 +570,8 @@ public class LevelManager {
         level.addActor(new ColoredMagnet(new Vector2(10,5), 10, level));
         level.addActor(new ColoredMagnet(new Vector2(30,5), 10, level));
         level.addActor(new MovingEnemy(new Vector2(30, 1), 2, 2, level, false, ElementColor.BLACK));
+        level.addActor(new MovingEnemy(new Vector2(34, 1), 2, 2, level, false, ElementColor.BLACK));
+        level.addActor(new MovingEnemy(new Vector2(38, 1), 2, 2, level, false, ElementColor.PURPLE));
 
         // Notices
         level.addActor(new Notice(new Vector2(4, 1), 3, 3, level.map, 0));

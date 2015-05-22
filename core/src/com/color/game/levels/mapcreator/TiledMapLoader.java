@@ -8,7 +8,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.color.game.assets.SaveManager;
 import com.color.game.levels.Level;
 import com.color.game.levels.mapcreator.elements.TiledElements;
-import com.color.game.levels.mapcreator.elements.dynamic.TiledMovingPlatforms;
+import com.color.game.levels.mapcreator.elements.specials.TiledEndObjects;
+import com.color.game.levels.mapcreator.elements.specials.TiledMovingPlatforms;
 import com.color.game.levels.mapcreator.elements.statics.TiledColorPlatforms;
 import com.color.game.levels.mapcreator.elements.statics.TiledDeadlyPlatforms;
 import com.color.game.levels.mapcreator.elements.statics.TiledPlatforms;
@@ -21,7 +22,8 @@ public class TiledMapLoader {
     private String[] maps = new String[]{"static", "moving", "deadly", "red", "red_deactivated",
                                          "blue", "blue_deactivated", "yellow", "yellow_deactivated",
                                          "purple", "purple_deactivated", "orange", "orange_deactivated",
-                                         "green", "green_deactivated", "black", "black_deactivated", "character"};
+                                         "green", "green_deactivated", "black", "black_deactivated",
+                                         "character", "exit"};
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
@@ -30,6 +32,7 @@ public class TiledMapLoader {
 
     ArrayList<TiledElements> tiledElements;
     private Level level;
+    private Integer levelIndex;
 
     public TiledMapLoader(Level level, String path){
 
@@ -37,6 +40,7 @@ public class TiledMapLoader {
         this.tiledMap = new TmxMapLoader().load(path);
         this.orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         this.layers = tiledMap.getLayers();
+        this.levelIndex = tiledMap.getProperties().get("index") != null ? Integer.parseInt((String)tiledMap.getProperties().get("index")) : -1;
 
         this.tiledElements = new ArrayList<>();
 
@@ -78,6 +82,9 @@ public class TiledMapLoader {
                     break;
                 case "character":
                     TiledElements.setCharacter(level, this.layers.get("character"));
+                    break;
+                case "exit":
+                    this.tiledElements.add(new TiledEndObjects(level, this.layers.get("exit"), levelIndex));
                     break;
             }
         }

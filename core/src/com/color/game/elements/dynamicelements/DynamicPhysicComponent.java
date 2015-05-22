@@ -6,7 +6,7 @@ import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
 
 /**
- * PhysicComponent specific to dynamic bodies. It manages every move of the dynamic element.
+ * PhysicComponent specific to specials bodies. It manages every move of the specials element.
  */
 public class DynamicPhysicComponent extends PhysicComponent{
 

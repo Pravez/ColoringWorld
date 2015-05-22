@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
- * Class BaseElement which one is part of the Scene2D "world". It will be extended by every static or dynamic
+ * Class BaseElement which one is part of the Scene2D "world". It will be extended by every static or specials
  * element in the world. It has two components : the graphic one used for everything concerning graphics, and the physic one
  * concerning the maths and physics for the element evolving in this world. See {@link com.color.game.elements.PhysicComponent}
  */

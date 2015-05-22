@@ -18,9 +18,9 @@ import com.color.game.elements.userData.UserData;
 import java.util.Iterator;
 
 /**
- * Basic class for each dynamic element, extending the basic class for every element. It has as attributes
+ * Basic class for each specials element, extending the basic class for every element. It has as attributes
  * two states : one concerning the states when being aloft, and another concerning the fact of moving the element.
- * This class contains everything common for each Dynamic element (understand dynamic body), so states and commands.
+ * This class contains everything common for each Dynamic element (understand specials body), so states and commands.
  */
 public abstract class BaseDynamicElement extends BaseElement {
 

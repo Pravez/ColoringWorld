@@ -10,7 +10,7 @@ import com.color.game.levels.Level;
 public class BaseDynamicPlatform extends BaseElement {
     
     /**
-     * The initial position of the dynamic platform in the level
+     * The initial position of the specials platform in the level
      */
     final private Vector2 initialPosition;
 
@@ -25,7 +25,7 @@ public class BaseDynamicPlatform extends BaseElement {
     }
 
     /**
-     * Method called when restarting the level to reset the dynamic platform in the level
+     * Method called when restarting the level to reset the specials platform in the level
      */
     public void respawn() {
         this.physicComponent.getBody().setActive(true);

@@ -8,10 +8,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.color.game.assets.SaveManager;
 import com.color.game.levels.Level;
 import com.color.game.levels.mapcreator.elements.TiledElements;
-import com.color.game.levels.mapcreator.elements.specials.TiledEndObjects;
-import com.color.game.levels.mapcreator.elements.specials.TiledFallingPlatforms;
-import com.color.game.levels.mapcreator.elements.specials.TiledMovingPlatforms;
-import com.color.game.levels.mapcreator.elements.specials.TiledTeleporters;
+import com.color.game.levels.mapcreator.elements.specials.*;
 import com.color.game.levels.mapcreator.elements.statics.TiledColorPlatforms;
 import com.color.game.levels.mapcreator.elements.statics.TiledDeadlyPlatforms;
 import com.color.game.levels.mapcreator.elements.statics.TiledPlatforms;
@@ -25,7 +22,7 @@ public class TiledMapLoader {
                                          "blue", "blue_deactivated", "yellow", "yellow_deactivated",
                                          "purple", "purple_deactivated", "orange", "orange_deactivated",
                                          "green", "green_deactivated", "black", "black_deactivated",
-                                         "character", "exit", "teleporter", "falling"};
+                                         "character", "exit", "teleporter", "falling", "windblower"};
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
@@ -93,6 +90,9 @@ public class TiledMapLoader {
                     break;
                 case "falling":
                     this.tiledElements.add(new TiledFallingPlatforms(level, this.layers.get("falling")));
+                    break;
+                case "windblower":
+                    this.tiledElements.add(new TiledWindBlowers(level, this.layers.get("windblower")));
                     break;
             }
         }

@@ -1,3 +1,6 @@
+# 0.3.2 (May 22, 2015)
+- ColoredMagnet implemented
+
 # 0.3.1a (May 20, 2015)
 - best scores
 - saving in a file the player's advancement

@@ -2,11 +2,9 @@ package com.color.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -26,16 +24,14 @@ public class TransitionScreen extends BaseScreen {
 
     public TransitionScreen(ColorGame game) {
         super(game);
-        this.texture = new Texture(Gdx.files.internal("backgrounds/background0.png"));
+        this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
 
         Table table = new Table();
         table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
 
-        Color color = new Color(142f/255, 188f/255, 224f/255, 1);
-
-        this.title = new Label("", new Label.LabelStyle(Assets.getBasicFont(28), color));
-        this.message = new Label("", new Label.LabelStyle(Assets.getBasicFont(14), color));
-        this.space = new Label("Press SPACE to continue", new Label.LabelStyle(Assets.getBasicFont(18), color));
+        this.title = createLabel("", 28, TEXT_COLOR);
+        this.message = createLabel("", 14, TEXT_COLOR);
+        this.space = createLabel("Press SPACE to continue", 18, TEXT_COLOR);
 
         table.add(title).padBottom(30).row();
         /*Image image = new Image();

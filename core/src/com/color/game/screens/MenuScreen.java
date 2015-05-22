@@ -68,6 +68,12 @@ public class MenuScreen extends BaseScreen {
                 game.reset();
             }
         });
+        addButton(table, "Credits", new Runnable() {
+            @Override
+            public void run() {
+                game.setCreditsScreen();
+            }
+        });
         addButton(table, "Exit", new Runnable() {
             @Override
             public void run() {

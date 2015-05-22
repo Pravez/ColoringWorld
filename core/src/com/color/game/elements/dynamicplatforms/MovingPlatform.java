@@ -41,7 +41,7 @@ public class MovingPlatform extends BaseDynamicPlatform{
 
         this.points = new ArrayList<>();
 
-        this.points.add(position);
+        this.points.add(this.physicComponent.getWorldPosition());
         this.points.addAll(points);
 
         this.physicComponent.adjustFriction(1.0f);

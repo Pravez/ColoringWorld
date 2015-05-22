@@ -24,7 +24,7 @@ public class ColorFallingPlatform extends FallingPlatform implements BaseColorEl
     }
 
     @Override
-    protected void touchFloor() {
+    public void touchFloor() {
         super.deactivate();
         setTransparent(true);
     }

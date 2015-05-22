@@ -16,6 +16,7 @@ import com.color.game.command.colors.ColorCommandManager;
 import com.color.game.command.elements.*;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.Character;
+import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.sensors.ColoredMagnet;
 import com.color.game.elements.staticelements.sensors.Sensor;
@@ -460,6 +461,22 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
                 @Override
                 public void run() {
                     ((Sensor) ((UserData) b.getBody().getUserData()).getElement()).act(character);
+                }
+            });
+        }
+
+        if (UserData.isFallingPlatform(a.getBody()) && UserData.isPlatform(b.getBody())) {
+            this.runnables.add(new Runnable() {
+                @Override
+                public void run() {
+                    ((FallingPlatform) ((UserData) a.getBody().getUserData()).getElement()).touchFloor();
+                }
+            });
+        } else if (UserData.isFallingPlatform(b.getBody()) && UserData.isPlatform(a.getBody())) {
+            this.runnables.add(new Runnable() {
+                @Override
+                public void run() {
+                    ((FallingPlatform) ((UserData) b.getBody().getUserData()).getElement()).touchFloor();
                 }
             });
         }

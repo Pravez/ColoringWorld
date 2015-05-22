@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.dynamicplatforms.MovingPlatform;
 import com.color.game.levels.Level;
-import com.color.game.levels.mapcreator.elements.TiledElements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,9 +54,6 @@ public class TiledMovingPlatforms extends TiledDynamicElements{
         }
     }
 
-    private float convert(float number){
-        return (number/32)* TiledElements.unitSize;
-    }
 
     private ArrayList<Vector2> getPositions(String s){
 

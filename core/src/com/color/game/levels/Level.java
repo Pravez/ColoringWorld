@@ -36,7 +36,7 @@ public class Level extends Stage {
     /**
      * The position of the {@link com.color.game.elements.dynamicelements.Character} at the beginning of the level
      */
-    final public Vector2 characterPos;
+    public Vector2 characterPos;
 
     /**
      * The list of the {@link com.color.game.elements.BaseColorElement} of the level
@@ -76,7 +76,7 @@ public class Level extends Stage {
 
     public Level(String path){
         this.map          = new Map(Map.WORLD_GRAVITY, true);
-        this.characterPos = new Vector2(1, 1).scl(2);
+        this.characterPos = new Vector2(1,1);
 
         this.colorElements = new Array<>();
         this.dynamicPlatforms = new Array<>();
@@ -97,6 +97,10 @@ public class Level extends Stage {
         for (BaseDynamicPlatform dynamicPlatform : this.dynamicPlatforms) {
             dynamicPlatform.respawn();
         }
+    }
+
+    public void setCharacterPosition(Vector2 position){
+        this.characterPos.set(position.x, position.y);
     }
 
     public boolean isLocked() {

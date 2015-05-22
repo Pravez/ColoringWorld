@@ -21,7 +21,7 @@ public class TiledMapLoader {
     private String[] maps = new String[]{"static", "moving", "deadly", "red", "red_deactivated",
                                          "blue", "blue_deactivated", "yellow", "yellow_deactivated",
                                          "purple", "purple_deactivated", "orange", "orange_deactivated",
-                                         "green", "green_deactivated", "black", "black_deactivated"};
+                                         "green", "green_deactivated", "black", "black_deactivated", "character"};
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
@@ -75,6 +75,9 @@ public class TiledMapLoader {
                     break;
                 case "deadly":
                     this.tiledElements.add(new TiledDeadlyPlatforms(level, (TiledMapTileLayer) this.layers.get("deadly")));
+                    break;
+                case "character":
+                    TiledElements.setCharacter(level, this.layers.get("character"));
                     break;
             }
         }

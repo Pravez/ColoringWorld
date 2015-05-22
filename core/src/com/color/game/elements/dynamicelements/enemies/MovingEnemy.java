@@ -9,6 +9,7 @@ import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
 import com.color.game.elements.staticelements.BaseStaticElement;
 import com.color.game.elements.staticelements.platforms.ElementColor;
+import com.color.game.elements.staticelements.sensors.ColoredMagnet;
 import com.color.game.elements.userData.UserData;
 import com.color.game.elements.userData.UserDataType;
 import com.color.game.levels.Level;
@@ -77,7 +78,7 @@ public class MovingEnemy extends Enemy {
             kill();
         }
 
-        if (changeDirection) {
+        if (this.changeDirection) {
             this.current_direction = -1 * this.current_direction;
             this.physicComponent.setMove(this.current_direction);
             this.preventRight = false;
@@ -118,6 +119,7 @@ public class MovingEnemy extends Enemy {
     @Override
     public void respawn() {
         super.respawn();
+        this.clearCommands();
         this.preventLeft = false;
         this.preventRight = false;
     }
@@ -125,11 +127,14 @@ public class MovingEnemy extends Enemy {
     @Override
     public void handleSpecificContacts(Contact c, Body touched) {
 
-        if(UserData.isWall(c)){
+        if(UserData.isWall(c)) {
             changeDirection = true;
         }
         if(UserData.isDynamicPlatform(touched)){
             changeDirection = true;
+        }
+        if(UserData.isColoredMagnet(touched)){
+            ((ColoredMagnet)(((UserData) touched.getUserData()).getElement())).act(this);
         }
 
         act(((UserData)touched.getUserData()).getElement());

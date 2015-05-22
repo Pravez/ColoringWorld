@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.command.elements.PushCommand;
 import com.color.game.elements.BaseColorElement;
-import com.color.game.elements.dynamicelements.BaseDynamicElement;
+import com.color.game.elements.dynamicelements.*;
 import com.color.game.elements.staticelements.platforms.ElementColor;
 import com.color.game.elements.userData.StaticElementUserData;
 import com.color.game.elements.userData.UserDataType;
@@ -16,18 +16,18 @@ import com.color.game.gui.ColorMixManager;
 import com.color.game.levels.Level;
 import com.color.game.screens.GameScreen;
 
-import java.util.HashMap;
+import java.util.LinkedList;
 
-@Deprecated
 public class ColoredMagnet extends Sensor implements BaseColorElement {
 
     private static final float ATTRACT_FORCE = 25f;
 
     final private PushCommand pushCommand;
+    final private PushCommand attractCommand;
 
     final private ShapeRenderer shapeRenderer;
 
-    private HashMap<ElementColor, Boolean> colorsMap;
+    private LinkedList<ElementColor> activatedColors;
 
     private ElementColor currentColor;
 
@@ -37,28 +37,24 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
 
         level.addColorElement(this);
 
-        colorsMap = new HashMap<>();
-        colorsMap.put(ElementColor.BLACK, false);
-        colorsMap.put(ElementColor.ORANGE, false);
-        colorsMap.put(ElementColor.GREEN, false);
-        colorsMap.put(ElementColor.PURPLE, false);
+        this.activatedColors = new LinkedList<>();
 
         this.currentColor = null;
 
-        this.pushCommand = new PushCommand();
-        this.shapeRenderer = new ShapeRenderer();
+        this.pushCommand    = new PushCommand();
+        this.attractCommand = new PushCommand();
+        this.shapeRenderer  = new ShapeRenderer();
     }
-
 
     @Override
     public void act(final BaseDynamicElement element) {
-        //this.pushCommand.restart();
-        addPushCommand(element);
+        manageContact(element);
     }
 
     @Override
     public void endAct() {
         this.pushCommand.end();
+        this.attractCommand.end();
     }
 
     @Override
@@ -76,66 +72,61 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
         batch.begin();
     }
 
-    private void addPushCommand(final BaseDynamicElement element){
-        if(/*colorsMap.get(ElementColor.GREEN) ||*/ this.currentColor == ElementColor.GREEN) {
-            this.pushCommand.setRunnable(new Runnable() {
-                @Override
-                public void run() {
-                    float dx = getCenter().x - element.getCenter().x;
-                    float dy = getCenter().y - element.getCenter().y;
-                    element.applyLinearVelocity(new Vector2(dx, dy));
-                }
-            });
-            element.addCommand(this.pushCommand);
-        } else if (this.currentColor == ElementColor.ORANGE) {
-            this.pushCommand.setRunnable(new Runnable() {
-                @Override
-                public void run() {
-                    element.applyLinearForce(calculateForce(element.getCenter()));
-                }
-            });
-            element.addCommand(this.pushCommand);
-        /*else if(colorsMap.get(ElementColor.ORANGE)){
-            this.pushCommand.setRunnable(new Runnable() {
-                @Override
-                public void run() {
-                    float dx = getCenter().x + element.getCenter().x;
-                    float dy = getCenter().y + element.getCenter().y;
-                    element.applyLinearVelocity(new Vector2(dx, dy));
-                }
-            });
-            element.addCommand(this.pushCommand);
-        }*/
-        } else if (this.currentColor == ElementColor.PURPLE) {
-            this.pushCommand.end();
-        } else if (this.currentColor == ElementColor.BLACK) {
-            this.pushCommand.end();
+    private void manageContact(final BaseDynamicElement element) {
+        boolean isCharacter = element instanceof com.color.game.elements.dynamicelements.Character;
+        if (this.currentColor == ElementColor.GREEN) { // Attracts the character
+            if (isCharacter)
+                addAttractCommand(element);
+        } else if (this.currentColor == ElementColor.ORANGE) { // Pushes the character
+            if (isCharacter)
+                addPushCommand(element);
+        } else if (this.currentColor == ElementColor.PURPLE) { // Pushes enemies
+            if (!isCharacter)
+                addPushCommand(element);
+        } else if (this.currentColor == ElementColor.BLACK) { // Kills the element (Character and enemies)
             element.kill();
         }
     }
 
-    private Vector2 calculateForce(Vector2 dynamicElement){
-        Vector2 center = this.getCenter();
-        Vector2 force = new Vector2(0,0);
-        if(dynamicElement.x > center.x){
-            force.x = +ATTRACT_FORCE;
-        }else if(dynamicElement.x < center.x){
-            force.x = -ATTRACT_FORCE;
-        }
+    private void addAttractCommand(final BaseDynamicElement element) {
+        this.attractCommand.setRunnable(new Runnable() {
+            @Override
+            public void run() {
+                element.applyLinearVelocity(new Vector2(getCenter().x - element.getCenter().x, getCenter().y - element.getCenter().y));
+            }
+        });
+        element.addCommand(this.attractCommand);
+    }
 
-        if(dynamicElement.y > center.y){
-            force.y = +ATTRACT_FORCE;
-        }else if(dynamicElement.y < center.y){
+    private void addPushCommand(final BaseDynamicElement element) {
+        this.pushCommand.setRunnable(new Runnable() {
+            @Override
+            public void run() {
+                element.applyLinearForce(calculatePushForce(element.getCenter()));
+            }
+        });
+        element.addCommand(this.pushCommand);
+    }
+
+    private Vector2 calculatePushForce(Vector2 dynamicElement){
+        Vector2 center = this.getCenter();
+        Vector2 force  = new Vector2(0,0);
+
+        if (dynamicElement.x > center.x)
+            force.x = ATTRACT_FORCE;
+        else if (dynamicElement.x < center.x)
+            force.x = -ATTRACT_FORCE;
+
+        if (dynamicElement.y > center.y)
+            force.y = ATTRACT_FORCE;
+        else if(dynamicElement.y < center.y)
             force.y = -ATTRACT_FORCE;
-        }
 
         return force;
     }
 
     @Override
     public boolean isActivated() {
-        /*return (colorsMap.get(ElementColor.PURPLE) || colorsMap.get(ElementColor.ORANGE)
-                || colorsMap.get(ElementColor.GREEN) || colorsMap.get(ElementColor.BLACK));*/
         return this.currentColor != null;
     }
 
@@ -147,32 +138,16 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
     }
 
     private void manageActivation(ElementColor color) {
-        System.out.println("Manage activation with : " + color);
-        /*for(ElementColor e : colorsMap.keySet()){
-            if(e == color){
-                colorsMap.put(e, true);
-            }else{
-                colorsMap.put(e, false);
-            }
-        }*/
-        if (this.currentColor == ElementColor.BLACK) {
-            if (color == ElementColor.BLACK)
-                this.currentColor = null;
-        } else {
-            this.currentColor = (color == this.currentColor) ? null : color;
-        }
+        if (this.activatedColors.contains(color))
+            this.activatedColors.remove();
+        else
+            this.activatedColors.add(color);
+
+        this.currentColor = (this.activatedColors.contains(ElementColor.BLACK)) ? ElementColor.BLACK : this.activatedColors.peek();
     }
 
     @Override
     public ElementColor getElementColor() {
-        /*for(ElementColor e : colorsMap.keySet()){
-            if(colorsMap.get(e)){
-                return e;
-            }
-        }
-
-        // ???
-        return ElementColor.YELLOW;*/
         return this.currentColor != null ? this.currentColor : ElementColor.YELLOW;
     }
 }

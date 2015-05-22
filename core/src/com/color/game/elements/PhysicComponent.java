@@ -19,9 +19,9 @@ public abstract class PhysicComponent {
     public static final short CATEGORY_PLATFORM = 0x0032;
 
     public static final short MASK_PLAYER = CATEGORY_ENEMY | CATEGORY_SCENERY | CATEGORY_PLATFORM | CATEGORY_SENSOR;
-    public static final short MASK_ENEMY = CATEGORY_PLAYER | CATEGORY_SCENERY | CATEGORY_PLATFORM;
+    public static final short MASK_ENEMY = CATEGORY_PLAYER | CATEGORY_SCENERY | CATEGORY_PLATFORM | CATEGORY_SENSOR;
     public static final short MASK_DEAD = 0;// = CATEGORY_SCENERY;
-    public static final short MASK_SENSOR = CATEGORY_PLAYER;
+    public static final short MASK_SENSOR = CATEGORY_PLAYER | CATEGORY_ENEMY;
     public static final short MASK_SCENERY = CATEGORY_PLAYER | CATEGORY_ENEMY | CATEGORY_SCENERY;
     public static final short MASK_PLATFORM = CATEGORY_SCENERY | CATEGORY_ENEMY | CATEGORY_PLAYER;
 

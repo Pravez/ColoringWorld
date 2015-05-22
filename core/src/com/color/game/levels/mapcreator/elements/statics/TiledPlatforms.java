@@ -1,9 +1,10 @@
-package com.color.game.levels.mapcreator.elements;
+package com.color.game.levels.mapcreator.elements.statics;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.staticelements.platforms.Platform;
 import com.color.game.levels.Level;
+import com.color.game.levels.mapcreator.elements.TiledCell;
 
 import java.util.HashMap;
 

@@ -30,7 +30,7 @@ public class SaveManager {
     }
 
     public static void writeLog(String fileName, Exception exception){
-        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(fileName+".txt", true)))) {
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(fileName+".log", true)))) {
             exception.printStackTrace(writer);
             writer.close();
         } catch (Exception e) {

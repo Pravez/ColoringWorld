@@ -1,14 +1,15 @@
-package com.color.game.levels.mapcreator.elements;
+package com.color.game.levels.mapcreator.elements.statics;
 
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
-import com.color.game.elements.BaseElement;
 import com.color.game.levels.Level;
+import com.color.game.levels.mapcreator.elements.TiledCell;
+import com.color.game.levels.mapcreator.elements.TiledElements;
 
 import java.util.HashMap;
 
-public abstract class TiledStaticElements extends TiledElements{
+public abstract class TiledStaticElements extends TiledElements {
 
     protected HashMap<TiledCell, Vector2> finalElements;
     protected TiledMapTileLayer layer;

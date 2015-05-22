@@ -1,4 +1,4 @@
-package com.color.game.levels.mapcreator.elements;
+package com.color.game.levels.mapcreator.elements.dynamic;
 
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.dynamicplatforms.MovingPlatform;
 import com.color.game.levels.Level;
+import com.color.game.levels.mapcreator.elements.TiledElements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class TiledMovingPlatforms extends TiledDynamicElements{
 
     private void loadRectangles(){
         for(MapObject object : this.objects){
-            if(object instanceof RectangleMapObject && Objects.equals(object.getName(), "MovingPlatform")) {
+            if(object instanceof RectangleMapObject && Objects.equals(object.getName(), "moving")) {
                 rectangles.put((RectangleMapObject) object, object.getProperties());
             }else if(object instanceof RectangleMapObject){
                 directionsPositions.add((RectangleMapObject) object);
@@ -55,7 +56,7 @@ public class TiledMovingPlatforms extends TiledDynamicElements{
     }
 
     private float convert(float number){
-        return (number/32)*unitSize;
+        return (number/32)* TiledElements.unitSize;
     }
 
     private ArrayList<Vector2> getPositions(String s){

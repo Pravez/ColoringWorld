@@ -18,7 +18,7 @@ public class DeadlyPlatform extends BaseStaticElement {
 
     final private ShapeRenderer shapeRenderer;
 
-    public DeadlyPlatform(Vector2 position, int width, int height, Level level) {
+    public DeadlyPlatform(Vector2 position, float width, float height, Level level) {
         super(position, width, height, level.map, PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);
         this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.DEADLY));
         level.addPlatform(this);

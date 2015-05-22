@@ -8,13 +8,20 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.color.game.assets.SaveManager;
 import com.color.game.levels.Level;
 import com.color.game.levels.mapcreator.elements.TiledElements;
-import com.color.game.levels.mapcreator.elements.TiledMovingPlatforms;
-import com.color.game.levels.mapcreator.elements.TiledPlatforms;
+import com.color.game.levels.mapcreator.elements.dynamic.TiledMovingPlatforms;
+import com.color.game.levels.mapcreator.elements.statics.TiledColorPlatforms;
+import com.color.game.levels.mapcreator.elements.statics.TiledDeadlyPlatforms;
+import com.color.game.levels.mapcreator.elements.statics.TiledPlatforms;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
 public class TiledMapLoader {
+
+    private String[] maps = new String[]{"static", "moving", "deadly", "red", "red_deactivated",
+                                         "blue", "blue_deactivated", "yellow", "yellow_deactivated",
+                                         "purple", "purple_deactivated", "orange", "orange_deactivated",
+                                         "green", "green_deactivated", "black", "black_deactivated"};
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
@@ -31,14 +38,18 @@ public class TiledMapLoader {
         this.orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         this.layers = tiledMap.getLayers();
 
+        this.tiledElements = new ArrayList<>();
+
     }
 
     public void loadMap() {
         try {
 
-            this.tiledElements = new ArrayList<>();
-            this.tiledElements.add(new TiledPlatforms(level, (TiledMapTileLayer) this.layers.get("static")));
-            this.tiledElements.add(new TiledMovingPlatforms(level, this.layers.get("objects")));
+            for(String s : maps){
+                if(this.layers.get(s) != null){
+                    addElement(s);
+                }
+            }
 
             for (TiledElements te : tiledElements) {
                 te.loadElements();
@@ -49,6 +60,30 @@ public class TiledMapLoader {
             JOptionPane.showMessageDialog(null, "An error has occurred, please see the generated log.");
             SaveManager.writeLog("log_level", e);
         }
+    }
+
+    private void addElement(String layerName){
+        if(containsColor(layerName)){
+            this.tiledElements.add(new TiledColorPlatforms(level, (TiledMapTileLayer) this.layers.get(layerName), layerName));
+        }else {
+            switch (layerName) {
+                case "static":
+                    this.tiledElements.add(new TiledPlatforms(level, (TiledMapTileLayer) this.layers.get("static")));
+                    break;
+                case "moving":
+                    this.tiledElements.add(new TiledMovingPlatforms(level, this.layers.get("moving")));
+                    break;
+                case "deadly":
+                    this.tiledElements.add(new TiledDeadlyPlatforms(level, (TiledMapTileLayer) this.layers.get("deadly")));
+                    break;
+            }
+        }
+    }
+
+    private boolean containsColor(String s){
+        return s.contains("red") || s.contains("blue") || s.contains("yellow")
+                || s.contains("purple") || s.contains("orange") || s.contains("green")
+                || s.contains("black");
     }
 
     public TiledMap getTiledMap() {

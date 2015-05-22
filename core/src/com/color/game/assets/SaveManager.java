@@ -17,7 +17,6 @@ public class SaveManager {
     private static String PLAYER_FILE = "player.txt";
 
     public void load() {
-        File f = new File(PLAYER_FILE);
         if (Files.isRegularFile(Paths.get(PLAYER_FILE))) {
             try (BufferedReader br = new BufferedReader(new FileReader(PLAYER_FILE))) {
                 String line = br.readLine();

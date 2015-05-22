@@ -18,7 +18,7 @@ public class TiledColorPlatforms extends TiledPlatforms{
         for(TiledCell cell : finalElements.keySet()){
 
             Vector2 datas = finalElements.get(cell);
-            boolean activated = Boolean.getBoolean((String) properties.get("activated"));
+            boolean activated = Boolean.parseBoolean((String)properties.get("activated"));
             ElementColor color = ElementColor.getColor((String)properties.get("color"));
 
             level.addActor(new ColorPlatform(new Vector2(cell.posX * unitSize, cell.posY * unitSize), datas.x * unitSize, datas.y * unitSize, level, color, activated));

@@ -7,7 +7,7 @@ import com.color.game.levels.Level;
 
 import java.util.HashMap;
 
-public class TiledPlatforms extends TiledElements {
+public class TiledPlatforms extends TiledStaticElements {
 
     public TiledPlatforms(Level level, TiledMapTileLayer layer) {
         super(level, layer);

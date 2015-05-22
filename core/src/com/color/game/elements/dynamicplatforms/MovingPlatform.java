@@ -20,7 +20,7 @@ public class MovingPlatform extends BaseDynamicPlatform{
     private int nextPointIndex;
     final private ShapeRenderer shapeRenderer;
 
-    public MovingPlatform(Vector2 position, int width, int height, Level level, Vector2 point) {
+    public MovingPlatform(Vector2 position, float width, float height, Level level, Vector2 point) {
         super(position, width, height, level);
         point.scl(2);
 
@@ -33,7 +33,7 @@ public class MovingPlatform extends BaseDynamicPlatform{
         this.shapeRenderer = new ShapeRenderer();
     }
 
-    public MovingPlatform(Vector2 position, int width, int height, Level level, ArrayList<Vector2> points) {
+    public MovingPlatform(Vector2 position, float width, float height, Level level, ArrayList<Vector2> points) {
         super(position, width, height, level);
         for (Vector2 point : points) {
             point.scl(2);

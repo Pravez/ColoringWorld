@@ -14,7 +14,7 @@ public class BaseDynamicPlatform extends BaseElement {
      */
     final private Vector2 initialPosition;
 
-    BaseDynamicPlatform(Vector2 position, int width, int height, Level level){
+    BaseDynamicPlatform(Vector2 position, float width, float height, Level level){
         super();
         this.physicComponent = new DynamicPlatformPhysicComponent(this);
         this.physicComponent.configureBody(position, width, height, level.getWorld(), PhysicComponent.CATEGORY_PLATFORM, PhysicComponent.MASK_PLATFORM);

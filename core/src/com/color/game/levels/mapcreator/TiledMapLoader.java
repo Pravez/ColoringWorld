@@ -22,7 +22,8 @@ public class TiledMapLoader {
                                          "blue", "blue_deactivated", "yellow", "yellow_deactivated",
                                          "purple", "purple_deactivated", "orange", "orange_deactivated",
                                          "green", "green_deactivated", "black", "black_deactivated",
-                                         "character", "exit", "teleporter", "falling", "windblower"};
+                                         "character", "exit", "teleporter", "falling", "windblower",
+                                         "enemies"};
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
@@ -93,6 +94,9 @@ public class TiledMapLoader {
                     break;
                 case "windblower":
                     this.tiledElements.add(new TiledWindBlowers(level, this.layers.get("windblower")));
+                    break;
+                case "enemies":
+                    this.tiledElements.add(new TiledEnemies(level, this.layers.get("enemies")));
                     break;
             }
         }

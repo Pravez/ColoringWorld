@@ -20,16 +20,20 @@ public class ColorCommandManager {
 
     private ComposedColorCommand blackCommand;
 
+    private Array<ColorCommand> calledCommands;
+
     public ColorCommandManager(){
-        redCommand    = new ColorCommand(ElementColor.RED);
-        blueCommand   = new ColorCommand(ElementColor.BLUE);
-        yellowCommand = new ColorCommand(ElementColor.YELLOW);
+        this.redCommand    = new ColorCommand(ElementColor.RED);
+        this.blueCommand   = new ColorCommand(ElementColor.BLUE);
+        this.yellowCommand = new ColorCommand(ElementColor.YELLOW);
 
-        greenCommand  = new ComposedColorCommand(ElementColor.GREEN, blueCommand, yellowCommand);
-        purpleCommand = new ComposedColorCommand(ElementColor.PURPLE, redCommand, blueCommand);
-        orangeCommand = new ComposedColorCommand(ElementColor.ORANGE, redCommand, yellowCommand);
+        this.greenCommand  = new ComposedColorCommand(ElementColor.GREEN, this.blueCommand, this.yellowCommand);
+        this.purpleCommand = new ComposedColorCommand(ElementColor.PURPLE, this.redCommand, this.blueCommand);
+        this.orangeCommand = new ComposedColorCommand(ElementColor.ORANGE, this.redCommand, this.yellowCommand);
 
-        blackCommand  = new ComposedColorCommand(ElementColor.BLACK, blueCommand, redCommand, yellowCommand);
+        this.blackCommand  = new ComposedColorCommand(ElementColor.BLACK, this.blueCommand, this.redCommand, this.yellowCommand);
+
+        this.calledCommands = new Array<>();
     }
 
     public ColorCommand getRedCommand() {
@@ -49,10 +53,14 @@ public class ColorCommandManager {
         this.blueCommand.stop();
         this.yellowCommand.stop();
 
-        this.purpleCommand.stop();
+        /*this.purpleCommand.stop();
         this.blackCommand.stop();
         this.orangeCommand.stop();
-        this.greenCommand.stop();
+        this.greenCommand.stop();*/
+
+        for (ColorCommand colorCommand : this.calledCommands)
+            colorCommand.stop();
+        this.calledCommands.clear();
     }
 
     public boolean allActivated(){
@@ -109,6 +117,7 @@ public class ColorCommandManager {
         if (composedColorCommand != null) {
             character.addCommand(composedColorCommand);
             composedColorCommand.setPressed(true);
+            this.calledCommands.add(composedColorCommand);
             if (composedColorCommand.getColor() == ElementColor.BLACK) {
                 pressComposedColors(this.purpleCommand, character);
                 pressComposedColors(this.orangeCommand, character);
@@ -126,6 +135,7 @@ public class ColorCommandManager {
         if (!composedColorCommand.isPressed()) {
             character.addCommand(composedColorCommand);
             composedColorCommand.setPressed(true);
+            this.calledCommands.add(composedColorCommand);
         }
     }
 
@@ -150,6 +160,8 @@ public class ColorCommandManager {
     public void addActivatedColor(Array<ElementColor> colors, ColorCommand command) {
         if (command.isPressed()) {
             colors.add(command.getColor());
+        } else if (command instanceof ComposedColorCommand && this.calledCommands.contains(command, true)) {
+            this.calledCommands.removeValue(command, true);
         }
     }
 }

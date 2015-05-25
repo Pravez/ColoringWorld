@@ -83,13 +83,14 @@ public class LevelManager {
     public static void init() {
         levels = new ArrayList<>();
         firstlevel();
-        /*addFirstDebugLevel();
+        //addSeventhLevel();
+        addFirstDebugLevel();
         addSecondDebugLevel();
         addThirdDebugLevel();
         addForthDebugLevel();
         addFifthDebugLevel();
         addSixthDebugLevel();
-        addSeventhDebugLevel();*/
+        addSeventhDebugLevel();
         /*addFirstLevel();
         addSecondLevel();
         addSecondBisLevel();
@@ -576,7 +577,7 @@ public class LevelManager {
         level.addActor(new ColorPlatform(new Vector2(67, 4), 5, 1, level, ElementColor.BLUE, false));
 
         level.addActor(new ColoredMagnet(new Vector2(10,5), 10, level));
-        level.addActor(new ColoredMagnet(new Vector2(30,5), 10, level));
+        //level.addActor(new ColoredMagnet(new Vector2(30,5), 10, level));
         level.addActor(new MovingEnemy(new Vector2(30, 1), 2, 2, level, false, ElementColor.BLACK));
         level.addActor(new MovingEnemy(new Vector2(34, 1), 2, 2, level, false, ElementColor.BLACK));
         level.addActor(new MovingEnemy(new Vector2(38, 1), 2, 2, level, false, ElementColor.PURPLE));

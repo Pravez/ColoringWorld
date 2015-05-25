@@ -85,7 +85,8 @@ public abstract class UserData {
         return userData != null && (userData.getUserDataType() == UserDataType.COLORPLATFORM ||
                 userData.getUserDataType() == UserDataType.PLATFORM ||
                 userData.getUserDataType() == UserDataType.DYNAMICPLATFORM ||
-                userData.getUserDataType() == UserDataType.ALTERINGPLATFORM);
+                userData.getUserDataType() == UserDataType.ALTERINGPLATFORM ||
+                userData.getUserDataType() == UserDataType.DEADLY);
     }
 
     public static boolean isDeadly(Body body){

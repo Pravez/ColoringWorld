@@ -3,6 +3,8 @@ package com.color.game.elements.staticelements.sensors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -60,16 +62,31 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.end();
+
+        Color c = ColorMixManager.getGDXColorFromElement(getElementColor());
+        /*batch.end();
 
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        Color c = ColorMixManager.getGDXColorFromElement(getElementColor());
         shapeRenderer.setColor(c.r, c.g, c.b, c.equals(Color.YELLOW) ? 0.2f : 0.5f);
-        shapeRenderer.circle(this.getBounds().x + this.getBounds().width/2, this.getBounds().y + this.getBounds().width/2, this.getBounds().width/2);
+        shapeRenderer.circle(this.getBounds().x + this.getBounds().width / 2, this.getBounds().y + this.getBounds().width / 2, this.getBounds().width / 2);
+        shapeRenderer.setColor(0, 0, 0, 0);
+        shapeRenderer.circle(this.getBounds().x + this.getBounds().width / 2, this.getBounds().y + this.getBounds().width / 2, this.getBounds().width / 2);
         shapeRenderer.end();
-        batch.begin();
+        batch.begin();*/
+
+        Pixmap background = new Pixmap((int)this.getBounds().width, (int)this.getBounds().width, Pixmap.Format.RGBA8888);
+        background.setColor(c.r, c.g, c.b, c.equals(Color.YELLOW) ? 0.2f : 0.5f);
+        Pixmap.setBlending(Pixmap.Blending.None);
+        int rad = (int) this.getBounds().width/2;
+        background.fillCircle(rad, rad, rad);
+        background.setColor(c.r, c.g, c.b, c.equals(Color.YELLOW) ? 0.05f : 0.2f);
+        background.fillCircle(rad, rad, rad - 5);
+
+        //batch.begin();
+
+        batch.draw(new Texture(background), this.getBounds().x, this.getBounds().y);
     }
 
     private void manageContact(final BaseDynamicElement element) {

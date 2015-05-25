@@ -1,3 +1,14 @@
+# May 25, 2015
+* Finished implementing reader of .tmx files. Every element can now be interpreted, see tutorial.
+* Bugfixes concerning enemies and falling platforms
+* Bugfixes concerning pixmaps and graphic components
+
+# May 24, 2015
+* Nothing
+
+# May 23, 2015
+* Started to work on graphic components for elements.
+
 # May 22, 2015
 * Continuing and finishing work on ColoredMagnets
 * Released v0.3.2

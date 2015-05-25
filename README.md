@@ -8,7 +8,6 @@ Concerning daily work, see the [diary](DIARY.md).
 * Fun in the menu
     - sounds in the menu
     - buttons effects (hover, active, …)
-* load a level from a file
 
 # Version 0.3 released :
 * Added enemies which are deadly according to the color

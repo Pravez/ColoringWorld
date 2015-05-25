@@ -1,3 +1,11 @@
+# 0.3.3a (May 25, 2015)
+- Finalized the editor.
+- Minor bugfixes
+
+# 0.3.3 (May 25, 2015)
+- near fully implemented reading from a .tmx file. The editor is complete. Please read the little tutorial to learn how to use it.
+- Corrected many bugs concerning falling platforms, and enemies.
+
 # 0.3.2 (May 22, 2015)
 - ColoredMagnet implemented
 

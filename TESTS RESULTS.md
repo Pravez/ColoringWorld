@@ -10,7 +10,8 @@
 
 ### What we did :
 
-    - Corrected the bug with the death screen which was called twice
+    * Corrected the bug with the death screen which was called twice
+    * Random bugs are probably due to OS, trying to correct it
 
 
 ## Tests results for version v0.2.4
@@ -27,15 +28,15 @@
 
 ### What we did :
 
-    - Adjusted character friction factor (finally linear dumping) with other elements
+    * Adjusted character friction factor (finally linear dumping) with other elements
         * Is it really important ?
-    - Removed useless platforms, useless features.
-    - Added possibility when the game is paused to see the entire level.
-    - Updated and added platforms
-    - Added faculty for the character to jump higher with a longer press on spacebar
+    * Removed useless platforms, useless features.
+    * Added possibility when the game is paused to see the entire level.
+    * Updated and added platforms
+    * Added faculty for the character to jump higher with a longer press on spacebar
         * This removed the problem of a real jumping on falling platforms
-    - Changed controls to "ZQSD" to move and "UIO" for colors
-    - Added a level selector
-    - Added possibility to change keymap
-    - Complicated a bit the game with secondary colors
-    - Added help concerning secondary colors, with a "chromatic circle"
+    * Changed controls to "ZQSD" to move and "UIO" for colors
+    * Added a level selector
+    * Added possibility to change keymap
+    * Complicated a bit the game with secondary colors
+    * Added help concerning secondary colors, with a "chromatic circle"

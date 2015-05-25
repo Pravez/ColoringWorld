@@ -141,6 +141,7 @@ public class LevelManager {
 
     private static void firstlevel(){
         Level level = new Level("mapsData/test.tmx");
+        level.setScoreHandler(new ScoreHandler(0, 150, 1000, 2000, 3900));
 
         levels.add(level);
     }
@@ -735,7 +736,7 @@ public class LevelManager {
         v.add(new Vector2(20,5));
         v.add(new Vector2(20,15));
         v.add(new Vector2(10,15));
-        level.addActor(new MovingPlatform(new Vector2(10, 5), 3,1,level, v));
+        level.addActor(new MovingPlatform(new Vector2(10, 5), 3, 1, level, v));
 
         //level.addActor(new Platform(new Vector2(25,5), 2, 1, level.map));
         level.addActor(new Exit(new Vector2(195, 1), 1, 3, level.map, 6));

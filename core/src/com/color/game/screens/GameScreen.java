@@ -26,7 +26,6 @@ import com.color.game.gui.UIStage;
 import com.color.game.keys.KeyEffect;
 import com.color.game.levels.Level;
 import com.color.game.levels.LevelManager;
-import com.color.game.levels.ScoreHandler;
 
 /**
  * GameScreen, the screen during which the game is been played
@@ -237,8 +236,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             changeLevel();
         if (this.restart)
             game.setDeathScreen();
-        }
-
     }
 
     private void runRunnables() {

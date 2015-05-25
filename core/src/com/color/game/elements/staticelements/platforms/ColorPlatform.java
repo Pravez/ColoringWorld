@@ -57,7 +57,7 @@ public class ColorPlatform extends BaseStaticElement implements BaseColorElement
         return this.color;
     }
 
-    @Override
+    /*@Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.end();
@@ -100,5 +100,5 @@ public class ColorPlatform extends BaseStaticElement implements BaseColorElement
         shapeRenderer.end();
 
         batch.begin();
-    }
+    }*/
 }

@@ -3,9 +3,11 @@ package com.color.game.elements.dynamicelements.enemies;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.color.game.assets.Assets;
 import com.color.game.command.elements.MovementDirection;
 import com.color.game.elements.BaseColorElement;
 import com.color.game.elements.BaseElement;
@@ -76,7 +78,12 @@ public abstract class Enemy extends BaseDynamicElement implements BaseColorEleme
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.end();
+        Color color = batch.getColor();
+        batch.setColor(this.color);
+        batch.setProjectionMatrix(GameScreen.camera.combined);
+        batch.draw(Assets.manager.get("sprites/enemy.png", Texture.class), getBounds().x, getBounds().y, getBounds().width, getBounds().height);
+        batch.setColor(color);
+        /*batch.end();
 
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
@@ -86,7 +93,7 @@ public abstract class Enemy extends BaseDynamicElement implements BaseColorEleme
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.rect(this.getPhysicComponent().getBody().getPosition().x*WORLD_TO_SCREEN, this.getPhysicComponent().getBody().getPosition().y*WORLD_TO_SCREEN, 5,5);
         shapeRenderer.end();
-        batch.begin();
+        batch.begin();*/
     }
 
     @Override

@@ -1,9 +1,11 @@
 package com.color.game.elements.staticelements;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.color.game.assets.Assets;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.userData.StaticElementUserData;
 import com.color.game.elements.userData.UserDataType;
@@ -36,7 +38,9 @@ public class Exit extends BaseStaticElement {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.end();
+        batch.setProjectionMatrix(GameScreen.camera.combined);
+        batch.draw(Assets.manager.get("sprites/door.png", Texture.class), this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
+        /*batch.end();
 
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -45,6 +49,6 @@ public class Exit extends BaseStaticElement {
         shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
         shapeRenderer.end();
 
-        batch.begin();
+        batch.begin();*/
     }
 }

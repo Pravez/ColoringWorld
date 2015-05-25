@@ -227,8 +227,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         handleDebugCodes();
 
         // Render the Game
-        LevelManager.getCurrentLevel().draw();
         LevelManager.getCurrentLevel().drawBackground();
+        LevelManager.getCurrentLevel().draw();
         uiStage.draw();
 
         if (this.runningLevel != LevelManager.getCurrentLevelNumber()) {

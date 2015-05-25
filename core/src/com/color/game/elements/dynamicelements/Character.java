@@ -3,6 +3,7 @@ package com.color.game.elements.dynamicelements;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.color.game.assets.Assets;
 import com.color.game.command.elements.MovementDirection;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
@@ -60,7 +62,10 @@ public class Character extends BaseDynamicElement {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.end();
+        batch.setProjectionMatrix(GameScreen.camera.combined);
+        batch.draw(Assets.manager.get("sprites/hero.png", Texture.class), getBounds().x, getBounds().y, getBounds().width, getBounds().height);
+
+        /*batch.end();
 
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
@@ -68,7 +73,7 @@ public class Character extends BaseDynamicElement {
         shapeRenderer.setColor(Color.YELLOW);
         shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
         shapeRenderer.end();
-        batch.begin();
+        batch.begin();*/
     }
 
     @Override

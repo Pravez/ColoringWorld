@@ -37,7 +37,7 @@ public class Platform extends BaseStaticElement {
         this.shapeRenderer = new ShapeRenderer();
     }
 
-    @Override
+    /*@Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.end();
@@ -49,5 +49,5 @@ public class Platform extends BaseStaticElement {
         shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
         shapeRenderer.end();
         batch.begin();
-    }
+    }*/
 }

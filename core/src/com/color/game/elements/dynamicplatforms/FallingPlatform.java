@@ -3,10 +3,12 @@ package com.color.game.elements.dynamicplatforms;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.color.game.assets.Assets;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.levels.Level;
@@ -20,23 +22,23 @@ public class FallingPlatform extends BaseDynamicPlatform {
     boolean falling = false;
     boolean transparent = false;
 
-    final private ShapeRenderer shapeRenderer;
-    private Color color = Color.ORANGE;
+    //final private ShapeRenderer shapeRenderer;
+    //private Color color = Color.ORANGE;
 
     public FallingPlatform(Vector2 position, float width, float height, Level level, boolean fall) {
         super(position, width, height, level);
         this.fall = fall;
 
-        this.shapeRenderer = new ShapeRenderer();
+        //this.shapeRenderer = new ShapeRenderer();
     }
 
     public boolean isFallingOntoElement(BaseDynamicElement element) {
         return this.falling && element.getAloftState() instanceof LandedState && this.getBounds().y > element.getBounds().y;
     }
 
-    public void setColor(Color color) {
+    /*public void setColor(Color color) {
         this.color = color;
-    }
+    }*/
 
     void setTransparent(boolean transparent) {
         this.transparent = transparent;
@@ -88,14 +90,20 @@ public class FallingPlatform extends BaseDynamicPlatform {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.end();
+        batch.setProjectionMatrix(GameScreen.camera.combined);
+        Color color = batch.getColor();
+        if (this.transparent)
+            batch.setColor(color.r, color.g, color.b, 0.5f);
+        batch.draw(Assets.manager.get("sprites/falling.png", Texture.class), this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
+        batch.setColor(color);
+        //batch.end();
 
-        Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
+        /*Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(this.color.r, this.color.g, this.color.b, this.transparent ? 0.5f : 1.0f);
         shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
         shapeRenderer.end();
-        batch.begin();
+        batch.begin();*/
     }
 }

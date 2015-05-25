@@ -46,7 +46,7 @@ public class MovingEnemy extends Enemy {
         this.physicComponent.getBody().setActive(true);
         this.canFall = canFall;
         this.current_direction = -1;
-        System.out.println(current_direction);
+        this.physicComponent.setMove(current_direction);
         this.changeDirection = false;
 
         this.setAloftState(new LandedState());
@@ -72,37 +72,32 @@ public class MovingEnemy extends Enemy {
         // Kill the enemy with a Deadly Platform
         if (element instanceof DeadlyPlatform)
             this.kill();
-
-        if (this.changeDirection) {
-            this.current_direction = -1 * this.current_direction;
-            this.preventRight = false;
-            this.preventLeft = false;
-            this.changeDirection = false;
-            this.physicComponent.move(MovingEnemy.ENEMY_MOVING_VELOCITY);
-        }
     }
 
     /**
      * Method called to prevent the Enemy from falling from its platform
      */
     private void preventFalling() {
+        boolean change = false;
         if (this.floorElement.getBounds().x > this.getBounds().x - FALL_GAP && !preventLeft) {
             this.preventLeft = true;
             this.preventRight = false;
-            this.current_direction = -1 * this.current_direction;
+            change = true;
         } else if (this.floorElement.getBounds().x + this.floorElement.getBounds().width < this.getBounds().x + this.getBounds().width + FALL_GAP && !preventRight) {
             this.preventRight = true;
             this.preventLeft = false;
-            this.current_direction = -1 * this.current_direction;
+            change = true;
         }
-
+        if (change) {
+            this.current_direction = -1 * this.current_direction;
+            this.physicComponent.setMove(current_direction);
+        }
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
         this.physicComponent.move(MovingEnemy.ENEMY_MOVING_VELOCITY);
-        this.physicComponent.setMove(current_direction);
         if (!this.canFall && this.floorElement != null )
             preventFalling();
     }
@@ -117,12 +112,8 @@ public class MovingEnemy extends Enemy {
 
     @Override
     public void handleSpecificContacts(Contact c, Body touched) {
-        if(UserData.isWall(c) || UserData.isDynamicPlatform(touched)) {
-            System.out.println("true");
-            if(!UserData.isEnemy(touched) && !UserData.isSensor(touched)) {
-                System.out.println("changing");
-                this.changeDirection = true;
-            }
+        if(!UserData.isEnemy(touched) && !UserData.isSensor(touched) && (UserData.isWall(c) || UserData.isDynamicPlatform(touched))) {
+            this.changeDirection = true;
         }
 
         if(UserData.isColoredMagnet(touched)) {
@@ -131,6 +122,14 @@ public class MovingEnemy extends Enemy {
 
         act(((UserData)touched.getUserData()).getElement());
         handleFallingPlatform(touched);
+
+        if (this.changeDirection) {
+            this.current_direction = -1 * this.current_direction;
+            this.preventRight = false;
+            this.preventLeft = false;
+            this.changeDirection = false;
+            this.physicComponent.setMove(current_direction);
+        }
     }
 
     @Override

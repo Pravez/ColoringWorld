@@ -42,6 +42,7 @@ public class SaveManager {
                     line = br.readLine();
                     level++;
                 }
+                br.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -59,6 +60,7 @@ public class SaveManager {
                     writer.write("UNLOCK\n");
                 writer.write(levels.get(i).getScoreHandler().getBestScore()+"\n");
             }
+            writer.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -54,6 +54,7 @@ public class Tutorial {
                     currentTutorials.put(index, text);
                     line = br.readLine();
                 }
+                br.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }

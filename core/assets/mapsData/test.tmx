@@ -76,11 +76,10 @@
   </object>
  </objectgroup>
  <objectgroup name="enemies">
-  <object id="61" x="1440" y="1504" width="64" height="64"/>
   <object id="63" x="288" y="1152" width="64" height="64">
    <properties>
     <property name="color" value="purple"/>
-    <property name="falling" value="true"/>
+    <property name="falling" value="false"/>
    </properties>
   </object>
  </objectgroup>

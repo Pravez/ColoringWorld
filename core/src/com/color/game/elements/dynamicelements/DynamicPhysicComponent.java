@@ -122,6 +122,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
     @Override
     public void setMove(int direction) {
         this.currentMovingImpulse.x = (DYNAMIC_ELEMENT_BASE_VELOCITY*direction);
+        System.out.println(currentMovingImpulse.x);
     }
 
     /**

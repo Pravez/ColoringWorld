@@ -24,7 +24,6 @@ public class SaveManager {
         if (Files.isRegularFile(Paths.get(PLAYER_FILE))) {
 
             try {
-
                 FileReader fileReader = new FileReader(PLAYER_FILE);
                 BufferedReader br = new BufferedReader(fileReader);
                 String line = br.readLine();

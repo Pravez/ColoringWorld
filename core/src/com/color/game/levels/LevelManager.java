@@ -101,7 +101,8 @@ public class LevelManager {
     }
 
     public static void unlock(int index) {
-        LevelManager.levels.get(index).unlock();
+        if (LevelManager.levels.size() > index && index > 0)
+            LevelManager.levels.get(index).unlock();
     }
 
     /**

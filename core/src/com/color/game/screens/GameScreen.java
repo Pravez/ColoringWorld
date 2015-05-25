@@ -33,6 +33,7 @@ import com.color.game.levels.LevelManager;
 public class GameScreen extends BaseScreen implements InputProcessor, ContactListener {
 
     public static OrthographicCamera camera;
+    private Box2DDebugRenderer renderer;
 
     final private Array<Runnable> runnables;
 
@@ -60,9 +61,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
     public boolean restart = false;
 
-    private ColoredMagnet currentColoredMagnet;
-    private boolean magnetKeyPressed;
-
     /**
      * The constructor of the class GameScreen
      * @param game the {@link ColorGame}
@@ -75,6 +73,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         character = new Character(this, LevelManager.getCurrentLevel().characterPos, Character.CHARACTER_WIDTH, Character.CHARACTER_HEIGHT, LevelManager.getCurrentLevel().getWorld());
         LevelManager.getCurrentLevel().addActor(character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
+
+        this.renderer =  new Box2DDebugRenderer();
 
         this.runningLevel = LevelManager.getCurrentLevelNumber();
 
@@ -159,7 +159,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
         this.uiStage.colorGauges.stopAll();
         endCommands();
-        this.magnetKeyPressed = false;
     }
 
     /**
@@ -231,6 +230,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         LevelManager.getCurrentLevel().drawBackground();
         LevelManager.getCurrentLevel().draw();
         this.uiStage.draw();
+        renderer.render(LevelManager.getCurrentLevel().getWorld(), camera.combined);
 
         if (this.runningLevel != LevelManager.getCurrentLevelNumber())
             changeLevel();
@@ -503,9 +503,10 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         level.reset();
         LevelManager.unlock(this.runningLevel);
         endCommands();
-        if (LevelManager.isLastLevel())
+        /*if (LevelManager.isLastLevel())
             this.game.setEndScreen();
         else
-            this.game.setWinScreen();
+            this.game.setWinScreen();*/
+        this.game.setWinScreen();
     }
 }

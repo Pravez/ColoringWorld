@@ -1,13 +1,13 @@
 Level 0
 0
-Hello stranger, I hope you will enjoy your way !
+Hello stranger, I hope you will enjoy your way ! To move, you have : [LEFT] to go left, [RIGHT] to go right and [JUMP] to jump.
 END
 1
-That is nice but\n not…
+This is too high, so you will need : [RED] (red platforms), [BLUE] (blue platforms) et [YELLOW] (yellow platforms).
 END
-Level 1
+Level 3
 0
-Pour les couleurs, c’est : [RED] (rouge), [BLUE] (bleu) et [YELLOW] (jaune)
+Pour les couleurs, c’est : [RED] (rouge), [BLUE] (bleu) and [YELLOW] (jaune)
 END
 1
 Sinon, pour squat, c’est : [SQUAT] !

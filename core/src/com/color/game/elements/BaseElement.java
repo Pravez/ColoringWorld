@@ -3,6 +3,7 @@ package com.color.game.elements;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.color.game.elements.userData.UserData;
 
 /**
  * Class BaseElement which one is part of the Scene2D "world". It will be extended by every static or specials
@@ -35,6 +36,10 @@ public abstract class BaseElement extends Actor {
 
     public PhysicComponent getPhysicComponent() {
         return physicComponent;
+    }
+
+    public boolean isPlatform() {
+        return UserData.isPlatform(this.physicComponent.getBody());
     }
 
     /** **/

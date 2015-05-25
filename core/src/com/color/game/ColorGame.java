@@ -33,6 +33,7 @@ public class ColorGame extends Game {
 	private KeysScreen           keysScreen;
 	private TransitionScreen     transitionScreen;
 	private WinScreen            winScreen;
+	private CreditsScreen        creditsScreen;
 
 	/**
 	 * Method to init all the needed assets, the sounds, musics, and creating all the different screens
@@ -59,6 +60,7 @@ public class ColorGame extends Game {
 		this.keysScreen           = new KeysScreen(this);
 		this.transitionScreen     = new TransitionScreen(this);
 		this.winScreen            = new WinScreen(this);
+        this.creditsScreen        = new CreditsScreen(this);
 
 		this.splashScreen.end();
 	}
@@ -157,6 +159,10 @@ public class ColorGame extends Game {
 	public void setWinScreen() {
 		super.setScreen(this.winScreen);
 	}
+
+    public void setCreditsScreen() {
+        super.setScreen(this.creditsScreen);
+    }
 
 	public void updateWinScreen(ScoreHandler score) {
 		this.winScreen.handle(score);

@@ -67,7 +67,7 @@ public abstract class UserData {
 
     public static boolean isSensor(Body body) {
         UserData userData = (UserData) body.getUserData();
-        return userData != null && userData.getUserDataType() == UserDataType.SENSOR || userData.getUserDataType() == UserDataType.COLOREDMAGNET;
+        return userData != null && (userData.getUserDataType() == UserDataType.SENSOR || userData.getUserDataType() == UserDataType.COLOREDMAGNET);
     }
 
     public static boolean isColoredMagnet(Body body) {
@@ -136,7 +136,7 @@ public abstract class UserData {
 
     public static boolean isWall(Contact c){
         float y = c.getWorldManifold().getNormal().y;
-        return y < 0.5f && y > - 0.5f &&  c.isTouching() && !UserData.isSensor(c.getFixtureB().getBody());
+        return y < 0.5f && y > - 0.5f &&  c.isTouching() && !UserData.isSensor(c.getFixtureB().getBody())  && !UserData.isEnemy(c.getFixtureB().getBody());
     }
 
     public static boolean isDynamicBodyPresent(Contact c, Body body) {

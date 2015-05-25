@@ -3,9 +3,11 @@ package com.color.game.elements.dynamicplatforms;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.color.game.assets.Assets;
 import com.color.game.levels.Level;
 import com.color.game.screens.GameScreen;
 
@@ -69,13 +71,28 @@ public class MovingPlatform extends BaseDynamicPlatform{
         super.draw(batch, parentAlpha);
         batch.end();
 
-        Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
+        /*Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.CYAN);
         shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
+        shapeRenderer.end();*/
+        shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.WHITE);
+        float midW = this.getBounds().width/2;
+        float midH = this.getBounds().height/2;
+        for (int i = 0 ; i < this.points.size() ; i++) {
+            Vector2 current = new Vector2(this.points.get(i).x * WORLD_TO_SCREEN + midW, this.points.get(i).y * WORLD_TO_SCREEN + midH);
+            Vector2 next = (i + 1 < this.points.size()) ? this.points.get(i+1) : this.points.get(0);
+            next = new Vector2(next.x * WORLD_TO_SCREEN + midW, next.y * WORLD_TO_SCREEN + midH);
+            shapeRenderer.rectLine(current, next, 2);
+        }
         shapeRenderer.end();
+
         batch.begin();
+        batch.setProjectionMatrix(GameScreen.camera.combined);
+        batch.draw(Assets.manager.get("sprites/moving.png", Texture.class), getBounds().x, getBounds().y, getBounds().width, getBounds().height);
     }
 
     @Override

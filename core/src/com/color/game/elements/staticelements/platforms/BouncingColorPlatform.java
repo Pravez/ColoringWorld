@@ -32,14 +32,14 @@ public class BouncingColorPlatform extends ColorPlatform{
 
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 
-        float width = this.physicComponent.getUserData().getWidth() * WORLD_TO_SCREEN - 10;
-        float height = this.physicComponent.getUserData().getHeight() * WORLD_TO_SCREEN - 6;
+        float width = this.physicComponent.getUserData().getWidth() * WORLD_TO_SCREEN;// - 10;
+        float height = this.physicComponent.getUserData().getHeight() * WORLD_TO_SCREEN;// - 6;
         float x = this.physicComponent.getBody().getPosition().x * WORLD_TO_SCREEN - width/2;
         float y = this.physicComponent.getBody().getPosition().y * WORLD_TO_SCREEN - height/2;
 
-        shapeRenderer.setColor(Color.CYAN.r, Color.CYAN.g, Color.CYAN.b, 0.5f);
+        shapeRenderer.setColor(Color.WHITE.r, Color.WHITE.g, Color.WHITE.b, 0.5f);
         shapeRenderer.rect(x, y, width, height);
         shapeRenderer.end();
 

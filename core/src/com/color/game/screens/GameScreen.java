@@ -24,7 +24,6 @@ import com.color.game.elements.userData.UserData;
 import com.color.game.gui.ColorGauge;
 import com.color.game.gui.UIStage;
 import com.color.game.keys.KeyEffect;
-import com.color.game.levels.Level;
 import com.color.game.levels.LevelManager;
 
 /**
@@ -228,8 +227,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         handleDebugCodes();
 
         // Render the Game
-        LevelManager.getCurrentLevel().draw();
         LevelManager.getCurrentLevel().drawBackground();
+        LevelManager.getCurrentLevel().draw();
         this.uiStage.draw();
 
         if (this.runningLevel != LevelManager.getCurrentLevelNumber())
@@ -501,7 +500,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
     @Override
     public void preSolve(Contact contact, Manifold manifold) {
+
     }
+
     @Override
     public void postSolve(Contact contact, ContactImpulse contactImpulse) { }
 

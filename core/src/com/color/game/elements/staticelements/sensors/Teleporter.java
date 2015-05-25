@@ -3,9 +3,11 @@ package com.color.game.elements.staticelements.sensors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.color.game.assets.Assets;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
@@ -39,9 +41,15 @@ public class Teleporter extends Sensor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.end();
 
-        Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
+        batch.setProjectionMatrix(GameScreen.camera.combined);
+        batch.draw(Assets.manager.get("sprites/teleport.png", Texture.class), getBounds().x, getBounds().y, getBounds().width, getBounds().height);
+
+        batch.draw(Assets.manager.get("sprites/light.png", Texture.class), this.teleportPosition.x * WORLD_TO_SCREEN, this.teleportPosition.y * WORLD_TO_SCREEN, 2 * WORLD_TO_SCREEN, 2 * WORLD_TO_SCREEN);
+
+        //batch.end();
+
+        /*Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.MAGENTA);
@@ -51,6 +59,6 @@ public class Teleporter extends Sensor {
         shapeRenderer.rect(this.teleportPosition.x * WORLD_TO_SCREEN, this.teleportPosition.y * WORLD_TO_SCREEN, 2 * WORLD_TO_SCREEN, 2 * WORLD_TO_SCREEN);
         shapeRenderer.end();
 
-        batch.begin();
+        batch.begin();*/
     }
 }

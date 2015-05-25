@@ -1,9 +1,13 @@
 package com.color.game.levels;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.color.game.assets.Assets;
 import com.color.game.elements.BaseColorElement;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
@@ -59,6 +63,8 @@ public class Level extends Stage {
     final private Array<Enemy> enemies;
 
     private TiledMapLoader mapLoader;
+
+    private SpriteBatch batch = new SpriteBatch();
 
     /**
      * The Constructor of the Level
@@ -159,8 +165,13 @@ public class Level extends Stage {
     }
 
     public void drawBackground(){
-        mapLoader.getOrthogonalTiledMapRenderer().setView(GameScreen.camera);
-        mapLoader.getOrthogonalTiledMapRenderer().render();
+        batch.begin();
+        batch.draw(Assets.manager.get("sprites/back.png", Texture.class), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.end();
+        if (mapLoader != null) {
+            mapLoader.getOrthogonalTiledMapRenderer().setView(GameScreen.camera);
+            mapLoader.getOrthogonalTiledMapRenderer().render();
+        }
     }
 
     /**

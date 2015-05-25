@@ -3,6 +3,7 @@ package com.color.game.elements.staticelements.sensors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
@@ -67,7 +68,11 @@ public class Notice extends Sensor {
             this.cache.setPosition(textX, y + height + 2 * this.cache.getBounds().height + TEXT_GAP);
             this.cache.draw(batch);
         }
-        batch.end();
+
+        batch.setProjectionMatrix(GameScreen.camera.combined);
+        batch.draw(Assets.manager.get("sprites/notice.png", Texture.class), this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
+
+        /*batch.end();
 
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
@@ -77,6 +82,6 @@ public class Notice extends Sensor {
         shapeRenderer.rect(x, y, width, height);
         shapeRenderer.end();
 
-        batch.begin();
+        batch.begin();*/
     }
 }

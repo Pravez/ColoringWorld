@@ -71,6 +71,16 @@ public class Assets {
         manager.load("sprites/door.png", Texture.class);
         manager.load("sprites/ground.png", Texture.class);
         manager.load("sprites/spike.png", Texture.class);
+        manager.load("sprites/moving.png", Texture.class);
+        manager.load("sprites/falling.png", Texture.class);
+        manager.load("sprites/teleport.png", Texture.class);
+        manager.load("sprites/light.png", Texture.class);
+        manager.load("sprites/hero.png", Texture.class);
+        manager.load("sprites/enemy.png", Texture.class);
+        manager.load("sprites/back.png", Texture.class);
+        manager.load("sprites/wind.png", Texture.class);
+        manager.load("sprites/notice.png", Texture.class);
+        manager.load("sprites/lava.png", Texture.class);
 
         manager.load("sprites/star.png", Texture.class);
         manager.load("sprites/star-empty.png", Texture.class);

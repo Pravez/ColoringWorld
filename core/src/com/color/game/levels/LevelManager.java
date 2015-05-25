@@ -82,8 +82,12 @@ public class LevelManager {
         ArrayList<Level> tempList = new ArrayList<>();
         for(String path : new File("mapsData").list()){
             if(path.endsWith(".tmx")){
-                Level level = new Level("mapsData/"+path);
-                tempList.add(level);
+                try {
+                    Level level = new Level("mapsData/" + path);
+                    tempList.add(level);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         }
 

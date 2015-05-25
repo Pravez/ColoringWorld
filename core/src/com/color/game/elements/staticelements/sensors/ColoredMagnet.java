@@ -3,8 +3,6 @@ package com.color.game.elements.staticelements.sensors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -29,7 +27,7 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
 
     final private ShapeRenderer shapeRenderer;
 
-    private Pixmap background;
+    //private Pixmap background;
 
     private LinkedList<ElementColor> activatedColors;
 
@@ -49,14 +47,14 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
         this.attractCommand = new PushCommand();
         this.shapeRenderer  = new ShapeRenderer();
 
-        this.background = new Pixmap((int)this.getBounds().width, (int)this.getBounds().width, Pixmap.Format.RGBA8888);
+        /*this.background = new Pixmap((int)this.getBounds().width, (int)this.getBounds().width, Pixmap.Format.RGBA8888);
         Color c = ColorMixManager.getGDXColorFromElement(getElementColor());
         background.setColor(c.r, c.g, c.b, c.equals(Color.YELLOW) ? 0.2f : 0.5f);
         Pixmap.setBlending(Pixmap.Blending.None);
         int rad = (int) this.getBounds().width/2;
         background.fillCircle(rad, rad, rad);
         background.setColor(c.r, c.g, c.b, c.equals(Color.YELLOW) ? 0.05f : 0.2f);
-        background.fillCircle(rad, rad, rad - 5);
+        background.fillCircle(rad, rad, rad - 5);*/
     }
 
     @Override
@@ -74,7 +72,9 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 
-        /*batch.end();
+        batch.end();
+
+        Color c = ColorMixManager.getGDXColorFromElement(getElementColor());
 
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
@@ -84,11 +84,9 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
         shapeRenderer.setColor(0, 0, 0, 0);
         shapeRenderer.circle(this.getBounds().x + this.getBounds().width / 2, this.getBounds().y + this.getBounds().width / 2, this.getBounds().width / 2);
         shapeRenderer.end();
-        batch.begin();*/
+        batch.begin();
 
-        //batch.begin();
-
-        batch.draw(new Texture(background), this.getBounds().x, this.getBounds().y);
+        //batch.draw(new Texture(background), this.getBounds().x, this.getBounds().y);
     }
 
     private void manageContact(final BaseDynamicElement element) {
@@ -165,7 +163,7 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
         this.currentColor = (this.activatedColors.contains(ElementColor.BLACK)) ? ElementColor.BLACK : this.activatedColors.peek();
 
         // Change pixmap background
-        Color c = ColorMixManager.getGDXColorFromElement(getElementColor());
+        /*Color c = ColorMixManager.getGDXColorFromElement(getElementColor());
         background.setColor(0, 0, 0, 0);
         background.fill();
         background.setColor(c.r, c.g, c.b, c.equals(Color.YELLOW) ? 0.2f : 0.5f);
@@ -173,7 +171,7 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
         int rad = (int) this.getBounds().width/2;
         background.fillCircle(rad, rad, rad);
         background.setColor(c.r, c.g, c.b, c.equals(Color.YELLOW) ? 0.05f : 0.2f);
-        background.fillCircle(rad, rad, rad - 5);
+        background.fillCircle(rad, rad, rad - 5);*/
     }
 
     @Override

@@ -5,10 +5,14 @@ END
 1
 This is too high, so you will need : [RED] (red platforms), [BLUE] (blue platforms) et [YELLOW] (yellow platforms).
 END
+Level 1
+0
+Let's complicate things a bit ... Don't go too fast !
+END
 Level 3
 0
-Pour les couleurs, c’est : [RED] (rouge), [BLUE] (bleu) and [YELLOW] (jaune)
+Here we are ! composed colors ! You see purple. You know that purple is composed by red and blue ... \n what will you do ?
 END
 1
-Sinon, pour squat, c’est : [SQUAT] !
+Same with other composed colors : green and orange !
 END

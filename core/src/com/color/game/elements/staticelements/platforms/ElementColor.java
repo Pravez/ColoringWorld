@@ -80,7 +80,7 @@ public enum ElementColor {
         }
     }
 
-    public static ElementColor parseString(String colorName) {
+    public static ElementColor parseColor(String colorName) {
         String color = getSimpleString(colorName);
         return getColor(color.toUpperCase());
     }

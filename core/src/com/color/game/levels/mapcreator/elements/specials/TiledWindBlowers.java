@@ -10,7 +10,7 @@ import com.color.game.elements.staticelements.sensors.WindBlower;
 import com.color.game.elements.staticelements.sensors.WindDirection;
 import com.color.game.levels.Level;
 
-public class TiledWindBlowers extends TiledDynamicElements{
+public class TiledWindBlowers extends TiledObjects {
 
     public TiledWindBlowers(Level level, MapLayer layer) {
         super(level, layer);

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class TiledTeleporters extends TiledDynamicElements{
+public class TiledTeleporters extends TiledObjects {
 
     private HashMap<RectangleMapObject, MapProperties> teleporters;
     private ArrayList<RectangleMapObject> destinations;

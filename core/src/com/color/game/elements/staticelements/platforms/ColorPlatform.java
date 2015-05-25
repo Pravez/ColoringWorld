@@ -57,16 +57,22 @@ public class ColorPlatform extends BaseStaticElement implements BaseColorElement
         return this.color;
     }
 
-    /*@Override
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.end();
+        /*batch.end();
 
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
-        if(color == ElementColor.BLACK){
+        if (!this.activated) {
+            Color c = Color.WHITE;//color.getColor();
+            shapeRenderer.setColor(c.r, c.g, c.b, 0.5f);
+            shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
+        }*/
+
+        /*if(color == ElementColor.BLACK){
             float width = this.physicComponent.getUserData().getWidth() * WORLD_TO_SCREEN;
             float height = this.physicComponent.getUserData().getHeight() * WORLD_TO_SCREEN;
             float x = this.physicComponent.getBody().getPosition().x * WORLD_TO_SCREEN - width/2;
@@ -95,10 +101,10 @@ public class ColorPlatform extends BaseStaticElement implements BaseColorElement
             float y = this.physicComponent.getBody().getPosition().y * WORLD_TO_SCREEN - height/2;
 
             shapeRenderer.rect(x, y, width, height);
-        }
+        }*/
 
-        shapeRenderer.end();
+        //shapeRenderer.end();
 
-        batch.begin();
-    }*/
+        //batch.begin();
+    }
 }

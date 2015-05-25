@@ -7,3 +7,6 @@ UNLOCK
 Level 3
 UNLOCK
 0
+Level 4
+UNLOCK
+0

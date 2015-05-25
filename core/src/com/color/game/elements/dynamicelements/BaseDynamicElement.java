@@ -24,7 +24,7 @@ import java.util.Iterator;
  */
 public abstract class BaseDynamicElement extends BaseElement {
 
-    public static final Vector2 DYNAMIC_ELEMENT_BASE_JUMP = new Vector2(0, 300f);
+    public static final Vector2 DYNAMIC_ELEMENT_BASE_JUMP = new Vector2(0, 240f);
 
     State movingState;
     private State aloftState;

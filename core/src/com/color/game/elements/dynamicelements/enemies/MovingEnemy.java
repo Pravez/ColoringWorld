@@ -22,7 +22,7 @@ public class MovingEnemy extends Enemy {
 
     int current_direction;
 
-    private BaseStaticElement floorElement;
+    private BaseElement floorElement;
 
     /**
      * Falling parameters
@@ -58,7 +58,7 @@ public class MovingEnemy extends Enemy {
      * Method called to select the platform on which the Enemy is
      * @param element the potential floor platform of the enemy
      */
-    private void selectFloorElement(BaseStaticElement element) {
+    private void selectFloorElement(BaseElement element) {
         if (this.floorElement == null)
             this.floorElement = element;
         else if (element.getBounds().y + element.getBounds().height < this.getBounds().y)
@@ -68,7 +68,7 @@ public class MovingEnemy extends Enemy {
     @Override
     public void act(BaseElement element) {
         if (!this.canFall && element.isPlatform())
-            selectFloorElement((BaseStaticElement) element);
+            selectFloorElement(element);
 
         // Kill the enemy with a Deadly Platform
         if (element instanceof DeadlyPlatform)

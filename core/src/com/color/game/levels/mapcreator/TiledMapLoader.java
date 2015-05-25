@@ -8,8 +8,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.color.game.assets.SaveManager;
 import com.color.game.levels.Level;
 import com.color.game.levels.mapcreator.elements.TiledElements;
-import com.color.game.levels.mapcreator.elements.specials.*;
-import com.color.game.levels.mapcreator.elements.specials.TiledBouncingColorPlatform;
+import com.color.game.levels.mapcreator.elements.objects.*;
+import com.color.game.levels.mapcreator.elements.objects.TiledBouncingColorPlatform;
 import com.color.game.levels.mapcreator.elements.statics.TiledColorPlatforms;
 import com.color.game.levels.mapcreator.elements.statics.TiledDeadlyPlatforms;
 import com.color.game.levels.mapcreator.elements.statics.TiledPlatforms;
@@ -24,7 +24,7 @@ public class TiledMapLoader {
                                          "purple", "purple_deactivated", "orange", "orange_deactivated",
                                          "green", "green_deactivated", "black", "black_deactivated",
                                          "character", "exit", "teleporter", "falling", "windblower",
-                                         "enemies", "bouncing"};
+                                         "enemies", "bouncing", "notice"};
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
@@ -44,6 +44,12 @@ public class TiledMapLoader {
         this.levelIndex = tiledMap.getProperties().get("index") != null ? Integer.parseInt((String)tiledMap.getProperties().get("index")) : -1;
 
         this.tiledElements = new ArrayList<>();
+
+        if(tiledMap.getProperties().get("index") != null){
+            level.setLevelIndex(Integer.parseInt((String) tiledMap.getProperties().get("index")));
+        }else{
+            throw new NullPointerException("Level index not initialized, please update it in the editor");
+        }
 
     }
 
@@ -101,6 +107,10 @@ public class TiledMapLoader {
                     break;
                 case "bouncing":
                     this.tiledElements.add(new TiledBouncingColorPlatform(level, this.layers.get("bouncing")));
+                    break;
+                case "notice":
+                    this.tiledElements.add(new TiledNotices(level, this.layers.get("notice")));
+                    break;
             }
         }
     }

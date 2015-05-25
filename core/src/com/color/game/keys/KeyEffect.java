@@ -8,6 +8,5 @@ public enum KeyEffect {
     RED,
     BLUE,
     YELLOW,
-    RUN,
-    MAGNES
+    RUN
 }

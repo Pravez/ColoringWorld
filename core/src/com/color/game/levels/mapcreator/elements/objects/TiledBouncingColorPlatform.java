@@ -1,4 +1,4 @@
-package com.color.game.levels.mapcreator.elements.specials;
+package com.color.game.levels.mapcreator.elements.objects;
 
 
 import com.badlogic.gdx.maps.MapLayer;
@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.staticelements.platforms.BouncingColorPlatform;
 import com.color.game.elements.staticelements.platforms.ElementColor;
 import com.color.game.levels.Level;
-import com.color.game.levels.mapcreator.elements.specials.TiledObjects;
 
 public class TiledBouncingColorPlatform extends TiledObjects {
 

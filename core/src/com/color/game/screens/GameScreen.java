@@ -290,12 +290,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         if (Gdx.input.isKeyJustPressed(this.game.keys.getKeyCode(KeyEffect.LEFT))) {
             character.addCommand(new StartMoveCommand(MovementDirection.LEFT));
         }
-        if (Gdx.input.isKeyJustPressed(this.game.keys.getKeyCode(KeyEffect.MAGNES))) {
-            this.magnetKeyPressed = true;
-            if (this.currentColoredMagnet != null) {
-                this.currentColoredMagnet.act(character);
-            }
-        }
 
         // Here the code to activate colors
         handleColorCommand(this.game.keys.getKeyCode(KeyEffect.RED), this.colorCommandManager.getRedCommand(), this.uiStage.colorGauges.redGauge);
@@ -406,12 +400,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             character.addCommand(new EndJumpCommand());
         } else if (keycode == this.game.keys.getKeyCode(KeyEffect.SQUAT)) {
             character.addCommand(new EndSquatCommand());
-        }
-        if (keycode == this.game.keys.getKeyCode(KeyEffect.MAGNES)) {
-            this.magnetKeyPressed = false;
-            if (this.currentColoredMagnet != null) {
-                this.currentColoredMagnet.endAct();
-            }
         }
         if(keycode == this.game.keys.getKeyCode(KeyEffect.LEFT) || keycode == this.game.keys.getKeyCode(KeyEffect.RIGHT)){
             character.addCommand(new EndMoveCommand());

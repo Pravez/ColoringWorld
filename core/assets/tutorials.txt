@@ -1,14 +1,14 @@
-Level 1
-1
+Level 0
+0
 Hello stranger, I hope you will enjoy your way !
 END
-2
+1
 That is nice but\n not…
 END
-Level 2
-1
+Level 1
+0
 Pour les couleurs, c’est : [RED] (rouge), [BLUE] (bleu) et [YELLOW] (jaune)
 END
-2
+1
 Sinon, pour squat, c’est : [SQUAT] !
 END

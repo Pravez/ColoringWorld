@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
-import com.color.game.elements.staticelements.BaseStaticElement;
 import com.color.game.elements.staticelements.platforms.DeadlyPlatform;
 import com.color.game.elements.staticelements.platforms.ElementColor;
 import com.color.game.elements.staticelements.sensors.ColoredMagnet;
@@ -47,6 +46,7 @@ public class MovingEnemy extends Enemy {
         this.physicComponent.getBody().setActive(true);
         this.canFall = canFall;
         this.current_direction = -1;
+        System.out.println(current_direction);
         this.changeDirection = false;
 
         this.setAloftState(new LandedState());
@@ -118,7 +118,9 @@ public class MovingEnemy extends Enemy {
     @Override
     public void handleSpecificContacts(Contact c, Body touched) {
         if(UserData.isWall(c) || UserData.isDynamicPlatform(touched)) {
+            System.out.println("true");
             if(!UserData.isEnemy(touched) && !UserData.isSensor(touched)) {
+                System.out.println("changing");
                 this.changeDirection = true;
             }
         }

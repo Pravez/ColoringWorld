@@ -29,6 +29,8 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
 
     final private ShapeRenderer shapeRenderer;
 
+    private Pixmap background;
+
     private LinkedList<ElementColor> activatedColors;
 
     private ElementColor currentColor;
@@ -46,6 +48,15 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
         this.pushCommand    = new PushCommand();
         this.attractCommand = new PushCommand();
         this.shapeRenderer  = new ShapeRenderer();
+
+        this.background = new Pixmap((int)this.getBounds().width, (int)this.getBounds().width, Pixmap.Format.RGBA8888);
+        Color c = ColorMixManager.getGDXColorFromElement(getElementColor());
+        background.setColor(c.r, c.g, c.b, c.equals(Color.YELLOW) ? 0.2f : 0.5f);
+        Pixmap.setBlending(Pixmap.Blending.None);
+        int rad = (int) this.getBounds().width/2;
+        background.fillCircle(rad, rad, rad);
+        background.setColor(c.r, c.g, c.b, c.equals(Color.YELLOW) ? 0.05f : 0.2f);
+        background.fillCircle(rad, rad, rad - 5);
     }
 
     @Override
@@ -63,7 +74,6 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 
-        Color c = ColorMixManager.getGDXColorFromElement(getElementColor());
         /*batch.end();
 
         Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
@@ -75,14 +85,6 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
         shapeRenderer.circle(this.getBounds().x + this.getBounds().width / 2, this.getBounds().y + this.getBounds().width / 2, this.getBounds().width / 2);
         shapeRenderer.end();
         batch.begin();*/
-
-        Pixmap background = new Pixmap((int)this.getBounds().width, (int)this.getBounds().width, Pixmap.Format.RGBA8888);
-        background.setColor(c.r, c.g, c.b, c.equals(Color.YELLOW) ? 0.2f : 0.5f);
-        Pixmap.setBlending(Pixmap.Blending.None);
-        int rad = (int) this.getBounds().width/2;
-        background.fillCircle(rad, rad, rad);
-        background.setColor(c.r, c.g, c.b, c.equals(Color.YELLOW) ? 0.05f : 0.2f);
-        background.fillCircle(rad, rad, rad - 5);
 
         //batch.begin();
 
@@ -161,6 +163,17 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
             this.activatedColors.add(color);
 
         this.currentColor = (this.activatedColors.contains(ElementColor.BLACK)) ? ElementColor.BLACK : this.activatedColors.peek();
+
+        // Change pixmap background
+        Color c = ColorMixManager.getGDXColorFromElement(getElementColor());
+        background.setColor(0, 0, 0, 0);
+        background.fill();
+        background.setColor(c.r, c.g, c.b, c.equals(Color.YELLOW) ? 0.2f : 0.5f);
+        Pixmap.setBlending(Pixmap.Blending.None);
+        int rad = (int) this.getBounds().width/2;
+        background.fillCircle(rad, rad, rad);
+        background.setColor(c.r, c.g, c.b, c.equals(Color.YELLOW) ? 0.05f : 0.2f);
+        background.fillCircle(rad, rad, rad - 5);
     }
 
     @Override

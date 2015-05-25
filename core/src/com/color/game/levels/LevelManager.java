@@ -74,8 +74,9 @@ public class LevelManager {
      * Method to init the different {@link Level} of the Game, should load the {@link Level} from files
      */
     public static void init() {
-        levels = new ArrayList<>();
+        LevelManager.levels = new ArrayList<>();
         loadLevels();
+        LevelManager.levels.get(0).unlock();
     }
 
     private static void loadLevels(){

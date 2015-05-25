@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="72">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="77">
  <properties>
   <property name="index" value="0"/>
  </properties>
@@ -35,20 +35,6 @@
   <object id="45" name="character" x="192" y="1408" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="exit"/>
- <objectgroup name="teleporter">
-  <object id="47" name="teleporter" x="128" y="1088" width="32" height="64">
-   <properties>
-    <property name="destination" value="2"/>
-   </properties>
-  </object>
-  <object id="48" name="1" x="352" y="1184" width="32" height="32"/>
-  <object id="49" name="2" x="992" y="1536" width="32" height="32"/>
-  <object id="50" name="teleporter" x="640" y="1376" width="32" height="64">
-   <properties>
-    <property name="destination" value="1"/>
-   </properties>
-  </object>
- </objectgroup>
  <objectgroup name="falling">
   <properties>
    <property name="activated" value="true"/>
@@ -100,5 +86,10 @@
    <property name="index" value="1"/>
   </properties>
   <object id="67" x="160" y="1504" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup name="magnet">
+  <object id="75" x="1024" y="1312" width="256" height="256">
+   <ellipse/>
+  </object>
  </objectgroup>
 </map>

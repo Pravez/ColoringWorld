@@ -22,7 +22,11 @@ public class SaveManager {
 
     public void load() {
         if (Files.isRegularFile(Paths.get(PLAYER_FILE))) {
-            try (BufferedReader br = new BufferedReader(new FileReader(PLAYER_FILE))) {
+
+            try {
+
+                FileReader fileReader = new FileReader(PLAYER_FILE);
+                BufferedReader br = new BufferedReader(fileReader);
                 String line = br.readLine();
 
                 int level = 0;
@@ -42,15 +46,21 @@ public class SaveManager {
                     line = br.readLine();
                     level++;
                 }
+                fileReader.close();
                 br.close();
             } catch (Exception e) {
                 e.printStackTrace();
+                if(e instanceof IOException) {
+                    JOptionPane.showMessageDialog(null, "IMPOSSIBLE TO READ SAVED FILE.");
+                }
             }
         }
     }
 
     public void save() {
-        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(PLAYER_FILE, false)))) {
+        try {
+            File file = new File(PLAYER_FILE);
+            PrintWriter writer = new PrintWriter(file);
             ArrayList<Level> levels = LevelManager.getLevels();
             for (int i = 0 ; i < levels.size() ; i++) {
                 writer.write("Level " + (i + 1) + "\n");

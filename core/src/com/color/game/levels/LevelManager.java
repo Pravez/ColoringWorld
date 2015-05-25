@@ -84,13 +84,13 @@ public class LevelManager {
         levels = new ArrayList<>();
         firstlevel();
         //addSeventhLevel();
-        addFirstDebugLevel();
+        /*addFirstDebugLevel();
         addSecondDebugLevel();
         addThirdDebugLevel();
         addForthDebugLevel();
         addFifthDebugLevel();
         addSixthDebugLevel();
-        addSeventhDebugLevel();
+        addSeventhDebugLevel();*/
         /*addFirstLevel();
         addSecondLevel();
         addSecondBisLevel();
@@ -102,42 +102,6 @@ public class LevelManager {
         addEighthLevel();*/
 
         //unlockAll();
-
-        /** **/
-        /*TiledMap map = new TiledMap();
-        TiledMapTileSet tileset =  tiledMap.getTileSets().getTileSet("Water");
-        waterTiles = new HashMap<String,TiledMapTile>();
-        for(TiledMapTile tile:tileset){
-            Object property = tile.getProperties().get("WaterFrame");
-            if(property != null)
-                waterTiles.put((String)property,tile);
-        }
-        waterCellsInScene = new ArrayList<TiledMapTileLayer.Cell>();
-        TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
-        for(int x = 0; x < layer.getWidth();x++){
-            for(int y = 0; y < layer.getHeight();y++){
-                TiledMapTileLayer.Cell cell = layer.getCell(x,y);
-                Object property = cell.getTile().getProperties().get("WaterFrame");
-                if(property != null){
-                    waterCellsInScene.add(cell);
-                }
-            }
-        }
-        private void updateWaterAnimations() {
-            for(TiledMapTileLayer.Cell cell : waterCellsInScene){
-                String property = (String) cell.getTile().getProperties().get("WaterFrame");
-                Integer currentAnimationFrame = Integer.parseInt(property);
-
-                currentAnimationFrame++;
-                if(currentAnimationFrame > waterTiles.size())
-                    currentAnimationFrame = 1;
-
-                TiledMapTile newTile = waterTiles.get(currentAnimationFrame.toString());
-                cell.setTile(newTile);
-            }
-        }*/
-        //
-        /** **/
     }
 
     private static void firstlevel(){

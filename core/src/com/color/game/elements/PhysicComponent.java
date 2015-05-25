@@ -61,7 +61,7 @@ public abstract class PhysicComponent {
      * @param category Body's category
      * @param mask Body's collision mask
      */
-    public abstract void configureCircleBody(Vector2 position, int radius, World world, short category, short mask);
+    public abstract void configureCircleBody(Vector2 position, float radius, World world, short category, short mask);
 
     /**
      * Method to move an enemy to the Player Category Collision Filtering

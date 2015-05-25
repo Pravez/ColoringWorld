@@ -31,7 +31,7 @@ public abstract class Sensor extends BaseStaticElement {
      * @param radius the radius of the Sensor
      * @param map the map containing the Sensor
      */
-    Sensor(Vector2 position, int radius, Map map) {
+    Sensor(Vector2 position, float radius, Map map) {
         super(position, radius, map, PhysicComponent.CATEGORY_SENSOR, PhysicComponent.MASK_SENSOR);
         this.physicComponent.configureUserData(new StaticElementUserData(this, radius, radius, UserDataType.SENSOR));
     }

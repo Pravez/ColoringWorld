@@ -23,7 +23,7 @@ public abstract class BaseStaticElement extends BaseElement {
         map.addBlock(position.x, position.y, width * 2, height * 2);
     }
 
-    protected BaseStaticElement(Vector2 position, int radius, Map map, short category, short mask) {
+    protected BaseStaticElement(Vector2 position, float radius, Map map, short category, short mask) {
         super();
         physicComponent = new StaticPhysicComponent(this);
         physicComponent.configureCircleBody(position, radius, map.world, category, mask);

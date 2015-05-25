@@ -24,7 +24,7 @@ public class TiledMapLoader {
                                          "purple", "purple_deactivated", "orange", "orange_deactivated",
                                          "green", "green_deactivated", "black", "black_deactivated",
                                          "character", "exit", "teleporter", "falling", "windblower",
-                                         "enemies", "bouncing", "notice"};
+                                         "enemies", "bouncing", "notice", "magnet"};
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
@@ -110,6 +110,9 @@ public class TiledMapLoader {
                     break;
                 case "notice":
                     this.tiledElements.add(new TiledNotices(level, this.layers.get("notice")));
+                    break;
+                case "magnet":
+                    this.tiledElements.add(new TiledColoredMagnet(level, this.layers.get("magnet")));
                     break;
             }
         }

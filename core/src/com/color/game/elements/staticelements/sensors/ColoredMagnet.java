@@ -33,7 +33,7 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
 
     private ElementColor currentColor;
 
-    public ColoredMagnet(Vector2 position, int radius, Level level) {
+    public ColoredMagnet(Vector2 position, float radius, Level level) {
         super(position, radius, level.map);
         this.physicComponent.configureUserData(new StaticElementUserData(this, radius, radius, UserDataType.COLOREDMAGNET));
 

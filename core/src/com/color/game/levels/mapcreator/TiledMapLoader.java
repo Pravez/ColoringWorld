@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.color.game.assets.SaveManager;
 import com.color.game.levels.Level;
+import com.color.game.levels.ScoreHandler;
 import com.color.game.levels.mapcreator.elements.TiledElements;
 import com.color.game.levels.mapcreator.elements.objects.*;
 import com.color.game.levels.mapcreator.elements.objects.TiledBouncingColorPlatform;
@@ -51,6 +52,22 @@ public class TiledMapLoader {
             throw new NullPointerException("Level index not initialized, please update it in the editor");
         }
 
+        ScoreHandler score;
+
+        try{
+
+            int maxDeath = Integer.parseInt((String) tiledMap.getProperties().get("deaths"));
+            int maxTime = Integer.parseInt((String) tiledMap.getProperties().get("time"));
+            int bronze = Integer.parseInt((String) tiledMap.getProperties().get("bronze"));
+            int silver = Integer.parseInt((String) tiledMap.getProperties().get("silver"));
+            int gold = Integer.parseInt((String) tiledMap.getProperties().get("gold"));
+
+            score = new ScoreHandler(maxDeath, maxTime, bronze, silver, gold);
+            level.setScoreHandler(score);
+
+        }catch (Exception e){
+            throw new NullPointerException("Impossible to initialize score system for level "+level.getLevelIndex());
+        }
     }
 
     public void loadMap() {

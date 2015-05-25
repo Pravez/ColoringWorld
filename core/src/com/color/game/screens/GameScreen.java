@@ -24,6 +24,7 @@ import com.color.game.elements.userData.UserData;
 import com.color.game.gui.ColorGauge;
 import com.color.game.gui.UIStage;
 import com.color.game.keys.KeyEffect;
+import com.color.game.levels.Level;
 import com.color.game.levels.LevelManager;
 
 /**

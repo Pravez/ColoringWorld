@@ -137,7 +137,7 @@ public abstract class UserData {
 
     public static boolean isWall(Contact c){
         float y = c.getWorldManifold().getNormal().y;
-        return y < 0.5f && y > - 0.5f &&  c.isTouching() && !UserData.isSensor(c.getFixtureB().getBody())  && !UserData.isEnemy(c.getFixtureB().getBody());
+        return y < 0.5f && y > - 0.5f &&  c.isTouching();
     }
 
     public static boolean isDynamicBodyPresent(Contact c, Body body) {
@@ -145,11 +145,7 @@ public abstract class UserData {
         Body a = c.getFixtureA().getBody();
         Body b = c.getFixtureB().getBody();
 
-        if (isDynamicBody(a) || isDynamicBody(b)) {
-            return a.equals(body) || b.equals(body);
-        } else {
-            return false;
-        }
+        return (isDynamicBody(a) || isDynamicBody(b)) && (a.equals(body) || b.equals(body));
     }
 
     public static Body getOtherBody(Contact c, BaseDynamicElement bde){

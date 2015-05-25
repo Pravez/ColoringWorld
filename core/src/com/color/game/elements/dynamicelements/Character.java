@@ -1,11 +1,7 @@
 package com.color.game.elements.dynamicelements;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -37,13 +33,10 @@ public class Character extends BaseDynamicElement {
     public static final float CHARACTER_HEIGHT = 1.9f;
     public static final float CHARACTER_SQUAT_HEIGHT = 0.9f;
     public static final int CHARACTER_WIDTH = 1;
-    public static final float JUMP_WHEN_FALLING_PLATFORM = 375f;
 
 
     final private GameScreen gameScreen;
     private Vector2 currentJumpVelocity;
-
-    final private ShapeRenderer shapeRenderer;
 
     public Character(GameScreen gameScreen, Vector2 position, float width, float height, World world) {
         super(position, width, height, world, PhysicComponent.CATEGORY_PLAYER, PhysicComponent.MASK_PLAYER);
@@ -51,7 +44,6 @@ public class Character extends BaseDynamicElement {
         this.physicComponent.configureUserData(new DynamicElementUserData(this, width, height, UserDataType.CHARACTER));
 
         this.gameScreen = gameScreen;
-        this.shapeRenderer = new ShapeRenderer();
 
         this.currentJumpVelocity = new Vector2(BaseDynamicElement.DYNAMIC_ELEMENT_BASE_JUMP);
 

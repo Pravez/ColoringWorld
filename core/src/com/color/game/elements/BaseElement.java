@@ -12,7 +12,7 @@ import com.color.game.elements.userData.UserData;
  */
 public abstract class BaseElement extends Actor {
 
-    public static final int WORLD_TO_SCREEN = 15;
+    public static final int WORLD_TO_SCREEN = 11;
 
     protected GraphicComponent graphicComponent;
     protected PhysicComponent physicComponent;

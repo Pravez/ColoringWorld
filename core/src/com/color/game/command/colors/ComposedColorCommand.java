@@ -2,7 +2,6 @@ package com.color.game.command.colors;
 
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.staticelements.platforms.ElementColor;
-import com.color.game.levels.LevelManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +20,7 @@ public class ComposedColorCommand extends ColorCommand {
     @Override
     public boolean execute(BaseDynamicElement element, float delta) {
         if (!this.activated) {
-            LevelManager.getCurrentLevel().changeColorPlatformsActivation(this.color);
+            changeColor();
             this.activated = true;
         }
 

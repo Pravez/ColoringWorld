@@ -2,6 +2,7 @@ package com.color.game.levels;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * LevelManager, class to handle the different {@link Level} of the Game
@@ -78,26 +79,21 @@ public class LevelManager {
     }
 
     private static void loadLevels(){
-        ArrayList<Level> tempList = new ArrayList<>();
+        HashMap<Integer, Level> tempList = new HashMap<>();
         for(String path : new File("mapsData").list()){
             if(path.endsWith(".tmx")){
                 try {
                     Level level = new Level("mapsData/" + path);
-                    tempList.add(level);
+                    tempList.put(level.getLevelIndex(), level);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
             }
         }
 
-        /*Level[] sortedLevels = new Level[highestLevel(tempList)];
-
-        for(Level l : tempList){
-            sortedLevels[l.getLevelIndex()] = l;
-        }*/
-
-       // Collections.addAll(levels, sortedLevels);
-        levels.addAll(tempList);
+        for(int i = 0;i<tempList.size();i++){
+            levels.add(tempList.get(i));
+        }
     }
 
     public static void unlock(int index) {

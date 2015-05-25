@@ -20,6 +20,7 @@ public abstract class PhysicComponent {
 
     public static final short MASK_PLAYER = CATEGORY_ENEMY | CATEGORY_SCENERY | CATEGORY_PLATFORM | CATEGORY_SENSOR;
     public static final short MASK_ENEMY = CATEGORY_PLAYER | CATEGORY_SCENERY | CATEGORY_PLATFORM | CATEGORY_SENSOR;
+    public static final short MASK_TRANSPARENT = CATEGORY_SCENERY | CATEGORY_PLATFORM | CATEGORY_SENSOR;
     public static final short MASK_DEAD = 0;// = CATEGORY_SCENERY;
     public static final short MASK_SENSOR = CATEGORY_PLAYER | CATEGORY_ENEMY;
     public static final short MASK_SCENERY = CATEGORY_PLAYER | CATEGORY_ENEMY | CATEGORY_SCENERY;
@@ -67,8 +68,8 @@ public abstract class PhysicComponent {
      */
     public void toPlayerCategory() {
         Filter filter = this.body.getFixtureList().first().getFilterData();
-        filter.categoryBits = PhysicComponent.CATEGORY_PLAYER;
-        filter.maskBits = PhysicComponent.MASK_ENEMY;
+        filter.categoryBits = PhysicComponent.CATEGORY_ENEMY;
+        filter.maskBits = PhysicComponent.MASK_TRANSPARENT;
         this.body.getFixtureList().first().setFilterData(filter);
     }
 

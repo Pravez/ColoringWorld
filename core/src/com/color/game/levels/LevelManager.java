@@ -2,7 +2,6 @@ package com.color.game.levels;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * LevelManager, class to handle the different {@link Level} of the Game
@@ -91,13 +90,14 @@ public class LevelManager {
             }
         }
 
-        Level[] sortedLevels = new Level[tempList.size()];
+        /*Level[] sortedLevels = new Level[highestLevel(tempList)];
 
         for(Level l : tempList){
             sortedLevels[l.getLevelIndex()] = l;
-        }
+        }*/
 
-        Collections.addAll(levels, sortedLevels);
+       // Collections.addAll(levels, sortedLevels);
+        levels.addAll(tempList);
     }
 
     public static void unlock(int index) {
@@ -132,11 +132,19 @@ public class LevelManager {
         }
     }
 
-
-
     public static void disposeLevels() {
         for(Level level : LevelManager.levels) {
             level.dispose();
         }
+    }
+
+    private static int highestLevel(ArrayList<Level> levels){
+        int max = 0;
+        for(Level l : levels){
+            if(l.getLevelIndex() > max)
+                max = l.getLevelIndex();
+        }
+
+        return max;
     }
 }

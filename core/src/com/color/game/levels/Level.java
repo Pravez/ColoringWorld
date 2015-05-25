@@ -239,6 +239,10 @@ public class Level extends Stage {
         return platforms;
     }
 
+    public void changeColorLayersOpacity(ElementColor color){
+        this.mapLoader.changeOpacity(color.toString().toLowerCase());
+    }
+
     public World getWorld() {
         return map.world;
     }

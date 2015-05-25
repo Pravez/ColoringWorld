@@ -10,13 +10,12 @@ import com.color.game.levels.Level;
 import com.color.game.levels.ScoreHandler;
 import com.color.game.levels.mapcreator.elements.TiledElements;
 import com.color.game.levels.mapcreator.elements.objects.*;
-import com.color.game.levels.mapcreator.elements.objects.TiledBouncingColorPlatform;
 import com.color.game.levels.mapcreator.elements.statics.TiledColorPlatforms;
 import com.color.game.levels.mapcreator.elements.statics.TiledDeadlyPlatforms;
 import com.color.game.levels.mapcreator.elements.statics.TiledPlatforms;
 
 import javax.swing.*;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TiledMapLoader {
 
@@ -32,7 +31,7 @@ public class TiledMapLoader {
 
     private MapLayers layers;
 
-    ArrayList<TiledElements> tiledElements;
+    HashMap<String, TiledElements> tiledElements;
     private Level level;
     private Integer levelIndex;
 
@@ -43,7 +42,7 @@ public class TiledMapLoader {
         this.orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         this.layers = tiledMap.getLayers();
 
-        this.tiledElements = new ArrayList<>();
+        this.tiledElements = new HashMap<>();
 
         if(tiledMap.getProperties().get("index") != null){
             level.setLevelIndex(Integer.parseInt((String) tiledMap.getProperties().get("index")));
@@ -80,8 +79,8 @@ public class TiledMapLoader {
                 }
             }
 
-            for (TiledElements te : tiledElements) {
-                te.loadElements();
+            for (String s : tiledElements.keySet()) {
+                tiledElements.get(s).loadElements();
             }
 
         }catch(Exception e){
@@ -93,44 +92,44 @@ public class TiledMapLoader {
 
     private void addElement(String layerName){
         if(containsColor(layerName)){
-            this.tiledElements.add(new TiledColorPlatforms(level, (TiledMapTileLayer) this.layers.get(layerName), layerName));
+            this.tiledElements.put(layerName, new TiledColorPlatforms(level, (TiledMapTileLayer) this.layers.get(layerName), layerName));
         }else {
             switch (layerName) {
                 case "static":
-                    this.tiledElements.add(new TiledPlatforms(level, (TiledMapTileLayer) this.layers.get("static")));
+                    this.tiledElements.put(layerName, new TiledPlatforms(level, (TiledMapTileLayer) this.layers.get("static")));
                     break;
                 case "moving":
-                    this.tiledElements.add(new TiledMovingPlatforms(level, this.layers.get("moving")));
+                    this.tiledElements.put(layerName, new TiledMovingPlatforms(level, this.layers.get("moving")));
                     break;
                 case "deadly":
-                    this.tiledElements.add(new TiledDeadlyPlatforms(level, (TiledMapTileLayer) this.layers.get("deadly")));
+                    this.tiledElements.put(layerName, new TiledDeadlyPlatforms(level, (TiledMapTileLayer) this.layers.get("deadly")));
                     break;
                 case "character":
                     TiledElements.setCharacter(level, this.layers.get("character"));
                     break;
                 case "exit":
-                    this.tiledElements.add(new TiledEndObjects(level, this.layers.get("exit"), levelIndex));
+                    this.tiledElements.put(layerName, new TiledEndObjects(level, this.layers.get("exit"), levelIndex));
                     break;
                 case "teleporter":
-                    this.tiledElements.add(new TiledTeleporters(level, this.layers.get("teleporter")));
+                    this.tiledElements.put(layerName, new TiledTeleporters(level, this.layers.get("teleporter")));
                     break;
                 case "falling":
-                    this.tiledElements.add(new TiledFallingPlatforms(level, this.layers.get("falling")));
+                    this.tiledElements.put(layerName, new TiledFallingPlatforms(level, this.layers.get("falling")));
                     break;
                 case "windblower":
-                    this.tiledElements.add(new TiledWindBlowers(level, this.layers.get("windblower")));
+                    this.tiledElements.put(layerName, new TiledWindBlowers(level, this.layers.get("windblower")));
                     break;
                 case "enemies":
-                    this.tiledElements.add(new TiledEnemies(level, this.layers.get("enemies")));
+                    this.tiledElements.put(layerName, new TiledEnemies(level, this.layers.get("enemies")));
                     break;
                 case "bouncing":
-                    this.tiledElements.add(new TiledBouncingColorPlatform(level, this.layers.get("bouncing")));
+                    this.tiledElements.put(layerName, new TiledBouncingColorPlatform(level, this.layers.get("bouncing")));
                     break;
                 case "notice":
-                    this.tiledElements.add(new TiledNotices(level, this.layers.get("notice")));
+                    this.tiledElements.put(layerName, new TiledNotices(level, this.layers.get("notice")));
                     break;
                 case "magnet":
-                    this.tiledElements.add(new TiledColoredMagnet(level, this.layers.get("magnet")));
+                    this.tiledElements.put(layerName, new TiledColoredMagnet(level, this.layers.get("magnet")));
                     break;
             }
         }
@@ -148,6 +147,14 @@ public class TiledMapLoader {
 
     public OrthogonalTiledMapRenderer getOrthogonalTiledMapRenderer() {
         return orthogonalTiledMapRenderer;
+    }
+
+    public void changeOpacity(String layers){
+        for(String s : maps){
+            if(s.contains(layers) && this.tiledElements.containsKey(s)){
+                this.tiledElements.get(s).inverseOpacity();
+            }
+        }
     }
 
 

@@ -27,7 +27,7 @@ public class ComposedColorCommand extends ColorCommand {
 
         for(ColorCommand command : this.colorComponents){
             if(!command.isPressed() && !this.isFinished()){
-                LevelManager.getCurrentLevel().changeColorPlatformsActivation(this.color);
+                changeColor();
                 restart();
             }
         }

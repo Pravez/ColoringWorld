@@ -13,6 +13,8 @@ public abstract class TiledElements {
 
     protected final static float tileSize = 32f;
     protected final static float unitSize = (tileSize / 2) / BaseElement.WORLD_TO_SCREEN;
+    public final static float COLOR_LAYER_OFF_OPACITY = 0.2f;
+    public final static float COLOR_LAYER_OPACITY = 1f;
 
 
     protected Level level;
@@ -47,4 +49,7 @@ public abstract class TiledElements {
         return (number/32)* TiledElements.unitSize;
     }
 
+    public void inverseOpacity(){
+
+    }
 }

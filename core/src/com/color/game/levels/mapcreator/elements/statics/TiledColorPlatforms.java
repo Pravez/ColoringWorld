@@ -26,9 +26,23 @@ public class TiledColorPlatforms extends TiledPlatforms{
         for(TiledCell cell : finalElements.keySet()){
 
             Vector2 datas = finalElements.get(cell);
+            if(!activated){
+                this.layer.setOpacity(COLOR_LAYER_OFF_OPACITY);
+            }else{
+                this.layer.setOpacity(COLOR_LAYER_OPACITY);
+            }
 
             level.addActor(new ColorPlatform(new Vector2(cell.posX * TiledElements.unitSize, cell.posY * TiledElements.unitSize), datas.x * TiledElements.unitSize, datas.y * TiledElements.unitSize, level, color, activated));
 
+        }
+    }
+
+    @Override
+    public void inverseOpacity(){
+        if(this.layer.getOpacity() == COLOR_LAYER_OFF_OPACITY){
+            this.layer.setOpacity(COLOR_LAYER_OPACITY);
+        }else{
+            this.layer.setOpacity(COLOR_LAYER_OFF_OPACITY);
         }
     }
 }

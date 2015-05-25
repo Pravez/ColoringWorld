@@ -53,9 +53,19 @@ public class ColorCommand implements Command {
      */
     public void stop() {
         if (this.activated && !this.desactivated) {
-            LevelManager.getCurrentLevel().changeColorPlatformsActivation(this.color);
+            changeColor();
         }
         restart();
+    }
+
+    public void start(){
+        changeColor();
+        this.activated = true;
+    }
+
+    protected void changeColor(){
+        LevelManager.getCurrentLevel().changeColorPlatformsActivation(this.color);
+        LevelManager.getCurrentLevel().changeColorLayersOpacity(this.color);
     }
 
 
@@ -63,16 +73,16 @@ public class ColorCommand implements Command {
     public boolean execute(BaseDynamicElement element, float delta) {
         this.time += delta;
         if (!this.activated) {
-            LevelManager.getCurrentLevel().changeColorPlatformsActivation(this.color);
-            this.activated = true;
+            start();
         }
         if (!this.desactivated && this.time >= 4f * ColorCommand.COLOR_DELAY / 5) {
-            LevelManager.getCurrentLevel().changeColorPlatformsActivation(this.color);
+            changeColor();
             this.desactivated = true;
             this.pressed = false;
         }
         if (this.time >= ColorCommand.COLOR_DELAY) {
             restart();
+
         }
 
         return isFinished();

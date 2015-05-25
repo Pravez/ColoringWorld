@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="77">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="79">
  <properties>
+  <property name="bronze" value="20"/>
+  <property name="deaths" value="20"/>
+  <property name="gold" value="20"/>
   <property name="index" value="0"/>
+  <property name="silver" value="20"/>
+  <property name="time" value="20"/>
  </properties>
  <tileset firstgid="1" name="walls1_0" tilewidth="32" tileheight="32">
   <image source="walls1_0.png" width="448" height="512"/>
@@ -52,9 +57,6 @@
   </object>
  </objectgroup>
  <objectgroup name="windblower">
-  <properties>
-   <property name="direction" value="north"/>
-  </properties>
   <object id="57" x="1312" y="1280" width="96" height="288">
    <properties>
     <property name="direction" value="north"/>

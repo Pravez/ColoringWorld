@@ -42,12 +42,13 @@ public class TiledMapLoader {
         this.tiledMap = new TmxMapLoader().load(path);
         this.orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         this.layers = tiledMap.getLayers();
-        this.levelIndex = tiledMap.getProperties().get("index") != null ? Integer.parseInt((String)tiledMap.getProperties().get("index")) : -1;
 
         this.tiledElements = new ArrayList<>();
 
         if(tiledMap.getProperties().get("index") != null){
             level.setLevelIndex(Integer.parseInt((String) tiledMap.getProperties().get("index")));
+            this.levelIndex = level.getLevelIndex();
+
         }else{
             throw new NullPointerException("Level index not initialized, please update it in the editor");
         }

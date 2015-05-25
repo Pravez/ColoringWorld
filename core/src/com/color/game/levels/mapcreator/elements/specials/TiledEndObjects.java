@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.levels.Level;
 
-public class TiledEndObjects extends TiledDynamicElements{
+public class TiledEndObjects extends TiledObjects {
 
     private Integer currentLevelIndex;
 

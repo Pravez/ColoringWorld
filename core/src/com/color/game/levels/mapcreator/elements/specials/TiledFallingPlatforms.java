@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.levels.Level;
 
-public class TiledFallingPlatforms extends TiledDynamicElements{
+public class TiledFallingPlatforms extends TiledObjects {
 
     public TiledFallingPlatforms(Level level, MapLayer layer) {
         super(level, layer);

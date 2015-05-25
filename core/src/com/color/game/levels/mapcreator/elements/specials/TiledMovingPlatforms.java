@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class TiledMovingPlatforms extends TiledDynamicElements{
+public class TiledMovingPlatforms extends TiledObjects {
 
     private HashMap<RectangleMapObject, MapProperties> rectangles;
     private ArrayList<RectangleMapObject> directionsPositions;

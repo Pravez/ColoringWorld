@@ -9,6 +9,7 @@ import com.color.game.assets.SaveManager;
 import com.color.game.levels.Level;
 import com.color.game.levels.mapcreator.elements.TiledElements;
 import com.color.game.levels.mapcreator.elements.specials.*;
+import com.color.game.levels.mapcreator.elements.specials.TiledBouncingColorPlatform;
 import com.color.game.levels.mapcreator.elements.statics.TiledColorPlatforms;
 import com.color.game.levels.mapcreator.elements.statics.TiledDeadlyPlatforms;
 import com.color.game.levels.mapcreator.elements.statics.TiledPlatforms;
@@ -23,7 +24,7 @@ public class TiledMapLoader {
                                          "purple", "purple_deactivated", "orange", "orange_deactivated",
                                          "green", "green_deactivated", "black", "black_deactivated",
                                          "character", "exit", "teleporter", "falling", "windblower",
-                                         "enemies"};
+                                         "enemies", "bouncing"};
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
@@ -98,6 +99,8 @@ public class TiledMapLoader {
                 case "enemies":
                     this.tiledElements.add(new TiledEnemies(level, this.layers.get("enemies")));
                     break;
+                case "bouncing":
+                    this.tiledElements.add(new TiledBouncingColorPlatform(level, this.layers.get("bouncing")));
             }
         }
     }

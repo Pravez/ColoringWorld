@@ -6,12 +6,12 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.color.game.levels.Level;
 import com.color.game.levels.mapcreator.elements.TiledElements;
 
-public abstract class TiledDynamicElements extends TiledElements {
+public abstract class TiledObjects extends TiledElements {
 
     protected MapObjects objects;
     protected MapLayer layer;
 
-    public TiledDynamicElements(Level level, MapLayer layer) {
+    public TiledObjects(Level level, MapLayer layer) {
         super(level, layer);
 
         this.layer = layer;

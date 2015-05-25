@@ -34,6 +34,8 @@ public abstract class TiledElements {
             Rectangle character = ((RectangleMapObject) layer.getObjects().get("character")).getRectangle();
             pos.x = convert(character.x)+convert(character.width);
             pos.y = convert(character.y)+convert(character.height);
+            pos.x*=1.9f;
+            pos.y*=1.9f;
 
         }catch (NullPointerException n){
             pos.x = 1;

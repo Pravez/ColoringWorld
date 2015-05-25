@@ -7,7 +7,7 @@ import com.color.game.elements.userData.UserData;
 /**
  * PhysicComponent is the class who does everything about the physics and the coordination between the world the players sees
  * and the bodies evolving in the Box2D {@link com.badlogic.gdx.physics.box2d.World}. It is overrided by static elements
- * and specials elements : they have their specific physics.
+ * and objects elements : they have their specific physics.
  */
 public abstract class PhysicComponent {
 

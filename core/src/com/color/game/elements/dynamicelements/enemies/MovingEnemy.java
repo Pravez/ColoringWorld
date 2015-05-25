@@ -47,7 +47,6 @@ public class MovingEnemy extends Enemy {
         this.physicComponent.getBody().setActive(true);
         this.canFall = canFall;
         this.current_direction = -1;
-        System.out.println(current_direction);
         this.changeDirection = false;
 
         this.setAloftState(new LandedState());
@@ -119,9 +118,7 @@ public class MovingEnemy extends Enemy {
     @Override
     public void handleSpecificContacts(Contact c, Body touched) {
         if(UserData.isWall(c) || UserData.isDynamicPlatform(touched)) {
-            System.out.println("true");
             if(!UserData.isEnemy(touched) && !UserData.isSensor(touched)) {
-                System.out.println("changing");
                 this.changeDirection = true;
             }
         }

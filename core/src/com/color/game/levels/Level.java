@@ -64,30 +64,36 @@ public class Level extends Stage {
 
     private TiledMapLoader mapLoader;
 
-    private SpriteBatch batch = new SpriteBatch();
+    private SpriteBatch batch;
+
+    private int levelIndex;
 
     /**
      * The Constructor of the Level
      * @param characterPos the position of the {@link com.color.game.elements.dynamicelements.Character} at the beginning of the level
      */
     public Level(Vector2 characterPos) {
-        this.map          = new Map(Map.WORLD_GRAVITY, true);
+        this.map = new Map(Map.WORLD_GRAVITY, true);
         this.characterPos = characterPos.scl(2);
 
         this.colorElements = new Array<>();
         this.dynamicPlatforms = new Array<>();
-        this.platforms        = new Array<>();
-        this.enemies          = new Array<>();
+        this.platforms = new Array<>();
+        this.enemies = new Array<>();
+        this.batch = new SpriteBatch();
+        this.levelIndex = 0;
     }
 
     public Level(String path){
-        this.map          = new Map(Map.WORLD_GRAVITY, true);
+        this.map = new Map(Map.WORLD_GRAVITY, true);
         this.characterPos = new Vector2(1,1);
 
         this.colorElements = new Array<>();
         this.dynamicPlatforms = new Array<>();
-        this.platforms        = new Array<>();
-        this.enemies          = new Array<>();
+        this.platforms = new Array<>();
+        this.enemies = new Array<>();
+        this.batch  = new SpriteBatch();
+        this.levelIndex = 0;
 
         this.mapLoader = new TiledMapLoader(this, path);
         mapLoader.loadMap();
@@ -239,5 +245,13 @@ public class Level extends Stage {
 
     public void addDeath() {
         this.scoreHandler.addDeath();
+    }
+
+    public int getLevelIndex() {
+        return levelIndex;
+    }
+
+    public void setLevelIndex(int levelIndex) {
+        this.levelIndex = levelIndex;
     }
 }

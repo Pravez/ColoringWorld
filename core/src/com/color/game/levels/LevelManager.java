@@ -199,10 +199,7 @@ public class LevelManager {
         level.addActor(new Exit(new Vector2(58, 17), 1, 3, level.map, 1));
 
         // Notices
-        level.addActor(new Notice(new Vector2(3, 1), 2, 2, level.map, 0));
-        level.addActor(new Notice(new Vector2(8, 1), 2, 2, level.map, 1));
-        level.addActor(new Notice(new Vector2(45, 1), 2, 2, level.map, 2));
-        level.addActor(new Notice(new Vector2(52, 17), 2, 2, level.map, 3));
+
 
         LevelManager.levels.add(level);
     }
@@ -234,7 +231,6 @@ public class LevelManager {
         level.addActor(new Exit(new Vector2(29, 21), 2, 3, level.map, 2));
 
         // Notice
-        level.addActor(new Notice(new Vector2(32, 1), 2, 2, level.map, 4));
 
         LevelManager.levels.add(level);
     }
@@ -260,9 +256,7 @@ public class LevelManager {
         level.addActor(new Exit(new Vector2(58, 17), 1, 3, level.map, 3));
 
         // Notices
-        level.addActor(new Notice(new Vector2(3, 1), 2, 2, level.map, 11));
-        level.addActor(new Notice(new Vector2(9, 1), 2, 2, level.map, 14));
-        level.addActor(new Notice(new Vector2(6, 1), 2, 2, level.map, 12));
+
 
         LevelManager.levels.add(level);
     }
@@ -288,7 +282,6 @@ public class LevelManager {
         level.addActor(new ColorPlatform(new Vector2(17,22), 10, 1, level, ElementColor.ORANGE, false));
         level.addActor(new ColorPlatform(new Vector2(35,26), 5, 1, level, ElementColor.BLACK, false));
 
-        level.addActor(new Notice(new Vector2(19, 17), 4, 1, level.map, 15));
 
         // Exit
         level.addActor(new Exit(new Vector2(48, 31), 1, 2, level.map, 4));
@@ -456,7 +449,6 @@ public class LevelManager {
         level.addActor(new ColorPlatform(new Vector2(78, 90), 16, 1, level, ElementColor.ORANGE, false));
 
         level.addActor(new Exit(new Vector2(69, 91), 2, 3, level.map, 6));
-        level.addActor(new Notice(new Vector2(10, 1), 4, 2, level.map, 16));
 
         level.addActor(new MovingEnemy(new Vector2(23, 6), 2, 2, level, false,  null));
         level.addActor(new MovingEnemy(new Vector2(33, 11), 2, 2, level, false,  null));
@@ -514,7 +506,6 @@ public class LevelManager {
         level.addActor(new Exit(new Vector2(24, 61), 3, 4, level.map, 7));
 
         // Notice
-        level.addActor(new Notice(new Vector2(3, 11), 2, 2, level.map, 10));
 
         LevelManager.levels.add(level);
     }
@@ -583,7 +574,6 @@ public class LevelManager {
         level.addActor(new MovingEnemy(new Vector2(38, 1), 2, 2, level, false, ElementColor.PURPLE));
 
         // Notices
-        level.addActor(new Notice(new Vector2(4, 1), 3, 3, level.map, 0));
 
         // Exit
         level.addActor(new Exit(new Vector2(89, 1), 1, 3, level.map, 1));

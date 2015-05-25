@@ -1,4 +1,4 @@
-package com.color.game.levels.mapcreator.elements.specials;
+package com.color.game.levels.mapcreator.elements.objects;
 
 
 import com.badlogic.gdx.maps.MapLayer;

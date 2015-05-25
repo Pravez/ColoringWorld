@@ -1,8 +1,6 @@
 package com.color.game.elements.staticelements.sensors;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -11,7 +9,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.assets.Assets;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
-import com.color.game.levels.LevelManager;
 import com.color.game.levels.Map;
 import com.color.game.levels.Tutorial;
 import com.color.game.screens.GameScreen;
@@ -32,12 +29,12 @@ public class Notice extends Sensor {
 
     final private BitmapFontCache cache;
 
-    public Notice(Vector2 position, int width, int height, Map map, int tutorialIndex) {
+    public Notice(Vector2 position, float width, float height, Map map, int levelindex, int tutorialIndex) {
         super(position, width, height, map);
 
         this.shapeRenderer = new ShapeRenderer();
         this.cache = new BitmapFontCache(Assets.getGroboldFont(Notice.FONT_SIZE));
-        this.cache.setWrappedText(Tutorial.getTutorial(tutorialIndex), 0, 0, Notice.TEXT_WIDTH, BitmapFont.HAlignment.CENTER);
+        this.cache.setWrappedText(Tutorial.getTutorial(levelindex, tutorialIndex), 0, 0, Notice.TEXT_WIDTH, BitmapFont.HAlignment.CENTER);
     }
 
     @Override

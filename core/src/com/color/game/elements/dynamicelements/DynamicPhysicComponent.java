@@ -6,7 +6,7 @@ import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
 
 /**
- * PhysicComponent specific to specials bodies. It manages every move of the specials element.
+ * PhysicComponent specific to objects bodies. It manages every move of the objects element.
  */
 public class DynamicPhysicComponent extends PhysicComponent{
 
@@ -122,7 +122,6 @@ public class DynamicPhysicComponent extends PhysicComponent{
     @Override
     public void setMove(int direction) {
         this.currentMovingImpulse.x = (DYNAMIC_ELEMENT_BASE_VELOCITY*direction);
-        System.out.println(currentMovingImpulse.x);
     }
 
     /**

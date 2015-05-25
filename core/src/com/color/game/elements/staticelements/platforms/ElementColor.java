@@ -58,4 +58,38 @@ public enum ElementColor {
     public ElementColor getElementColor(){
         return this;
     }
+
+    public static ElementColor getColor(String color){
+        switch (color){
+            case "RED":
+                return RED;
+            case "BLUE":
+                return BLUE;
+            case "YELLOW":
+                return YELLOW;
+            case "PURPLE":
+                return PURPLE;
+            case "GREEN":
+                return GREEN;
+            case "ORANGE":
+                return ORANGE;
+            case "BLACK":
+                return BLACK;
+            default:
+                throw new ClassCastException("Impossible to get the color of the platforms from the .tmx file");
+        }
+    }
+
+    public static ElementColor parseColor(String colorName) {
+        String color = getSimpleString(colorName);
+        return getColor(color.toUpperCase());
+    }
+
+    private static String getSimpleString(String str){
+        if(str.contains("deactivated")){
+            return str.replace("_deactivated", "");
+        }else{
+            return str;
+        }
+    }
 }

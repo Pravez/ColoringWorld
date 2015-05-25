@@ -16,6 +16,7 @@ import com.color.game.command.colors.ColorCommandManager;
 import com.color.game.command.elements.*;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.Character;
+import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.sensors.ColoredMagnet;
 import com.color.game.elements.staticelements.sensors.Sensor;
@@ -225,16 +226,19 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
 
         //TO DEBUG
-        //handleDebugCodes();
+        handleDebugCodes();
 
         // Render the Game
         LevelManager.getCurrentLevel().draw();
+        LevelManager.getCurrentLevel().drawBackground();
         this.uiStage.draw();
 
         if (this.runningLevel != LevelManager.getCurrentLevelNumber())
             changeLevel();
         if (this.restart)
             game.setDeathScreen();
+        }
+
     }
 
     private void runRunnables() {
@@ -458,6 +462,22 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             });
         }
 
+        if (UserData.isFallingPlatform(a.getBody()) && UserData.isPlatform(b.getBody())) {
+            this.runnables.add(new Runnable() {
+                @Override
+                public void run() {
+                    ((FallingPlatform) ((UserData) a.getBody().getUserData()).getElement()).touchFloor();
+                }
+            });
+        } else if (UserData.isFallingPlatform(b.getBody()) && UserData.isPlatform(a.getBody())) {
+            this.runnables.add(new Runnable() {
+                @Override
+                public void run() {
+                    ((FallingPlatform) ((UserData) b.getBody().getUserData()).getElement()).touchFloor();
+                }
+            });
+        }
+
         // ColoredMagnet
        /* if (UserData.isColoredMagnet(b.getBody()) && UserData.isCharacter(a.getBody())) {
             this.currentColoredMagnet = (ColoredMagnet)((UserData)b.getBody().getUserData()).getElement();
@@ -483,8 +503,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     }
 
     @Override
-    public void preSolve(Contact contact, Manifold manifold) { }
-
+    public void preSolve(Contact contact, Manifold manifold) {
+    }
     @Override
     public void postSolve(Contact contact, ContactImpulse contactImpulse) { }
 

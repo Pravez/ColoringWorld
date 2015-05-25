@@ -11,6 +11,8 @@ import com.color.game.elements.dynamicplatforms.BaseDynamicPlatform;
 import com.color.game.elements.dynamicplatforms.ColorFallingPlatform;
 import com.color.game.elements.staticelements.platforms.ColorPlatform;
 import com.color.game.elements.staticelements.platforms.ElementColor;
+import com.color.game.levels.mapcreator.TiledMapLoader;
+import com.color.game.screens.GameScreen;
 
 /**
  * Level class containing everything needed for the Levels of the game
@@ -34,7 +36,7 @@ public class Level extends Stage {
     /**
      * The position of the {@link com.color.game.elements.dynamicelements.Character} at the beginning of the level
      */
-    final public Vector2 characterPos;
+    public Vector2 characterPos;
 
     /**
      * The list of the {@link com.color.game.elements.BaseColorElement} of the level
@@ -56,6 +58,8 @@ public class Level extends Stage {
      */
     final private Array<Enemy> enemies;
 
+    private TiledMapLoader mapLoader;
+
     /**
      * The Constructor of the Level
      * @param characterPos the position of the {@link com.color.game.elements.dynamicelements.Character} at the beginning of the level
@@ -68,6 +72,19 @@ public class Level extends Stage {
         this.dynamicPlatforms = new Array<>();
         this.platforms        = new Array<>();
         this.enemies          = new Array<>();
+    }
+
+    public Level(String path){
+        this.map          = new Map(Map.WORLD_GRAVITY, true);
+        this.characterPos = new Vector2(1,1);
+
+        this.colorElements = new Array<>();
+        this.dynamicPlatforms = new Array<>();
+        this.platforms        = new Array<>();
+        this.enemies          = new Array<>();
+
+        this.mapLoader = new TiledMapLoader(this, path);
+        mapLoader.loadMap();
     }
 
     /**
@@ -108,6 +125,10 @@ public class Level extends Stage {
         }
     }
 
+    public void setCharacterPosition(Vector2 position){
+        this.characterPos.set(position.x, position.y);
+    }
+
     public boolean isLocked() {
         return this.locked;
     }
@@ -135,6 +156,11 @@ public class Level extends Stage {
             LevelManager.getCurrentLevel().map.world.step(Level.TIME_STEP, 6, 2);
             Level.accumulator -= Level.TIME_STEP;
         }
+    }
+
+    public void drawBackground(){
+        mapLoader.getOrthogonalTiledMapRenderer().setView(GameScreen.camera);
+        mapLoader.getOrthogonalTiledMapRenderer().render();
     }
 
     /**

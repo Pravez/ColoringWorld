@@ -12,7 +12,7 @@ import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
 
 /**
- * Static element supposed to do the inverse of the windblower. Instead of pushing a dynamic element, it will force it
+ * Static element supposed to do the inverse of the windblower. Instead of pushing a specials element, it will force it
  * to go on his center.
  */
 @Deprecated

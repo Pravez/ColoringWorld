@@ -49,6 +49,35 @@ public class StaticPhysicComponent extends PhysicComponent{
     }
 
     @Override
+    public void configureBody(Vector2 position, float width, float height, World world, short category, short mask, Shape shape){
+        this.world = world;
+
+        this.bodyDef = new BodyDef();
+        this.bodyDef.type = BodyDef.BodyType.StaticBody;
+
+        position.scl(2); // Multiply by two because of the half size boxes
+
+        //To keep from rotations
+        this.bodyDef.fixedRotation = true;
+        this.bodyDef.position.set(new Vector2(position.x + width, position.y + height));
+
+        this.body = world.createBody(this.bodyDef);
+        this.fixtureDef = new FixtureDef();
+
+        fixtureDef.density = STATIC_ELEMENT_DENSITY;
+        fixtureDef.shape = shape;
+        fixtureDef.filter.maskBits = mask;
+        fixtureDef.filter.categoryBits = category;
+
+        if (category == CATEGORY_SENSOR) {
+            fixtureDef.isSensor = true;
+        }
+
+        this.body.createFixture(fixtureDef);
+        shape.dispose();
+    }
+
+    @Override
     public void configureCircleBody(Vector2 position, int radius, World world, short category, short mask){
         this.world = world;
 

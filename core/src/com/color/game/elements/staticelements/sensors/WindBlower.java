@@ -22,7 +22,7 @@ public class WindBlower extends Sensor {
 
     final private ShapeRenderer shapeRenderer;
 
-    public WindBlower(Vector2 position, int width, int height, Map map, WindDirection direction) {
+    public WindBlower(Vector2 position, float width, float height, Map map, WindDirection direction) {
         super(position, width, height, map);
 
         Vector2 coordinates = direction.toCoordinates();

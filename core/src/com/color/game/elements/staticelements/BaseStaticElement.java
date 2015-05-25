@@ -1,6 +1,7 @@
 package com.color.game.elements.staticelements;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.color.game.elements.BaseElement;
 import com.color.game.levels.Map;
 
@@ -14,7 +15,7 @@ public abstract class BaseStaticElement extends BaseElement {
         super();
     }
 
-    protected BaseStaticElement(Vector2 position, int width, int height, Map map, short category, short mask) {
+    protected BaseStaticElement(Vector2 position, float width, float height, Map map, short category, short mask) {
         super();
         physicComponent = new StaticPhysicComponent(this);
         physicComponent.configureBody(position, width, height, map.world, category, mask);
@@ -28,5 +29,13 @@ public abstract class BaseStaticElement extends BaseElement {
         physicComponent.configureCircleBody(position, radius, map.world, category, mask);
 
         map.addBlock(position.x, position.y, radius * 2, radius * 2);
+    }
+
+    public BaseStaticElement(Vector2 position, int width, int height, Map map, short category, short mask, Shape shape) {
+        super();
+        physicComponent = new StaticPhysicComponent(this);
+        physicComponent.configureBody(position, width, height, map.world, category, mask, shape);
+
+        map.addBlock(position.x, position.y, width * 2, height * 2);
     }
 }

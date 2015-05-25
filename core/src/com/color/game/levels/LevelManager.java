@@ -82,20 +82,21 @@ public class LevelManager {
      */
     public static void init() {
         levels = new ArrayList<>();
-        addFirstDebugLevel();
-        /*addSecondDebugLevel();
+        firstlevel();
+        /*addFirstDebugLevel();
+        addSecondDebugLevel();
         addThirdDebugLevel();
         addForthDebugLevel();
         addFifthDebugLevel();
         addSixthDebugLevel();
         addSeventhDebugLevel();*/
-        addFirstLevel();
+        /*addFirstLevel();
         addSecondLevel();
         addSecondBisLevel();
         addThirdLevel();
         addForthLevel();
         addFifthLevel();
-        addSixthLevel();
+        addSixthLevel();*/
         /*addSeventhLevel();
         addEighthLevel();*/
 
@@ -136,6 +137,12 @@ public class LevelManager {
         }*/
         //
         /** **/
+    }
+
+    private static void firstlevel(){
+        Level level = new Level("mapsData/test.tmx");
+
+        levels.add(level);
     }
 
     public static void unlock(int index) {

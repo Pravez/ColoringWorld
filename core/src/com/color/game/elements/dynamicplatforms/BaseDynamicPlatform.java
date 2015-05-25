@@ -10,11 +10,11 @@ import com.color.game.levels.Level;
 public class BaseDynamicPlatform extends BaseElement {
     
     /**
-     * The initial position of the dynamic platform in the level
+     * The initial position of the specials platform in the level
      */
     final private Vector2 initialPosition;
 
-    BaseDynamicPlatform(Vector2 position, int width, int height, Level level){
+    BaseDynamicPlatform(Vector2 position, float width, float height, Level level){
         super();
         this.physicComponent = new DynamicPlatformPhysicComponent(this);
         this.physicComponent.configureBody(position, width, height, level.getWorld(), PhysicComponent.CATEGORY_PLATFORM, PhysicComponent.MASK_PLATFORM);
@@ -25,7 +25,7 @@ public class BaseDynamicPlatform extends BaseElement {
     }
 
     /**
-     * Method called when restarting the level to reset the dynamic platform in the level
+     * Method called when restarting the level to reset the specials platform in the level
      */
     public void respawn() {
         this.physicComponent.getBody().setActive(true);

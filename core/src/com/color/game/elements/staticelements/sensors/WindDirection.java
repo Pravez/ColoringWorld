@@ -20,4 +20,22 @@ public enum WindDirection {
             coordinates.y = -1;
         return coordinates;
     }
+
+    public static WindDirection parseDirection(String s){
+        if(s != null) {
+            String str = s.toUpperCase();
+            switch (str) {
+                case "NORTH":
+                    return NORTH;
+                case "SOUTH":
+                    return SOUTH;
+                case "EAST":
+                    return EAST;
+                case "WEST":
+                    return WEST;
+            }
+        }
+
+        return null;
+    }
 }

@@ -41,7 +41,7 @@ public class MovingEnemy extends Enemy {
      * @param level the level of the enemy
      * @param canFall if the enemy can fall from a platform or not
      */
-    public MovingEnemy(Vector2 position, int width, int height, Level level, boolean canFall, ElementColor color) {
+    public MovingEnemy(Vector2 position, float width, float height, Level level, boolean canFall, ElementColor color) {
         super(position, width, height, level, color);
         this.physicComponent.getBody().setAwake(true);
         this.physicComponent.getBody().setActive(true);

@@ -7,7 +7,7 @@ import com.color.game.elements.userData.UserData;
 /**
  * PhysicComponent is the class who does everything about the physics and the coordination between the world the players sees
  * and the bodies evolving in the Box2D {@link com.badlogic.gdx.physics.box2d.World}. It is overrided by static elements
- * and dynamic elements : they have their specific physics.
+ * and specials elements : they have their specific physics.
  */
 public abstract class PhysicComponent {
 
@@ -49,6 +49,8 @@ public abstract class PhysicComponent {
      * @param mask Body's collision mask
      */
     public abstract void configureBody(Vector2 position, float width, float height, World world, short category, short mask);
+
+    public abstract void configureBody(Vector2 position, float width, float height, World world, short category, short mask, Shape shape);
 
     /**
      * Main method to initialize the corpse, the body of the element when it is a circle.

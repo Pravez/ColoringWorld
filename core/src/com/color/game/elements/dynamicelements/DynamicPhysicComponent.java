@@ -6,7 +6,7 @@ import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
 
 /**
- * PhysicComponent specific to dynamic bodies. It manages every move of the dynamic element.
+ * PhysicComponent specific to specials bodies. It manages every move of the specials element.
  */
 public class DynamicPhysicComponent extends PhysicComponent{
 
@@ -54,6 +54,11 @@ public class DynamicPhysicComponent extends PhysicComponent{
         this.currentMovingImpulse = new Vector2(0f,0f);
         this.currentJumpingImpulse = new Vector2(((BaseDynamicElement)element).getJumpVelocity());
         jumping = false;
+
+    }
+
+    @Override
+    public void configureBody(Vector2 position, float width, float height, World world, short category, short mask, Shape shape) {
 
     }
 

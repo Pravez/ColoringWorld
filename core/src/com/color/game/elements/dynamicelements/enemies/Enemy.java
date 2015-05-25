@@ -42,7 +42,7 @@ public abstract class Enemy extends BaseDynamicElement implements BaseColorEleme
      * @param height the height of the enemy
      * @param level the level of the enemy
      */
-    Enemy(Vector2 position, int width, int height, Level level, ElementColor elementColor) {
+    Enemy(Vector2 position, float width, float height, Level level, ElementColor elementColor) {
         super(position, width, height, level.getWorld(), PhysicComponent.CATEGORY_ENEMY, PhysicComponent.MASK_ENEMY);
         level.addEnemy(this);
         this.initialPosition = position;

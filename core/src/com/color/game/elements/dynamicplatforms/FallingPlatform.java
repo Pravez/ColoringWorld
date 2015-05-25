@@ -23,7 +23,7 @@ public class FallingPlatform extends BaseDynamicPlatform {
     final private ShapeRenderer shapeRenderer;
     private Color color = Color.ORANGE;
 
-    public FallingPlatform(Vector2 position, int width, int height, Level level, boolean fall) {
+    public FallingPlatform(Vector2 position, float width, float height, Level level, boolean fall) {
         super(position, width, height, level);
         this.fall = fall;
 
@@ -62,7 +62,7 @@ public class FallingPlatform extends BaseDynamicPlatform {
     /**
      * Method called when the falling platform touches the floor, deactivate the platform
      */
-    void touchFloor() {
+    public void touchFloor() {
         super.deactivate();
         setTransparent(true);
     }
@@ -71,11 +71,8 @@ public class FallingPlatform extends BaseDynamicPlatform {
     public void act(float delta) {
         super.act(delta);
 
-        if (Math.abs(GameScreen.character.getCenter().x - this.getCenter().x) < FALLING_GAP && this.fall && !this.falling) {
+        if (Math.abs(GameScreen.character.getCenter().x - this.getCenter().x) < FALLING_GAP && this.fall && !this.falling)
             fall();
-        } else if (this.falling && this.physicComponent.getBody().getLinearVelocity().y == 0) {
-            touchFloor();
-        }
     }
 
     @Override

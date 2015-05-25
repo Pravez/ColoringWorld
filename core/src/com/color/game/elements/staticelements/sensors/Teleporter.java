@@ -19,7 +19,7 @@ public class Teleporter extends Sensor {
 
     final private ShapeRenderer shapeRenderer;
 
-    public Teleporter(Vector2 position, int width, int height, Map map, Vector2 teleportPosition) {
+    public Teleporter(Vector2 position, float width, float height, Map map, Vector2 teleportPosition) {
         super(position, width, height, map);
 
         this.teleportPosition = teleportPosition.scl(2);

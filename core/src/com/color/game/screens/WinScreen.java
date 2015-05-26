@@ -46,6 +46,8 @@ public class WinScreen extends BaseScreen {
     private int   finalScore;
     private final static int REPETITION_COUNT = 60;
 
+    private boolean isLastLevel = false;
+
     /**
      * Constructor of the BaseScreen
      *
@@ -134,7 +136,10 @@ public class WinScreen extends BaseScreen {
         stage.draw();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            this.game.setLevelSelectionScreen();
+            if (this.isLastLevel)
+                this.game.setLevelSelectionScreen();
+            else
+                this.game.setGameScreen();
         }
     }
 
@@ -182,7 +187,7 @@ public class WinScreen extends BaseScreen {
         this.scoreTimer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                scoreAmount = (scoreAmount + finalScore/REPETITION_COUNT) > finalScore ? finalScore : scoreAmount + finalScore/REPETITION_COUNT;
+                scoreAmount = (scoreAmount + finalScore / REPETITION_COUNT) > finalScore ? finalScore : scoreAmount + finalScore / REPETITION_COUNT;
                 score.setText("" + scoreAmount);
             }
         }, 0.02f, 0.02f, REPETITION_COUNT);
@@ -194,5 +199,9 @@ public class WinScreen extends BaseScreen {
             star.setDrawable(new SpriteDrawable(new Sprite(this.starTexture)));
         else
             star.setDrawable(new SpriteDrawable(new Sprite(this.emptyStarTexture)));
+    }
+
+    public void setNext(boolean isLastLevel) {
+        this.isLastLevel = isLastLevel;
     }
 }

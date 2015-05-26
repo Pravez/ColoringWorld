@@ -156,7 +156,8 @@ public class ColorGame extends Game {
 		super.setScreen(this.keysScreen);
 	}
 
-	public void setWinScreen() {
+	public void setWinScreen(boolean isLastLevel) {
+		this.winScreen.setNext(isLastLevel);
 		super.setScreen(this.winScreen);
 	}
 

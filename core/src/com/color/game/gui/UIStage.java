@@ -16,7 +16,7 @@ import com.color.game.screens.GameScreen;
 public class UIStage extends Stage {
 
     final private Label levelNumber;
-    final private Label deathNumber;
+    //final private Label deathNumber;
     //final private Label timePassed;
 
     final public Gauges colorGauges;
@@ -31,8 +31,8 @@ public class UIStage extends Stage {
         this.levelNumber.setPosition((Gdx.graphics.getWidth() - this.levelNumber.getWidth())/2, Gdx.graphics.getHeight() - this.levelNumber.getHeight());
 
         // The number of deaths in the Level
-        this.deathNumber = new Label(LevelManager.getCurrentLevel().getScoreHandler().getDeaths() + " death", Assets.menuSkin);
-        this.deathNumber.setPosition((Gdx.graphics.getWidth() - this.deathNumber.getWidth())/2, this.levelNumber.getY() - this.deathNumber.getHeight());
+        //this.deathNumber = new Label(LevelManager.getCurrentLevel().getScoreHandler().getDeaths() + " death", Assets.menuSkin);
+        //this.deathNumber.setPosition((Gdx.graphics.getWidth() - this.deathNumber.getWidth())/2, this.levelNumber.getY() - this.deathNumber.getHeight());
 
         //this.timePassed = new Label("-- " + LevelManager.getCurrentLevel().getTime() + " --", Assets.menuSkin);
         //this.timePassed.setPosition((Gdx.graphics.getWidth() - this.timePassed.getWidth())/2, this.deathNumber.getY() - this.timePassed.getHeight());
@@ -84,7 +84,7 @@ public class UIStage extends Stage {
         });
 
         this.addActor(this.levelNumber);
-        this.addActor(this.deathNumber);
+        //this.addActor(this.deathNumber);
         //this.addActor(this.timePassed);
         this.addActor(this.colorGauges);
         this.addActor(colorFigure);
@@ -102,16 +102,16 @@ public class UIStage extends Stage {
 
     public void changeLevelNumber() {
         this.levelNumber.setText("Level " + (LevelManager.getCurrentLevelNumber() + 1));
-        changeDeathNumber();
+        //changeDeathNumber();
         //changeTimePassed();
     }
 
-    public void changeDeathNumber() {
+    /*public void changeDeathNumber() {
         int deaths = LevelManager.getCurrentLevel().getScoreHandler().getDeaths();
         this.deathNumber.setText(deaths + (deaths < 2 ? " death" : " deaths"));
         this.deathNumber.pack();
         this.deathNumber.setPosition((Gdx.graphics.getWidth() - this.deathNumber.getWidth())/2, this.levelNumber.getY() - this.deathNumber.getHeight());
-    }
+    }*/
 
     /*public void changeTimePassed() {
         this.timePassed.setText("-- " + Math.round(LevelManager.getCurrentLevel().getTime()*TIME_PRECISION)/TIME_PRECISION + " --");

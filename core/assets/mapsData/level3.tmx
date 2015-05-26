@@ -50,7 +50,7 @@
   </data>
  </layer>
  <objectgroup name="exit">
-  <object id="74" name="exit" x="32" y="96" width="32" height="64">
+  <object id="74" name="exit" x="32" y="96" width="64" height="64">
    <properties>
     <property name="next" value="3"/>
    </properties>

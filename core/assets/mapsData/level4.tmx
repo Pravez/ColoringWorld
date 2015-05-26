@@ -75,7 +75,7 @@
   </data>
  </layer>
  <objectgroup name="exit">
-  <object id="4" x="1504" y="608" width="32" height="64">
+  <object id="4" x="1504" y="608" width="64" height="64">
    <properties>
     <property name="next" value="4"/>
    </properties>

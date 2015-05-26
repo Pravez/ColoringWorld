@@ -39,6 +39,12 @@ public class WindBlower extends Sensor {
         this.sprite = new Sprite(Assets.manager.get("sprites/wind.png", Texture.class));
         this.sprite.setPosition(this.getBounds().x, this.getBounds().y);
         this.sprite.setSize(this.getBounds().width, this.getBounds().height);
+        if (this.direction == WindDirection.EAST)
+            this.sprite.rotate90(true);
+        if (this.direction == WindDirection.WEST)
+            this.sprite.rotate90(false);
+        if (this.direction == WindDirection.SOUTH)
+            this.sprite.flip(false, true);
     }
 
     @Override
@@ -62,14 +68,9 @@ public class WindBlower extends Sensor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.setProjectionMatrix(GameScreen.camera.combined);
-        if (this.direction == WindDirection.EAST)
-            this.sprite.rotate90(true);
-        if (this.direction == WindDirection.WEST)
-            this.sprite.rotate90(false);
-        if (this.direction == WindDirection.SOUTH)
-            this.sprite.rotate(180);
+
         this.sprite.draw(batch);
-        batch.draw(Assets.manager.get("sprites/wind.png", Texture.class), this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
+        //batch.draw(Assets.manager.get("sprites/wind.png", Texture.class), this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
         //batch.end();
 
         /*Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);

@@ -96,6 +96,9 @@
   </data>
  </layer>
  <objectgroup name="exit">
+  <properties>
+   <property name="next" value="5"/>
+  </properties>
   <object id="110" name="exit" x="3008" y="768" width="64" height="64">
    <properties>
     <property name="next" value="5"/>

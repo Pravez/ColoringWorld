@@ -16,3 +16,16 @@ END
 1
 Same with other composed colors : green and orange !
 END
+Level 7
+0
+Those light static platforms are black colored platforms. To activate them, you need to activate black color, so every color !
+END
+1
+Be careful with falling platforms, if you approach them, they will probably fall !
+END
+2
+Watch out !
+END
+3
+The platform you see there is a bouncing platform, you will need to activate it to be able to be bounced !
+END

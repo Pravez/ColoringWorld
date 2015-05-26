@@ -12,7 +12,7 @@ import com.color.game.screens.GameScreen;
 
 public class BouncingColorPlatform extends ColorPlatform{
 
-    public static float platformRestitution = 2.2f;
+    public static float platformRestitution = 1.65f;
 
     final private ShapeRenderer shapeRenderer;
 

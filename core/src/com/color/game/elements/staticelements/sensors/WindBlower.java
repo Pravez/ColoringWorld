@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.assets.Assets;
 import com.color.game.command.elements.PushCommand;
+import com.color.game.elements.enabledelements.BaseEnabledElement;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.levels.Map;
 import com.color.game.screens.GameScreen;
@@ -25,7 +26,7 @@ public class WindBlower extends Sensor {
 
     final private ShapeRenderer shapeRenderer;
 
-    private Sprite sprite;
+    protected Sprite sprite;
     private WindDirection direction;
 
     public WindBlower(Vector2 position, float width, float height, Map map, WindDirection direction) {
@@ -68,8 +69,8 @@ public class WindBlower extends Sensor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.setProjectionMatrix(GameScreen.camera.combined);
-
         this.sprite.draw(batch);
+
         //batch.draw(Assets.manager.get("sprites/wind.png", Texture.class), this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
         //batch.end();
 

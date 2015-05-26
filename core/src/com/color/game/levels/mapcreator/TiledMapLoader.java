@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.color.game.assets.SaveManager;
+import com.color.game.elements.enabledelements.BaseEnabledElement;
 import com.color.game.levels.Level;
 import com.color.game.levels.ScoreHandler;
 import com.color.game.levels.mapcreator.elements.TiledElements;
@@ -24,7 +25,7 @@ public class TiledMapLoader {
                                          "purple", "purple_deactivated", "orange", "orange_deactivated",
                                          "green", "green_deactivated", "black", "black_deactivated",
                                          "character", "exit", "teleporter", "falling", "windblower",
-                                         "enemies", "bouncing", "notice", "magnet"};
+                                         "enemies", "bouncing", "notice", "magnet", "lever", "enabled"};
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
@@ -32,6 +33,7 @@ public class TiledMapLoader {
     private MapLayers layers;
 
     HashMap<String, TiledElements> tiledElements;
+
     private Level level;
     private Integer levelIndex;
 
@@ -74,17 +76,23 @@ public class TiledMapLoader {
     public void loadMap() {
         try {
 
-            for(String s : maps){
-                if(this.layers.get(s) != null){
+            HashMap<Integer, BaseEnabledElement> enabledElements = new HashMap<>();
+
+            for (String s : this.maps) {
+                if (this.layers.get(s) != null) {
                     addElement(s);
                 }
             }
 
-            for (String s : tiledElements.keySet()) {
-                tiledElements.get(s).loadElements();
+            for (String name : this.tiledElements.keySet()) {
+                this.tiledElements.get(name).loadElements();
+                this.tiledElements.get(name).addEnabledElements(enabledElements);
             }
 
-        }catch(Exception e){
+            if (this.tiledElements.containsKey("lever"))
+                ((TiledLever) tiledElements.get("lever")).bindElements(enabledElements);
+
+        } catch(Exception e){
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "An error has occurred, please see the generated log.");
             SaveManager.writeLog("log_level", e);
@@ -131,6 +139,12 @@ public class TiledMapLoader {
                     break;
                 case "magnet":
                     this.tiledElements.put(layerName, new TiledColoredMagnet(level, this.layers.get("magnet")));
+                    break;
+                case "lever":
+                    this.tiledElements.put(layerName, new TiledLever(level, this.layers.get("lever")));
+                    break;
+                case "enabled":
+                    this.tiledElements.put(layerName, new TiledEnabled(level, this.layers.get("enabled")));
                     break;
             }
         }

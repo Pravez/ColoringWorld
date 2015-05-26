@@ -15,6 +15,7 @@ import com.color.game.command.elements.*;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.staticelements.Exit;
+import com.color.game.elements.staticelements.Lever;
 import com.color.game.elements.staticelements.sensors.Sensor;
 import com.color.game.elements.userData.UserData;
 import com.color.game.gui.ColorGauge;
@@ -56,6 +57,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     private boolean run = true;
 
     public boolean restart = false;
+
+    /**
+     * Current Lever
+     */
+    private Lever currentLever;
 
     /**
      * The constructor of the class GameScreen
@@ -406,6 +412,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
                 character.addCommand(new StartMoveCommand(MovementDirection.RIGHT));
             }
         }
+        if (keycode == this.game.keys.getKeyCode(KeyEffect.INTERACT) && this.currentLever != null)
+            this.currentLever.activate();
         return false;
     }
 
@@ -459,6 +467,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             });
         }
 
+        if (UserData.isLever(a.getBody()) && UserData.isCharacter(b.getBody()))
+            this.currentLever = (Lever)((UserData)a.getBody().getUserData()).getElement();
+
         // ColoredMagnet
        /* if (UserData.isColoredMagnet(b.getBody()) && UserData.isCharacter(a.getBody())) {
             this.currentColoredMagnet = (ColoredMagnet)((UserData)b.getBody().getUserData()).getElement();
@@ -476,6 +487,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         } else if (UserData.isSensor(b.getBody()) && UserData.isCharacter(a.getBody())) {
             ((Sensor)((UserData)b.getBody().getUserData()).getElement()).endAct();
         }
+
+        if (UserData.isLever(a.getBody()) && UserData.isCharacter(b.getBody()))
+            this.currentLever = null;
 
         // ColoredMagnet
       /*  if (UserData.isColoredMagnet(b.getBody()) && UserData.isCharacter(a.getBody())) {

@@ -13,6 +13,7 @@ import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.dynamicplatforms.BaseDynamicPlatform;
 import com.color.game.elements.dynamicplatforms.ColorFallingPlatform;
+import com.color.game.elements.staticelements.Lever;
 import com.color.game.elements.staticelements.platforms.ColorPlatform;
 import com.color.game.elements.staticelements.platforms.ElementColor;
 import com.color.game.levels.mapcreator.TiledMapLoader;
@@ -62,6 +63,11 @@ public class Level extends Stage {
      */
     final private Array<Enemy> enemies;
 
+    /**
+     * The list of the {@link Lever} of the level
+     */
+    final private Array<Lever> levers;
+
     private TiledMapLoader mapLoader;
 
     private SpriteBatch batch;
@@ -76,24 +82,26 @@ public class Level extends Stage {
         this.map = new Map(Map.WORLD_GRAVITY, true);
         this.characterPos = characterPos.scl(2);
 
-        this.colorElements = new Array<>();
+        this.colorElements    = new Array<>();
         this.dynamicPlatforms = new Array<>();
-        this.platforms = new Array<>();
-        this.enemies = new Array<>();
-        this.batch = new SpriteBatch();
-        this.levelIndex = 0;
+        this.platforms        = new Array<>();
+        this.enemies          = new Array<>();
+        this.levers           = new Array<>();
+        this.batch            = new SpriteBatch();
+        this.levelIndex       = 0;
     }
 
     public Level(String path){
         this.map = new Map(Map.WORLD_GRAVITY, true);
         this.characterPos = new Vector2(1,1);
 
-        this.colorElements = new Array<>();
+        this.colorElements    = new Array<>();
         this.dynamicPlatforms = new Array<>();
-        this.platforms = new Array<>();
-        this.enemies = new Array<>();
-        this.batch  = new SpriteBatch();
-        this.levelIndex = 0;
+        this.platforms        = new Array<>();
+        this.enemies          = new Array<>();
+        this.levers           = new Array<>();
+        this.batch            = new SpriteBatch();
+        this.levelIndex       = 0;
 
         this.mapLoader = new TiledMapLoader(this, path);
         mapLoader.loadMap();
@@ -129,12 +137,12 @@ public class Level extends Stage {
      * Method to call when restarting the Level in order to restart all the positions of the scenery and enemies
      */
     public void restart() {
-        for (Enemy enemy : this.enemies) {
+        for (Enemy enemy : this.enemies)
             enemy.respawn();
-        }
-        for (BaseDynamicPlatform dynamicPlatform : this.dynamicPlatforms) {
+        for (BaseDynamicPlatform dynamicPlatform : this.dynamicPlatforms)
             dynamicPlatform.respawn();
-        }
+        for (Lever lever : this.levers)
+            lever.reset();
     }
 
     public void setCharacterPosition(Vector2 position){
@@ -223,6 +231,14 @@ public class Level extends Stage {
         for (BaseColorElement colorElement : this.colorElements) {
             colorElement.changeActivation(color);
         }
+    }
+
+    /**
+     * Method to add a {@link Lever} to the list of Lever in the level
+     * @param lever the {@link Lever} to add
+     */
+    public void addLever(Lever lever) {
+        this.levers.add(lever);
     }
 
     public Array<BaseElement> getPlatforms() {

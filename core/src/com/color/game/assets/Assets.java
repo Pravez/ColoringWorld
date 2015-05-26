@@ -2,7 +2,6 @@ package com.color.game.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
@@ -11,8 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
@@ -82,6 +79,8 @@ public class Assets {
         manager.load("sprites/wind.png", Texture.class);
         manager.load("sprites/notice.png", Texture.class);
         manager.load("sprites/lava.png", Texture.class);
+        manager.load("sprites/enabled.png", Texture.class);
+        manager.load("sprites/lever.png", Texture.class);
 
         manager.load("sprites/star.png", Texture.class);
         manager.load("sprites/star-empty.png", Texture.class);

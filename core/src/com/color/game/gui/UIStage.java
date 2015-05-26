@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -22,7 +24,7 @@ public class UIStage extends Stage {
     final public Gauges colorGauges;
 
     final private TextButton playButton;
-    private static final int BUTTON_GAP = 30;
+    private static final int BUTTON_GAP = 25;
     private static final double TIME_PRECISION = 10.0;
 
     public UIStage(final GameScreen gameScreen) {
@@ -48,20 +50,7 @@ public class UIStage extends Stage {
         this.playButton.setPosition(Gdx.graphics.getWidth() - this.playButton.getWidth() - BUTTON_GAP,
                 Gdx.graphics.getHeight() - this.playButton.getHeight() - BUTTON_GAP);
 
-        this.playButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if (gameScreen.isPaused()) {
-                    gameScreen.resumeGame();
-                    updateButton("Pause");
-                } else {
-                    gameScreen.pauseGame();
-                    updateButton("Resume");
-                }
-            }
-        });
-
-        TextButton restartButton = new TextButton("Restart", Assets.menuSkin);
+        final TextButton restartButton = new TextButton("Restart", Assets.menuSkin);
         restartButton.setPosition(Gdx.graphics.getWidth() - restartButton.getWidth() - BUTTON_GAP,
                 this.playButton.getY() - restartButton.getHeight() - BUTTON_GAP/2);
 
@@ -72,14 +61,31 @@ public class UIStage extends Stage {
             }
         });
 
-        TextButton menuButton = new TextButton("Menu", Assets.menuSkin);
+        final TextButton menuButton = new TextButton("Menu", Assets.menuSkin);
         menuButton.setPosition(Gdx.graphics.getWidth() - menuButton.getWidth() - BUTTON_GAP,
                 restartButton.getY() - menuButton.getHeight() - BUTTON_GAP/2);
 
         menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((ColorGame)Gdx.app.getApplicationListener()).setMenuScreen();
+                ((ColorGame) Gdx.app.getApplicationListener()).setMenuScreen();
+            }
+        });
+
+        this.playButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (gameScreen.isPaused()) {
+                    gameScreen.resumeGame();
+                    updateButton("Pause");
+                    restartButton.remove();
+                    menuButton.remove();
+                } else {
+                    gameScreen.pauseGame();
+                    updateButton("Resume");
+                    addButton(restartButton);
+                    addButton(menuButton);
+                }
             }
         });
 
@@ -89,8 +95,10 @@ public class UIStage extends Stage {
         this.addActor(this.colorGauges);
         this.addActor(colorFigure);
         this.addActor(this.playButton);
-        this.addActor(restartButton);
-        this.addActor(menuButton);
+    }
+
+    private void addButton(Button button) {
+        this.addActor(button);
     }
 
     public void updateButton(String text) {

@@ -147,7 +147,11 @@
   <properties>
    <property name="next" value="8"/>
   </properties>
-  <object id="18" x="1536" y="1440" width="32" height="64"/>
+  <object id="18" x="1504" y="1440" width="64" height="64">
+   <properties>
+    <property name="next" value="8"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="character">
   <object id="19" name="character" x="768" y="96" width="32" height="32"/>

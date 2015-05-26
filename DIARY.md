@@ -1,7 +1,17 @@
+# May 26, 2015
+* Finished level design for this version
+* Modified falling platforms so that they fall according to x and y axis (not only x)
+* Modified a bit the UI
+* corrected some bugs for enemies
+* Prepared game for testers
+* Released v0.3.3b
+
+
 # May 25, 2015
 * Finished implementing reader of .tmx files. Every element can now be interpreted, see tutorial.
 * Bugfixes concerning enemies and falling platforms
 * Bugfixes concerning pixmaps and graphic components
+* Started to create some levels for testers
 
 # May 24, 2015
 * Nothing

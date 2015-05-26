@@ -1,5 +1,7 @@
 # RESULTS AND COMMENTS ON THE GAME MADE BY TESTERS
 
+## Tests results for version v0.4
+
 
 ## Tests results for version v0.3
 
@@ -12,6 +14,7 @@
 
     * Corrected the bug with the death screen which was called twice
     * Random bugs are probably due to OS, trying to correct it
+    * Added much more levels, with evolving difficulty
 
 
 ## Tests results for version v0.2.4

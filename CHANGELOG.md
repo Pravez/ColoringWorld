@@ -1,3 +1,9 @@
+# 0.3.3b (May 26, 2015)
+- Adapted UI
+- Modified physics
+- Added levels
+- Bugfixes on enemies
+
 # 0.3.3a (May 25, 2015)
 - Finalized the editor.
 - Minor bugfixes

@@ -4,7 +4,9 @@
 * Modified a bit the UI
 * corrected some bugs for enemies
 * Prepared game for testers
-* Released v0.3.3b
+* Released v0.3.3b containing levels and bugfixes
+* Released v0.4 and sent it to testers
+
 
 
 # May 25, 2015

@@ -1,3 +1,11 @@
+# 0.4 (May 26, 2015)
+- Levels can now be loaded from .tmx files from Tiled
+- Bugfixes
+- Added sprites to elements
+- Modified UI
+- Added ColoredMagnet
+- Added score system
+
 # 0.3.3b (May 26, 2015)
 - Adapted UI
 - Modified physics

@@ -4,10 +4,14 @@ Game featuring a strange man using colors to live his life
 If you want to know exactly what is being done, please see the [changelog](CHANGELOG.md).
 Concerning daily work, see the [diary](DIARY.md).
 
-## Version 0.4 in development :
-* Fun in the menu
-    - sounds in the menu
-    - buttons effects (hover, active, …)
+## Version 0.4 released :
+* Added graphics
+* Added level editor with software TILED
+* Bugfixes
+* Adapted UI
+* Adapted physics
+* Added score system
+* Added ColoredMagnet
 
 # Version 0.3 released :
 * Added enemies which are deadly according to the color

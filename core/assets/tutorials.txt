@@ -29,3 +29,13 @@ END
 3
 The platform you see there is a bouncing platform, you will need to activate it to be able to be bounced !
 END
+Level 9
+0
+Some enemies now. They can be killed by falling platforms. Don't touch them, or they'll kill you ! If you have their color activated (green, purple or orange), they won't kill you.
+END
+1
+Here is a magnet. If you activate green, it will attract you. Orange will push back you. Purple will push back only enemies, and black will kill everything.
+END
+2
+WATCH OUT !
+END

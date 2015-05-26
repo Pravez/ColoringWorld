@@ -41,7 +41,7 @@ public class UIStage extends Stage {
         this.colorGauges = new Gauges(new Rectangle(20, Gdx.graphics.getHeight() - 65, 75, 50));
 
         // The Primary Colors
-        ColorFigure colorFigure = new ColorFigure(gameScreen, new Rectangle(this.colorGauges.getWidth() + 10, Gdx.graphics.getHeight() - 200, 100, 100));
+        ColorFigure colorFigure = new ColorFigure(gameScreen, new Rectangle(this.colorGauges.getWidth() + 40, Gdx.graphics.getHeight() - 100, 100, 100));
 
         // Buttons : Play, Restart, Menu
         this.playButton = new TextButton("Pause", Assets.menuSkin);

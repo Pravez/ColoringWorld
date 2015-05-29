@@ -29,7 +29,7 @@ import com.color.game.levels.LevelManager;
 public class GameScreen extends BaseScreen implements InputProcessor, ContactListener {
 
     public static OrthographicCamera camera;
-    //private Box2DDebugRenderer renderer;
+    private Box2DDebugRenderer renderer;
 
     final private Array<Runnable> runnables;
 
@@ -70,7 +70,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         LevelManager.getCurrentLevel().addActor(character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
 
-        //this.renderer =  new Box2DDebugRenderer();
+        this.renderer =  new Box2DDebugRenderer();
 
         this.runningLevel = LevelManager.getCurrentLevelNumber();
 
@@ -220,13 +220,13 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
 
         //TO DEBUG
-        //handleDebugCodes();
+        handleDebugCodes();
 
         // Render the Game
         LevelManager.getCurrentLevel().drawBackground();
         LevelManager.getCurrentLevel().draw();
         this.uiStage.draw();
-        //renderer.render(LevelManager.getCurrentLevel().getWorld(), camera.combined);
+        renderer.render(LevelManager.getCurrentLevel().getWorld(), camera.combined);
 
         if (this.runningLevel != LevelManager.getCurrentLevelNumber())
             changeLevel();

@@ -31,6 +31,7 @@ public class TiledPlatforms extends TiledStaticElements {
 
                 //If the cell is not null
                 if (cell.cell != null && cell.cell.getTile() != null) {
+
                     //We create the two cells behind the one being used
                     TiledCell previousCol = new TiledCell(col-1, row, layer.getCell(col-1, row));
                     TiledCell previousRow = new TiledCell(col, row-1, layer.getCell(col, row-1));
@@ -45,7 +46,8 @@ public class TiledPlatforms extends TiledStaticElements {
                         platforms.get(previousCol.vector2).orientation = TiledCell.TileOrientation.WIDTH;
 
                      //Same version here, but inverse
-                    } else if (previousRow.cell != null && containsObject(platforms, previousRow) &&
+                    }
+                    if (previousRow.cell != null && containsObject(platforms, previousRow) &&
                             (platforms.get(previousRow.vector2).orientation == TiledCell.TileOrientation.NONE ||
                                     platforms.get(previousRow.vector2).orientation == TiledCell.TileOrientation.HEIGHT)) {
 

@@ -1,4 +1,7 @@
 # May 29, 2015
+* Continued work on DrawManager, changed way to save elements
+* Problem with tiled and the managing of transparency - resolved ?
+* Started to think about how to change way to load static tiles from tiled
 
 # May 28, 2015
 * Started to search musics, and found some

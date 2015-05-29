@@ -11,6 +11,10 @@ import com.color.game.screens.GameScreen;
 
 import java.util.HashMap;
 
+/**
+ * Class to create the circle of colors for the player. Not important class that will probably be deleted in
+ * a next version.
+ */
 public class ColorFigure extends Actor {
 
     private GameScreen gameScreen;

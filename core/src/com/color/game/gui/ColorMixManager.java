@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
+/**
+ * "Static" class used by everything which manages to use colors. It can do operations and tests.
+ * Essentially used because libGDX is using colors from floats and because the color circle we are using
+ * is RED-BLUE-YELLOW, the three primary colors in arts. In science, the three primary colors are RED-BLUE-GREEN.
+ * So it is a bit difficult to calculate colors with integer of floats from RGB to RBY. So there is this manager.
+ */
 public class ColorMixManager {
 
     public static Color getAdditionOf(Color a, Color b){
@@ -104,6 +110,12 @@ public class ColorMixManager {
         return getAdditionOf(colors.get(firstColor), colors.get(secondColor));
     }
 
+    /**
+     * Check if the firstColor does have the secondColor in his components
+     * @param firstColor
+     * @param secondColor
+     * @return
+     */
     public static boolean contains(ElementColor firstColor, ElementColor secondColor){
         if(firstColor == secondColor){
             return true;

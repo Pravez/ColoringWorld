@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -15,6 +14,9 @@ import com.color.game.assets.Assets;
 import com.color.game.levels.LevelManager;
 import com.color.game.screens.GameScreen;
 
+/**
+ * Second scene paste on the first scene which is the GameScreen, it is the stage containing every UI element.
+ */
 public class UIStage extends Stage {
 
     final private Label levelNumber;

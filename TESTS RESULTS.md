@@ -2,6 +2,14 @@
 
 ## Tests results for version v0.4
 
+* Level design is a bit simple : if you observe enough you can easily finish every level
+* Sprite can be much better
+* We need music
+* Maybe balance a bit more ?
+
+### What we did :
+
+    * Nothing for now
 
 ## Tests results for version v0.3
 

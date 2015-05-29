@@ -1,9 +1,7 @@
 package com.color.game.elements.staticelements;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.assets.Assets;
 import com.color.game.elements.PhysicComponent;
@@ -21,14 +19,11 @@ public class Exit extends BaseStaticElement {
 
     final private int levelIndex;
 
-    final private ShapeRenderer shapeRenderer;
-
     public Exit(Vector2 position, float width, float height, Map map, int levelIndex) {
         super(position, width, height, map, PhysicComponent.CATEGORY_SENSOR, PhysicComponent.MASK_SENSOR);
         this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.EXIT));
         this.levelIndex = levelIndex;
 
-        this.shapeRenderer = new ShapeRenderer();
     }
 
     public int getLevelIndex() {
@@ -40,15 +35,5 @@ public class Exit extends BaseStaticElement {
         super.draw(batch, parentAlpha);
         batch.setProjectionMatrix(GameScreen.camera.combined);
         batch.draw(Assets.manager.get("sprites/door.png", Texture.class), this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
-        /*batch.end();
-
-        shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
-        shapeRenderer.setColor(Color.WHITE);
-        shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
-        shapeRenderer.end();
-
-        batch.begin();*/
     }
 }

@@ -10,6 +10,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.color.game.levels.Level;
 import com.color.game.screens.GameScreen;
 
+/**
+ * Bouncing platforms extending Color platforms. These are platforms with a certain restitution. They are used to
+ * bounce the character when it touches it.
+ */
 public class BouncingColorPlatform extends ColorPlatform{
 
     public static float platformRestitution = 1.65f;

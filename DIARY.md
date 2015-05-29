@@ -1,3 +1,16 @@
+# May 29, 2015
+
+# May 28, 2015
+* Started to search musics, and found some
+* Started to create the entire theme of the game
+* Did some work about sprites and their integration in the game
+* Started the work on a DrawManager (testing the item)
+
+# May 27, 2015
+* Started to think about what to polish, to refactor on the program
+* Started to describe the scene of the game, the plot
+* Did some modifications concerning tiled
+
 # May 26, 2015
 * Finished level design for this version
 * Modified falling platforms so that they fall according to x and y axis (not only x)
@@ -6,8 +19,6 @@
 * Prepared game for testers
 * Released v0.3.3b containing levels and bugfixes
 * Released v0.4 and sent it to testers
-
-
 
 # May 25, 2015
 * Finished implementing reader of .tmx files. Every element can now be interpreted, see tutorial.

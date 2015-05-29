@@ -68,17 +68,5 @@ public class Notice extends Sensor {
 
         batch.setProjectionMatrix(GameScreen.camera.combined);
         batch.draw(Assets.manager.get("sprites/notice.png", Texture.class), this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
-
-        /*batch.end();
-
-        Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
-        shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        Color c = Color.MAROON;
-        shapeRenderer.setColor(c.r, c.g, c.b, 0.8f);
-        shapeRenderer.rect(x, y, width, height);
-        shapeRenderer.end();
-
-        batch.begin();*/
     }
 }

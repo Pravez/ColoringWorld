@@ -1,8 +1,5 @@
 package com.color.game.elements.staticelements.sensors;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -47,18 +44,5 @@ public class Teleporter extends Sensor {
 
         batch.draw(Assets.manager.get("sprites/light.png", Texture.class), this.teleportPosition.x * WORLD_TO_SCREEN, this.teleportPosition.y * WORLD_TO_SCREEN, 2 * WORLD_TO_SCREEN, 2 * WORLD_TO_SCREEN);
 
-        //batch.end();
-
-        /*Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
-        shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.MAGENTA);
-        shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
-        Color color = Color.MAGENTA;
-        shapeRenderer.setColor(color.r, color.g, color.b, 0.7f);
-        shapeRenderer.rect(this.teleportPosition.x * WORLD_TO_SCREEN, this.teleportPosition.y * WORLD_TO_SCREEN, 2 * WORLD_TO_SCREEN, 2 * WORLD_TO_SCREEN);
-        shapeRenderer.end();
-
-        batch.begin();*/
     }
 }

@@ -1,12 +1,8 @@
 package com.color.game.elements.staticelements.sensors;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.assets.Assets;
 import com.color.game.command.elements.PushCommand;
@@ -23,8 +19,6 @@ public class WindBlower extends Sensor {
     final private PushCommand pushCommand;
     final private Vector2 force;
 
-    final private ShapeRenderer shapeRenderer;
-
     private Sprite sprite;
     private WindDirection direction;
 
@@ -35,7 +29,6 @@ public class WindBlower extends Sensor {
         this.force = new Vector2(coordinates.x * PUSH_FORCE, coordinates.y * PUSH_FORCE);
         this.pushCommand = new PushCommand();
 
-        this.shapeRenderer = new ShapeRenderer();
         this.sprite = new Sprite(Assets.manager.get("sprites/wind.png", Texture.class));
         this.sprite.setPosition(this.getBounds().x, this.getBounds().y);
         this.sprite.setSize(this.getBounds().width, this.getBounds().height);
@@ -70,16 +63,5 @@ public class WindBlower extends Sensor {
         batch.setProjectionMatrix(GameScreen.camera.combined);
 
         this.sprite.draw(batch);
-        //batch.draw(Assets.manager.get("sprites/wind.png", Texture.class), this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
-        //batch.end();
-
-        /*Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
-        shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        Color c = Color.CYAN;
-        shapeRenderer.setColor(c.r, c.g, c.b, 0.5f);
-        shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
-        shapeRenderer.end();
-        batch.begin();*/
     }
 }

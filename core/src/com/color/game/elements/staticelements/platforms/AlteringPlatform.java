@@ -12,6 +12,7 @@ import com.color.game.elements.userData.UserDataType;
 import com.color.game.levels.Level;
 import com.color.game.screens.GameScreen;
 
+@Deprecated
 public class AlteringPlatform extends BaseStaticElement {
 
     public static final float slowRate = 6f;

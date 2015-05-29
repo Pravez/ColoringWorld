@@ -20,6 +20,9 @@ public class SaveManager {
 
     private static String PLAYER_FILE = "player.txt";
 
+    /**
+     * Method to load from the player file "player.txt" the current progression of the player which was saved.
+     */
     public void load() {
         if (Files.isRegularFile(Paths.get(PLAYER_FILE))) {
 
@@ -56,6 +59,9 @@ public class SaveManager {
         }
     }
 
+    /**
+     * Method to save in a file the current progression of the player (levels done ..)
+     */
     public void save() {
         try {
             File file = new File(PLAYER_FILE);
@@ -75,6 +81,11 @@ public class SaveManager {
         }
     }
 
+    /**
+     * Method used to write a "log file", meaning a file where is printed the errors caught during the execution
+     * @param fileName name of the desired logfile
+     * @param exception The caught exception
+     */
     public static void writeLog(String fileName, Exception exception){
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(fileName+".log", true)))) {
             exception.printStackTrace(writer);

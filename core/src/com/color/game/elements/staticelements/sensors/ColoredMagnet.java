@@ -18,6 +18,9 @@ import com.color.game.screens.GameScreen;
 
 import java.util.LinkedList;
 
+/**
+ * ColoredMagnet, a feature concerning a magnet which changes his state and also its effects according to activated colors.
+ */
 public class ColoredMagnet extends Sensor implements BaseColorElement {
 
     private static final float ATTRACT_FORCE = 25f;
@@ -26,8 +29,6 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
     final private PushCommand attractCommand;
 
     final private ShapeRenderer shapeRenderer;
-
-    //private Pixmap background;
 
     private LinkedList<ElementColor> activatedColors;
 
@@ -89,6 +90,10 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
         //batch.draw(new Texture(background), this.getBounds().x, this.getBounds().y);
     }
 
+    /**
+     * Method to add commands to an element according to the current color of the magnet
+     * @param element the element on which to apply a command
+     */
     private void manageContact(final BaseDynamicElement element) {
         boolean isCharacter = element instanceof com.color.game.elements.dynamicelements.Character;
         if (this.currentColor == ElementColor.GREEN) { // Attracts the character
@@ -105,6 +110,10 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
         }
     }
 
+    /**
+     * Method to add an AttractCommand to an element
+     * @param element the element
+     */
     private void addAttractCommand(final BaseDynamicElement element) {
         this.attractCommand.setRunnable(new Runnable() {
             @Override
@@ -115,6 +124,10 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
         element.addCommand(this.attractCommand);
     }
 
+    /**
+     * Method ti add a PushCommand to an element
+     * @param element the element
+     */
     private void addPushCommand(final BaseDynamicElement element) {
         this.pushCommand.setRunnable(new Runnable() {
             @Override
@@ -125,6 +138,12 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
         element.addCommand(this.pushCommand);
     }
 
+    /**
+     * Method used to calculate how must push the magnet when there is an element on it, according to
+     * his current position (the element).
+     * @param dynamicElement Position of the element.
+     * @return the Vector2 force to apply
+     */
     private Vector2 calculatePushForce(Vector2 dynamicElement){
         Vector2 center = this.getCenter();
         Vector2 force  = new Vector2(0,0);
@@ -154,6 +173,10 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
         }
     }
 
+    /**
+     * Method called to change the color of the magnet, referencing to the current colors stocked by it.
+     * @param color
+     */
     private void manageActivation(ElementColor color) {
         if (this.activatedColors.contains(color))
             this.activatedColors.remove();
@@ -161,17 +184,6 @@ public class ColoredMagnet extends Sensor implements BaseColorElement {
             this.activatedColors.add(color);
 
         this.currentColor = (this.activatedColors.contains(ElementColor.BLACK)) ? ElementColor.BLACK : this.activatedColors.peek();
-
-        // Change pixmap background
-        /*Color c = ColorMixManager.getGDXColorFromElement(getElementColor());
-        background.setColor(0, 0, 0, 0);
-        background.fill();
-        background.setColor(c.r, c.g, c.b, c.equals(Color.YELLOW) ? 0.2f : 0.5f);
-        Pixmap.setBlending(Pixmap.Blending.None);
-        int rad = (int) this.getBounds().width/2;
-        background.fillCircle(rad, rad, rad);
-        background.setColor(c.r, c.g, c.b, c.equals(Color.YELLOW) ? 0.05f : 0.2f);
-        background.fillCircle(rad, rad, rad - 5);*/
     }
 
     @Override

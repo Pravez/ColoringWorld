@@ -1,6 +1,5 @@
 package com.color.game.levels.mapcreator.elements.objects;
 
-
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
@@ -17,7 +16,7 @@ import java.util.Objects;
 public class TiledTeleporters extends TiledObjects {
 
     private HashMap<RectangleMapObject, MapProperties> teleporters;
-    private ArrayList<RectangleMapObject> destinations;
+    private ArrayList<RectangleMapObject>              destinations;
 
     public TiledTeleporters(Level level, MapLayer layer) {
         super(level, layer);
@@ -33,35 +32,25 @@ public class TiledTeleporters extends TiledObjects {
     }
 
     private void loadRectangles(){
-        for(MapObject object : this.objects){
-            if(object instanceof RectangleMapObject && Objects.equals(object.getName(), "teleporter")) {
-                teleporters.put((RectangleMapObject) object, object.getProperties());
-            }else if(object instanceof RectangleMapObject){
-                destinations.add((RectangleMapObject) object);
-            }
+        for (MapObject object : this.objects){
+            if(object instanceof RectangleMapObject && Objects.equals(object.getName(), "teleporter"))
+                this.teleporters.put((RectangleMapObject) object, object.getProperties());
+            else if(object instanceof RectangleMapObject)
+                this.destinations.add((RectangleMapObject) object);
         }
     }
 
     public void createBodies(){
-
         for(RectangleMapObject rect : teleporters.keySet()){
-            Rectangle rectangle = new Rectangle();
-            rectangle.x = convert(rect.getRectangle().x);
-            rectangle.y = convert(rect.getRectangle().y);
-            rectangle.width = convert(rect.getRectangle().width);
-            rectangle.height = convert(rect.getRectangle().height);
-
-            level.addActor(new Teleporter(new Vector2(rectangle.x, rectangle.y), rectangle.width, rectangle.height, level.map, getTeleporterDestination((String) teleporters.get(rect).get("destination"))));
+            Rectangle rectangle = new Rectangle(convert(rect.getRectangle().x), convert(rect.getRectangle().y), convert(rect.getRectangle().width), convert(rect.getRectangle().height));
+            this.level.addActor(new Teleporter(new Vector2(rectangle.x, rectangle.y), rectangle.width, rectangle.height, level, getTeleporterDestination((String) teleporters.get(rect).get("destination"))));
         }
     }
 
     private Vector2 getTeleporterDestination(String name){
-        for(RectangleMapObject object : destinations){
-            if(object.getName().equals(name)){
+        for(RectangleMapObject object : this.destinations)
+            if(object.getName().equals(name))
                 return new Vector2(convert(object.getRectangle().x), convert(object.getRectangle().y));
-            }
-        }
-
         return null;
     }
 }

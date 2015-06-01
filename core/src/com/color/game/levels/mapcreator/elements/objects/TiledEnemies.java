@@ -21,14 +21,13 @@ public class TiledEnemies extends TiledObjects {
     }
 
     private void createBodies(){
-        for(MapObject object : this.objects){
-            if(object instanceof RectangleMapObject){
-
+        for (MapObject object : this.objects){
+            if (object instanceof RectangleMapObject){
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 ElementColor color = object.getProperties().get("color") != null ? ElementColor.parseColor((String) object.getProperties().get("color")) : null;
                 boolean canFall = object.getProperties().get("falling") != null && Boolean.parseBoolean((String) object.getProperties().get("falling"));
 
-                level.addActor(new MovingEnemy(new Vector2(convert(rect.x), convert(rect.y)), convert(rect.width), convert(rect.height), level, canFall, color));
+                this.level.addActor(new MovingEnemy(new Vector2(convert(rect.x), convert(rect.y)), convert(rect.width), convert(rect.height), level, canFall, color));
             }
         }
     }

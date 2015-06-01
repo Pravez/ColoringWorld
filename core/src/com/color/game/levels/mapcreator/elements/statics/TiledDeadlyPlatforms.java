@@ -15,10 +15,9 @@ public class TiledDeadlyPlatforms extends TiledPlatforms{
 
     @Override
     protected void createBodies(){
-        for(TiledCell cell : finalElements.keySet()){
-            Vector2 size = finalElements.get(cell);
-
-            level.addActor(new DeadlyPlatform(new Vector2(cell.posX * TiledElements.unitSize, cell.posY * TiledElements.unitSize), size.x * TiledElements.unitSize, size.y * TiledElements.unitSize, level));
+        for(TiledCell cell : this.finalElements.keySet()){
+            Vector2 size = this.finalElements.get(cell);
+            this.level.addActor(new DeadlyPlatform(new Vector2(cell.posX * TiledElements.unitSize, cell.posY * TiledElements.unitSize), size.x * TiledElements.unitSize, size.y * TiledElements.unitSize, level));
         }
     }
 }

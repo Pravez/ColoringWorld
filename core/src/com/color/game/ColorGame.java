@@ -6,6 +6,7 @@ import com.color.game.assets.Assets;
 import com.color.game.assets.MusicManager;
 import com.color.game.assets.SaveManager;
 import com.color.game.assets.SoundManager;
+import com.color.game.graphics.GraphicManager;
 import com.color.game.keys.KeyMapper;
 import com.color.game.levels.LevelManager;
 import com.color.game.levels.ScoreHandler;
@@ -43,6 +44,8 @@ public class ColorGame extends Game {
 		//noinspection StatementWithEmptyBody
 		while(!Assets.update());
 
+		Assets.loadTextures();
+
 		this.soundManager = new SoundManager();
 		this.musicManager = new MusicManager();
 		this.saveManager  = new SaveManager();
@@ -61,6 +64,8 @@ public class ColorGame extends Game {
 		this.transitionScreen     = new TransitionScreen(this);
 		this.winScreen            = new WinScreen(this);
         this.creditsScreen        = new CreditsScreen(this);
+
+		GraphicManager.init();
 
 		this.splashScreen.end();
 	}

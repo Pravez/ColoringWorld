@@ -27,19 +27,19 @@ public class TiledWindBlowers extends TiledObjects {
         createBlowers();
     }
 
-    private void createBlowers(){
-        for(MapObject object : this.objects){
-            if(object instanceof RectangleMapObject){
+    private void createBlowers() {
+        for(MapObject object : this.objects) {
+            if(object instanceof RectangleMapObject) {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 WindDirection direction = object.getProperties().get("direction") != null ? WindDirection.parseDirection((String) object.getProperties().get("direction")) : null;
 
                 if (direction != null) {
                     if (object.getProperties().get("activated") != null) {
-                        WindBlowerEnabled windBlowerEnabled = new WindBlowerEnabled(new Vector2(convert(rect.x), convert(rect.y)), convert(rect.width), convert(rect.height), level.map, direction, Boolean.parseBoolean((String) object.getProperties().get("activated")));
+                        WindBlowerEnabled windBlowerEnabled = new WindBlowerEnabled(new Vector2(convert(rect.x), convert(rect.y)), convert(rect.width), convert(rect.height), level, direction, Boolean.parseBoolean((String) object.getProperties().get("activated")));
                         this.enabledElements.put(Integer.parseInt(object.getName()), windBlowerEnabled);
-                        level.addActor(windBlowerEnabled);
+                        this.level.addActor(windBlowerEnabled);
                     } else
-                        level.addActor(new WindBlower(new Vector2(convert(rect.x), convert(rect.y)), convert(rect.width), convert(rect.height), level.map, direction));
+                        this.level.addActor(new WindBlower(new Vector2(convert(rect.x), convert(rect.y)), convert(rect.width), convert(rect.height), level, direction));
                 }
             }
         }

@@ -16,6 +16,7 @@ import com.color.game.elements.dynamicplatforms.ColorFallingPlatform;
 import com.color.game.elements.staticelements.Lever;
 import com.color.game.elements.staticelements.platforms.ColorPlatform;
 import com.color.game.elements.staticelements.platforms.ElementColor;
+import com.color.game.graphics.GraphicManager;
 import com.color.game.levels.mapcreator.TiledMapLoader;
 import com.color.game.screens.GameScreen;
 
@@ -72,6 +73,8 @@ public class Level extends Stage {
 
     private SpriteBatch batch;
 
+    public GraphicManager graphicManager;
+
     private int levelIndex;
 
     /**
@@ -89,6 +92,8 @@ public class Level extends Stage {
         this.levers           = new Array<>();
         this.batch            = new SpriteBatch();
         this.levelIndex       = 0;
+
+        this.graphicManager   = new GraphicManager();
     }
 
     public Level(String path){
@@ -103,8 +108,10 @@ public class Level extends Stage {
         this.batch            = new SpriteBatch();
         this.levelIndex       = 0;
 
+        this.graphicManager   = new GraphicManager();
+
         this.mapLoader = new TiledMapLoader(this, path);
-        mapLoader.loadMap();
+        this.mapLoader.loadMap();
     }
 
     /**
@@ -186,6 +193,12 @@ public class Level extends Stage {
             mapLoader.getOrthogonalTiledMapRenderer().setView(GameScreen.camera);
             mapLoader.getOrthogonalTiledMapRenderer().render();
         }
+    }
+
+    @Override
+    public void draw() {
+        super.draw();
+        this.graphicManager.draw();
     }
 
     /**
@@ -273,5 +286,11 @@ public class Level extends Stage {
 
     public void setLevelIndex(int levelIndex) {
         this.levelIndex = levelIndex;
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        this.mapLoader.getTiledMap().dispose();
     }
 }

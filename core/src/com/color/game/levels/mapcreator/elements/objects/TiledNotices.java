@@ -25,8 +25,7 @@ public class TiledNotices extends TiledObjects {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 int noticeIndex = object.getProperties().get("index") != null ? Integer.parseInt((String) object.getProperties().get("index")) : 0;
 
-
-                level.addActor(new Notice(new Vector2(convert(rect.x), convert(rect.y)), convert(rect.width), convert(rect.height), level.map, this.level.getLevelIndex(), noticeIndex));
+                this.level.addActor(new Notice(new Vector2(convert(rect.x), convert(rect.y)), convert(rect.width), convert(rect.height), level, this.level.getLevelIndex(), noticeIndex));
             }
         }
     }

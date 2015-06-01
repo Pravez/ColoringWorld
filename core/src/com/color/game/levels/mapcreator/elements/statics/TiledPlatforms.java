@@ -60,7 +60,6 @@ public class TiledPlatforms extends TiledStaticElements {
 
             }
         }
-
         return platforms;
     }
 
@@ -69,7 +68,7 @@ public class TiledPlatforms extends TiledStaticElements {
      */
     @Override
     protected void allocateCells(){
-        HashMap<Vector2, TiledCell> cells = loadCells();
+        HashMap<Vector2, TiledCell> cells      = loadCells();
         HashMap<TiledCell, Vector2> cellsWidth = new HashMap<>();
 
         // For each cell represented as a vector2, meaning a cell refering to another
@@ -89,7 +88,7 @@ public class TiledPlatforms extends TiledStaticElements {
             }
         }
         //We attribute the HashMap to the finalElements
-        finalElements = cellsWidth;
+        this.finalElements = cellsWidth;
     }
 
     /**
@@ -97,9 +96,9 @@ public class TiledPlatforms extends TiledStaticElements {
      */
     @Override
     protected void createBodies(){
-        for(TiledCell cell : finalElements.keySet()){
-            Vector2 datas = finalElements.get(cell);
-            level.addActor(new Platform(new Vector2(cell.posX * unitSize, cell.posY * unitSize), datas.x * unitSize, datas.y * unitSize, level));
+        for(TiledCell cell : this.finalElements.keySet()){
+            Vector2 datas = this.finalElements.get(cell);
+            this.level.addActor(new Platform(new Vector2(cell.posX * unitSize, cell.posY * unitSize), datas.x * unitSize, datas.y * unitSize, level));
         }
     }
 }

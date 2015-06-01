@@ -29,6 +29,14 @@ public abstract class BaseElement extends Actor {
         return new Rectangle(x * WORLD_TO_SCREEN, y * WORLD_TO_SCREEN, width * WORLD_TO_SCREEN, height * WORLD_TO_SCREEN);
     }
 
+    public float getPixelWidth() {
+        return this.physicComponent.getUserData().getWidth() * WORLD_TO_SCREEN;
+    }
+
+    public float getPixelHeight() {
+        return this.physicComponent.getUserData().getHeight() * WORLD_TO_SCREEN;
+    }
+
     public Vector2 getCenter() {
         return new Vector2(this.physicComponent.getBody().getPosition().x * WORLD_TO_SCREEN,
                 this.physicComponent.getBody().getPosition().y * WORLD_TO_SCREEN);

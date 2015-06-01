@@ -6,12 +6,15 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.ColorGame;
 import com.color.game.command.colors.ColorCommand;
 import com.color.game.command.colors.ColorCommandManager;
 import com.color.game.command.elements.*;
+import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.staticelements.Exit;
@@ -95,7 +98,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         character.remove();
         LevelManager.changeLevel(this.runningLevel);
         this.uiStage.changeLevelNumber();
-        character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
+        character.changeLevel(LevelManager.getCurrentLevel());
         LevelManager.getCurrentLevel().addActor(character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
         LevelManager.getCurrentLevel().restart();
@@ -107,7 +110,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     public void restart() {
         LevelManager.getCurrentLevel().addDeath();
         //this.uiStage.changeDeathNumber();
-        character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
+        character.changeLevel(LevelManager.getCurrentLevel());
         LevelManager.getCurrentLevel().restart();
         respawn();
         this.restart = false;
@@ -121,7 +124,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         this.uiStage.changeLevelNumber();
         respawn();
         character.remove();
-        character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
+        character.changeLevel(LevelManager.getCurrentLevel());
         LevelManager.getCurrentLevel().addActor(character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
     }
@@ -421,11 +424,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         // Teleport the character
         //DEBUG TOOL
-        /*if (button == Input.Buttons.LEFT) {
+        if (button == Input.Buttons.LEFT) {
             Vector3 worldCoordinates = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(worldCoordinates);
             character.teleport(new Vector2(worldCoordinates.x / BaseElement.WORLD_TO_SCREEN, worldCoordinates.y / BaseElement.WORLD_TO_SCREEN));
-        }*/
+        }
         return false;
     }
 

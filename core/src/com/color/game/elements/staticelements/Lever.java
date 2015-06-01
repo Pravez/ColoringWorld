@@ -1,20 +1,14 @@
 package com.color.game.elements.staticelements;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
-import com.color.game.assets.Assets;
 import com.color.game.elements.enabledelements.BaseEnabledElement;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.userData.StaticElementUserData;
 import com.color.game.elements.userData.UserDataType;
 import com.color.game.levels.Level;
-import com.color.game.screens.GameScreen;
 
 public class Lever extends BaseStaticElement {
 
@@ -28,7 +22,6 @@ public class Lever extends BaseStaticElement {
 
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
-    private Texture texture;
     private TextureRegion region[];
 
     /**
@@ -54,10 +47,11 @@ public class Lever extends BaseStaticElement {
             this.looping = loop;
 
         level.addLever(this);
-        this.texture = Assets.manager.get("sprites/lever.png", Texture.class);
-        this.region = new TextureRegion[2];
-        this.region[0] = new TextureRegion(this.texture, 0, 0, this.texture.getWidth()/2, this.texture.getHeight());
-        this.region[1] = new TextureRegion(this.texture, this.texture.getWidth()/2, 0, this.texture.getWidth()/2, this.texture.getHeight());
+        level.graphicManager.addElement(Lever.class, this);
+    }
+
+    public boolean isActivated() {
+        return this.activated;
     }
 
     private void launchTimer() {
@@ -105,25 +99,5 @@ public class Lever extends BaseStaticElement {
                 launchTimer();
             }
         }
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-
-        batch.setProjectionMatrix(GameScreen.camera.combined);
-        if (this.activated)
-            batch.draw(this.region[1], this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
-        else
-            batch.draw(this.region[0], this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
-
-
-        /*batch.end();
-        shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.MAROON);
-        shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
-        shapeRenderer.end();
-        batch.begin();*/
     }
 }

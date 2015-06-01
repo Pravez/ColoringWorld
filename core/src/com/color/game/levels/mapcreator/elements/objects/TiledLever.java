@@ -18,20 +18,7 @@ public class TiledLever extends TiledObjects {
     }
 
     @Override
-    public void loadElements() {
-        //createLever();
-    }
-
-    /*private void createLever(){
-        for (MapObject object : this.objects) {
-            if (object instanceof RectangleMapObject){
-                Rectangle rect = ((RectangleMapObject) object).getRectangle();
-                boolean looping = object.getProperties().get("looping") != null && Boolean.parseBoolean((String) object.getProperties().get("looping"));
-
-                level.addActor(new Lever(new Vector2(convert(rect.x), convert(rect.y)), convert(rect.width), convert(rect.height), level, looping));
-            }
-        }
-    }*/
+    public void loadElements() { }
 
     public void bindElements(HashMap<Integer, BaseEnabledElement> elements) {
         for (MapObject object : this.objects) {

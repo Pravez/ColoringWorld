@@ -65,7 +65,7 @@ public class ColorCommand implements Command {
 
     protected void changeColor(){
         LevelManager.getCurrentLevel().changeColorPlatformsActivation(this.color);
-        LevelManager.getCurrentLevel().changeColorLayersOpacity(this.color);
+        //LevelManager.getCurrentLevel().changeColorLayersOpacity(this.color);
     }
 
 

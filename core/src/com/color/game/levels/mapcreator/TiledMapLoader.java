@@ -27,60 +27,55 @@ public class TiledMapLoader {
                                          "character", "exit", "teleporter", "falling", "windblower",
                                          "enemies", "bouncing", "notice", "magnet", "lever", "enabled"};
 
-    private TiledMap tiledMap;
+    private TiledMap                   tiledMap;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
-    private MapLayers layers;
+    private MapLayers                  layers;
 
-    HashMap<String, TiledElements> tiledElements;
+    HashMap<String, TiledElements>     tiledElements;
 
-    private Level level;
-    private Integer levelIndex;
+    private Level                      level;
 
     public TiledMapLoader(Level level, String path){
+        this.level                      = level;
+        this.tiledMap                   = new TmxMapLoader().load(path);
+        this.orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(this.tiledMap);
 
-        this.level = level;
-        this.tiledMap = new TmxMapLoader().load(path);
-        this.orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+        this.layers                     = this.tiledMap.getLayers();
 
-        this.layers = tiledMap.getLayers();
+        this.tiledElements              = new HashMap<>();
 
-        this.tiledElements = new HashMap<>();
-
-        if(tiledMap.getProperties().get("index") != null){
-            level.setLevelIndex(Integer.parseInt((String) tiledMap.getProperties().get("index")));
-            this.levelIndex = level.getLevelIndex();
-
-        }else{
+        if (this.tiledMap.getProperties().get("index") != null) {
+            level.setLevelIndex(Integer.parseInt((String) this.tiledMap.getProperties().get("index")));
+        } else
             throw new NullPointerException("Level index not initialized, please update it in the editor");
-        }
 
-        ScoreHandler score;
+        try {
+            int maxDeath = Integer.parseInt((String) this.tiledMap.getProperties().get("deaths"));
+            int maxTime  = Integer.parseInt((String) this.tiledMap.getProperties().get("time"));
+            int bronze   = Integer.parseInt((String) this.tiledMap.getProperties().get("bronze"));
+            int silver   = Integer.parseInt((String) this.tiledMap.getProperties().get("silver"));
+            int gold     = Integer.parseInt((String) this.tiledMap.getProperties().get("gold"));
 
-        try{
+            level.setScoreHandler(new ScoreHandler(maxDeath, maxTime, bronze, silver, gold));
 
-            int maxDeath = Integer.parseInt((String) tiledMap.getProperties().get("deaths"));
-            int maxTime = Integer.parseInt((String) tiledMap.getProperties().get("time"));
-            int bronze = Integer.parseInt((String) tiledMap.getProperties().get("bronze"));
-            int silver = Integer.parseInt((String) tiledMap.getProperties().get("silver"));
-            int gold = Integer.parseInt((String) tiledMap.getProperties().get("gold"));
-
-            score = new ScoreHandler(maxDeath, maxTime, bronze, silver, gold);
-            level.setScoreHandler(score);
-
-        }catch (Exception e){
-            throw new NullPointerException("Impossible to initialize score system for level "+level.getLevelIndex());
+        } catch (Exception e){
+            throw new NullPointerException("Impossible to initialize score system for level " + level.getLevelIndex());
         }
     }
 
     public void loadMap() {
         try {
+            HashMap<Integer, BaseEnabledElement> enabledElements = new HashMap<>(); // the elements which can be activated / deactivated
 
-            HashMap<Integer, BaseEnabledElement> enabledElements = new HashMap<>();
-
-            for (String s : this.maps) {
-                if (this.layers.get(s) != null) {
-                    addElement(s);
+            /**
+             * Scanning all the layer name's contained in the name maps to check if the level has those layers
+             */
+            for (String name : this.maps) {
+                if (this.layers.get(name) != null) {
+                    addElement(name);
+                    if (!name.equals("static"))
+                        this.layers.get(name).setVisible(false);
                 }
             }
 
@@ -99,10 +94,14 @@ public class TiledMapLoader {
         }
     }
 
-    private void addElement(String layerName){
-        if(containsColor(layerName)){
+    /**
+     * Method to add a TiledElement to the HashMap of the TiledElements of the Level
+     * @param layerName the name of the layer to check
+     */
+    private void addElement(String layerName) {
+        if (containsColor(layerName)) {
             this.tiledElements.put(layerName, new TiledColorPlatforms(level, (TiledMapTileLayer) this.layers.get(layerName), layerName));
-        }else {
+        } else {
             switch (layerName) {
                 case "static":
                     this.tiledElements.put(layerName, new TiledPlatforms(level, (TiledMapTileLayer) this.layers.get("static")));
@@ -117,7 +116,7 @@ public class TiledMapLoader {
                     TiledElements.setCharacter(level, this.layers.get("character"));
                     break;
                 case "exit":
-                    this.tiledElements.put(layerName, new TiledEndObjects(level, this.layers.get("exit"), levelIndex));
+                    this.tiledElements.put(layerName, new TiledEndObjects(level, this.layers.get("exit")));
                     break;
                 case "teleporter":
                     this.tiledElements.put(layerName, new TiledTeleporters(level, this.layers.get("teleporter")));
@@ -150,27 +149,33 @@ public class TiledMapLoader {
         }
     }
 
-    private boolean containsColor(String s){
-        return s.contains("red") || s.contains("blue") || s.contains("yellow")
-                || s.contains("purple") || s.contains("orange") || s.contains("green")
-                || s.contains("black");
+    /**
+     * Method to know if the text contains the name of a color
+     * @param name the name of the layer to check
+     * @return the result as a boolean
+     */
+    private boolean containsColor(String name){
+        return name.contains("red") || name.contains("blue") || name.contains("yellow")
+                || name.contains("purple") || name.contains("orange") || name.contains("green")
+                || name.contains("black");
     }
 
     public TiledMap getTiledMap() {
-        return tiledMap;
+        return this.tiledMap;
     }
 
     public OrthogonalTiledMapRenderer getOrthogonalTiledMapRenderer() {
-        return orthogonalTiledMapRenderer;
+        return this.orthogonalTiledMapRenderer;
     }
 
-    public void changeOpacity(String layers){
-        for(String s : maps){
-            if(s.contains(layers) && this.tiledElements.containsKey(s)){
-                this.tiledElements.get(s).inverseOpacity();
-            }
+    /**
+     * Method to change the opacity of a specific layer
+     * @param layer the name of the layer
+     */
+    public void changeOpacity(String layer){
+        for(String name : maps){
+            if(name.contains(layer) && this.tiledElements.containsKey(name))
+                this.tiledElements.get(name).inverseOpacity();
         }
     }
-
-
 }

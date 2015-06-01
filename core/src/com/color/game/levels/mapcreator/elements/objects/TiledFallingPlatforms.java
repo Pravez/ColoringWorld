@@ -1,6 +1,5 @@
 package com.color.game.levels.mapcreator.elements.objects;
 
-
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -26,7 +25,7 @@ public class TiledFallingPlatforms extends TiledObjects {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 boolean falling = object.getProperties().get("falling") != null && Boolean.parseBoolean((String) object.getProperties().get("falling"));
 
-                level.addActor(new FallingPlatform(new Vector2(convert(rect.x), convert(rect.y)), convert(rect.width), convert(rect.height), level, falling));
+                this.level.addActor(new FallingPlatform(new Vector2(convert(rect.x), convert(rect.y)), convert(rect.width), convert(rect.height), level, falling));
             }
         }
     }

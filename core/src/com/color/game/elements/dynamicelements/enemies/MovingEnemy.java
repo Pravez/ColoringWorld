@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
-import com.color.game.elements.staticelements.platforms.DeadlyPlatform;
 import com.color.game.elements.staticelements.platforms.ElementColor;
 import com.color.game.elements.staticelements.sensors.ColoredMagnet;
 import com.color.game.elements.userData.UserData;
@@ -51,6 +50,8 @@ public class MovingEnemy extends Enemy {
 
         this.setAloftState(new LandedState());
         this.setMovingState(new RunningState());
+
+        level.graphicManager.addEnemy(this.elementColor, this);
     }
 
     /**
@@ -66,12 +67,9 @@ public class MovingEnemy extends Enemy {
 
     @Override
     public void act(BaseElement element) {
+        super.act(element);
         if (!this.canFall && element.isPlatform())
             selectFloorElement(element);
-
-        // Kill the enemy with a Deadly Platform
-        if (element instanceof DeadlyPlatform)
-            this.kill();
     }
 
     /**

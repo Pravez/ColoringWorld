@@ -10,7 +10,20 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.color.game.elements.dynamicelements.enemies.Enemy;
+import com.color.game.elements.dynamicplatforms.FallingPlatform;
+import com.color.game.elements.dynamicplatforms.MovingPlatform;
+import com.color.game.elements.staticelements.Exit;
+import com.color.game.elements.staticelements.Lever;
+import com.color.game.elements.staticelements.platforms.ColorPlatform;
+import com.color.game.elements.staticelements.platforms.DeadlyPlatform;
+import com.color.game.elements.staticelements.sensors.Notice;
+import com.color.game.elements.staticelements.sensors.Teleporter;
+import com.color.game.elements.staticelements.sensors.WindBlower;
+
+import java.util.HashMap;
 
 /**
  * Assets class containing all the assets needed for the game handled by a {@link AssetManager}
@@ -31,6 +44,8 @@ public class Assets {
     private static FileHandle basicFont;
     private static FileHandle bebasFont;
     private static FileHandle groboldFont;
+
+    private static HashMap<Class<?>, Texture> textures;
 
     final public static AssetManager manager  = new AssetManager();
     public static Skin         menuSkin;
@@ -81,6 +96,9 @@ public class Assets {
         manager.load("sprites/lava.png", Texture.class);
         manager.load("sprites/enabled.png", Texture.class);
         manager.load("sprites/lever.png", Texture.class);
+        manager.load("sprites/fireflies.png", Texture.class);
+        manager.load("sprites/exit2.png", Texture.class);
+        manager.load("sprites/platform.png", Texture.class);
 
         manager.load("sprites/star.png", Texture.class);
         manager.load("sprites/star-empty.png", Texture.class);
@@ -101,6 +119,27 @@ public class Assets {
         //manager.load("level1.tmx", TiledMap.class);
         // TiledMap map = manager.get("level1.tmx");
         // http://www.gamefromscratch.com/post/2014/04/16/LibGDX-Tutorial-11-Tiled-Maps-Part-1-Simple-Orthogonal-Maps.aspx
+    }
+
+    public static void loadTextures() {
+        Assets.textures = new HashMap<>();
+
+        Assets.textures.put(Lever.class, Assets.manager.get("sprites/lever.png", Texture.class));
+        Assets.textures.put(ColorPlatform.class, Assets.manager.get("sprites/platform.png", Texture.class));
+        Assets.textures.put(Notice.class, Assets.manager.get("sprites/fireflies.png", Texture.class));
+        Assets.textures.put(WindBlower.class, Assets.manager.get("sprites/wind.png", Texture.class));
+        Assets.textures.put(DeadlyPlatform.class, Assets.manager.get("sprites/lava.png", Texture.class));
+        Assets.textures.put(FallingPlatform.class, Assets.manager.get("sprites/falling.png", Texture.class));
+        Assets.textures.put(MovingPlatform.class, Assets.manager.get("sprites/moving.png", Texture.class));
+        Assets.textures.put(Teleporter.class, Assets.manager.get("sprites/teleport.png", Texture.class));
+        Assets.textures.put(Vector2.class, Assets.manager.get("sprites/light.png", Texture.class));
+        Assets.textures.put(Exit.class, Assets.manager.get("sprites/exit2.png", Texture.class));
+        Assets.textures.put(Enemy.class, Assets.manager.get("sprites/enemy.png", Texture.class));
+        Assets.textures.put(com.color.game.elements.dynamicelements.Character.class, Assets.manager.get("sprites/hero.png", Texture.class));
+    }
+
+    public static Texture getTexture(Class<?> type) {
+        return Assets.textures.get(type);
     }
 
     /**

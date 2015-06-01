@@ -1,3 +1,13 @@
+# June 1, 2015
+* 
+
+# May 21, 2015
+* Nothing
+
+# May 30, 2015
+* Created sprites for platforms
+* Adapted levels with the new sprites
+
 # May 29, 2015
 * Continued work on DrawManager, changed way to save elements
 * Problem with tiled and the managing of transparency - resolved ?

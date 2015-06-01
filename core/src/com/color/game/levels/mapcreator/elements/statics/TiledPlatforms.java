@@ -10,8 +10,11 @@ import java.util.HashMap;
 
 public class TiledPlatforms extends TiledStaticElements {
 
+    private TiledCell[][] layerCells;
+
     public TiledPlatforms(Level level, TiledMapTileLayer layer) {
         super(level, layer);
+        layerCells = new TiledCell[][]{};
     }
 
     /**
@@ -22,15 +25,15 @@ public class TiledPlatforms extends TiledStaticElements {
      */
     @Override
     protected HashMap<Vector2, TiledCell> loadCells() {
-        HashMap<Vector2, TiledCell> platforms = new HashMap<>();
+        //HashMap<Vector2, TiledCell> platforms = new HashMap<>();
 
         for (int row = 0; row < layer.getHeight(); row++) {
             for (int col = 0; col < layer.getWidth(); col++) {
 
-                TiledCell cell = new TiledCell(col, row, layer.getCell(col, row));
+                layerCells[row][col] = new TiledCell(col, row, layer.getCell(col, row), false);
 
                 //If the cell is not null
-                if (cell.cell != null && cell.cell.getTile() != null) {
+                /*if (cell.cell != null && cell.cell.getTile() != null) {
 
                     //We create the two cells behind the one being used
                     TiledCell previousCol = new TiledCell(col-1, row, layer.getCell(col-1, row));
@@ -58,12 +61,31 @@ public class TiledPlatforms extends TiledStaticElements {
                         //If the cell is alone, we add it
                         platforms.put(cell.vector2, cell);
                     }
-                }
+                }*/
 
             }
         }
 
-        return platforms;
+        //return platforms;
+        return null;
+    }
+
+    public void seeLayer(){
+        for(int row = 0;row<layerCells.length;row++){
+            for(int col = 0;col<layerCells[row].length;col++){
+                if(!layerCells[row][col].referenced){
+                    Vector2 prout = fillLayer(row, col);
+                }
+            }
+        }
+    }
+
+    public Vector2 fillLayer(int row, int col){
+        if(!layerCells[row][col].referenced){
+            return(new Vector2(0, 0).add(1, 0).add(fillLayer(row+1, col)));
+        }else if(!layerCells[row][col+1].referenced){
+
+        }
     }
 
     /**

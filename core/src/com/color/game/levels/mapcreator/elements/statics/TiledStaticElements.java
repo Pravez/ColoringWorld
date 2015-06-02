@@ -26,7 +26,7 @@ public abstract class TiledStaticElements extends TiledElements {
      * a vector2, in a map.
      * @return The HashMap created
      */
-    protected abstract HashMap<Vector2, TiledCell> loadCells();
+    protected abstract void loadCells();
     /**
      * Here we allocate cells, we sort them and allocate them to be ready for being treated.
      */

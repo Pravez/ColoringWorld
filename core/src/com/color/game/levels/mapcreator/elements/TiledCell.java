@@ -25,6 +25,10 @@ public class TiledCell{
         this.orientation = TileOrientation.NONE;
     }
 
+    public boolean isReferenced() {
+        return !(cell != null && cell.getTile() != null) || referenced;
+    }
+
     public enum TileOrientation{
         WIDTH,
         HEIGHT,

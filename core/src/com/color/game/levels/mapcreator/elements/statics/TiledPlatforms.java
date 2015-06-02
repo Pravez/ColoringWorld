@@ -14,7 +14,9 @@ public class TiledPlatforms extends TiledStaticElements {
 
     public TiledPlatforms(Level level, TiledMapTileLayer layer) {
         super(level, layer);
-        layerCells = new TiledCell[][]{};
+        this.finalElements = new HashMap<>();
+        layerCells = new TiledCell[layer.getHeight()+1][layer.getWidth()+1];
+        System.out.println(layer.getHeight() + " " + layer.getWidth());
     }
 
     /**
@@ -24,96 +26,68 @@ public class TiledPlatforms extends TiledStaticElements {
      * @return The HashMap created
      */
     @Override
-    protected HashMap<Vector2, TiledCell> loadCells() {
-        //HashMap<Vector2, TiledCell> platforms = new HashMap<>();
-
+    protected void loadCells() {
         for (int row = 0; row < layer.getHeight(); row++) {
             for (int col = 0; col < layer.getWidth(); col++) {
-
                 layerCells[row][col] = new TiledCell(col, row, layer.getCell(col, row), false);
-
-                //If the cell is not null
-                /*if (cell.cell != null && cell.cell.getTile() != null) {
-
-                    //We create the two cells behind the one being used
-                    TiledCell previousCol = new TiledCell(col-1, row, layer.getCell(col-1, row));
-                    TiledCell previousRow = new TiledCell(col, row-1, layer.getCell(col, row-1));
-
-                    //If one previous cell is not null, if it is on a special orientation (width or height),
-                    //and if this cell refers to one already there, meaning there is another cell behind this one.
-                    if (previousCol.cell != null && containsObject(platforms, previousCol) &&
-                            (platforms.get(previousCol.vector2).orientation == TiledCell.TileOrientation.NONE ||
-                                    platforms.get(previousCol.vector2).orientation == TiledCell.TileOrientation.WIDTH)) {
-
-                        platforms.put(cell.vector2, platforms.get(previousCol.vector2));
-                        platforms.get(previousCol.vector2).orientation = TiledCell.TileOrientation.WIDTH;
-
-                     //Same version here, but inverse
-                    }
-                    if (previousRow.cell != null && containsObject(platforms, previousRow) &&
-                            (platforms.get(previousRow.vector2).orientation == TiledCell.TileOrientation.NONE ||
-                                    platforms.get(previousRow.vector2).orientation == TiledCell.TileOrientation.HEIGHT)) {
-
-                        platforms.put(cell.vector2, platforms.get(previousRow.vector2));
-                        platforms.get(previousRow.vector2).orientation = TiledCell.TileOrientation.HEIGHT;
-
-                    } else {
-                        //If the cell is alone, we add it
-                        platforms.put(cell.vector2, cell);
-                    }
-                }*/
-
             }
         }
-
-        //return platforms;
-        return null;
     }
 
     public void seeLayer(){
         for(int row = 0;row<layerCells.length;row++){
             for(int col = 0;col<layerCells[row].length;col++){
-                if(!layerCells[row][col].referenced){
-                    Vector2 prout = fillLayer(row, col);
+                if(layerCells[row][col]!= null && !layerCells[row][col].isReferenced()){
+                    Vector2 platform = new Vector2(fillLayerCols(row, col), 0);
+                    //We first charged the x axis, now the y
+                    platform.y = 1+fillLayerRows(row+1, col, (int) platform.x);
+                    //We finally put it into the layer
+                    this.finalElements.put(layerCells[row][col], platform);
                 }
             }
         }
     }
 
-    public Vector2 fillLayer(int row, int col){
-        if(!layerCells[row][col].referenced){
-            return(new Vector2(0, 0).add(1, 0).add(fillLayer(row+1, col)));
-        }else if(!layerCells[row][col+1].referenced){
-
+    public int fillLayerCols(int row, int col){
+        if(layerCells[row][col+1]!=null && !layerCells[row][col+1].isReferenced()){
+            layerCells[row][col].referenced = true;
+            return(1+fillLayerCols(row, col + 1));
+        }else if(!layerCells[row][col].isReferenced()){
+            layerCells[row][col].referenced = true;
+            return 1;
+        }else{
+            return 0;
         }
     }
+
+    public int fillLayerRows(int row, int col, int width) {
+
+        for(int l = col;l<col+width;l++){
+            if(layerCells[row][l] == null || layerCells[row][l].isReferenced()){
+                return 0;
+            }
+        }
+
+        if(layerCells[row][col+width-1] != null && !layerCells[row][col+width-1].isReferenced()){
+            for(int j = col; j<col+width;j++){
+                layerCells[row][j].referenced = true;
+            }
+
+            return 1 + fillLayerRows(row+1, col, width);
+        }
+
+        return 0;
+    }
+
+
 
     /**
      * Here we allocate cells, we sort them and allocate them to be ready for being treated.
      */
     @Override
     protected void allocateCells(){
-        HashMap<Vector2, TiledCell> cells = loadCells();
-        HashMap<TiledCell, Vector2> cellsWidth = new HashMap<>();
-
-        // For each cell represented as a vector2, meaning a cell refering to another
-        for(Vector2 cell : cells.keySet()){
-            //If the cell referred by the one of the foreach is not already present, we add it, and we
-            //initialize his width and height as a vector2(1,1)
-            if(cellsWidth.get(cells.get(cell)) == null){
-                cellsWidth.put(cells.get(cell), new Vector2(1, 1));
-            }else{
-                //Else if the cell of the foreach is forward on the x axis, we add 1 to the width of the main cell
-                if(cells.get(cell).posX <= cell.x && cells.get(cell).orientation == TiledCell.TileOrientation.WIDTH){
-                    cellsWidth.get(cells.get(cell)).x ++;
-                //Else, the inverse, we add 1 to the height axis
-                }else if(cells.get(cell).posY <= cell.y && cells.get(cell).orientation == TiledCell.TileOrientation.HEIGHT){
-                    cellsWidth.get(cells.get(cell)).y ++;
-                }
-            }
-        }
-        //We attribute the HashMap to the finalElements
-        finalElements = cellsWidth;
+        loadCells();
+        seeLayer();
     }
 
     /**

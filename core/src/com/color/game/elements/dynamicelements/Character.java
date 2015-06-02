@@ -27,8 +27,8 @@ import com.color.game.screens.GameScreen;
  */
 public class Character extends BaseDynamicElement {
 
-    public static final float CHARACTER_RUNNING_VELOCITY = 35f;
-    public static final float CHARACTER_HEIGHT = 1.9f;
+    public static final float CHARACTER_RUNNING_VELOCITY = 25f;//35f;
+    public static final float CHARACTER_HEIGHT = 0.9f;//1.9f;
     public static final float CHARACTER_SQUAT_HEIGHT = 0.9f;
     public static final int CHARACTER_WIDTH = 1;
 
@@ -94,7 +94,7 @@ public class Character extends BaseDynamicElement {
 
     @Override
     public void squat() {
-        physicComponent.squat();
+        //physicComponent.squat();
     }
 
     /**
@@ -116,7 +116,7 @@ public class Character extends BaseDynamicElement {
 
     @Override
     public void stopSquat(){
-        physicComponent.stopSquat();
+        //physicComponent.stopSquat();
     }
 
     /**

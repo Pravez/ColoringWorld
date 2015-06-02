@@ -50,6 +50,14 @@ public class Map {
         }
     }
 
+    public float getWidth() {
+        return (this.end.x - this.start.x);
+    }
+
+    public float getHeight() {
+        return (this.end.y - this.start.x);
+    }
+
     /**
      * Method called to get the position of the bottom of the {@link World} in pixels
      * @return the position of the bottom in pixels

@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.color.game.assets.SaveManager;
+import com.color.game.elements.BaseElement;
 import com.color.game.elements.enabledelements.BaseEnabledElement;
 import com.color.game.levels.Level;
 import com.color.game.levels.ScoreHandler;
@@ -39,7 +40,7 @@ public class TiledMapLoader {
     public TiledMapLoader(Level level, String path){
         this.level                      = level;
         this.tiledMap                   = new TmxMapLoader().load(path);
-        this.orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(this.tiledMap);
+        this.orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(this.tiledMap, BaseElement.WORLD_TO_SCREEN/16f);
 
         this.layers                     = this.tiledMap.getLayers();
 

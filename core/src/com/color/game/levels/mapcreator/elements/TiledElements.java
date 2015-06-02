@@ -14,7 +14,7 @@ import java.util.HashMap;
 public abstract class TiledElements {
 
     protected final static float tileSize             = 32f;
-    protected final static float unitSize             = (tileSize / 2) / BaseElement.WORLD_TO_SCREEN;
+    protected final static float unitSize             = 1;//(tileSize / 2) / BaseElement.WORLD_TO_SCREEN;
     public final static float COLOR_LAYER_OFF_OPACITY = 0.4f;
     public final static float COLOR_LAYER_OPACITY     = 1f;
 

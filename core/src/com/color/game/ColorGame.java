@@ -90,6 +90,7 @@ public class ColorGame extends Game {
 		super.dispose();
 		Assets.dispose();
 		LevelManager.disposeLevels();
+		GraphicManager.dispose();
 	}
 
 	public void reset() {

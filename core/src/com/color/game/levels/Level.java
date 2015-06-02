@@ -93,7 +93,7 @@ public class Level extends Stage {
         this.batch            = new SpriteBatch();
         this.levelIndex       = 0;
 
-        this.graphicManager   = new GraphicManager();
+        this.graphicManager   = new GraphicManager(this);
     }
 
     public Level(String path){
@@ -108,7 +108,7 @@ public class Level extends Stage {
         this.batch            = new SpriteBatch();
         this.levelIndex       = 0;
 
-        this.graphicManager   = new GraphicManager();
+        this.graphicManager   = new GraphicManager(this);
 
         this.mapLoader = new TiledMapLoader(this, path);
         this.mapLoader.loadMap();
@@ -186,12 +186,19 @@ public class Level extends Stage {
     }
 
     public void drawBackground(){
-        batch.begin();
+        /*batch.begin();
         batch.draw(Assets.manager.get("sprites/back.png", Texture.class), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.end();
         if (mapLoader != null) {
             mapLoader.getOrthogonalTiledMapRenderer().setView(GameScreen.camera);
             mapLoader.getOrthogonalTiledMapRenderer().render();
+        }*/
+    }
+
+    public void showMapRenderer() {
+        if (this.mapLoader != null) {
+            this.mapLoader.getOrthogonalTiledMapRenderer().setView(GameScreen.camera);
+            this.mapLoader.getOrthogonalTiledMapRenderer().render();
         }
     }
 
@@ -292,5 +299,6 @@ public class Level extends Stage {
     public void dispose() {
         super.dispose();
         this.mapLoader.getTiledMap().dispose();
+        this.graphicManager.disposeLights();
     }
 }

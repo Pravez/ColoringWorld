@@ -1,9 +1,9 @@
 Level 1
 UNLOCK
-7774
+7787
 Level 2
 UNLOCK
-3330
+3342
 Level 3
 UNLOCK
 11999

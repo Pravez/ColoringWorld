@@ -98,10 +98,12 @@ public class Assets {
         manager.load("sprites/lever.png", Texture.class);
         manager.load("sprites/fireflies.png", Texture.class);
         manager.load("sprites/exit2.png", Texture.class);
-        manager.load("sprites/platform.png", Texture.class);
+        manager.load("sprites/platform1.png", Texture.class);
 
         manager.load("sprites/star.png", Texture.class);
         manager.load("sprites/star-empty.png", Texture.class);
+
+        manager.load("sprites/light 2.png", Texture.class);
 
         //manager.load("sprites/colors.png", Texture.class);
 
@@ -125,7 +127,7 @@ public class Assets {
         Assets.textures = new HashMap<>();
 
         Assets.textures.put(Lever.class, Assets.manager.get("sprites/lever.png", Texture.class));
-        Assets.textures.put(ColorPlatform.class, Assets.manager.get("sprites/platform.png", Texture.class));
+        Assets.textures.put(ColorPlatform.class, Assets.manager.get("sprites/platform1.png", Texture.class));
         Assets.textures.put(Notice.class, Assets.manager.get("sprites/fireflies.png", Texture.class));
         Assets.textures.put(WindBlower.class, Assets.manager.get("sprites/wind.png", Texture.class));
         Assets.textures.put(DeadlyPlatform.class, Assets.manager.get("sprites/lava.png", Texture.class));

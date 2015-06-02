@@ -12,7 +12,7 @@ import com.color.game.elements.userData.UserData;
  */
 public abstract class BaseElement extends Actor {
 
-    public static final int WORLD_TO_SCREEN = 11;
+    public static final int WORLD_TO_SCREEN = 17;//11;
 
     protected GraphicComponent graphicComponent;
     protected PhysicComponent physicComponent;
@@ -29,6 +29,14 @@ public abstract class BaseElement extends Actor {
         return new Rectangle(x * WORLD_TO_SCREEN, y * WORLD_TO_SCREEN, width * WORLD_TO_SCREEN, height * WORLD_TO_SCREEN);
     }
 
+    public Rectangle getWorldBounds() {
+        float width = this.physicComponent.getUserData().getWidth();
+        float height = this.physicComponent.getUserData().getHeight();
+        float x = (this.physicComponent.getBody().getPosition().x) - this.physicComponent.getUserData().getWidth()/2;
+        float y = (this.physicComponent.getBody().getPosition().y) - this.physicComponent.getUserData().getHeight()/2;
+        return new Rectangle(x, y, width, height);
+    }
+
     public float getPixelWidth() {
         return this.physicComponent.getUserData().getWidth() * WORLD_TO_SCREEN;
     }
@@ -40,6 +48,10 @@ public abstract class BaseElement extends Actor {
     public Vector2 getCenter() {
         return new Vector2(this.physicComponent.getBody().getPosition().x * WORLD_TO_SCREEN,
                 this.physicComponent.getBody().getPosition().y * WORLD_TO_SCREEN);
+    }
+
+    public Vector2 getPosition() {
+        return new Vector2(this.physicComponent.getBody().getPosition().x, this.physicComponent.getBody().getPosition().y);
     }
 
     public PhysicComponent getPhysicComponent() {

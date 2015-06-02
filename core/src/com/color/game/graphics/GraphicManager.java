@@ -34,10 +34,9 @@ import static com.color.game.elements.BaseElement.WORLD_TO_SCREEN;
 
 public class GraphicManager {
 
-    private static boolean RAY_TEST = true;
-    private static boolean COLOR_TEST = true;
-    private static boolean EXIT_TEST = true;
-
+    /**
+     * Constants for camera moving
+     */
     private static final int MOVING_GAP = 4;
     private static final int MOVING_AMOUNT = 10;
 
@@ -46,11 +45,17 @@ public class GraphicManager {
     private static final int COLOR_COLS = 6;
     private static final int COLOR_ROWS = 4;
 
+    /**
+     * Notice constants
+     */
     private static final int FONT_SIZE = 18;//14;
     private static final int TEXT_WIDTH = 260;//200;
     private static final int TEXT_GAP = 20;
     private static final float NOTICE_DELAY = 0.15f;
 
+    /**
+     * HashMap of the Level elements to render
+     */
     private HashMap<Class<?>, Array<?>> elements;
     private HashMap<ElementColor, Array<ColorPlatform>> colorPlatforms;
     private HashMap<ElementColor, Array<Enemy>> enemies;
@@ -58,16 +63,25 @@ public class GraphicManager {
 
     private HashMap<ColorPlatform, Array<PointLight>> colorLights;
 
+    /**
+     * Drawing tools
+     */
     private static SpriteBatch   batch;
     private static ShapeRenderer renderer;
+
+    /**
+     * Light tools
+     */
     public RayHandler    rayHandler;
-    private Box2DDebugRenderer debugRenderer;
 
     private PointLight characterLight;
     private PointLight exitLight;
 
     private static OrthographicCamera lightCamera;
 
+    /**
+     * Textures, sprites and Animations for the elements
+     */
     private static TextureRegion    leverRegions[];
     private static TextureRegion    colorPlatformRegions[][];
     private static TextureAnimation noticeAnimation;
@@ -82,48 +96,27 @@ public class GraphicManager {
         this.windBlowers    = new HashMap<>();
 
         this.colorLights = new HashMap<>();
-
-        if (RAY_TEST) {
-            this.debugRenderer = new Box2DDebugRenderer();
-            this.rayHandler = new RayHandler(level.getWorld());
-            //this.rayHandler.setAmbientLight(0.4f, 0.4f, 0.4f, 0.8f);
-            this.rayHandler.setAmbientLight(1, 1, 1, 0.2f);
-            this.characterLight = new PointLight(this.rayHandler, 50, Color.WHITE, 10, 5, 5);
-        }
+        this.rayHandler  = new RayHandler(level.getWorld());
+        //this.rayHandler.setAmbientLight(0.4f, 0.4f, 0.4f, 0.8f);
+        this.rayHandler.setAmbientLight(1, 1, 1, 0.2f);
+        this.characterLight = new PointLight(this.rayHandler, 50, Color.WHITE, 10, 5, 5);
     }
 
     public static void init() {
         batch    = new SpriteBatch();
         renderer = new ShapeRenderer();
 
-        if (RAY_TEST) {
-            lightCamera = new OrthographicCamera();
-            lightCamera.setToOrtho(false, Gdx.graphics.getWidth() / BaseElement.WORLD_TO_SCREEN, Gdx.graphics.getHeight() / BaseElement.WORLD_TO_SCREEN);
-            //lightCamera.position.set(GameScreen.camera.position);
-            /*RayHandler.setGammaCorrection(true);
-            //RayHandler.useDiffuseLight(false);
-            rayHandler = new RayHandler(LevelManager.getCurrentLevel().getWorld());
-            rayHandler.setAmbientLight(0.4f, 0.4f, 0.4f, 0.9f);
-            //rayHandler.setBlurNum(3);
-            //rayHandler.setShadows(true);
+        lightCamera = new OrthographicCamera();
+        lightCamera.setToOrtho(false, Gdx.graphics.getWidth() / BaseElement.WORLD_TO_SCREEN, Gdx.graphics.getHeight() / BaseElement.WORLD_TO_SCREEN);
+        PointLight.setContactFilter(PhysicComponent.CATEGORY_SCENERY, (short) 0, PhysicComponent.MASK_SCENERY);
 
-            Vector2 pos = GameScreen.character.getCenter();
-            characterLight = new PointLight(rayHandler, 50, Color.WHITE, 80, pos.x, pos.y);
-            //characterLight.attachToBody(GameScreen.character.getPhysicComponent().getBody());
-            characterLight.setStaticLight(true);
-            //characterLight.setXray(true);
-            //light.attachToBody(GameScreen.character.getPhysicComponent().getBody());*/
-
-            PointLight.setContactFilter(PhysicComponent.CATEGORY_SCENERY, (short) 0, PhysicComponent.MASK_SCENERY);
-        }
-
-        Texture texture1     = Assets.getTexture(Lever.class);
+        Texture leverTexture = Assets.getTexture(Lever.class);
         leverRegions    = new TextureRegion[2];
-        leverRegions[0] = new TextureRegion(texture1, 0, 0, texture1.getWidth()/2, texture1.getHeight());
-        leverRegions[1] = new TextureRegion(texture1, texture1.getWidth()/2, 0, texture1.getWidth()/2, texture1.getHeight());
+        leverRegions[0] = new TextureRegion(leverTexture, 0, 0, leverTexture.getWidth()/2, leverTexture.getHeight());
+        leverRegions[1] = new TextureRegion(leverTexture, leverTexture.getWidth()/2, 0, leverTexture.getWidth()/2, leverTexture.getHeight());
 
-        Texture texture2          = Assets.getTexture(ColorPlatform.class);
-        colorPlatformRegions = TextureRegion.split(texture2, texture2.getWidth()/COLOR_COLS, texture2.getHeight()/COLOR_ROWS);
+        Texture platformTexture = Assets.getTexture(ColorPlatform.class);
+        colorPlatformRegions = TextureRegion.split(platformTexture, platformTexture.getWidth()/COLOR_COLS, platformTexture.getHeight()/COLOR_ROWS);
 
         noticeAnimation = new TextureAnimation(Assets.getTexture(Notice.class), 2, 2, NOTICE_DELAY);
         fontCache       = new BitmapFontCache(Assets.getGroboldFont(FONT_SIZE));
@@ -133,47 +126,24 @@ public class GraphicManager {
         background      = Assets.manager.get("sprites/back.png", Texture.class);
     }
 
+    /**
+     * Method to draw the Level
+     */
     public void draw() {
         float delta = Gdx.graphics.getDeltaTime();
 
-        /* Ray test */
-        if (RAY_TEST) {
-            if (GameScreen.isRunning())
-                handleCamera(lightCamera, LevelManager.getCurrentLevel().map.getWidth(), LevelManager.getCurrentLevel().map.getHeight(), GameScreen.character.getPosition());
-            else
-                handleMovingCamera2(GameScreen.camera, lightCamera, LevelManager.getCurrentLevel().map.getWidth(), LevelManager.getCurrentLevel().map.getHeight());
-            //debugRenderer.render(LevelManager.getCurrentLevel().getWorld(), lightCamera.combined);
-
-            //lightCamera.position.x = GameScreen.character.getPosition().x;
-            //lightCamera.position.x = GameScreen.character.getPosition().x;
-            //lightCamera.position.y = lightCamera.viewportHeight - GameScreen.character.getPosition().y;
-            //lightCamera.update();
-            rayHandler.setCombinedMatrix(lightCamera.combined);//, lightCamera.position.x, lightCamera.position.y, lightCamera.viewportWidth, lightCamera.viewportHeight);
-            characterLight.setPosition(GameScreen.character.getPosition());
-            rayHandler.updateAndRender();
-        }
+        handleLights();
 
         float width   = GameScreen.camera.viewportWidth;
         float height  = GameScreen.camera.viewportHeight;
-        float screenX = GameScreen.camera.position.x - width/2;
-        float screenY = GameScreen.camera.position.y - height/2;
 
-        /*batch.begin();
-        batch.draw(background, screenX, screenY, width, height);
-        batch.end();*/
-
+        // Draw the Moving Platforms path
         renderer.begin(ShapeRenderer.ShapeType.Filled);
         renderer.setProjectionMatrix(GameScreen.camera.combined);
-
-        //renderer.setColor(0f, 0f, 0f, 0.5f);
-        //Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
-
-        //renderer.rect(screenX, screenY, width, height);
-
         drawMovingPlatformsPath();
-
         renderer.end();
 
+        // Draw the Tiled Map
         LevelManager.getCurrentLevel().showMapRenderer();
 
         batch.begin();
@@ -198,12 +168,26 @@ public class GraphicManager {
 
         //renderer.begin(ShapeRenderer.ShapeType.Filled);
         //drawCharacter();
-        //renderer.setColor(0f, 0f, 0f, 0.5f);
-        //Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
-        //renderer.rect(screenX, screenY, width, height);
         //renderer.end();
     }
 
+    /**
+     * Method to handle the lights : move the light Camera and set the character light to its position then render all the lights
+     */
+    private void handleLights() {
+        if (GameScreen.isRunning())
+            handleCamera(lightCamera, LevelManager.getCurrentLevel().map.getWidth(), LevelManager.getCurrentLevel().map.getHeight(), GameScreen.character.getPosition());
+        else
+            handleMovingCamera2(GameScreen.camera, lightCamera, LevelManager.getCurrentLevel().map.getWidth(), LevelManager.getCurrentLevel().map.getHeight());
+
+        this.rayHandler.setCombinedMatrix(lightCamera.combined);
+        this.characterLight.setPosition(GameScreen.character.getPosition());
+        this.rayHandler.updateAndRender();
+    }
+
+    /**
+     * Private method to render all the ColorPlatforms
+     */
     private void drawColorPlatforms() {
         Color color = batch.getColor();
 
@@ -239,82 +223,10 @@ public class GraphicManager {
         batch.setColor(color);
     }
 
-    private void drawActivatedColorPlatforms() {
-        Color color = batch.getColor();
-
-        if (this.colorPlatforms.containsKey(ElementColor.RED)) {
-            batch.setColor(Color.RED);
-            drawActivatedColorPlatforms(this.colorPlatforms.get(ElementColor.RED));
-        }
-        if (this.colorPlatforms.containsKey(ElementColor.BLUE)) {
-            batch.setColor(Color.BLUE);
-            drawActivatedColorPlatforms(this.colorPlatforms.get(ElementColor.BLUE));
-        }
-        if (this.colorPlatforms.containsKey(ElementColor.YELLOW)) {
-            batch.setColor(Color.YELLOW);
-            drawActivatedColorPlatforms(this.colorPlatforms.get(ElementColor.YELLOW));
-        }
-        if (this.colorPlatforms.containsKey(ElementColor.PURPLE)) {
-            batch.setColor(Color.PURPLE);
-            drawActivatedColorPlatforms(this.colorPlatforms.get(ElementColor.PURPLE));
-        }
-        if (this.colorPlatforms.containsKey(ElementColor.GREEN)) {
-            batch.setColor(Color.GREEN);
-            drawActivatedColorPlatforms(this.colorPlatforms.get(ElementColor.GREEN));
-        }
-        if (this.colorPlatforms.containsKey(ElementColor.ORANGE)) {
-            batch.setColor(Color.ORANGE);
-            drawActivatedColorPlatforms(this.colorPlatforms.get(ElementColor.ORANGE));
-        }
-        /*if (this.colorPlatforms.containsKey(ElementColor.BLACK)) {
-            this.batch.setColor(Color.BLACK);
-            drawColorPlatforms(this.colorPlatforms.get(ElementColor.BLACK));
-        }*/
-
-        batch.setColor(color);
-    }
-
-    private void drawDeactivatedColorPlatforms() {
-        Color color = batch.getColor();
-
-        if (this.colorPlatforms.containsKey(ElementColor.RED)) {
-            batch.setColor(Color.RED);
-            drawDeactivatedColorPlatforms(this.colorPlatforms.get(ElementColor.RED));
-        }
-        if (this.colorPlatforms.containsKey(ElementColor.BLUE)) {
-            batch.setColor(Color.BLUE);
-            drawDeactivatedColorPlatforms(this.colorPlatforms.get(ElementColor.BLUE));
-        }
-        if (this.colorPlatforms.containsKey(ElementColor.YELLOW)) {
-            batch.setColor(Color.YELLOW);
-            drawDeactivatedColorPlatforms(this.colorPlatforms.get(ElementColor.YELLOW));
-        }
-        if (this.colorPlatforms.containsKey(ElementColor.PURPLE)) {
-            batch.setColor(Color.PURPLE);
-            drawDeactivatedColorPlatforms(this.colorPlatforms.get(ElementColor.PURPLE));
-        }
-        if (this.colorPlatforms.containsKey(ElementColor.GREEN)) {
-            batch.setColor(Color.GREEN);
-            drawDeactivatedColorPlatforms(this.colorPlatforms.get(ElementColor.GREEN));
-        }
-        if (this.colorPlatforms.containsKey(ElementColor.ORANGE)) {
-            batch.setColor(Color.ORANGE);
-            drawDeactivatedColorPlatforms(this.colorPlatforms.get(ElementColor.ORANGE));
-        }
-        if (this.colorPlatforms.containsKey(ElementColor.BLACK)) {
-            batch.setColor(Color.WHITE);
-            drawColorPlatforms(this.colorPlatforms.get(ElementColor.BLACK));
-        }
-
-        batch.setColor(color);
-    }
-
     private void drawColorPlatforms(Array<ColorPlatform> colorPlatforms) {
         for (ColorPlatform platform : colorPlatforms) {
-            if (RAY_TEST) {
-                for (PointLight light : this.colorLights.get(platform)) {
-                    light.setActive(platform.isActivated());
-                }
+            for (PointLight light : this.colorLights.get(platform)) {
+                light.setActive(platform.isActivated());
             }
             Rectangle bounds = platform.getBounds();
             int col = 0;
@@ -340,68 +252,9 @@ public class GraphicManager {
         }
     }
 
-    private void drawActivatedColorPlatforms(Array<ColorPlatform> colorPlatforms) {
-        for (ColorPlatform platform : colorPlatforms) {
-            if (!platform.isActivated())
-                continue;
-            Rectangle bounds = platform.getBounds();
-            int col = 0;
-            int row = 1;
-            if (platform.getPhysicComponent().getUserData().getWidth() < platform.getPhysicComponent().getUserData().getHeight()) {//== 1) { // Vertical platform
-                col = 3;
-                float height = platform.getPhysicComponent().getUserData().getHeight();
-                batch.draw(colorPlatformRegions[row][col + 2], bounds.x, bounds.y, bounds.width, WORLD_TO_SCREEN);
-                for (int i = 1 ; i < height - 1 ; i ++) {
-                    batch.draw(colorPlatformRegions[row][col + 1], bounds.x, bounds.y + i * WORLD_TO_SCREEN, bounds.width, WORLD_TO_SCREEN);
-                }
-                batch.draw(colorPlatformRegions[row][col], bounds.x, bounds.y + (height - 1) * WORLD_TO_SCREEN, bounds.width, WORLD_TO_SCREEN);
-
-            } else { // if (platform.getPhysicComponent().getUserData().getHeight() == 1) { // Horizontal platform
-                col = 0;
-                float width = platform.getPhysicComponent().getUserData().getWidth();
-                batch.draw(colorPlatformRegions[row][col], bounds.x, bounds.y, WORLD_TO_SCREEN, bounds.height);
-                for (int i = 1 ; i < width - 1 ; i ++) {
-                    batch.draw(colorPlatformRegions[row][col + 1], bounds.x + i * WORLD_TO_SCREEN, bounds.y, WORLD_TO_SCREEN, bounds.height);
-                }
-                batch.draw(colorPlatformRegions[row][col + 2], bounds.x + (width - 1) * WORLD_TO_SCREEN, bounds.y, WORLD_TO_SCREEN, bounds.height);
-            }
-            if (platform.isActivated()) {
-                new PointLight(rayHandler, 100, Color.WHITE, 80, bounds.x, bounds.y);
-            }
-        }
-    }
-
-    private void drawDeactivatedColorPlatforms(Array<ColorPlatform> colorPlatforms) {
-        for (ColorPlatform platform : colorPlatforms) {
-            if (platform.isActivated())
-                continue;
-            Rectangle bounds = platform.getBounds();
-            int col = 0;
-            int row = 0;
-            if (platform.getPhysicComponent().getUserData().getWidth() < platform.getPhysicComponent().getUserData().getHeight()) {//== 1) { // Vertical platform
-                col = 3;
-                float height = platform.getPhysicComponent().getUserData().getHeight();
-                batch.draw(colorPlatformRegions[row][col + 2], bounds.x, bounds.y, bounds.width, WORLD_TO_SCREEN);
-                for (int i = 1 ; i < height - 1 ; i ++) {
-                    batch.draw(colorPlatformRegions[row][col + 1], bounds.x, bounds.y + i * WORLD_TO_SCREEN, bounds.width, WORLD_TO_SCREEN);
-                }
-                batch.draw(colorPlatformRegions[row][col], bounds.x, bounds.y + (height - 1) * WORLD_TO_SCREEN, bounds.width, WORLD_TO_SCREEN);
-
-            } else { // if (platform.getPhysicComponent().getUserData().getHeight() == 1) { // Horizontal platform
-                col = 0;
-                float width = platform.getPhysicComponent().getUserData().getWidth();
-                batch.draw(colorPlatformRegions[row][col], bounds.x, bounds.y, WORLD_TO_SCREEN, bounds.height);
-                for (int i = 1 ; i < width - 1 ; i ++) {
-                    batch.draw(colorPlatformRegions[row][col + 1], bounds.x + i * WORLD_TO_SCREEN, bounds.y, WORLD_TO_SCREEN, bounds.height);
-                }
-                batch.draw(colorPlatformRegions[row][col + 2], bounds.x + (width - 1) * WORLD_TO_SCREEN, bounds.y, WORLD_TO_SCREEN, bounds.height);
-            }
-            if (platform.isActivated()) {
-                new PointLight(rayHandler, 100, Color.WHITE, 80, bounds.x, bounds.y);
-            }
-        }
-    }
-
+    /**
+     * Private method to draw the Deadly Platforms
+     */
     private void drawDeadlyPlatforms() {
         if (!this.elements.containsKey(DeadlyPlatform.class))
             return;
@@ -414,6 +267,9 @@ public class GraphicManager {
         }
     }
 
+    /**
+     * Private method to draw the Falling Platforms
+     */
     private void drawFallingPlatforms() {
         if (!this.elements.containsKey(FallingPlatform.class))
             return;
@@ -429,6 +285,9 @@ public class GraphicManager {
         }
     }
 
+    /**
+     * Private method to draw the Moving Platforms Path
+     */
     private void drawMovingPlatformsPath() {
         if (!this.elements.containsKey(MovingPlatform.class))
             return;
@@ -505,13 +364,11 @@ public class GraphicManager {
             return;
         Texture texture = Assets.getTexture(Exit.class);
         for (Exit exit : (Array<Exit>)this.elements.get(Exit.class)) {
-            if (EXIT_TEST) {
                 if (GameScreen.isExitReached()) {
                     this.exitLight.setActive(true);
                 } else if (this.exitLight.isActive()) {
                     this.exitLight.setActive(false);
                 }
-            }
             Rectangle bounds = exit.getBounds();
             batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
         }
@@ -603,22 +460,20 @@ public class GraphicManager {
             this.colorPlatforms.put(color, new Array<ColorPlatform>());
         this.colorPlatforms.get(color).add(platform);
 
-        if (COLOR_TEST) {
-            Array<PointLight> lights = new Array<>();
-            Rectangle bounds = platform.getWorldBounds();
+        Array<PointLight> lights = new Array<>();
+        Rectangle bounds = platform.getWorldBounds();
 
-            for (int i = 0 ; i < bounds.height ; i++) {
-                for (int j = 0 ; j < bounds.width ; j++) {
-                    Color color1 = platform.getElementColor().getColor();
-                    if (color1 == Color.BLACK)
-                        color1 = Color.WHITE;
-                    PointLight light = new PointLight(this.rayHandler, 5, color1, 2, bounds.x + j, bounds.y + i);
-                    light.setActive(platform.isActivated());
-                    lights.add(light);
-                }
+        for (int i = 0 ; i < bounds.height ; i++) {
+            for (int j = 0 ; j < bounds.width ; j++) {
+                Color color1 = platform.getElementColor().getColor();
+                if (color1 == Color.BLACK)
+                    color1 = Color.WHITE;
+                PointLight light = new PointLight(this.rayHandler, 5, color1, 2, bounds.x + j, bounds.y + i);
+                light.setActive(platform.isActivated());
+                lights.add(light);
             }
-            this.colorLights.put(platform, lights);
         }
+        this.colorLights.put(platform, lights);
     }
 
     public void addWindBlower(WindDirection direction, WindBlower blower) {
@@ -637,15 +492,14 @@ public class GraphicManager {
         if (!this.elements.containsKey(type))
             this.elements.put(type, new Array<T>());
         ((Array<T>) this.elements.get(type)).add(element);
-        if (type == Exit.class && EXIT_TEST) {
+        if (type == Exit.class) {
             Vector2 position = ((BaseElement)element).getPosition();
             this.exitLight = new PointLight(this.rayHandler, 5, Color.CYAN, 10, position.x, position.y);
         }
     }
 
     public void disposeLights() {
-        if (RAY_TEST)
-            this.rayHandler.dispose();
+        this.rayHandler.dispose();
     }
 
     public static void dispose() {

@@ -1,5 +1,12 @@
+# June 2, 2015
+* Finished reworking on level loader : better algorithm
+* Continuing work with lights
+* Changed theme
+
 # June 1, 2015
-* 
+* Tests about lights, how to manage it.
+* Started to rework level loader
+* Changing the theme of the game
 
 # May 21, 2015
 * Nothing

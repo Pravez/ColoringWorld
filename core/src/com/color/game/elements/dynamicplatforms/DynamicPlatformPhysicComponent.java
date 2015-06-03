@@ -8,7 +8,7 @@ import com.color.game.elements.PhysicComponent;
 public class DynamicPlatformPhysicComponent extends PhysicComponent {
 
     private static final float DYNAMIC_PLATFORM_DENSITY = 1000f;
-    private static final float VELOCITY_MAX = 11f;//14f;
+    private static final float VELOCITY_MAX = 8f;//11f;//14f;
 
     final private Vector2 linearVelocity;
 

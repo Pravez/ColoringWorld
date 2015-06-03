@@ -56,6 +56,8 @@ public class ColorGame extends Game {
 		LevelManager.init();
 		this.saveManager.load();
 
+		this.musicManager.playMusic(MusicManager.MUSIC.MENU);
+
 		this.gameScreen           = new GameScreen(this);
 		this.levelSelectionScreen = new LevelSelectionScreen(this);
 		this.menuScreen           = new MenuScreen(this);
@@ -91,6 +93,7 @@ public class ColorGame extends Game {
 		Assets.dispose();
 		LevelManager.disposeLevels();
 		GraphicManager.dispose();
+		this.musicManager.dispose();
 	}
 
 	public void reset() {
@@ -142,6 +145,7 @@ public class ColorGame extends Game {
 	}
 
 	public void setGameScreen() {
+		this.musicManager.playMusic(MusicManager.MUSIC.GAME);
 		super.setScreen(this.gameScreen);
 	}
 
@@ -151,6 +155,7 @@ public class ColorGame extends Game {
 	}
 
 	public void setMenuScreen() {
+		this.musicManager.playMusic(MusicManager.MUSIC.MENU);
 		super.setScreen(this.menuScreen);
 	}
 
@@ -173,5 +178,9 @@ public class ColorGame extends Game {
 
 	public void updateWinScreen(ScoreHandler score) {
 		this.winScreen.handle(score);
+	}
+
+	public void updateKeys() {
+		GameScreen.uiStage.updateKeys();
 	}
 }

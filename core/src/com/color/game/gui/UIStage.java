@@ -75,16 +75,16 @@ public class UIStage extends Stage {
         this.playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (gameScreen.isPaused()) {
-                    gameScreen.resumeGame();
-                    updateButton("Pause");
-                    restartButton.remove();
-                    menuButton.remove();
-                } else {
+                if (GameScreen.isRunning()) {
                     gameScreen.pauseGame();
                     updateButton("Resume");
                     addButton(restartButton);
                     addButton(menuButton);
+                } else {
+                    gameScreen.resumeGame();
+                    updateButton("Pause");
+                    restartButton.remove();
+                    menuButton.remove();
                 }
             }
         });
@@ -95,6 +95,12 @@ public class UIStage extends Stage {
         this.addActor(this.colorGauges);
         this.addActor(colorFigure);
         this.addActor(this.playButton);
+    }
+
+    public void updateKeys() {
+        this.colorGauges.redGauge.update();
+        this.colorGauges.blueGauge.update();
+        this.colorGauges.yellowGauge.update();
     }
 
     private void addButton(Button button) {

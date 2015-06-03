@@ -38,7 +38,7 @@ public class ColorMixManager {
             }
         }
 
-        return Color.BLACK;
+        return Color.WHITE;
     }
 
     public static ElementColor getElementColorFromGDX(Color color){
@@ -61,7 +61,7 @@ public class ColorMixManager {
             return ElementColor.GREEN;
         }
 
-        return ElementColor.BLACK;
+        return ElementColor.WHITE;
     }
 
     public static Color getGDXColorFromElement(ElementColor elementColor){
@@ -84,7 +84,7 @@ public class ColorMixManager {
             return Color.GREEN;
         }
 
-        return Color.BLACK;
+        return Color.WHITE;
     }
 
     public static Color randomizeRYBColor(){
@@ -115,7 +115,7 @@ public class ColorMixManager {
                     return (secondColor == ElementColor.RED || secondColor == ElementColor.YELLOW);
                 case PURPLE:
                     return (secondColor == ElementColor.BLUE || secondColor == ElementColor.RED);
-                case BLACK:
+                case WHITE:
                     return (secondColor == ElementColor.BLUE || secondColor == ElementColor.YELLOW ||
                             secondColor == ElementColor.RED || secondColor == ElementColor.PURPLE ||
                             secondColor == ElementColor.ORANGE || secondColor == ElementColor.GREEN);
@@ -127,6 +127,6 @@ public class ColorMixManager {
     }
 
     public static boolean isSecondaryColor(ElementColor color){
-        return color == ElementColor.PURPLE || color == ElementColor.GREEN || color == ElementColor.BLACK || color == ElementColor.ORANGE;
+        return color == ElementColor.PURPLE || color == ElementColor.GREEN || color == ElementColor.WHITE || color == ElementColor.ORANGE;
     }
 }

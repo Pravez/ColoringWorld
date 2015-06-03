@@ -185,16 +185,6 @@ public class Level extends Stage {
         }
     }
 
-    public void drawBackground(){
-        /*batch.begin();
-        batch.draw(Assets.manager.get("sprites/back.png", Texture.class), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.end();
-        if (mapLoader != null) {
-            mapLoader.getOrthogonalTiledMapRenderer().setView(GameScreen.camera);
-            mapLoader.getOrthogonalTiledMapRenderer().render();
-        }*/
-    }
-
     public void showMapRenderer() {
         if (this.mapLoader != null) {
             this.mapLoader.getOrthogonalTiledMapRenderer().setView(GameScreen.camera);
@@ -204,7 +194,6 @@ public class Level extends Stage {
 
     @Override
     public void draw() {
-        super.draw();
         this.graphicManager.draw();
     }
 

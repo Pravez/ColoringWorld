@@ -28,9 +28,9 @@ import com.color.game.screens.GameScreen;
 public class Character extends BaseDynamicElement {
 
     public static final float CHARACTER_RUNNING_VELOCITY = 25f;//35f;
-    public static final float CHARACTER_HEIGHT = 0.9f;//1.9f;
-    public static final float CHARACTER_SQUAT_HEIGHT = 0.9f;
-    public static final int CHARACTER_WIDTH = 1;
+    public static final float CHARACTER_HEIGHT = 0.95f;//1.9f;
+    public static final float CHARACTER_SQUAT_HEIGHT = 0.95f;
+    public static final float CHARACTER_WIDTH = 0.95f;
 
     final private GameScreen gameScreen;
     private Vector2 currentJumpVelocity;

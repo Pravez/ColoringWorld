@@ -31,7 +31,7 @@ public class ColorFigure extends Actor {
         this.colors.put(ElementColor.PURPLE, new ColorPiece(Assets.manager.get("colors/purple.png", Texture.class)));
         this.colors.put(ElementColor.GREEN, new ColorPiece(Assets.manager.get("colors/green.png", Texture.class)));
         this.colors.put(ElementColor.ORANGE, new ColorPiece(Assets.manager.get("colors/orange.png", Texture.class)));
-        this.colors.put(ElementColor.BLACK, new ColorPiece(Assets.manager.get("colors/black.png", Texture.class)));
+        this.colors.put(ElementColor.WHITE, new ColorPiece(Assets.manager.get("colors/white.png", Texture.class)));
     }
 
     @Override

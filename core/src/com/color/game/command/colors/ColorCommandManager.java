@@ -3,6 +3,7 @@ package com.color.game.command.colors;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.staticelements.platforms.ElementColor;
+import com.color.game.screens.GameScreen;
 
 /**
  * Manager of the colors commands, it will store every possible command, and manage the interaction between
@@ -18,20 +19,20 @@ public class ColorCommandManager {
     private ComposedColorCommand purpleCommand;
     private ComposedColorCommand orangeCommand;
 
-    private ComposedColorCommand blackCommand;
+    private ComposedColorCommand whiteCommand;
 
     private Array<ColorCommand> calledCommands;
 
     public ColorCommandManager(){
-        this.redCommand    = new ColorCommand(ElementColor.RED);
-        this.blueCommand   = new ColorCommand(ElementColor.BLUE);
-        this.yellowCommand = new ColorCommand(ElementColor.YELLOW);
+        this.redCommand    = new ColorCommand(ElementColor.RED, GameScreen.uiStage.colorGauges.redGauge);
+        this.blueCommand   = new ColorCommand(ElementColor.BLUE, GameScreen.uiStage.colorGauges.blueGauge);
+        this.yellowCommand = new ColorCommand(ElementColor.YELLOW, GameScreen.uiStage.colorGauges.yellowGauge);
 
         this.greenCommand  = new ComposedColorCommand(ElementColor.GREEN, this.blueCommand, this.yellowCommand);
         this.purpleCommand = new ComposedColorCommand(ElementColor.PURPLE, this.redCommand, this.blueCommand);
         this.orangeCommand = new ComposedColorCommand(ElementColor.ORANGE, this.redCommand, this.yellowCommand);
 
-        this.blackCommand  = new ComposedColorCommand(ElementColor.BLACK, this.blueCommand, this.redCommand, this.yellowCommand);
+        this.whiteCommand  = new ComposedColorCommand(ElementColor.WHITE, this.blueCommand, this.redCommand, this.yellowCommand);
 
         this.calledCommands = new Array<>();
     }
@@ -53,13 +54,9 @@ public class ColorCommandManager {
         this.blueCommand.stop();
         this.yellowCommand.stop();
 
-        /*this.purpleCommand.stop();
-        this.blackCommand.stop();
-        this.orangeCommand.stop();
-        this.greenCommand.stop();*/
-
         for (ColorCommand colorCommand : this.calledCommands)
             colorCommand.stop();
+
         this.calledCommands.clear();
     }
 
@@ -74,7 +71,7 @@ public class ColorCommandManager {
      */
     public ComposedColorCommand activateComposedColor(ColorCommand command){
         if (allActivated()) {
-            return blackCommand;
+            return whiteCommand;
         } else {
             switch (command.getColor()) {
                 case RED:
@@ -118,7 +115,7 @@ public class ColorCommandManager {
             character.addCommand(composedColorCommand);
             composedColorCommand.setPressed(true);
             this.calledCommands.add(composedColorCommand);
-            if (composedColorCommand.getColor() == ElementColor.BLACK) {
+            if (composedColorCommand.getColor() == ElementColor.WHITE) {
                 pressComposedColors(this.purpleCommand, character);
                 pressComposedColors(this.orangeCommand, character);
                 pressComposedColors(this.greenCommand, character);
@@ -152,7 +149,7 @@ public class ColorCommandManager {
         addActivatedColor(colors, this.orangeCommand);
         addActivatedColor(colors, this.purpleCommand);
         addActivatedColor(colors, this.greenCommand);
-        addActivatedColor(colors, this.blackCommand);
+        addActivatedColor(colors, this.whiteCommand);
 
         return colors;
     }

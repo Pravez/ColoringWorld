@@ -3,6 +3,7 @@ package com.color.game.command.colors;
 import com.color.game.command.Command;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
 import com.color.game.elements.staticelements.platforms.ElementColor;
+import com.color.game.gui.ColorGauge;
 import com.color.game.levels.LevelManager;
 
 /**
@@ -13,13 +14,26 @@ public class ColorCommand implements Command {
 
     public static final float COLOR_DELAY = 5.0f;
 
+    private ColorGauge colorUI;
+
     protected final ElementColor color;
     protected boolean activated = false;
-    private boolean desactivated = false;
+    private boolean deactivated = false;
 
     private boolean pressed = false;
 
     protected float time = 0;
+
+    /**
+     * Constructor
+     * @param color color of the ColorCommand
+     * @param colorUI the ColorGauge UI of the ColorCommand
+     */
+    public ColorCommand (ElementColor color, ColorGauge colorUI) {
+        this.color   = color;
+        this.colorUI = colorUI;
+        restart();
+    }
 
     /**
      * Constructor
@@ -35,7 +49,7 @@ public class ColorCommand implements Command {
      * @return
      */
     public boolean isFinished() {
-        return !this.activated && !this.desactivated;
+        return !this.activated && !this.deactivated;
     }
 
     /**
@@ -43,47 +57,46 @@ public class ColorCommand implements Command {
      */
     public void restart() {
         this.activated = false;
-        this.desactivated = false;
+        this.deactivated = false;
         this.time = 0;
         this.pressed = false;
+        if (this.colorUI != null)
+            this.colorUI.showKey();
     }
 
     /**
      * Stops the current command and sends to every color element a signal to change their activation
      */
     public void stop() {
-        if (this.activated && !this.desactivated) {
+        if (this.activated && !this.deactivated)
             changeColor();
-        }
         restart();
     }
 
     public void start(){
         changeColor();
         this.activated = true;
+        if (this.colorUI != null)
+            this.colorUI.hideKey();
     }
 
     protected void changeColor(){
         LevelManager.getCurrentLevel().changeColorPlatformsActivation(this.color);
-        //LevelManager.getCurrentLevel().changeColorLayersOpacity(this.color);
     }
 
 
     @Override
     public boolean execute(BaseDynamicElement element, float delta) {
         this.time += delta;
-        if (!this.activated) {
+        if (!this.activated)
             start();
-        }
-        if (!this.desactivated && this.time >= 4f * ColorCommand.COLOR_DELAY / 5) {
+        if (!this.deactivated && this.time >= 4f * ColorCommand.COLOR_DELAY / 5) {
             changeColor();
-            this.desactivated = true;
+            this.deactivated = true;
             this.pressed = false;
         }
-        if (this.time >= ColorCommand.COLOR_DELAY) {
+        if (this.time >= ColorCommand.COLOR_DELAY)
             restart();
-
-        }
 
         return isFinished();
     }
@@ -92,8 +105,8 @@ public class ColorCommand implements Command {
         return activated;
     }
 
-    public boolean isDesactivated() {
-        return desactivated;
+    public boolean isDeactivated() {
+        return deactivated;
     }
 
     public ElementColor getColor() {

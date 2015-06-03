@@ -88,6 +88,11 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
     }
 
     @Override
+    public void hide() {
+        this.game.updateKeys();
+    }
+
+    @Override
     public boolean keyDown(int keycode) {
         if (this.currentModifier != null) {
             if (!this.game.keys.isCodeUsed(keycode, this.currentModifier.getKey()))

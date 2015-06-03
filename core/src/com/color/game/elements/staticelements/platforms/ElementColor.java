@@ -10,7 +10,7 @@ public enum ElementColor {
     GREEN,
     ORANGE,
     PURPLE,
-    BLACK;
+    WHITE;
 
     public static ElementColor rand() {
         int index = MathUtils.random(0, 2);
@@ -37,8 +37,8 @@ public enum ElementColor {
                 return Color.GREEN;
             case ORANGE:
                 return Color.ORANGE;
-            case BLACK:
-                return Color.BLACK;
+            case WHITE:
+                return Color.WHITE;
         }
         return new Color();
     }
@@ -73,8 +73,9 @@ public enum ElementColor {
                 return GREEN;
             case "ORANGE":
                 return ORANGE;
+            case "WHITE":
             case "BLACK":
-                return BLACK;
+                return WHITE;
             default:
                 throw new ClassCastException("Impossible to get the color of the platforms from the .tmx file");
         }

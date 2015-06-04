@@ -1,5 +1,6 @@
 # June 4, 2015
 * Reworked the windblowers skin
+* @deprecated ColoredMagnet, BouncingPlatforms
 * Added animation on death
 * Changed animation when finishing a level
 * Rebalanced a bit the game

@@ -14,6 +14,7 @@ import com.color.game.screens.GameScreen;
  * Bouncing platforms extending Color platforms. These are platforms with a certain restitution. They are used to
  * bounce the character when it touches it.
  */
+@Deprecated
 public class BouncingColorPlatform extends ColorPlatform{
 
     public static float platformRestitution = 1.65f;

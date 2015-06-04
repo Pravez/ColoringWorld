@@ -4,6 +4,7 @@
 - Reworked the management of drawing elements
 - Bugfixes
 - Deprecated ColoredMagnet
+- Deprecated BouncingPlatforms
 - Modified UI a bit
 
 # 0.4 (May 26, 2015)

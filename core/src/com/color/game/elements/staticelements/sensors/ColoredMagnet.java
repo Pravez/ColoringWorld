@@ -18,6 +18,7 @@ import com.color.game.screens.GameScreen;
 
 import java.util.LinkedList;
 
+@Deprecated
 public class ColoredMagnet extends Sensor implements BaseColorElement {
 
     private static final float ATTRACT_FORCE = 25f;

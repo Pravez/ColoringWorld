@@ -9,7 +9,8 @@
 
 ### What we did :
 
-    * Nothing for now
+    * Added music
+    * Rebalanced character's data
 
 ## Tests results for version v0.3
 

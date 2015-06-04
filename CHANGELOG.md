@@ -1,3 +1,11 @@
+# 0.4.1 (June 4, 2015)
+- Changed way to load cells from the TMX files
+- Changed the whole theme of the game
+- Reworked the management of drawing elements
+- Bugfixes
+- Deprecated ColoredMagnet
+- Modified UI a bit
+
 # 0.4 (May 26, 2015)
 - Levels can now be loaded from .tmx files from Tiled
 - Bugfixes

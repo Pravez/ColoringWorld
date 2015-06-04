@@ -6,6 +6,7 @@
 * Changed intensity of lights
 * Corrected detection on the y axis of falling platforms
 * Started to rework the entire menu
+* Released v0.4.1
 
 # June 3, 2015
 

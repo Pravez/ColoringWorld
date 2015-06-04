@@ -1,3 +1,15 @@
+# June 4, 2015
+* Reworked the windblowers skin
+* Added animation on death
+* Changed animation when finishing a level
+* Rebalanced a bit the game
+* Changed intensity of lights
+* Corrected detection on the y axis of falling platforms
+* Started to rework the entire menu
+
+# June 3, 2015
+
+
 # June 2, 2015
 * Finished reworking on level loader : better algorithm
 * Continuing work with lights

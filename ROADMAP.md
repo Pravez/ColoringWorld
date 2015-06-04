@@ -71,11 +71,13 @@ With this, you will be able to have an overview of the game and its future.
 * sprites (character, blocks)
 * animations
 * animation of death : the game runs slower
+* add music
+
+
+## Version 0.6 - Bonuses
 * definition of more complex level exit (code to enter, keys to find, color to activate, …)
 * (10 more levels)
 * hidden exits to secret levels that have to be found in order to play it
-
-## Version 0.6 - Bonuses
 * full screen mode of the game
 * the game can be resized
 * hidden special items to find in each level (such as 3 stars) and which gives more points

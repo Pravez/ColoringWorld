@@ -160,6 +160,9 @@ public class GraphicManager {
     public void draw() {
         float delta = GameScreen.isRunning() ? Gdx.graphics.getDeltaTime() : 0;
 
+        /** LIGHT TEST **/
+
+
         handleLights(delta);
 
         /**

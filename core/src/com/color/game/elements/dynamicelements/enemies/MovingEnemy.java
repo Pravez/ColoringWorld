@@ -34,13 +34,12 @@ public class MovingEnemy extends Enemy {
     /**
      * Moving Enemy constructor
      * @param position the position of the enemy
-     * @param width the width of the enemy
-     * @param height the height of the enemy
+     * @param radius the radius of the enemy
      * @param level the level of the enemy
      * @param canFall if the enemy can fall from a platform or not
      */
-    public MovingEnemy(Vector2 position, float width, float height, Level level, boolean canFall, ElementColor color) {
-        super(position, width, height, level, color);
+    public MovingEnemy(Vector2 position, float radius, Level level, boolean canFall, ElementColor color) {
+        super(position, radius, level, color);
         this.physicComponent.getBody().setAwake(true);
         this.physicComponent.getBody().setActive(true);
         this.canFall = canFall;
@@ -127,13 +126,6 @@ public class MovingEnemy extends Enemy {
             this.preventLeft = false;
             this.changeDirection = false;
             this.physicComponent.setMove(current_direction);
-        }
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        if (this.physicComponent.getBody().isActive()) {
-            super.draw(batch, parentAlpha);
         }
     }
 }

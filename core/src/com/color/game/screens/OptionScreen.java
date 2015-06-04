@@ -47,7 +47,7 @@ public class OptionScreen extends BaseScreen {
 
     private void addSliders(Table table) {
         // The Music Volume Slider
-        addVolumeSlider(table, "Music Volume : ", this.musicValue, new ChangeListener() {
+        addVolumeSlider(table, "Music Volume : ", this.musicValue, this.game.musicManager.getVolume(), new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 game.musicManager.setVolume(((Slider) actor).getValue());
@@ -56,7 +56,7 @@ public class OptionScreen extends BaseScreen {
         });
 
         // The Sound Volume Slider
-        addVolumeSlider(table, "Sound Volume : ", this.soundValue, new ChangeListener() {
+        addVolumeSlider(table, "Sound Volume : ", this.soundValue, this.game.soundManager.getVolume(), new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.soundManager.setVolume(((Slider) actor).getValue());
@@ -66,10 +66,11 @@ public class OptionScreen extends BaseScreen {
         });
     }
 
-    private void addVolumeSlider(Table table, String text, Label value, ChangeListener changeListener) {
+    private void addVolumeSlider(Table table, String text, Label value, float sliderValue, ChangeListener changeListener) {
         Label label = new Label(text, Assets.menuSkin);
         table.add(label);
         Slider slider = new Slider(0.0f, 1.0f, 0.1f, false, Assets.menuSkin);
+        slider.setValue(sliderValue);
         table.add(slider);
         label.invalidate();
 

@@ -22,7 +22,7 @@ import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.Lever;
 import com.color.game.elements.staticelements.sensors.Sensor;
 import com.color.game.elements.userData.UserData;
-import com.color.game.graphics.GraphicManager;
+import com.color.game.graphics.Camera;
 import com.color.game.gui.ColorGauge;
 import com.color.game.gui.UIStage;
 import com.color.game.keys.KeyEffect;
@@ -34,7 +34,8 @@ import com.color.game.levels.LevelManager;
  */
 public class GameScreen extends BaseScreen implements InputProcessor, ContactListener {
 
-    private static float WAITING_DELAY = 2.0f;
+    public static float WIN_DELAY = 1.4f;
+    public static float DEATH_DELAY = 1.0f;
 
     public static OrthographicCamera camera;
 
@@ -60,7 +61,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      */
     private int runningLevel;
 
-    private static boolean run = true;
+    private static boolean run   = true;
+    private static boolean pause = false;
 
     private static boolean killedWaiting = false;
     private static boolean endedWaiting  = false;
@@ -115,6 +117,14 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     }
 
     /**
+     * Method to know if the game is in pause mode or not
+     * @return the result as a boolean
+     */
+    public static boolean isPaused() {
+        return pause;
+    }
+
+    /**
      * Method called when changing the level to remove the character body from the world, and place it in the new Level's world
      */
     private void changeLevel() {
@@ -157,14 +167,16 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      * Method to pause the game
      */
     public void pauseGame() {
-        run = false;
+        run   = false;
+        pause = true;
     }
 
     /**
      * Method to resume the game
      */
     public void resumeGame() {
-        run = true;
+        run   = true;
+        pause = false;
     }
 
     /**
@@ -242,7 +254,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             handleInputs();
             handleCharacter();
             handleCamera();
-        } else
+        } else if (pause)
             handleMovingCamera();
 
         //TO DEBUG
@@ -256,14 +268,14 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             changeLevel();
         if (this.restart && !killedWaiting) {
             killedWaiting = true;
-            pauseGame();
+            run = false;
             this.timer.scheduleTask(new Timer.Task() {
                 @Override
                 public void run() {
-                    resumeGame();
+                    run = true;
                     game.setDeathScreen();
                 }
-            }, WAITING_DELAY);
+            }, DEATH_DELAY);
         }
     }
 
@@ -355,14 +367,14 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         //position.x += (character.getBounds().x - position.x) * lerp;
         //position.y += (character.getBounds().y - position.y) * lerp;
         /** **/
-        GraphicManager.handleCamera(camera, LevelManager.getCurrentLevel().map.getPixelWidth(), LevelManager.getCurrentLevel().map.getPixelHeight(), character.getCenter());
+        Camera.handleCamera(camera, LevelManager.getCurrentLevel().map.getPixelWidth(), LevelManager.getCurrentLevel().map.getPixelHeight(), character.getCenter());
     }
 
     /**
      * Method called to handle the camera when it should move (according to the mouse position)
      */
     private void handleMovingCamera() {
-        GraphicManager.handleMovingCamera(camera, camera, LevelManager.getCurrentLevel().map.getPixelWidth(), LevelManager.getCurrentLevel().map.getPixelHeight());
+        Camera.handleMovingCamera(camera, camera, LevelManager.getCurrentLevel().map.getPixelWidth(), LevelManager.getCurrentLevel().map.getPixelHeight());
     }
 
     /**
@@ -494,7 +506,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
                     changeLevel();
                     game.setWinScreen(LevelManager.isLastLevel());
                 }
-            }, WAITING_DELAY);
+            }, WIN_DELAY);
             endedWaiting = true;
         }
     }

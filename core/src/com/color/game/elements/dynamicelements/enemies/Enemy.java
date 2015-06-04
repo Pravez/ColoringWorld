@@ -30,12 +30,12 @@ public abstract class Enemy extends BaseDynamicElement implements BaseColorEleme
     /**
      * Enemy constructor
      * @param position the position of the enemy
-     * @param width the width of the enemy
-     * @param height the height of the enemy
+     * @param radius the radius of the enemy
      * @param level the level of the enemy
+     * @param elementColor the ElementColor of the Enemy
      */
-    Enemy(Vector2 position, float width, float height, Level level, ElementColor elementColor) {
-        super(position, width, height, level.getWorld(), PhysicComponent.CATEGORY_ENEMY, PhysicComponent.MASK_ENEMY);
+    Enemy(Vector2 position, float radius, Level level, ElementColor elementColor) {
+        super(position, radius, level.getWorld(), PhysicComponent.CATEGORY_ENEMY, PhysicComponent.MASK_ENEMY);
         level.addEnemy(this);
         this.initialPosition = position;
 
@@ -48,7 +48,7 @@ public abstract class Enemy extends BaseDynamicElement implements BaseColorEleme
 
         this.colorActivation = false;
 
-        this.physicComponent.configureUserData(new DynamicElementUserData(this, width, height, UserDataType.ENEMY));
+        this.physicComponent.configureUserData(new DynamicElementUserData(this, radius, radius, UserDataType.ENEMY));
     }
 
     public boolean isAlive() {

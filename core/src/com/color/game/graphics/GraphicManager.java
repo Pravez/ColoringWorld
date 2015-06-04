@@ -4,7 +4,6 @@ import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -12,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.assets.Assets;
 import com.color.game.elements.BaseElement;
@@ -33,12 +33,6 @@ import static com.color.game.elements.BaseElement.WORLD_TO_SCREEN;
 
 public class GraphicManager {
 
-    /**
-     * Constants for camera moving
-     */
-    private static final int MOVING_GAP = 4;
-    private static final int MOVING_AMOUNT = 10;
-
     private static final float OPACITY = 0.4f;
 
     /**
@@ -46,9 +40,18 @@ public class GraphicManager {
      */
     private static final float COLOR_LIGHT_WIDTH = 1.6f;
     private static final float ENEMY_LIGHT_WIDTH = 6f;
+    // Ambient light animation
     private static final Color MIN_AMBIENT_LIGHT = new Color(1, 1, 1, 0.2f);
     private static final Color MAX_AMBIENT_LIGHT = new Color(1, 1, 1, 0.4f);
     private static final float AMBIENT_CHANGE_DELAY = 3.0f;
+    // Color light animation
+    private static final float COLOR_LIGHT_ACTIVATION_DELAY = 0.2f;
+    private static final float COLOR_LIGHT_DEACTIVATION_DELAY = 0.5f;
+    // Character
+    private static final float CHARACTER_LIGHT_WIDTH = 12f;
+
+    private static final float EXIT_LIGHT_WIDTH = 10f;
+    private static final float EXIT_LIGHT_MIN = 5f;
 
     /**
      * Notice constants
@@ -89,6 +92,9 @@ public class GraphicManager {
     private static Color ambientLight;
     private static Color ambientTarget;
 
+    private static Color characterColor;
+    private static Color exitColor;
+
     private float timePassed = 0;
 
     /**
@@ -114,12 +120,15 @@ public class GraphicManager {
         this.windLights  = new HashMap<>();
         this.rayHandler  = new RayHandler(level.getWorld());
         this.rayHandler.setAmbientLight(MIN_AMBIENT_LIGHT);
-        this.characterLight = new PointLight(this.rayHandler, 50, Color.WHITE, 12, 5, 5);
+        this.characterLight = new PointLight(this.rayHandler, 50, Color.WHITE, CHARACTER_LIGHT_WIDTH, 5, 5);
     }
 
     public static void init() {
         ambientLight = new Color(MIN_AMBIENT_LIGHT);
         ambientTarget = MAX_AMBIENT_LIGHT;
+
+        characterColor = new Color(Color.WHITE);
+        exitColor = new Color(1, 1, 1, OPACITY);
 
         batch    = new SpriteBatch();
         renderer = new ShapeRenderer();
@@ -150,7 +159,6 @@ public class GraphicManager {
      */
     public void draw() {
         float delta = GameScreen.isRunning() ? Gdx.graphics.getDeltaTime() : 0;
-        this.timePassed += delta;
 
         handleLights(delta);
 
@@ -173,7 +181,7 @@ public class GraphicManager {
         batch.begin();
         batch.setProjectionMatrix(GameScreen.camera.combined);
 
-        drawColorPlatforms();
+        drawColorPlatforms(delta);
         drawMovingPlatforms();
         drawDeadlyPlatforms();
         Color color = new Color(batch.getColor());
@@ -183,16 +191,15 @@ public class GraphicManager {
         drawWindBlowers();
         //drawTeleporters();
         drawLevers();
-        batch.setColor(color);
         drawExits();
+        batch.setColor(color);
         drawNotices(delta);
 
         drawEnemies();
         batch.end();
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        Rectangle bounds = GameScreen.character.getBounds();
-        renderer.rect(bounds.x, bounds.y, bounds.width, bounds.height);
+        drawCharacter();
         renderer.end();
     }
 
@@ -200,6 +207,7 @@ public class GraphicManager {
      * Method to handle the lights : move the light Camera and set the character light to its position then render all the lights
      */
     private void handleLights(float delta) {
+        this.timePassed += delta;
         /** AMBIENT LIGHT LERP **/
         if (this.timePassed > AMBIENT_CHANGE_DELAY) {
             this.timePassed = 0;
@@ -208,10 +216,10 @@ public class GraphicManager {
         ambientLight.lerp(ambientTarget, delta/AMBIENT_CHANGE_DELAY);
         this.rayHandler.setAmbientLight(ambientLight);
 
-        if (GameScreen.isRunning())
-            handleCamera(lightCamera, LevelManager.getCurrentLevel().map.getWidth(), LevelManager.getCurrentLevel().map.getHeight(), GameScreen.character.getPosition());
+        if (GameScreen.isPaused())
+            Camera.handleMovingCamera(GameScreen.camera, lightCamera, LevelManager.getCurrentLevel().map.getWidth(), LevelManager.getCurrentLevel().map.getHeight());
         else
-            handleMovingCamera(GameScreen.camera, lightCamera, LevelManager.getCurrentLevel().map.getWidth(), LevelManager.getCurrentLevel().map.getHeight());
+            Camera.handleCamera(lightCamera, LevelManager.getCurrentLevel().map.getWidth(), LevelManager.getCurrentLevel().map.getHeight(), GameScreen.character.getPosition());
 
         this.rayHandler.setCombinedMatrix(lightCamera.combined);
         // Make the light follow the Character
@@ -222,11 +230,11 @@ public class GraphicManager {
     /**
      * Private method to render all the ColorPlatforms
      */
-    private void drawColorPlatforms() {
+    private void drawColorPlatforms(float delta) {
         Color color = batch.getColor();
 
         for (ElementColor elementColor : ElementColor.values())
-            drawColorPlatforms(elementColor);
+            drawColorPlatforms(elementColor, delta);
 
         batch.setColor(color);
     }
@@ -235,11 +243,11 @@ public class GraphicManager {
      * Method to draw all ColorPlatforms of a certain color whith testing before if the level contains ColorPlatforms of this color
      * @param elementColor the ElementColor of the ColorPlatforms to render
      */
-    private void drawColorPlatforms(ElementColor elementColor) {
+    private void drawColorPlatforms(ElementColor elementColor, float delta) {
         if (this.colorPlatforms.containsKey(elementColor)) {
             Color color = elementColor.getColor();
             batch.setColor(color.r, color.g, color.b, OPACITY);
-            drawColorPlatforms(this.colorPlatforms.get(elementColor));
+            drawColorPlatforms(this.colorPlatforms.get(elementColor), delta);
         }
     }
 
@@ -247,11 +255,23 @@ public class GraphicManager {
      * Method to draw all the ColorPlatforms specified
      * @param colorPlatforms all the ColorPlatforms to draw
      */
-    private void drawColorPlatforms(Array<ColorPlatform> colorPlatforms) {
+    private void drawColorPlatforms(Array<ColorPlatform> colorPlatforms, float delta) {
         for (ColorPlatform platform : colorPlatforms) {
             // Set active of inactive the PointLights
-            for (PointLight light : this.colorLights.get(platform))
-                light.setActive(platform.isActivated());
+            for (PointLight light : this.colorLights.get(platform)) {
+                if (platform.isActivated() && light.getDistance() < COLOR_LIGHT_WIDTH) {
+                    float width = light.getDistance() + (COLOR_LIGHT_WIDTH )/(COLOR_LIGHT_ACTIVATION_DELAY/delta);
+                    if (width > COLOR_LIGHT_WIDTH)
+                        width = COLOR_LIGHT_WIDTH;
+                    light.setDistance(width);
+
+                } else if (!platform.isActivated() && light.getDistance() > 0) {
+                    float width = light.getDistance() - (COLOR_LIGHT_WIDTH)/(COLOR_LIGHT_DEACTIVATION_DELAY/delta);
+                    if (width < 0)
+                        width = 0;
+                    light.setDistance(width);
+                }
+            }
 
             Rectangle bounds = platform.getBounds();
             batch.draw(colorPlatformTexture, bounds.x, bounds.y, bounds.width, bounds.height);
@@ -306,7 +326,7 @@ public class GraphicManager {
     private void drawMovingPlatformsPath() {
         if (!this.elements.containsKey(MovingPlatform.class))
             return;
-        renderer.setColor(Color.WHITE);
+        renderer.setColor(Color.GRAY);
         for (MovingPlatform platform : (Array<MovingPlatform>)this.elements.get(MovingPlatform.class)) {
             Rectangle bounds      = platform.getBounds();
             Array<Vector2> points = platform.getPoints();
@@ -395,7 +415,12 @@ public class GraphicManager {
             return;
         Texture texture = Assets.getTexture(Exit.class);
         for (Exit exit : (Array<Exit>)this.elements.get(Exit.class)) {
-            this.exitLights.get(exit).setActive(GameScreen.isExitReached());
+            if (GameScreen.isExitReached()) {
+                float coef = (Gdx.graphics.getDeltaTime() / GameScreen.WIN_DELAY);
+                batch.setColor(exitColor.lerp(Color.CYAN.r, Color.CYAN.g, Color.CYAN.b, 1f, coef));
+                this.exitLights.get(exit).setDistance(this.exitLights.get(exit).getDistance() + coef * EXIT_LIGHT_WIDTH);
+            } else if (this.exitLights.get(exit).getDistance() != EXIT_LIGHT_MIN)
+                this.exitLights.get(exit).setDistance(EXIT_LIGHT_MIN);
             Rectangle bounds = exit.getBounds();
             batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
         }
@@ -481,6 +506,23 @@ public class GraphicManager {
     }
 
     /**
+     * Method to draw the character
+     */
+    private void drawCharacter() {
+        if (!GameScreen.isPaused() && !GameScreen.isRunning()) {
+            float coef = Gdx.graphics.getDeltaTime()/GameScreen.DEATH_DELAY;
+            characterColor.lerp(Color.GRAY, coef);
+            this.characterLight.setDistance(this.characterLight.getDistance() - coef * (CHARACTER_LIGHT_WIDTH - 2f));
+        } else {
+            characterColor.set(Color.WHITE);
+            this.characterLight.setDistance(CHARACTER_LIGHT_WIDTH);
+        }
+        renderer.setColor(characterColor);
+        Rectangle bounds = GameScreen.character.getBounds();
+        renderer.rect(bounds.x, bounds.y, bounds.width, bounds.height);
+    }
+
+    /**
      * Method to add a ColorPlatform to draw
      * @param color the ElementColor of the ColorPlatform
      * @param platform the ColorPlatform to add
@@ -493,13 +535,10 @@ public class GraphicManager {
         Array<PointLight> lights = new Array<>();
         Rectangle bounds = platform.getWorldBounds();
 
-        for (int i = 0 ; i < bounds.height ; i++) {
-            for (int j = 0 ; j < bounds.width ; j++) {
-                PointLight light = new PointLight(this.rayHandler, 5, platform.getElementColor().getColor(), COLOR_LIGHT_WIDTH, bounds.x + 0.5f + j, bounds.y + 0.5f + i);
-                light.setActive(platform.isActivated());
-                lights.add(light);
-            }
-        }
+        for (int i = 0 ; i < bounds.height ; i++)
+            for (int j = 0 ; j < bounds.width ; j++)
+                lights.add(new PointLight(this.rayHandler, 5, platform.getElementColor().getColor(), platform.isActivated() ? COLOR_LIGHT_WIDTH : 0, bounds.x + 0.5f + j, bounds.y + 0.5f + i));
+
         this.colorLights.put(platform, lights);
     }
 
@@ -557,7 +596,7 @@ public class GraphicManager {
         ((Array<T>) this.elements.get(type)).add(element);
         if (type == Exit.class) {
             Vector2 position = ((BaseElement)element).getPosition();
-            this.exitLights.put(((Exit)element), new PointLight(this.rayHandler, 5, Color.CYAN, 10, position.x, position.y));
+            this.exitLights.put(((Exit)element), new PointLight(this.rayHandler, 5, Color.CYAN, EXIT_LIGHT_MIN, position.x, position.y));
         } else if (type == Teleporter.class) {
             Teleporter teleporter = (Teleporter)element;
             drawLightEllipse(teleporter.getWorldBounds(), Color.CYAN);
@@ -592,70 +631,5 @@ public class GraphicManager {
         batch.dispose();
         renderer.dispose();
         background.dispose();
-    }
-
-    /**
-     * Method to handle the camera in order to make it follow the Character position
-     * @param camera the OrthographicCamera to handle
-     * @param levelWidth the width of the level
-     * @param levelHeight the height of the level
-     * @param position the position of the Character
-     */
-    public static void handleCamera(OrthographicCamera camera, float levelWidth, float levelHeight, Vector2 position) {
-        camera.position.x = position.x;
-        camera.position.y = (camera.viewportHeight < levelHeight) ? position.y + camera.viewportHeight/4f : camera.viewportHeight/4f;
-        stabilizeCamera(camera, levelWidth);
-        if (camera.position.y > levelHeight - camera.viewportHeight / 2f && camera.viewportHeight < levelHeight)
-            camera.position.y = levelHeight - camera.viewportHeight / 2f;
-        camera.update();
-    }
-
-    /**
-     * Public static method to handle the Camera when it should move
-     * @param referenceCamera the referenceCamera to take as a reference for its viewport
-     * @param camera the OrthographicCamera which should move
-     * @param levelWidth the width of the level
-     * @param levelHeight the height of the level
-     */
-    public static void handleMovingCamera(OrthographicCamera referenceCamera, OrthographicCamera camera, float levelWidth, float levelHeight) {
-        moveCamera(referenceCamera, camera, (referenceCamera == camera) ? MOVING_AMOUNT : 1.0f * MOVING_AMOUNT/BaseElement.WORLD_TO_SCREEN);
-        stabilizeCamera(camera, levelWidth);
-        if (camera.position.y > levelHeight - camera.viewportHeight / 2f)
-            camera.position.y = (camera.viewportHeight > levelHeight) ? camera.viewportHeight/2 : levelHeight - camera.viewportHeight / 2f;
-        camera.update();
-    }
-
-    /**
-     * Private static method to stabilize the OrthographicCamera according to its viewportWidth and the width of the level
-     * @param camera the OrthographicCamera to stabilize
-     * @param levelWidth the width of the level
-     */
-    private static void stabilizeCamera(OrthographicCamera camera, float levelWidth) {
-        if (camera.position.x < camera.viewportWidth / 2f)
-            camera.position.x = camera.viewportWidth / 2f;
-
-        if (camera.position.y < camera.viewportHeight / 2f)
-            camera.position.y = camera.viewportHeight / 2f;
-
-        if (camera.position.x > levelWidth - camera.viewportWidth / 2f)
-            camera.position.x = levelWidth - camera.viewportWidth / 2f;
-    }
-
-    /**
-     * Private static method to move the Camera according to the mouse Position and the reference Camera
-     * @param referenceCamera the OrthographicCamera to take as a view reference
-     * @param movingCamera the OrthographicCamera which should change its position
-     * @param movingAmount the moving amount the movingCamea should move
-     */
-    private static void moveCamera(OrthographicCamera referenceCamera, OrthographicCamera movingCamera, float movingAmount) {
-        if (Gdx.input.getX() > (MOVING_GAP - 1) * referenceCamera.viewportWidth/MOVING_GAP) // going to the right
-            movingCamera.position.x += movingAmount;
-        else if (Gdx.input.getX() < referenceCamera.viewportWidth/MOVING_GAP) // going to the left
-            movingCamera.position.x -= movingAmount;
-
-        if (Gdx.input.getY() > (MOVING_GAP - 1) * referenceCamera.viewportHeight/MOVING_GAP) // going to the bottom
-            movingCamera.position.y -= movingAmount;
-        else if (Gdx.input.getY() < referenceCamera.viewportHeight/MOVING_GAP) // going to the top
-            movingCamera.position.y += movingAmount;
     }
 }

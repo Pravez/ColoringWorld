@@ -9,7 +9,8 @@ import com.color.game.screens.GameScreen;
 
 public class FallingPlatform extends BaseDynamicPlatform {
 
-    private static final int FALLING_GAP = 200;
+    private static final int FALLING_X_GAP = 200;
+    private static final int FALLING_Y_GAP = 700;
 
     boolean fall        = false;
     boolean falling     = false;
@@ -62,8 +63,20 @@ public class FallingPlatform extends BaseDynamicPlatform {
     public void act(float delta) {
         super.act(delta);
 
-        if (Math.abs(GameScreen.character.getCenter().x - this.getCenter().x) < FALLING_GAP && this.fall && !this.falling)
+        if (isCharacterNearXAxis() && isCharacterNearYAxis() && canFall())
             fall();
+    }
+
+    private boolean canFall() {
+        return this.fall && !this.falling;
+    }
+
+    private boolean isCharacterNearXAxis() {
+        return Math.abs(GameScreen.character.getCenter().x - this.getCenter().x) < FALLING_X_GAP;
+    }
+
+    private boolean isCharacterNearYAxis() {
+        return Math.abs(GameScreen.character.getCenter().y - this.getCenter().y) < FALLING_Y_GAP;
     }
 
     @Override

@@ -34,9 +34,9 @@ public enum ElementColor {
             case PURPLE:
                 return Color.PURPLE;
             case GREEN:
-                return Color.GREEN;
+                return new Color(9/255f, 127/255f, 10/255f, 1);
             case ORANGE:
-                return Color.ORANGE;
+                return new Color(1, 83/255f, 13/255f, 1);
             case WHITE:
                 return Color.WHITE;
         }

@@ -27,7 +27,7 @@ public class TiledEnemies extends TiledObjects {
                 ElementColor color = object.getProperties().get("color") != null ? ElementColor.parseColor((String) object.getProperties().get("color")) : null;
                 boolean canFall = object.getProperties().get("falling") != null && Boolean.parseBoolean((String) object.getProperties().get("falling"));
 
-                this.level.addActor(new MovingEnemy(new Vector2(convert(rect.x), convert(rect.y)), convert(rect.width), convert(rect.height), level, canFall, color));
+                this.level.addActor(new MovingEnemy(new Vector2(convert(rect.x), convert(rect.y)), convert(rect.width), level, canFall, color));
             }
         }
     }

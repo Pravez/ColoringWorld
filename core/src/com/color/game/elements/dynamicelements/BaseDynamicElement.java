@@ -40,6 +40,14 @@ public abstract class BaseDynamicElement extends BaseElement {
         this.contacts = new Array<>();
     }
 
+    protected BaseDynamicElement(Vector2 position, float radius, World world, short category, short mask){
+        super();
+        physicComponent = new DynamicPhysicComponent(this);
+        physicComponent.configureCircleBody(position, radius, world, category, mask);
+        this.commands = new Array<>();
+        this.contacts = new Array<>();
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);

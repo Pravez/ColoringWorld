@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.assets.Assets;
 import com.color.game.elements.BaseElement;
@@ -21,13 +20,19 @@ import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.dynamicplatforms.MovingPlatform;
 import com.color.game.elements.staticelements.Exit;
 import com.color.game.elements.staticelements.Lever;
-import com.color.game.elements.staticelements.platforms.*;
-import com.color.game.elements.staticelements.sensors.*;
+import com.color.game.elements.staticelements.platforms.ColorPlatform;
+import com.color.game.elements.staticelements.platforms.DeadlyPlatform;
+import com.color.game.elements.staticelements.platforms.ElementColor;
+import com.color.game.elements.staticelements.sensors.Notice;
+import com.color.game.elements.staticelements.sensors.Teleporter;
+import com.color.game.elements.staticelements.sensors.WindBlower;
+import com.color.game.elements.staticelements.sensors.WindDirection;
 import com.color.game.levels.Level;
 import com.color.game.levels.LevelManager;
 import com.color.game.screens.GameScreen;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import static com.color.game.elements.BaseElement.WORLD_TO_SCREEN;
 
@@ -60,6 +65,7 @@ public class GraphicManager {
     private static final int TEXT_WIDTH = 260;//200;
     private static final int TEXT_GAP = 20;
     private static final float NOTICE_DELAY = 0.15f;
+    private static final float BLOWER_LIGHT_INTENSITY = 2.0f;
 
     /**
      * HashMap of the Level elements to render
@@ -384,6 +390,7 @@ public class GraphicManager {
      * Private method to draw the WindBlowers
      */
     private void drawWindBlowers() {
+        updateBlowers();
         drawWindBlowers(this.windBlowers.get(WindDirection.NORTH));
         drawWindBlowers(this.windBlowers.get(WindDirection.EAST));
         drawWindBlowers(this.windBlowers.get(WindDirection.SOUTH));
@@ -446,20 +453,25 @@ public class GraphicManager {
         if (windBlowers != null) {
             for (WindBlower blower : windBlowers) {
                 for (PointLight light : this.windLights.get(blower)) {
-                    float y = light.getY() + 1;
-                    if (y > blower.getWorldBounds().height/2 + blower.getPosition().y)
-                        y = blower.getPosition().y - blower.getWorldBounds().height/2;
+                    //Defining datas
+                    float y = light.getY() + 0.5f;
+                    float ymax = blower.getWorldBounds().height/2 + blower.getPosition().y;
+                    float distance = (y*100)/ymax;
+
+                    //Modifying position
                     light.setPosition(light.getX(), y);
+                    light.setPosition(light.getX()+((new Random().nextInt(21) - 10) / 18.0f), light.getY());
+                    if (y > ymax) {
+                        light.setActive(false);
+                        this.windLights.get(blower).removeValue(light, true);
+                    }else if (distance > 50){
+                        //Calculating the percentage of distance between 0.5 and 1.0
+                        // distance = 0.75 will give 0.5
+                        float value = (distance*50)/100;
+                        //Then calculate the percentage according to the blower light intensity with the value
+                        light.setDistance(((100-value)*BLOWER_LIGHT_INTENSITY)/100);
+                    }
                 }
-                /*boolean transparent;
-                Rectangle bounds = blower.getBounds();
-                windSprite.setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
-                transparent = blower instanceof WindBlowerEnabled && !((WindBlowerEnabled)blower).isActivated();
-                if (transparent)
-                    windSprite.setAlpha(0.5f);
-                windSprite.draw(batch);
-                if (transparent)
-                    windSprite.setAlpha(1);*/
             }
         }
         windSprite.rotate90(true);
@@ -563,12 +575,31 @@ public class GraphicManager {
         } else if (direction == WindDirection.WEST) {
             drawLightEllipse(new Rectangle(bounds.x + bounds.width - size, bounds.y, size, bounds.height), Color.WHITE);
         }
-        Array<PointLight> lights = new Array<>();
-        for (int i = 0 ; i < 10 ; i++) {
-            lights.add(new PointLight(this.rayHandler, 5, Color.WHITE, 1.6f, bounds.x + i * bounds.width / 10, bounds.y));
-            lights.add(new PointLight(this.rayHandler, 5, Color.WHITE, 1.6f, bounds.x + i * bounds.width / 10, bounds.y + 4));
+
+        this.windLights.put(blower, new Array<PointLight>());
+
+    }
+
+    /**
+     * Method to update wind particles of every blower in the level
+     */
+    public void updateBlowers(){
+        for(WindDirection direction : windBlowers.keySet()){
+            for(WindBlower blower : windBlowers.get(direction)){
+                generateWind(blower.getWorldBounds(), blower);
+            }
         }
-        this.windLights.put(blower, lights);
+    }
+
+    /**
+     * Method to generate a point of wind from a given blower
+     * @param bounds bounds of the blower
+     * @param blower the blower
+     */
+    private void generateWind(Rectangle bounds, WindBlower blower){
+        Random r = new Random();
+
+        this.windLights.get(blower).add(new PointLight(this.rayHandler, 4, Color.WHITE, BLOWER_LIGHT_INTENSITY, bounds.x + (2.0f +  r.nextInt(6)) * bounds.width / 10, bounds.y));
     }
 
     /**

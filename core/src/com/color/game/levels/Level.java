@@ -1,13 +1,10 @@
 package com.color.game.levels;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.color.game.assets.Assets;
 import com.color.game.elements.BaseColorElement;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.enemies.Enemy;

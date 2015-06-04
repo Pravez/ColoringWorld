@@ -1,6 +1,5 @@
 package com.color.game.levels.mapcreator.elements.statics;
 
-
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.elements.staticelements.platforms.ColorPlatform;
@@ -17,7 +16,7 @@ public class TiledColorPlatforms extends TiledPlatforms{
     public TiledColorPlatforms(Level level, TiledMapTileLayer layer, String colorName) {
         super(level, layer);
 
-        this.color = ElementColor.parseColor(colorName);
+        this.color     = ElementColor.parseColor(colorName);
         this.activated = !colorName.contains("deactivated");
     }
 
@@ -39,10 +38,6 @@ public class TiledColorPlatforms extends TiledPlatforms{
 
     @Override
     public void inverseOpacity(){
-        if(this.layer.getOpacity() == COLOR_LAYER_OFF_OPACITY){
-            this.layer.setOpacity(COLOR_LAYER_OPACITY);
-        }else{
-            this.layer.setOpacity(COLOR_LAYER_OFF_OPACITY);
-        }
+        this.layer.setOpacity(this.layer.getOpacity() == COLOR_LAYER_OFF_OPACITY ? COLOR_LAYER_OPACITY : COLOR_LAYER_OFF_OPACITY);
     }
 }

@@ -16,13 +16,10 @@ public class TiledPlatforms extends TiledStaticElements {
         super(level, layer);
         this.finalElements = new HashMap<>();
         layerCells = new TiledCell[layer.getHeight()+1][layer.getWidth()+1];
-        System.out.println(layer.getHeight() + " " + layer.getWidth());
     }
 
     /**
-     * Complicated way to load cells, it can be simplified.
-     * The idea is to store one cell, and store every other cell that is near on the same axis (y or x) as
-     * a vector2, in a map.
+     * Stores the cells in an 2D array
      * @return The HashMap created
      */
     @Override
@@ -34,6 +31,9 @@ public class TiledPlatforms extends TiledStaticElements {
         }
     }
 
+    /**
+     * Inspects the layer and calls methods to create platforms if it is possible
+     */
     public void seeLayer(){
         for(int row = 0;row<layerCells.length;row++){
             for(int col = 0;col<layerCells[row].length;col++){
@@ -48,6 +48,12 @@ public class TiledPlatforms extends TiledStaticElements {
         }
     }
 
+    /**
+     * Fill the platforms in width, recursively, if it is possible
+     * @param row
+     * @param col
+     * @return
+     */
     public int fillLayerCols(int row, int col){
         if(layerCells[row][col+1]!=null && !layerCells[row][col+1].isReferenced()){
             layerCells[row][col].referenced = true;
@@ -60,6 +66,13 @@ public class TiledPlatforms extends TiledStaticElements {
         }
     }
 
+    /**
+     * Fill the platform in rows, recursively, if it is possible
+     * @param row
+     * @param col
+     * @param width width of the platform
+     * @return
+     */
     public int fillLayerRows(int row, int col, int width) {
 
         for(int l = col;l<col+width;l++){
@@ -78,8 +91,6 @@ public class TiledPlatforms extends TiledStaticElements {
 
         return 0;
     }
-
-
 
     /**
      * Here we allocate cells, we sort them and allocate them to be ready for being treated.

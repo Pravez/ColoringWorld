@@ -24,7 +24,7 @@ import java.util.Iterator;
  */
 public abstract class BaseDynamicElement extends BaseElement {
 
-    public static final Vector2 DYNAMIC_ELEMENT_BASE_JUMP = new Vector2(0, 285f);
+    public static final Vector2 DYNAMIC_ELEMENT_BASE_JUMP = new Vector2(0, 120f);//285f);
 
     State movingState;
     private State aloftState;
@@ -36,6 +36,14 @@ public abstract class BaseDynamicElement extends BaseElement {
         super();
         physicComponent = new DynamicPhysicComponent(this);
         physicComponent.configureBody(position, width, height, world, category, mask);
+        this.commands = new Array<>();
+        this.contacts = new Array<>();
+    }
+
+    protected BaseDynamicElement(Vector2 position, float radius, World world, short category, short mask){
+        super();
+        physicComponent = new DynamicPhysicComponent(this);
+        physicComponent.configureCircleBody(position, radius, world, category, mask);
         this.commands = new Array<>();
         this.contacts = new Array<>();
     }

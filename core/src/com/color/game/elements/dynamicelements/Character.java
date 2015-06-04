@@ -1,14 +1,11 @@
 package com.color.game.elements.dynamicelements;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.color.game.assets.Assets;
 import com.color.game.command.elements.MovementDirection;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
@@ -20,6 +17,7 @@ import com.color.game.elements.staticelements.sensors.ColoredMagnet;
 import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.UserData;
 import com.color.game.elements.userData.UserDataType;
+import com.color.game.levels.Level;
 import com.color.game.levels.LevelManager;
 import com.color.game.screens.GameScreen;
 
@@ -29,11 +27,10 @@ import com.color.game.screens.GameScreen;
  */
 public class Character extends BaseDynamicElement {
 
-    public static final float CHARACTER_RUNNING_VELOCITY = 35f;
-    public static final float CHARACTER_HEIGHT = 1.9f;
-    public static final float CHARACTER_SQUAT_HEIGHT = 0.9f;
-    public static final int CHARACTER_WIDTH = 1;
-
+    public static final float CHARACTER_RUNNING_VELOCITY = 25f;//35f;
+    public static final float CHARACTER_HEIGHT = 0.95f;//1.9f;
+    public static final float CHARACTER_SQUAT_HEIGHT = 0.95f;
+    public static final float CHARACTER_WIDTH = 0.95f;
 
     final private GameScreen gameScreen;
     private Vector2 currentJumpVelocity;
@@ -49,23 +46,8 @@ public class Character extends BaseDynamicElement {
 
         this.setMovingState(new StandingState());
         this.setAloftState(new LandedState());
-    }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-        batch.setProjectionMatrix(GameScreen.camera.combined);
-        batch.draw(Assets.manager.get("sprites/hero.png", Texture.class), getBounds().x, getBounds().y, getBounds().width, getBounds().height);
-
-        /*batch.end();
-
-        Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
-        shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.YELLOW);
-        shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
-        shapeRenderer.end();
-        batch.begin();*/
+        //this.physicComponent.adjustLinearDamping(0);
     }
 
     @Override
@@ -114,7 +96,7 @@ public class Character extends BaseDynamicElement {
 
     @Override
     public void squat() {
-        physicComponent.squat();
+        //physicComponent.squat();
     }
 
     /**
@@ -136,18 +118,17 @@ public class Character extends BaseDynamicElement {
 
     @Override
     public void stopSquat(){
-        physicComponent.stopSquat();
+        //physicComponent.stopSquat();
     }
 
     /**
      * Method to change to "teleport" the character to another level. Instead of killing the instance of the class, we
      * are just moving it elsewhere, in another level.
-     * @param world The world where the character will be replaced
-     * @param position The position in the new world
+     * @param level The level where the character will be replaced
      */
-    public void changeWorld(World world, Vector2 position) {
+    public void changeLevel(Level level) {
         this.removeContacts();
-        this.physicComponent.changeWorld(world, position);
+        this.physicComponent.changeWorld(level.getWorld(), level.characterPos);
     }
 
     public Vector2 getSquatVector2(){
@@ -160,9 +141,9 @@ public class Character extends BaseDynamicElement {
 
     @Override
     public Vector2 getJumpVelocity() {
-        if(currentJumpVelocity != null) {
+        if (currentJumpVelocity != null) {
             return currentJumpVelocity;
-        }else{
+        } else {
             return BaseDynamicElement.DYNAMIC_ELEMENT_BASE_JUMP;
         }
     }

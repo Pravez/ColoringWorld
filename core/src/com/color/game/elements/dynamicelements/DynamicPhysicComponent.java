@@ -10,10 +10,10 @@ import com.color.game.elements.PhysicComponent;
  */
 public class DynamicPhysicComponent extends PhysicComponent{
 
-    private static final float DYNAMIC_ELEMENT_DENSITY = 1f;
+    private static final float DYNAMIC_ELEMENT_DENSITY = 1.15f;
     private static final float DYNAMIC_ELEMENT_SQUAT_DENSITY = 4f;
 
-    private static final float DYNAMIC_ELEMENT_BASE_VELOCITY = 28f;
+    private static final float DYNAMIC_ELEMENT_BASE_VELOCITY = 20f;
 
     private Vector2 currentMovingImpulse;
     private Vector2 currentJumpingImpulse;
@@ -37,7 +37,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
         //To keep from rotations
         this.bodyDef.fixedRotation = true;
         this.bodyDef.position.set(new Vector2(position.x, position.y));
-        this.bodyDef.linearDamping = 2f;
+        this.bodyDef.linearDamping = 2.4f;
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width, height);
@@ -46,7 +46,6 @@ public class DynamicPhysicComponent extends PhysicComponent{
         this.fixtureDef = new FixtureDef();
         fixtureDef.density = DYNAMIC_ELEMENT_DENSITY;
         fixtureDef.shape = shape;
-        //fixtureDef.filter.groupIndex = group;
         fixtureDef.filter.maskBits = mask;
         fixtureDef.filter.categoryBits = category;
         this.body.createFixture(fixtureDef);
@@ -76,7 +75,6 @@ public class DynamicPhysicComponent extends PhysicComponent{
         this.bodyDef.position.set(new Vector2(position.x + radius, position.y + radius));
         this.bodyDef.linearDamping = 2.0f;
 
-
         CircleShape shape = new CircleShape();
         shape.setRadius(radius);
 
@@ -86,7 +84,6 @@ public class DynamicPhysicComponent extends PhysicComponent{
         fixtureDef.shape = shape;
         fixtureDef.filter.maskBits = mask;
         fixtureDef.filter.categoryBits = category;
-        //fixtureDef.filter.groupIndex = group;
         this.body.createFixture(fixtureDef);
 
         this.currentMovingImpulse = new Vector2(0f,0f);
@@ -121,7 +118,7 @@ public class DynamicPhysicComponent extends PhysicComponent{
 
     @Override
     public void setMove(int direction) {
-        this.currentMovingImpulse.x = (DYNAMIC_ELEMENT_BASE_VELOCITY*direction);
+        this.currentMovingImpulse.x = (DYNAMIC_ELEMENT_BASE_VELOCITY * direction);
     }
 
     /**

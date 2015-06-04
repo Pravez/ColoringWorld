@@ -1,14 +1,10 @@
 package com.color.game.elements.staticelements;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-import com.color.game.assets.Assets;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.userData.StaticElementUserData;
 import com.color.game.elements.userData.UserDataType;
-import com.color.game.levels.Map;
-import com.color.game.screens.GameScreen;
+import com.color.game.levels.Level;
 
 /**
  * Exit is the actor (extending {@link com.color.game.elements.staticelements.BaseStaticElement}) which is supposed to
@@ -19,21 +15,15 @@ public class Exit extends BaseStaticElement {
 
     final private int levelIndex;
 
-    public Exit(Vector2 position, float width, float height, Map map, int levelIndex) {
-        super(position, width, height, map, PhysicComponent.CATEGORY_SENSOR, PhysicComponent.MASK_SENSOR);
+    public Exit(Vector2 position, float width, float height, Level level, int levelIndex) {
+        super(position, width, height, level.map, PhysicComponent.CATEGORY_SENSOR, PhysicComponent.MASK_SENSOR);
         this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.EXIT));
         this.levelIndex = levelIndex;
 
+        level.graphicManager.addElement(Exit.class, this);
     }
 
     public int getLevelIndex() {
         return this.levelIndex;
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-        batch.setProjectionMatrix(GameScreen.camera.combined);
-        batch.draw(Assets.manager.get("sprites/door.png", Texture.class), this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
     }
 }

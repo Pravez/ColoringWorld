@@ -21,6 +21,7 @@ public class KeyMapper {
         this.keys.put(KeyEffect.RED, new Key("Red", Input.Keys.U));
         this.keys.put(KeyEffect.BLUE, new Key("Blue", Input.Keys.O));
         this.keys.put(KeyEffect.YELLOW, new Key("Yellow", Input.Keys.I));
+        this.keys.put(KeyEffect.INTERACT, new Key("Interact", Input.Keys.SHIFT_LEFT));
         this.keys.put(KeyEffect.RUN, new Key("Run", Input.Keys.SHIFT_LEFT));
     }
 

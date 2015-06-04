@@ -26,6 +26,9 @@ public class UIStage extends Stage {
     final public Gauges colorGauges;
 
     final private TextButton playButton;
+    final private TextButton restartButton;
+    final private TextButton menuButton;
+
     private static final int BUTTON_GAP = 25;
     private static final double TIME_PRECISION = 10.0;
 
@@ -52,7 +55,7 @@ public class UIStage extends Stage {
         this.playButton.setPosition(Gdx.graphics.getWidth() - this.playButton.getWidth() - BUTTON_GAP,
                 Gdx.graphics.getHeight() - this.playButton.getHeight() - BUTTON_GAP);
 
-        final TextButton restartButton = new TextButton("Restart", Assets.menuSkin);
+        this.restartButton = new TextButton("Restart", Assets.menuSkin);
         restartButton.setPosition(Gdx.graphics.getWidth() - restartButton.getWidth() - BUTTON_GAP,
                 this.playButton.getY() - restartButton.getHeight() - BUTTON_GAP/2);
 
@@ -63,7 +66,7 @@ public class UIStage extends Stage {
             }
         });
 
-        final TextButton menuButton = new TextButton("Menu", Assets.menuSkin);
+        this.menuButton = new TextButton("Menu", Assets.menuSkin);
         menuButton.setPosition(Gdx.graphics.getWidth() - menuButton.getWidth() - BUTTON_GAP,
                 restartButton.getY() - menuButton.getHeight() - BUTTON_GAP/2);
 
@@ -77,16 +80,12 @@ public class UIStage extends Stage {
         this.playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (gameScreen.isPaused()) {
-                    gameScreen.resumeGame();
-                    updateButton("Pause");
-                    restartButton.remove();
-                    menuButton.remove();
-                } else {
+                if (GameScreen.isRunning()) {
                     gameScreen.pauseGame();
-                    updateButton("Resume");
-                    addButton(restartButton);
-                    addButton(menuButton);
+                    pause();
+                } else {
+                    gameScreen.resumeGame();
+                    resume();
                 }
             }
         });
@@ -99,6 +98,12 @@ public class UIStage extends Stage {
         this.addActor(this.playButton);
     }
 
+    public void updateKeys() {
+        this.colorGauges.redGauge.update();
+        this.colorGauges.blueGauge.update();
+        this.colorGauges.yellowGauge.update();
+    }
+
     private void addButton(Button button) {
         this.addActor(button);
     }
@@ -108,6 +113,18 @@ public class UIStage extends Stage {
         this.playButton.pack();
         this.playButton.setPosition(Gdx.graphics.getWidth() - this.playButton.getWidth() - BUTTON_GAP,
                 Gdx.graphics.getHeight() - this.playButton.getHeight() - BUTTON_GAP);
+    }
+
+    public void pause() {
+        updateButton("Resume");
+        addButton(restartButton);
+        addButton(menuButton);
+    }
+
+    public void resume() {
+        updateButton("Pause");
+        restartButton.remove();
+        menuButton.remove();
     }
 
     public void changeLevelNumber() {

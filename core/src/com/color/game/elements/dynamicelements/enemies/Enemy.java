@@ -1,24 +1,18 @@
 package com.color.game.elements.dynamicelements.enemies;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.color.game.assets.Assets;
 import com.color.game.command.elements.MovementDirection;
 import com.color.game.elements.BaseColorElement;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.BaseDynamicElement;
+import com.color.game.elements.staticelements.platforms.DeadlyPlatform;
 import com.color.game.elements.staticelements.platforms.ElementColor;
 import com.color.game.elements.userData.DynamicElementUserData;
 import com.color.game.elements.userData.UserDataType;
 import com.color.game.gui.ColorMixManager;
 import com.color.game.levels.Level;
-import com.color.game.screens.GameScreen;
 
 /**
  * Class waiting to be implemented in next releases.
@@ -30,39 +24,35 @@ public abstract class Enemy extends BaseDynamicElement implements BaseColorEleme
      */
     final private Vector2 initialPosition;
 
-    final private ShapeRenderer shapeRenderer;
-
-    protected Color color;
     protected ElementColor elementColor;
     private boolean colorActivation;
-
 
     /**
      * Enemy constructor
      * @param position the position of the enemy
-     * @param width the width of the enemy
-     * @param height the height of the enemy
+     * @param radius the radius of the enemy
      * @param level the level of the enemy
+     * @param elementColor the ElementColor of the Enemy
      */
-    Enemy(Vector2 position, float width, float height, Level level, ElementColor elementColor) {
-        super(position, width, height, level.getWorld(), PhysicComponent.CATEGORY_ENEMY, PhysicComponent.MASK_ENEMY);
+    Enemy(Vector2 position, float radius, Level level, ElementColor elementColor) {
+        super(position, radius, level.getWorld(), PhysicComponent.CATEGORY_ENEMY, PhysicComponent.MASK_ENEMY);
         level.addEnemy(this);
         this.initialPosition = position;
 
         level.addColorElement(this);
 
-        if(elementColor == null) {
-            this.color = new Color(ColorMixManager.randomizeRYBColor());
-            this.elementColor = ColorMixManager.getElementColorFromGDX(color);
-        }else{
+        if(elementColor == null)
+            this.elementColor = ColorMixManager.getElementColorFromGDX(new Color(ColorMixManager.randomizeRYBColor()));
+        else
             this.elementColor = elementColor;
-            this.color = new Color(ColorMixManager.getGDXColorFromElement(this.elementColor));
-        }
 
         this.colorActivation = false;
 
-        this.physicComponent.configureUserData(new DynamicElementUserData(this, width, height, UserDataType.ENEMY));
-        this.shapeRenderer = new ShapeRenderer();
+        this.physicComponent.configureUserData(new DynamicElementUserData(this, radius, radius, UserDataType.ENEMY));
+    }
+
+    public boolean isAlive() {
+        return this.physicComponent.getBody().isActive();
     }
 
     /**
@@ -76,50 +66,21 @@ public abstract class Enemy extends BaseDynamicElement implements BaseColorEleme
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-        Color color = batch.getColor();
-        batch.setColor(this.color);
-        batch.setProjectionMatrix(GameScreen.camera.combined);
-        batch.draw(Assets.manager.get("sprites/enemy.png", Texture.class), getBounds().x, getBounds().y, getBounds().width, getBounds().height);
-        batch.setColor(color);
-        /*batch.end();
-
-        Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
-        shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(color.r, color.g, color.b, this.colorActivation ? 0.5f : 1f);
-        shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.rect(this.getPhysicComponent().getBody().getPosition().x*WORLD_TO_SCREEN, this.getPhysicComponent().getBody().getPosition().y*WORLD_TO_SCREEN, 5,5);
-        shapeRenderer.end();
-        batch.begin();*/
-    }
-
-    @Override
     public void kill() {
         this.physicComponent.getBody().setActive(false);
     }
 
     @Override
-    public void startJump() {
-
-    }
+    public void startJump() { }
 
     @Override
-    public void endJump(){
-
-    }
+    public void endJump(){ }
 
     @Override
-    public void configureMove(MovementDirection direction){
-
-    }
+    public void configureMove(MovementDirection direction){ }
 
     @Override
-    public void squat() {
-
-    }
+    public void squat() { }
 
     @Override
     public boolean canStopSquat() {
@@ -127,15 +88,17 @@ public abstract class Enemy extends BaseDynamicElement implements BaseColorEleme
     }
 
     @Override
-    public void stopSquat() {
+    public void stopSquat() { }
 
+    public void act(BaseElement element) {
+        // Kill the enemy with a Deadly Platform
+        if (element instanceof DeadlyPlatform)
+            this.kill();
     }
-
-    public abstract void act(BaseElement element);
 
     @Override
     public boolean isActivated() {
-        return colorActivation;
+        return this.colorActivation;
     }
 
     @Override

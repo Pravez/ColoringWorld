@@ -65,6 +65,11 @@ public abstract class UserData {
         return userData != null && userData.getUserDataType() == UserDataType.CHARACTER;
     }
 
+    public static boolean isLever(Body body) {
+        UserData userData = (UserData) body.getUserData();
+        return userData != null && userData.getUserDataType() == UserDataType.LEVER;
+    }
+
     public static boolean isSensor(Body body) {
         UserData userData = (UserData) body.getUserData();
         return userData != null && (userData.getUserDataType() == UserDataType.SENSOR || userData.getUserDataType() == UserDataType.COLOREDMAGNET);

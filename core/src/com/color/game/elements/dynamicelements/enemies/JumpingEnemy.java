@@ -18,8 +18,8 @@ public class JumpingEnemy extends MovingEnemy{
 
     private final Array<Body> bodies;
 
-    public JumpingEnemy(Vector2 position, int width, int height, Level level, boolean canFall, ElementColor color) {
-        super(position, width, height, level, canFall, color);
+    public JumpingEnemy(Vector2 position, int radius, Level level, boolean canFall, ElementColor color) {
+        super(position, radius, level, canFall, color);
 
         Array<Body> tempbodies = new Array<>();
         bodies = new Array<>();

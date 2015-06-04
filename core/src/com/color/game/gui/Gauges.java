@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.color.game.gui.ColorGauge;
+import com.color.game.keys.KeyEffect;
 
 /**
  * Gauges, the class handling the different {@link ColorGauge} of the game, currently, there are three colors :
@@ -27,9 +28,9 @@ public class Gauges extends Actor {
         float width = (bounds.width - 6)/3;
         float gap = 2;
 
-        this.redGauge    = new ColorGauge(new Rectangle(bounds.x, bounds.y, width, bounds.height), Color.RED);
-        this.yellowGauge = new ColorGauge(new Rectangle(bounds.x + width + gap, bounds.y, width, bounds.height), Color.YELLOW);
-        this.blueGauge   = new ColorGauge(new Rectangle(bounds.x + width * 2 + gap * 2, bounds.y, width, bounds.height), Color.BLUE);
+        this.redGauge    = new ColorGauge(new Rectangle(bounds.x, bounds.y, width, bounds.height), Color.RED, KeyEffect.RED);
+        this.yellowGauge = new ColorGauge(new Rectangle(bounds.x + width + gap, bounds.y, width, bounds.height), Color.YELLOW, KeyEffect.YELLOW);
+        this.blueGauge   = new ColorGauge(new Rectangle(bounds.x + width * 2 + gap * 2, bounds.y, width, bounds.height), Color.BLUE, KeyEffect.BLUE);
     }
 
     /**

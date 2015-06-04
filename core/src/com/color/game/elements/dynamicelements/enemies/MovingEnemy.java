@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.states.LandedState;
 import com.color.game.elements.dynamicelements.states.RunningState;
-import com.color.game.elements.staticelements.platforms.DeadlyPlatform;
 import com.color.game.elements.staticelements.platforms.ElementColor;
 import com.color.game.elements.staticelements.sensors.ColoredMagnet;
 import com.color.game.elements.userData.UserData;
@@ -35,13 +34,12 @@ public class MovingEnemy extends Enemy {
     /**
      * Moving Enemy constructor
      * @param position the position of the enemy
-     * @param width the width of the enemy
-     * @param height the height of the enemy
+     * @param radius the radius of the enemy
      * @param level the level of the enemy
      * @param canFall if the enemy can fall from a platform or not
      */
-    public MovingEnemy(Vector2 position, float width, float height, Level level, boolean canFall, ElementColor color) {
-        super(position, width, height, level, color);
+    public MovingEnemy(Vector2 position, float radius, Level level, boolean canFall, ElementColor color) {
+        super(position, radius, level, color);
         this.physicComponent.getBody().setAwake(true);
         this.physicComponent.getBody().setActive(true);
         this.canFall = canFall;
@@ -51,6 +49,8 @@ public class MovingEnemy extends Enemy {
 
         this.setAloftState(new LandedState());
         this.setMovingState(new RunningState());
+
+        level.graphicManager.addEnemy(this.elementColor, this);
     }
 
     /**
@@ -66,12 +66,9 @@ public class MovingEnemy extends Enemy {
 
     @Override
     public void act(BaseElement element) {
+        super.act(element);
         if (!this.canFall && element.isPlatform())
             selectFloorElement(element);
-
-        // Kill the enemy with a Deadly Platform
-        if (element instanceof DeadlyPlatform)
-            this.kill();
     }
 
     /**
@@ -129,13 +126,6 @@ public class MovingEnemy extends Enemy {
             this.preventLeft = false;
             this.changeDirection = false;
             this.physicComponent.setMove(current_direction);
-        }
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        if (this.physicComponent.getBody().isActive()) {
-            super.draw(batch, parentAlpha);
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.color.game.levels.mapcreator.elements.statics;
 
-
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.color.game.levels.Level;
@@ -12,11 +11,10 @@ import java.util.HashMap;
 public abstract class TiledStaticElements extends TiledElements {
 
     protected HashMap<TiledCell, Vector2> finalElements;
-    protected TiledMapTileLayer layer;
+    protected TiledMapTileLayer           layer;
 
     public TiledStaticElements(Level level, TiledMapTileLayer layer){
         super(level, layer);
-
         this.layer = layer;
     }
 
@@ -52,11 +50,9 @@ public abstract class TiledStaticElements extends TiledElements {
      * @return true or false
      */
     protected boolean containsObject(HashMap<Vector2, TiledCell> cells, TiledCell tiledCell) {
-        for (Vector2 c : cells.keySet()) {
-            if (c.x == tiledCell.posX && c.y == tiledCell.posY) {
+        for (Vector2 c : cells.keySet())
+            if (c.x == tiledCell.posX && c.y == tiledCell.posY)
                 return true;
-            }
-        }
         return false;
     }
 }

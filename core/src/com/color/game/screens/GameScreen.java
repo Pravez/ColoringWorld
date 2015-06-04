@@ -6,17 +6,23 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.color.game.ColorGame;
 import com.color.game.command.colors.ColorCommand;
 import com.color.game.command.colors.ColorCommandManager;
 import com.color.game.command.elements.*;
+import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.Character;
 import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.staticelements.Exit;
+import com.color.game.elements.staticelements.Lever;
 import com.color.game.elements.staticelements.sensors.Sensor;
 import com.color.game.elements.userData.UserData;
+import com.color.game.graphics.Camera;
 import com.color.game.gui.ColorGauge;
 import com.color.game.gui.UIStage;
 import com.color.game.keys.KeyEffect;
@@ -28,8 +34,10 @@ import com.color.game.levels.LevelManager;
  */
 public class GameScreen extends BaseScreen implements InputProcessor, ContactListener {
 
+    public static float WIN_DELAY = 1.4f;
+    public static float DEATH_DELAY = 1.0f;
+
     public static OrthographicCamera camera;
-    private Box2DDebugRenderer renderer;
 
     final private Array<Runnable> runnables;
 
@@ -41,7 +49,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     /**
      * The User Interface Stage containing all the informations during the play
      */
-    private final UIStage uiStage;
+    public static UIStage uiStage;
 
     /**
      * The different ColorCommands
@@ -53,9 +61,20 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      */
     private int runningLevel;
 
-    private boolean run = true;
+    private static boolean run   = true;
+    private static boolean pause = false;
+
+    private static boolean killedWaiting = false;
+    private static boolean endedWaiting  = false;
+
+    private Timer timer;
 
     public boolean restart = false;
+
+    /**
+     * Current Lever
+     */
+    private Lever currentLever;
 
     /**
      * The constructor of the class GameScreen
@@ -70,15 +89,39 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         LevelManager.getCurrentLevel().addActor(character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
 
-        this.renderer =  new Box2DDebugRenderer();
+        this.timer = new Timer();
 
         this.runningLevel = LevelManager.getCurrentLevelNumber();
 
-        this.uiStage = new UIStage(this);
+        uiStage = new UIStage(this);
 
         this.colorCommandManager = new ColorCommandManager();
 
         this.runnables = new Array<>();
+    }
+
+    /**
+     * Method to know if the character as reached the Exit
+     * @return the result as a boolean
+     */
+    public static boolean isExitReached() {
+        return endedWaiting;
+    }
+
+    /**
+     * Method to know if the game is running or not
+     * @return the result as a boolean
+     */
+    public static boolean isRunning() {
+        return run;
+    }
+
+    /**
+     * Method to know if the game is in pause mode or not
+     * @return the result as a boolean
+     */
+    public static boolean isPaused() {
+        return pause;
     }
 
     /**
@@ -88,8 +131,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         respawn();
         character.remove();
         LevelManager.changeLevel(this.runningLevel);
-        this.uiStage.changeLevelNumber();
-        character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
+        uiStage.changeLevelNumber();
+        character.changeLevel(LevelManager.getCurrentLevel());
         LevelManager.getCurrentLevel().addActor(character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
         LevelManager.getCurrentLevel().restart();
@@ -101,7 +144,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     public void restart() {
         LevelManager.getCurrentLevel().addDeath();
         //this.uiStage.changeDeathNumber();
-        character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
+        character.changeLevel(LevelManager.getCurrentLevel());
         LevelManager.getCurrentLevel().restart();
         respawn();
         this.restart = false;
@@ -112,10 +155,10 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      */
     public void reset() {
         this.runningLevel = LevelManager.getCurrentLevelNumber();
-        this.uiStage.changeLevelNumber();
+        uiStage.changeLevelNumber();
         respawn();
         character.remove();
-        character.changeWorld(LevelManager.getCurrentLevel().getWorld(), LevelManager.getCurrentLevel().characterPos);
+        character.changeLevel(LevelManager.getCurrentLevel());
         LevelManager.getCurrentLevel().addActor(character);
         LevelManager.getCurrentLevel().getWorld().setContactListener(this);
     }
@@ -124,22 +167,16 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      * Method to pause the game
      */
     public void pauseGame() {
-        this.run = false;
+        run   = false;
+        pause = true;
     }
 
     /**
      * Method to resume the game
      */
     public void resumeGame() {
-        this.run = true;
-    }
-
-    /**
-     * Method to know if the game is paused or not
-     * @return the result as a boolean
-     */
-    public boolean isPaused() {
-        return !this.run;
+        run   = true;
+        pause = false;
     }
 
     /**
@@ -149,11 +186,13 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      *  - stop the graphic gauges
      */
     private void respawn() {
+        killedWaiting = false;
+        endedWaiting  = false;
         character.clearCommands();
 
         colorCommandManager.stopCommands();
 
-        this.uiStage.colorGauges.stopAll();
+        uiStage.colorGauges.stopAll();
         endCommands();
     }
 
@@ -183,12 +222,13 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     @Override
     public void show() {
         super.show();
-        Gdx.input.setInputProcessor(new InputMultiplexer(this.uiStage, this));
-        if (this.restart) {
+        Gdx.input.setInputProcessor(new InputMultiplexer(uiStage, this));
+        uiStage.resume();
+        if (this.restart)
             restart();
-        }
         if (this.runningLevel != LevelManager.getCurrentLevelNumber()) {
             reset();
+            resumeGame();
         }
     }
 
@@ -201,55 +241,65 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         super.render(delta);
         camera.update();
         Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
         handlePause();
 
         // If the game is in running mode
-        if (this.run) {
+        if (run) {
             runRunnables();
-            // Act the current level Stage
-            LevelManager.getCurrentLevel().act(delta);
-            // Act the User Interface Stage
-            this.uiStage.act(delta);
+
+            LevelManager.getCurrentLevel().act(delta); // Act the current level Stage
+            uiStage.act(delta); // Act the User Interface Stage
+
             handleInputs();
             handleCharacter();
             handleCamera();
-        } else {
+        } else if (pause)
             handleMovingCamera();
-        }
 
         //TO DEBUG
-        handleDebugCodes();
+        //handleDebugCodes();
 
         // Render the Game
-        LevelManager.getCurrentLevel().drawBackground();
         LevelManager.getCurrentLevel().draw();
-        this.uiStage.draw();
-        renderer.render(LevelManager.getCurrentLevel().getWorld(), camera.combined);
+        uiStage.draw();
 
         if (this.runningLevel != LevelManager.getCurrentLevelNumber())
             changeLevel();
-        if (this.restart)
-            game.setDeathScreen();
+        if (this.restart && !killedWaiting) {
+            killedWaiting = true;
+            run = false;
+            this.timer.scheduleTask(new Timer.Task() {
+                @Override
+                public void run() {
+                    run = true;
+                    game.setDeathScreen();
+                }
+            }, DEATH_DELAY);
+        }
     }
 
+    /**
+     * Method to run all the runnables the collisions have asked to run
+     */
     private void runRunnables() {
-        for (Runnable runnable : this.runnables) {
+        for (Runnable runnable : this.runnables)
             runnable.run();
-        }
         this.runnables.clear();
     }
 
+    /**
+     * Method to handle the Pause when pressing the ESCAPE Key
+     */
     private void handlePause() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            if (this.isPaused()) {
-                this.uiStage.updateButton("Pause");
-                resumeGame();
-            }
-            else {
-                this.uiStage.updateButton("Resume");
+            if (isRunning()) {
+                uiStage.pause();
                 pauseGame();
+            } else {
+                resumeGame();
+                uiStage.resume();
             }
         }
     }
@@ -288,9 +338,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         }
 
         // Here the code to activate colors
-        handleColorCommand(this.game.keys.getKeyCode(KeyEffect.RED), this.colorCommandManager.getRedCommand(), this.uiStage.colorGauges.redGauge);
-        handleColorCommand(this.game.keys.getKeyCode(KeyEffect.BLUE), this.colorCommandManager.getBlueCommand(), this.uiStage.colorGauges.blueGauge);
-        handleColorCommand(this.game.keys.getKeyCode(KeyEffect.YELLOW), this.colorCommandManager.getYellowCommand(), this.uiStage.colorGauges.yellowGauge);
+        handleColorCommand(this.game.keys.getKeyCode(KeyEffect.RED), this.colorCommandManager.getRedCommand(), uiStage.colorGauges.redGauge);
+        handleColorCommand(this.game.keys.getKeyCode(KeyEffect.BLUE), this.colorCommandManager.getBlueCommand(), uiStage.colorGauges.blueGauge);
+        handleColorCommand(this.game.keys.getKeyCode(KeyEffect.YELLOW), this.colorCommandManager.getYellowCommand(), uiStage.colorGauges.yellowGauge);
     }
 
     /**
@@ -320,65 +370,14 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         //position.x += (character.getBounds().x - position.x) * lerp;
         //position.y += (character.getBounds().y - position.y) * lerp;
         /** **/
-
-        float level_width  = LevelManager.getCurrentLevel().map.getPixelWidth();
-        float level_height = LevelManager.getCurrentLevel().map.getPixelHeight();
-
-        camera.position.x = character.getBounds().x;
-        if (camera.viewportHeight < level_height)
-            camera.position.y = character.getBounds().y + camera.viewportHeight/4;
-        else
-            camera.position.y = camera.viewportHeight/4;
-        if (camera.position.x < camera.viewportWidth / 2f) {
-            camera.position.x = camera.viewportWidth / 2f;
-        }
-        if (camera.position.y < camera.viewportHeight / 2f) {
-            camera.position.y = camera.viewportHeight / 2f;
-        }
-        if (camera.position.x > level_width - camera.viewportWidth / 2f) {
-            camera.position.x = level_width - camera.viewportWidth / 2f;
-        }
-        if (camera.position.y > level_height - camera.viewportHeight / 2f && camera.viewportHeight < level_height) {
-            camera.position.y = level_height - camera.viewportHeight / 2f;
-        }
-        camera.update();
+        Camera.handleCamera(camera, LevelManager.getCurrentLevel().map.getPixelWidth(), LevelManager.getCurrentLevel().map.getPixelHeight(), character.getCenter());
     }
 
+    /**
+     * Method called to handle the camera when it should move (according to the mouse position)
+     */
     private void handleMovingCamera() {
-        int moveGap    = 4;
-        int moveAmount = 10;
-
-        float level_width  = LevelManager.getCurrentLevel().map.getPixelWidth();
-        float level_height = LevelManager.getCurrentLevel().map.getPixelHeight();
-
-        if (Gdx.input.getX() > (moveGap - 1) * camera.viewportWidth/moveGap) { // going to the right
-            camera.position.x += moveAmount;
-        } else if (Gdx.input.getX() < camera.viewportWidth/moveGap) { // going to the left
-            camera.position.x -= moveAmount;
-        }
-
-        if (Gdx.input.getY() > (moveGap - 1) * camera.viewportHeight/moveGap) { // going to the bottom
-            camera.position.y -= moveAmount;
-        } else if (Gdx.input.getY() < camera.viewportHeight/moveGap) { // going to the top
-            camera.position.y += moveAmount;
-        }
-
-        if (camera.position.x < camera.viewportWidth / 2f) {
-            camera.position.x = camera.viewportWidth / 2f;
-        }
-        if (camera.position.y < camera.viewportHeight / 2f) {
-            camera.position.y = camera.viewportHeight / 2f;
-        }
-        if (camera.position.x > level_width - camera.viewportWidth / 2f) {
-            camera.position.x = level_width - camera.viewportWidth / 2f;
-        }
-        if (camera.position.y > level_height - camera.viewportHeight / 2f) {
-            if (camera.viewportHeight > level_height)
-                camera.position.y = camera.viewportHeight/2;
-            else
-                camera.position.y = level_height - camera.viewportHeight / 2f;
-        }
-        camera.update();
+        Camera.handleMovingCamera(camera, camera, LevelManager.getCurrentLevel().map.getPixelWidth(), LevelManager.getCurrentLevel().map.getPixelHeight());
     }
 
     /**
@@ -406,18 +405,19 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
                 character.addCommand(new StartMoveCommand(MovementDirection.RIGHT));
             }
         }
+        if (keycode == this.game.keys.getKeyCode(KeyEffect.INTERACT) && this.currentLever != null)
+            this.currentLever.activate();
         return false;
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        // Teleport the character
-        //DEBUG TOOL
-        /*if (button == Input.Buttons.LEFT) {
+        //DEBUG TOOL to Teleport the character
+        if (button == Input.Buttons.LEFT) {
             Vector3 worldCoordinates = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(worldCoordinates);
             character.teleport(new Vector2(worldCoordinates.x / BaseElement.WORLD_TO_SCREEN, worldCoordinates.y / BaseElement.WORLD_TO_SCREEN));
-        }*/
+        }
         return false;
     }
 
@@ -459,6 +459,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             });
         }
 
+        if (UserData.isLever(a.getBody()) && UserData.isCharacter(b.getBody()))
+            this.currentLever = (Lever)((UserData)a.getBody().getUserData()).getElement();
+
         // ColoredMagnet
        /* if (UserData.isColoredMagnet(b.getBody()) && UserData.isCharacter(a.getBody())) {
             this.currentColoredMagnet = (ColoredMagnet)((UserData)b.getBody().getUserData()).getElement();
@@ -477,6 +480,9 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             ((Sensor)((UserData)b.getBody().getUserData()).getElement()).endAct();
         }
 
+        if (UserData.isLever(a.getBody()) && UserData.isCharacter(b.getBody()))
+            this.currentLever = null;
+
         // ColoredMagnet
       /*  if (UserData.isColoredMagnet(b.getBody()) && UserData.isCharacter(a.getBody())) {
             this.currentColoredMagnet = null;
@@ -484,25 +490,27 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     }
 
     @Override
-    public void preSolve(Contact contact, Manifold manifold) {
-
-    }
+    public void preSolve(Contact contact, Manifold manifold) { }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse contactImpulse) { }
 
-    public void reachExit(Body exit) {
-        Level level = LevelManager.getCurrentLevel();
-        level.handleScore();
-        this.game.updateWinScreen(level.getScoreHandler());
-        this.runningLevel = ((Exit) ((UserData) exit.getUserData()).getElement()).getLevelIndex();
-        level.reset();
-        LevelManager.unlock(this.runningLevel);
-        endCommands();
-        /*if (LevelManager.isLastLevel())
-            this.game.setEndScreen();
-        else
-            this.game.setWinScreen();*/
-        this.game.setWinScreen(LevelManager.isLastLevel());
+    public void reachExit(final Body exit) {
+        if (!endedWaiting) {
+            LevelManager.getCurrentLevel().handleScore();
+            this.timer.scheduleTask(new Timer.Task() {
+                @Override
+                public void run() {
+                    Level level = LevelManager.getCurrentLevel();
+                    game.updateWinScreen(level.getScoreHandler());
+                    runningLevel = ((Exit) ((UserData) exit.getUserData()).getElement()).getLevelIndex();
+                    level.reset();
+                    LevelManager.unlock(runningLevel);
+                    changeLevel();
+                    game.setWinScreen(LevelManager.isLastLevel());
+                }
+            }, WIN_DELAY);
+            endedWaiting = true;
+        }
     }
 }

@@ -81,10 +81,10 @@ public class LevelManager {
 
     private static void loadLevels(){
         HashMap<Integer, Level> tempList = new HashMap<>();
-        for(String path : new File("mapsData").list()){
+        for(String path : new File("mapsData/dark").list()){
             if(path.endsWith(".tmx")){
                 try {
-                    Level level = new Level("mapsData/" + path);
+                    Level level = new Level("mapsData/dark/" + path);
                     tempList.put(level.getLevelIndex(), level);
                 }catch (Exception e){
                     e.printStackTrace();

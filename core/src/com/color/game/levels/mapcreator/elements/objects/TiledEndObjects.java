@@ -1,6 +1,5 @@
 package com.color.game.levels.mapcreator.elements.objects;
 
-
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -11,12 +10,8 @@ import com.color.game.levels.Level;
 
 public class TiledEndObjects extends TiledObjects {
 
-    private Integer currentLevelIndex;
-
-    public TiledEndObjects(Level level, MapLayer layer, Integer currentLevelIndex) {
+    public TiledEndObjects(Level level, MapLayer layer) {
         super(level, layer);
-
-        this.currentLevelIndex = currentLevelIndex;
     }
 
     @Override
@@ -25,12 +20,12 @@ public class TiledEndObjects extends TiledObjects {
     }
 
     private void setExits(){
-        for(MapObject object : this.objects){
-            if(object instanceof RectangleMapObject){
+        for (MapObject object : this.objects){
+            if (object instanceof RectangleMapObject){
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 int tolevel = object.getProperties().get("next") != null ? Integer.parseInt((String)object.getProperties().get("next")) : -1;
 
-                level.addActor(new Exit(new Vector2(convert(rect.x), convert(rect.y)), convert(rect.width), convert(rect.height), level.map, tolevel));
+                this.level.addActor(new Exit(new Vector2(convert(rect.x), convert(rect.y)), convert(rect.width), convert(rect.height), level, tolevel));
             }
         }
     }

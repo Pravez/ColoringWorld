@@ -2,7 +2,6 @@ package com.color.game.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
@@ -11,9 +10,20 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.color.game.elements.dynamicelements.enemies.Enemy;
+import com.color.game.elements.dynamicplatforms.FallingPlatform;
+import com.color.game.elements.dynamicplatforms.MovingPlatform;
+import com.color.game.elements.staticelements.Exit;
+import com.color.game.elements.staticelements.Lever;
+import com.color.game.elements.staticelements.platforms.ColorPlatform;
+import com.color.game.elements.staticelements.platforms.DeadlyPlatform;
+import com.color.game.elements.staticelements.sensors.Notice;
+import com.color.game.elements.staticelements.sensors.Teleporter;
+import com.color.game.elements.staticelements.sensors.WindBlower;
+
+import java.util.HashMap;
 
 /**
  * Assets class containing all the assets needed for the game handled by a {@link AssetManager}
@@ -35,6 +45,8 @@ public class Assets {
     private static FileHandle bebasFont;
     private static FileHandle groboldFont;
 
+    private static HashMap<Class<?>, Texture> textures;
+
     final public static AssetManager manager  = new AssetManager();
     public static Skin         menuSkin;
 
@@ -54,7 +66,8 @@ public class Assets {
         groboldFont = new FileHandle("fonts/grobold.ttf");
 
         // Musics
-        manager.load("musics/music.mp3", Music.class);
+        manager.load("musics/main_music_final.mp3", Music.class);
+        manager.load("musics/Blank_Holes_modified.mp3", Music.class);
 
         // Sounds
         manager.load("sounds/click.mp3", Sound.class);
@@ -64,29 +77,25 @@ public class Assets {
 
         // Sprites
         manager.load("sprites/bar.png", Texture.class);
-        manager.load("sprites/blocks.png", Texture.class);
-        manager.load("sprites/character.png", Texture.class);
-        manager.load("sprites/character-idle.png", Texture.class);
-        manager.load("sprites/character-walking.png", Texture.class);
-        manager.load("sprites/dead.png", Texture.class);
-        manager.load("sprites/door.png", Texture.class);
-        manager.load("sprites/ground.png", Texture.class);
         manager.load("sprites/spike.png", Texture.class);
         manager.load("sprites/moving.png", Texture.class);
         manager.load("sprites/falling.png", Texture.class);
         manager.load("sprites/teleport.png", Texture.class);
         manager.load("sprites/light.png", Texture.class);
-        manager.load("sprites/hero.png", Texture.class);
         manager.load("sprites/enemy.png", Texture.class);
         manager.load("sprites/back.png", Texture.class);
         manager.load("sprites/wind.png", Texture.class);
-        manager.load("sprites/notice.png", Texture.class);
         manager.load("sprites/lava.png", Texture.class);
+        manager.load("sprites/enabled.png", Texture.class);
+        manager.load("sprites/lever.png", Texture.class);
+        manager.load("sprites/fireflies.png", Texture.class);
+        manager.load("sprites/exit.png", Texture.class);
+        manager.load("sprites/color.png", Texture.class);
 
         manager.load("sprites/star.png", Texture.class);
         manager.load("sprites/star-empty.png", Texture.class);
 
-        //manager.load("sprites/colors.png", Texture.class);
+        manager.load("sprites/light.png", Texture.class);
 
         // Colors
         manager.load("colors/red.png", Texture.class);
@@ -95,13 +104,27 @@ public class Assets {
         manager.load("colors/purple.png", Texture.class);
         manager.load("colors/green.png", Texture.class);
         manager.load("colors/orange.png", Texture.class);
-        manager.load("colors/black.png", Texture.class);
+        manager.load("colors/white.png", Texture.class);
+    }
 
-        // Levels
-        //manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-        //manager.load("level1.tmx", TiledMap.class);
-        // TiledMap map = manager.get("level1.tmx");
-        // http://www.gamefromscratch.com/post/2014/04/16/LibGDX-Tutorial-11-Tiled-Maps-Part-1-Simple-Orthogonal-Maps.aspx
+    public static void loadTextures() {
+        Assets.textures = new HashMap<>();
+
+        Assets.textures.put(Lever.class, Assets.manager.get("sprites/lever.png", Texture.class));
+        Assets.textures.put(ColorPlatform.class, Assets.manager.get("sprites/color.png", Texture.class));
+        Assets.textures.put(Notice.class, Assets.manager.get("sprites/fireflies.png", Texture.class));
+        Assets.textures.put(WindBlower.class, Assets.manager.get("sprites/wind.png", Texture.class));
+        Assets.textures.put(DeadlyPlatform.class, Assets.manager.get("sprites/lava.png", Texture.class));
+        Assets.textures.put(FallingPlatform.class, Assets.manager.get("sprites/falling.png", Texture.class));
+        Assets.textures.put(MovingPlatform.class, Assets.manager.get("sprites/moving.png", Texture.class));
+        Assets.textures.put(Teleporter.class, Assets.manager.get("sprites/teleport.png", Texture.class));
+        Assets.textures.put(Vector2.class, Assets.manager.get("sprites/light.png", Texture.class));
+        Assets.textures.put(Exit.class, Assets.manager.get("sprites/exit.png", Texture.class));
+        Assets.textures.put(Enemy.class, Assets.manager.get("sprites/enemy.png", Texture.class));
+    }
+
+    public static Texture getTexture(Class<?> type) {
+        return Assets.textures.get(type);
     }
 
     /**

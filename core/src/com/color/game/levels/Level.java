@@ -1,20 +1,19 @@
 package com.color.game.levels;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.color.game.assets.Assets;
 import com.color.game.elements.BaseColorElement;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.dynamicplatforms.BaseDynamicPlatform;
 import com.color.game.elements.dynamicplatforms.ColorFallingPlatform;
+import com.color.game.elements.staticelements.Lever;
 import com.color.game.elements.staticelements.platforms.ColorPlatform;
 import com.color.game.elements.staticelements.platforms.ElementColor;
+import com.color.game.graphics.GraphicManager;
 import com.color.game.levels.mapcreator.TiledMapLoader;
 import com.color.game.screens.GameScreen;
 
@@ -62,9 +61,16 @@ public class Level extends Stage {
      */
     final private Array<Enemy> enemies;
 
+    /**
+     * The list of the {@link Lever} of the level
+     */
+    final private Array<Lever> levers;
+
     private TiledMapLoader mapLoader;
 
     private SpriteBatch batch;
+
+    public GraphicManager graphicManager;
 
     private int levelIndex;
 
@@ -76,27 +82,33 @@ public class Level extends Stage {
         this.map = new Map(Map.WORLD_GRAVITY, true);
         this.characterPos = characterPos.scl(2);
 
-        this.colorElements = new Array<>();
+        this.colorElements    = new Array<>();
         this.dynamicPlatforms = new Array<>();
-        this.platforms = new Array<>();
-        this.enemies = new Array<>();
-        this.batch = new SpriteBatch();
-        this.levelIndex = 0;
+        this.platforms        = new Array<>();
+        this.enemies          = new Array<>();
+        this.levers           = new Array<>();
+        this.batch            = new SpriteBatch();
+        this.levelIndex       = 0;
+
+        this.graphicManager   = new GraphicManager(this);
     }
 
     public Level(String path){
         this.map = new Map(Map.WORLD_GRAVITY, true);
         this.characterPos = new Vector2(1,1);
 
-        this.colorElements = new Array<>();
+        this.colorElements    = new Array<>();
         this.dynamicPlatforms = new Array<>();
-        this.platforms = new Array<>();
-        this.enemies = new Array<>();
-        this.batch  = new SpriteBatch();
-        this.levelIndex = 0;
+        this.platforms        = new Array<>();
+        this.enemies          = new Array<>();
+        this.levers           = new Array<>();
+        this.batch            = new SpriteBatch();
+        this.levelIndex       = 0;
+
+        this.graphicManager   = new GraphicManager(this);
 
         this.mapLoader = new TiledMapLoader(this, path);
-        mapLoader.loadMap();
+        this.mapLoader.loadMap();
     }
 
     /**
@@ -129,12 +141,12 @@ public class Level extends Stage {
      * Method to call when restarting the Level in order to restart all the positions of the scenery and enemies
      */
     public void restart() {
-        for (Enemy enemy : this.enemies) {
+        for (Enemy enemy : this.enemies)
             enemy.respawn();
-        }
-        for (BaseDynamicPlatform dynamicPlatform : this.dynamicPlatforms) {
+        for (BaseDynamicPlatform dynamicPlatform : this.dynamicPlatforms)
             dynamicPlatform.respawn();
-        }
+        for (Lever lever : this.levers)
+            lever.reset();
     }
 
     public void setCharacterPosition(Vector2 position){
@@ -170,14 +182,16 @@ public class Level extends Stage {
         }
     }
 
-    public void drawBackground(){
-        batch.begin();
-        batch.draw(Assets.manager.get("sprites/back.png", Texture.class), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.end();
-        if (mapLoader != null) {
-            mapLoader.getOrthogonalTiledMapRenderer().setView(GameScreen.camera);
-            mapLoader.getOrthogonalTiledMapRenderer().render();
+    public void showMapRenderer() {
+        if (this.mapLoader != null) {
+            this.mapLoader.getOrthogonalTiledMapRenderer().setView(GameScreen.camera);
+            this.mapLoader.getOrthogonalTiledMapRenderer().render();
         }
+    }
+
+    @Override
+    public void draw() {
+        this.graphicManager.draw();
     }
 
     /**
@@ -225,6 +239,14 @@ public class Level extends Stage {
         }
     }
 
+    /**
+     * Method to add a {@link Lever} to the list of Lever in the level
+     * @param lever the {@link Lever} to add
+     */
+    public void addLever(Lever lever) {
+        this.levers.add(lever);
+    }
+
     public Array<BaseElement> getPlatforms() {
         Array<BaseElement> platforms = new Array<>(this.platforms);
         for (BaseColorElement colorPlatform : this.colorElements) {
@@ -257,5 +279,12 @@ public class Level extends Stage {
 
     public void setLevelIndex(int levelIndex) {
         this.levelIndex = levelIndex;
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        this.mapLoader.getTiledMap().dispose();
+        this.graphicManager.disposeLights();
     }
 }

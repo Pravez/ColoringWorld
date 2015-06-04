@@ -1,48 +1,39 @@
 package com.color.game.elements.dynamicplatforms;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.color.game.assets.Assets;
+import com.badlogic.gdx.utils.Array;
 import com.color.game.levels.Level;
-import com.color.game.screens.GameScreen;
-
-import java.util.ArrayList;
 
 public class MovingPlatform extends BaseDynamicPlatform{
 
     private static final float MOVING_PLATFORM_VELOCITY = 1f;
     private static final float MOVING_PLATFORM_VELOCITY_NEAR_POINT=0.5f;
 
-    final private ArrayList<Vector2> points;
+    final private Array<Vector2> points;
     private int nextPointIndex;
-    final private ShapeRenderer shapeRenderer;
 
     public MovingPlatform(Vector2 position, float width, float height, Level level, Vector2 point) {
         super(position, width, height, level);
         point.scl(2);
 
-        this.points = new ArrayList<>();
+        this.points = new Array<>();
 
         this.points.add(this.physicComponent.getWorldPosition());
         this.points.add(point);
 
         this.nextPointIndex = 0;
-        this.shapeRenderer = new ShapeRenderer();
+
+        level.graphicManager.addElement(MovingPlatform.class, this);
     }
 
-    public MovingPlatform(Vector2 position, float width, float height, Level level, ArrayList<Vector2> points) {
+    public MovingPlatform(Vector2 position, float width, float height, Level level, Array<Vector2> points) {
         super(position, width, height, level);
 
         for (Vector2 point : points) {
             point.scl(2);
         }
 
-        this.points = new ArrayList<>();
+        this.points = new Array<>();
 
         this.points.add(this.physicComponent.getWorldPosition());
         this.points.addAll(points);
@@ -50,50 +41,22 @@ public class MovingPlatform extends BaseDynamicPlatform{
         this.physicComponent.adjustFriction(1.0f);
 
         this.nextPointIndex = 0;
-        this.shapeRenderer = new ShapeRenderer();
+
+        level.graphicManager.addElement(MovingPlatform.class, this);
+    }
+
+    public Array<Vector2> getPoints() {
+        return this.points;
     }
 
     @Override
     public void act(float delta){
         super.act(delta);
         this.getPhysicComponent().move(MOVING_PLATFORM_VELOCITY);
-        if(destinationReached()){
-            if(nextPointIndex == points.size()-1){
-                nextPointIndex = 0;
-            }else{
-                nextPointIndex++;
-            }
-            ((DynamicPlatformPhysicComponent)this.getPhysicComponent()).setNextPath(points.get(nextPointIndex));
+        if (destinationReached()) {
+            this.nextPointIndex = this.points.size - 1 == this.nextPointIndex ? 0 : this.nextPointIndex + 1;
+            ((DynamicPlatformPhysicComponent)this.getPhysicComponent()).setNextPath(this.points.get(this.nextPointIndex));
         }
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-        batch.end();
-
-        /*Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
-        shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.CYAN);
-        shapeRenderer.rect(this.getBounds().x, this.getBounds().y, this.getBounds().width, this.getBounds().height);
-        shapeRenderer.end();*/
-        shapeRenderer.setProjectionMatrix(GameScreen.camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.WHITE);
-        float midW = this.getBounds().width/2;
-        float midH = this.getBounds().height/2;
-        for (int i = 0 ; i < this.points.size() ; i++) {
-            Vector2 current = new Vector2(this.points.get(i).x * WORLD_TO_SCREEN + midW, this.points.get(i).y * WORLD_TO_SCREEN + midH);
-            Vector2 next = (i + 1 < this.points.size()) ? this.points.get(i+1) : this.points.get(0);
-            next = new Vector2(next.x * WORLD_TO_SCREEN + midW, next.y * WORLD_TO_SCREEN + midH);
-            shapeRenderer.rectLine(current, next, 2);
-        }
-        shapeRenderer.end();
-
-        batch.begin();
-        batch.setProjectionMatrix(GameScreen.camera.combined);
-        batch.draw(Assets.manager.get("sprites/moving.png", Texture.class), getBounds().x, getBounds().y, getBounds().width, getBounds().height);
     }
 
     @Override
@@ -107,9 +70,9 @@ public class MovingPlatform extends BaseDynamicPlatform{
 
         Vector2 lastPoint;
         if(this.nextPointIndex == 0){
-            lastPoint = points.get(this.points.size()-1);
+            lastPoint = points.get(this.points.size - 1);
         }else{
-            lastPoint = points.get(this.nextPointIndex-1);
+            lastPoint = points.get(this.nextPointIndex - 1);
         }
 
         Vector2 nextPoint = points.get(this.nextPointIndex);

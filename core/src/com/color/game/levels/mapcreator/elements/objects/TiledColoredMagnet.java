@@ -20,13 +20,12 @@ public class TiledColoredMagnet extends TiledObjects{
     }
 
     private void createBodies() {
-
         for(MapObject object : this.objects){
             if(object instanceof EllipseMapObject){
                 Ellipse ellipse = ((EllipseMapObject) object).getEllipse();
                 Vector2 center = new Vector2(convert(ellipse.x)+convert(ellipse.width)/2, convert(ellipse.y)+convert(ellipse.height)/2);
 
-                level.addActor(new ColoredMagnet(center, convert(ellipse.width), level));
+                this.level.addActor(new ColoredMagnet(center, convert(ellipse.width), level));
             }
         }
     }

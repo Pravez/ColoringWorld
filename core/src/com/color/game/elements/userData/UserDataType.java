@@ -3,6 +3,7 @@ package com.color.game.elements.userData;
 
 public enum UserDataType {
 
+    LEVER,
     SENSOR,
     COLOREDMAGNET,
     EXIT,

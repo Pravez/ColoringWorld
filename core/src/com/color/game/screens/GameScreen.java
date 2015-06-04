@@ -223,6 +223,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     public void show() {
         super.show();
         Gdx.input.setInputProcessor(new InputMultiplexer(uiStage, this));
+        uiStage.resume();
         if (this.restart)
             restart();
         if (this.runningLevel != LevelManager.getCurrentLevelNumber()) {
@@ -293,11 +294,13 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      */
     private void handlePause() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            uiStage.updateButton(isRunning() ? "Resume" : "Pause");
-            if (isRunning())
+            if (isRunning()) {
+                uiStage.pause();
                 pauseGame();
-            else
+            } else {
                 resumeGame();
+                uiStage.resume();
+            }
         }
     }
 

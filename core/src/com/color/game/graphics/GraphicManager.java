@@ -1,20 +1,14 @@
 package com.color.game.graphics;
 
-import box2dLight.PointLight;
-import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.assets.Assets;
-import com.color.game.elements.BaseElement;
-import com.color.game.elements.PhysicComponent;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.dynamicplatforms.FallingPlatform;
 import com.color.game.elements.dynamicplatforms.MovingPlatform;
@@ -32,7 +26,6 @@ import com.color.game.levels.LevelManager;
 import com.color.game.screens.GameScreen;
 
 import java.util.HashMap;
-import java.util.Random;
 
 import static com.color.game.elements.BaseElement.WORLD_TO_SCREEN;
 
@@ -41,31 +34,12 @@ public class GraphicManager {
     private static final float OPACITY = 0.4f;
 
     /**
-     * Light constants
-     */
-    private static final float COLOR_LIGHT_WIDTH = 1.6f;
-    private static final float ENEMY_LIGHT_WIDTH = 6f;
-    // Ambient light animation
-    private static final Color MIN_AMBIENT_LIGHT = new Color(1, 1, 1, 0.2f);
-    private static final Color MAX_AMBIENT_LIGHT = new Color(1, 1, 1, 0.4f);
-    private static final float AMBIENT_CHANGE_DELAY = 3.0f;
-    // Color light animation
-    private static final float COLOR_LIGHT_ACTIVATION_DELAY = 0.2f;
-    private static final float COLOR_LIGHT_DEACTIVATION_DELAY = 0.5f;
-    // Character
-    private static final float CHARACTER_LIGHT_WIDTH = 12f;
-
-    private static final float EXIT_LIGHT_WIDTH = 10f;
-    private static final float EXIT_LIGHT_MIN = 5f;
-
-    /**
      * Notice constants
      */
     private static final int FONT_SIZE = 18;//14;
     private static final int TEXT_WIDTH = 260;//200;
     private static final int TEXT_GAP = 20;
     private static final float NOTICE_DELAY = 0.15f;
-    private static final float BLOWER_LIGHT_INTENSITY = 2.0f;
 
     /**
      * HashMap of the Level elements to render
@@ -75,33 +49,15 @@ public class GraphicManager {
     private HashMap<ElementColor, Array<Enemy>> enemies;
     private HashMap<WindDirection, Array<WindBlower>> windBlowers;
 
-    private HashMap<ColorPlatform, Array<PointLight>> colorLights;
-
     /**
      * Drawing tools
      */
     private static SpriteBatch   batch;
     private static ShapeRenderer renderer;
 
-    /**
-     * Light tools
-     */
-    public RayHandler  rayHandler;
-
-    private PointLight characterLight;
-    private HashMap<Exit, PointLight> exitLights;
-    private HashMap<Enemy, PointLight> enemyLights;
-    private HashMap<WindBlower, Array<PointLight>> windLights;
-
-    private static OrthographicCamera lightCamera;
-
-    private static Color ambientLight;
-    private static Color ambientTarget;
+    private LightManager lightManager;
 
     private static Color characterColor;
-    private static Color exitColor;
-
-    private float timePassed = 0;
 
     /**
      * Textures, sprites and Animations for the elements
@@ -111,7 +67,6 @@ public class GraphicManager {
     private static Texture          colorPlatformTexture;
     private static TextureAnimation noticeAnimation;
     private static BitmapFontCache  fontCache;
-    private static Sprite           windSprite;
     private static Texture          background;
 
     public GraphicManager(Level level) {
@@ -119,29 +74,16 @@ public class GraphicManager {
         this.colorPlatforms = new HashMap<>();
         this.enemies        = new HashMap<>();
         this.windBlowers    = new HashMap<>();
-
-        this.colorLights = new HashMap<>();
-        this.exitLights  = new HashMap<>();
-        this.enemyLights = new HashMap<>();
-        this.windLights  = new HashMap<>();
-        this.rayHandler  = new RayHandler(level.getWorld());
-        this.rayHandler.setAmbientLight(MIN_AMBIENT_LIGHT);
-        this.characterLight = new PointLight(this.rayHandler, 50, Color.WHITE, CHARACTER_LIGHT_WIDTH, 5, 5);
+        this.lightManager   = new LightManager(level);
     }
 
     public static void init() {
-        ambientLight = new Color(MIN_AMBIENT_LIGHT);
-        ambientTarget = MAX_AMBIENT_LIGHT;
+        LightManager.init();
 
         characterColor = new Color(Color.WHITE);
-        exitColor = new Color(1, 1, 1, OPACITY);
 
         batch    = new SpriteBatch();
         renderer = new ShapeRenderer();
-
-        lightCamera = new OrthographicCamera();
-        lightCamera.setToOrtho(false, 1.0f * Gdx.graphics.getWidth() / BaseElement.WORLD_TO_SCREEN, 1.0f * Gdx.graphics.getHeight() / BaseElement.WORLD_TO_SCREEN);
-        PointLight.setContactFilter(PhysicComponent.CATEGORY_SCENERY, (short) 0, PhysicComponent.MASK_SCENERY);
 
         Texture leverTexture = Assets.getTexture(Lever.class);
         leverRegions    = new TextureRegion[2];
@@ -155,8 +97,6 @@ public class GraphicManager {
         noticeAnimation = new TextureAnimation(Assets.getTexture(Notice.class), 2, 2, NOTICE_DELAY);
         fontCache       = new BitmapFontCache(Assets.getGroboldFont(FONT_SIZE));
 
-        windSprite      = new Sprite(Assets.getTexture(WindBlower.class));
-
         background      = Assets.manager.get("sprites/back.png", Texture.class);
     }
 
@@ -166,10 +106,7 @@ public class GraphicManager {
     public void draw() {
         float delta = GameScreen.isRunning() ? Gdx.graphics.getDeltaTime() : 0;
 
-        /** LIGHT TEST **/
-
-
-        handleLights(delta);
+        this.lightManager.render(delta);
 
         /**
          * Draw the Moving Platforms path
@@ -198,7 +135,6 @@ public class GraphicManager {
         drawFallingPlatforms();
 
         drawWindBlowers();
-        //drawTeleporters();
         drawLevers();
         drawExits();
         batch.setColor(color);
@@ -210,30 +146,6 @@ public class GraphicManager {
         renderer.begin(ShapeRenderer.ShapeType.Filled);
         drawCharacter();
         renderer.end();
-    }
-
-    /**
-     * Method to handle the lights : move the light Camera and set the character light to its position then render all the lights
-     */
-    private void handleLights(float delta) {
-        this.timePassed += delta;
-        /** AMBIENT LIGHT LERP **/
-        if (this.timePassed > AMBIENT_CHANGE_DELAY) {
-            this.timePassed = 0;
-            ambientTarget = (ambientTarget == MIN_AMBIENT_LIGHT) ? MAX_AMBIENT_LIGHT : MIN_AMBIENT_LIGHT;
-        }
-        ambientLight.lerp(ambientTarget, delta/AMBIENT_CHANGE_DELAY);
-        this.rayHandler.setAmbientLight(ambientLight);
-
-        if (GameScreen.isPaused())
-            Camera.handleMovingCamera(GameScreen.camera, lightCamera, LevelManager.getCurrentLevel().map.getWidth(), LevelManager.getCurrentLevel().map.getHeight());
-        else
-            Camera.handleCamera(lightCamera, LevelManager.getCurrentLevel().map.getWidth(), LevelManager.getCurrentLevel().map.getHeight(), GameScreen.character.getPosition());
-
-        this.rayHandler.setCombinedMatrix(lightCamera.combined);
-        // Make the light follow the Character
-        this.characterLight.setPosition(GameScreen.character.getPosition());
-        this.rayHandler.updateAndRender();
     }
 
     /**
@@ -266,22 +178,7 @@ public class GraphicManager {
      */
     private void drawColorPlatforms(Array<ColorPlatform> colorPlatforms, float delta) {
         for (ColorPlatform platform : colorPlatforms) {
-            // Set active of inactive the PointLights
-            for (PointLight light : this.colorLights.get(platform)) {
-                if (platform.isActivated() && light.getDistance() < COLOR_LIGHT_WIDTH) {
-                    float width = light.getDistance() + (COLOR_LIGHT_WIDTH )/(COLOR_LIGHT_ACTIVATION_DELAY/delta);
-                    if (width > COLOR_LIGHT_WIDTH)
-                        width = COLOR_LIGHT_WIDTH;
-                    light.setDistance(width);
-
-                } else if (!platform.isActivated() && light.getDistance() > 0) {
-                    float width = light.getDistance() - (COLOR_LIGHT_WIDTH)/(COLOR_LIGHT_DEACTIVATION_DELAY/delta);
-                    if (width < 0)
-                        width = 0;
-                    light.setDistance(width);
-                }
-            }
-
+            this.lightManager.renderColorPlatformLights(platform, delta);
             Rectangle bounds = platform.getBounds();
             batch.draw(colorPlatformTexture, bounds.x, bounds.y, bounds.width, bounds.height);
         }
@@ -401,23 +298,6 @@ public class GraphicManager {
     }
 
     /**
-     * Private method to draw the Teleporters
-     */
-    private void drawTeleporters() {
-        if (!this.elements.containsKey(Teleporter.class))
-            return;
-        Texture texture = Assets.getTexture(Teleporter.class);
-        Texture light   = Assets.getTexture(Vector2.class);
-        float side = 2 * WORLD_TO_SCREEN;
-        for (Teleporter teleporter : (Array<Teleporter>)this.elements.get(Teleporter.class)) {
-            Rectangle bounds = teleporter.getBounds();
-            Vector2 position = new Vector2(teleporter.getTeleportPosition().x * WORLD_TO_SCREEN, teleporter.getTeleportPosition().y * WORLD_TO_SCREEN);
-            batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
-            batch.draw(light, position.x, position.y, side, side);
-        }
-    }
-
-    /**
      * Method called to draw all the Exits
      */
     private void drawExits() {
@@ -425,12 +305,7 @@ public class GraphicManager {
             return;
         Texture texture = Assets.getTexture(Exit.class);
         for (Exit exit : (Array<Exit>)this.elements.get(Exit.class)) {
-            if (GameScreen.isExitReached()) {
-                float coef = (Gdx.graphics.getDeltaTime() / GameScreen.WIN_DELAY);
-                batch.setColor(exitColor.lerp(Color.CYAN.r, Color.CYAN.g, Color.CYAN.b, 1f, coef));
-                this.exitLights.get(exit).setDistance(this.exitLights.get(exit).getDistance() + coef * EXIT_LIGHT_WIDTH);
-            } else if (this.exitLights.get(exit).getDistance() != EXIT_LIGHT_MIN)
-                this.exitLights.get(exit).setDistance(EXIT_LIGHT_MIN);
+            this.lightManager.renderExitLights(exit);
             Rectangle bounds = exit.getBounds();
             batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
         }
@@ -454,30 +329,9 @@ public class GraphicManager {
      */
     private void drawWindBlowers(Array<WindBlower> windBlowers) {
         if (windBlowers != null) {
-            for (WindBlower blower : windBlowers) {
-                for (PointLight light : this.windLights.get(blower)) {
-                    //Defining datas
-                    float y = light.getY() + 0.5f;
-                    float ymax = blower.getWorldBounds().height/2 + blower.getPosition().y;
-                    float distance = (y*100)/ymax;
-
-                    //Modifying position
-                    light.setPosition(light.getX(), y);
-                    light.setPosition(light.getX()+((new Random().nextInt(21) - 10) / 18.0f), light.getY());
-                    if (y > ymax) {
-                        light.setActive(false);
-                        this.windLights.get(blower).removeValue(light, true);
-                    }else if (distance > 50){
-                        //Calculating the percentage of distance between 0.5 and 1.0
-                        // distance = 0.75 will give 0.5
-                        float value = (distance*50)/100;
-                        //Then calculate the percentage according to the blower light intensity with the value
-                        light.setDistance(((100-value)*BLOWER_LIGHT_INTENSITY)/100);
-                    }
-                }
-            }
+            for (WindBlower blower : windBlowers)
+                this.lightManager.renderWindBlowerLight(blower);
         }
-        windSprite.rotate90(true);
     }
 
     /**
@@ -511,11 +365,10 @@ public class GraphicManager {
     private void drawEnemies(Array<Enemy> enemies) {
         Texture texture = Assets.getTexture(Enemy.class);
         for (Enemy enemy : enemies) {
-            this.enemyLights.get(enemy).setActive(enemy.isAlive());
+            this.lightManager.renderEnemyLight(enemy);
             if (enemy.isAlive()) {
                 Rectangle bounds = enemy.getBounds();
                 batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
-                this.enemyLights.get(enemy).setPosition(enemy.getPosition());
             }
         }
     }
@@ -524,14 +377,11 @@ public class GraphicManager {
      * Method to draw the character
      */
     private void drawCharacter() {
-        if (!GameScreen.isPaused() && !GameScreen.isRunning()) {
-            float coef = Gdx.graphics.getDeltaTime()/GameScreen.DEATH_DELAY;
-            characterColor.lerp(Color.GRAY, coef);
-            this.characterLight.setDistance(this.characterLight.getDistance() - coef * (CHARACTER_LIGHT_WIDTH - 2f));
-        } else {
+        if (!GameScreen.isPaused() && !GameScreen.isRunning())
+            characterColor.lerp(Color.GRAY, Gdx.graphics.getDeltaTime()/GameScreen.DEATH_DELAY);
+        else
             characterColor.set(Color.WHITE);
-            this.characterLight.setDistance(CHARACTER_LIGHT_WIDTH);
-        }
+        this.lightManager.renderCharacterLight(!GameScreen.isPaused() && !GameScreen.isRunning());
         renderer.setColor(characterColor);
         Rectangle bounds = GameScreen.character.getBounds();
         renderer.rect(bounds.x, bounds.y, bounds.width, bounds.height);
@@ -547,14 +397,7 @@ public class GraphicManager {
             this.colorPlatforms.put(color, new Array<ColorPlatform>());
         this.colorPlatforms.get(color).add(platform);
 
-        Array<PointLight> lights = new Array<>();
-        Rectangle bounds = platform.getWorldBounds();
-
-        for (int i = 0 ; i < bounds.height ; i++)
-            for (int j = 0 ; j < bounds.width ; j++)
-                lights.add(new PointLight(this.rayHandler, 5, platform.getElementColor().getColor(), platform.isActivated() ? COLOR_LIGHT_WIDTH : 0, bounds.x + 0.5f + j, bounds.y + 0.5f + i));
-
-        this.colorLights.put(platform, lights);
+        this.lightManager.addColorPlatformLights(platform);
     }
 
     /**
@@ -566,21 +409,8 @@ public class GraphicManager {
         if (!this.windBlowers.containsKey(direction))
             this.windBlowers.put(direction, new Array<WindBlower>());
         this.windBlowers.get(direction).add(blower);
-        Rectangle bounds = blower.getWorldBounds();
-        float size = 4;
-        if (direction == WindDirection.NORTH) {
-            drawLightEllipse(new Rectangle(bounds.x, bounds.y, bounds.width, size), Color.WHITE);
 
-        } else if (direction == WindDirection.SOUTH) {
-            drawLightEllipse(new Rectangle(bounds.x, bounds.y + bounds.height - size, bounds.width, size), Color.WHITE);
-        } else if (direction == WindDirection.EAST) {
-            drawLightEllipse(new Rectangle(bounds.x, bounds.y, size, bounds.height), Color.WHITE);
-        } else if (direction == WindDirection.WEST) {
-            drawLightEllipse(new Rectangle(bounds.x + bounds.width - size, bounds.y, size, bounds.height), Color.WHITE);
-        }
-
-        this.windLights.put(blower, new Array<PointLight>());
-
+        this.lightManager.addWindBlowerLights(direction, blower);
     }
 
     /**
@@ -589,20 +419,9 @@ public class GraphicManager {
     public void updateBlowers(){
         for(WindDirection direction : windBlowers.keySet()){
             for(WindBlower blower : windBlowers.get(direction)){
-                generateWind(blower.getWorldBounds(), blower);
+                this.lightManager.generateWind(blower.getWorldBounds(), blower);
             }
         }
-    }
-
-    /**
-     * Method to generate a point of wind from a given blower
-     * @param bounds bounds of the blower
-     * @param blower the blower
-     */
-    private void generateWind(Rectangle bounds, WindBlower blower){
-        Random r = new Random();
-
-        this.windLights.get(blower).add(new PointLight(this.rayHandler, 4, Color.WHITE, BLOWER_LIGHT_INTENSITY, bounds.x + (2.0f +  r.nextInt(6)) * bounds.width / 10, bounds.y));
     }
 
     /**
@@ -614,8 +433,8 @@ public class GraphicManager {
         if (!this.enemies.containsKey(color))
             this.enemies.put(color, new Array<Enemy>());
         this.enemies.get(color).add(enemy);
-        Vector2 position = enemy.getPosition();
-        this.enemyLights.put(enemy, new PointLight(this.rayHandler, 5, color.getColor(), ENEMY_LIGHT_WIDTH, position.x, position.y));
+
+        this.lightManager.addEnemyLights(color, enemy);
     }
 
     /**
@@ -629,25 +448,9 @@ public class GraphicManager {
             this.elements.put(type, new Array<T>());
         ((Array<T>) this.elements.get(type)).add(element);
         if (type == Exit.class) {
-            Vector2 position = ((BaseElement)element).getPosition();
-            this.exitLights.put(((Exit)element), new PointLight(this.rayHandler, 5, Color.CYAN, EXIT_LIGHT_MIN, position.x, position.y));
+            this.lightManager.addExitLights((Exit)element);
         } else if (type == Teleporter.class) {
-            Teleporter teleporter = (Teleporter)element;
-            drawLightEllipse(teleporter.getWorldBounds(), Color.CYAN);
-            Vector2 position = teleporter.getTeleportPosition();
-            drawLightEllipse(new Rectangle(position.x - 1.6f, position.y, 3.2f, 4.8f), Color.ORANGE);
-        }
-    }
-
-    private void drawLightEllipse(Rectangle bounds, Color color) {
-        int segments = 30;
-        float angle = 2 * MathUtils.PI / segments;
-
-        float cx = bounds.x + bounds.width / 2, cy = bounds.y + bounds.height / 2;
-        for (int i = 0; i < segments; i++) {
-            float posX = cx + (bounds.width * 0.5f * MathUtils.cos(i * angle));
-            float posY = cy + (bounds.height * 0.5f * MathUtils.sin(i * angle));
-            new PointLight(this.rayHandler, 5, color, 1.6f, posX, posY);
+            this.lightManager.addTeleporterLights((Teleporter)element);
         }
     }
 
@@ -655,7 +458,7 @@ public class GraphicManager {
      * Method called to dispose the RayHandler
      */
     public void disposeLights() {
-        this.rayHandler.dispose();
+        this.lightManager.dispose();
     }
 
     /**

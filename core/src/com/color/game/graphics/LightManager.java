@@ -42,7 +42,7 @@ public class LightManager {
     private static final float COLOR_LIGHT_ACTIVATION_DELAY = 0.2f;
     private static final float COLOR_LIGHT_DEACTIVATION_DELAY = 0.5f;
     // Character
-    private static final float CHARACTER_LIGHT_WIDTH = 12f;
+    private static final float CHARACTER_LIGHT_WIDTH = 15f;
     // Exit
     private static final float EXIT_LIGHT_WIDTH = 10f;
     private static final float EXIT_LIGHT_MIN = 5f;

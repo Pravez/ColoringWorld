@@ -5,7 +5,6 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.color.game.elements.BaseElement;
 import com.color.game.elements.enabledelements.BaseEnabledElement;
 import com.color.game.levels.Level;
 
@@ -30,8 +29,8 @@ public abstract class TiledElements {
         Vector2 pos = new Vector2();
         try {
             Rectangle character = ((RectangleMapObject) layer.getObjects().get("character")).getRectangle();
-            pos.x = (convert(character.x) + convert(character.width)) * 1.9f;
-            pos.y = (convert(character.y) + convert(character.height)) * 1.9f;
+            pos.x = (convert(character.x) + convert(character.width));
+            pos.y = (convert(character.y) + convert(character.height));
         } catch (NullPointerException n) {
             pos = new Vector2(1, 1);
         }

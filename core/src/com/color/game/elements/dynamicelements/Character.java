@@ -46,8 +46,6 @@ public class Character extends BaseDynamicElement {
 
         this.setMovingState(new StandingState());
         this.setAloftState(new LandedState());
-
-        //this.physicComponent.adjustLinearDamping(0);
     }
 
     @Override

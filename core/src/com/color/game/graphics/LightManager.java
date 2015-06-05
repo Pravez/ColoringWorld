@@ -143,15 +143,27 @@ public class LightManager {
 
     public void renderWindBlowerLight(WindBlower blower) {
         for (PointLight light : this.windLights.get(blower)) {
-            //Defining datas
-            float y = light.getY() + 0.5f;
-            float ymax = blower.getWorldBounds().height/2 + blower.getPosition().y;
-            float distance = (y*100)/ymax;
+
+            WindDirection direction = blower.getDirection();
+
+            Vector2 changing = direction.toCoordinates().scl(light.getPosition());
+            changing.x = Math.abs(changing.x);
+            changing.y = Math.abs(changing.y);
+            Vector2 maxValue = direction.adaptBlowerMaxValue(blower.getWorldBounds().width/2, blower.getWorldBounds().height/2, blower.getPosition());
+            float moving = ((new Random().nextInt(21) - 10) / 18.0f);
+            direction.addValue(changing, 0.5f);
+            if(changing.x == 0){
+                changing.x += light.getX() + moving;
+            }else{
+                changing.y += light.getY() + moving;
+            }
+            float distance = direction.calculatePercentage(changing, maxValue, blower.getPosition());
+            System.out.println(distance);
 
             //Modifying position
-            light.setPosition(light.getX(), y);
-            light.setPosition(light.getX()+((new Random().nextInt(21) - 10) / 18.0f), light.getY());
-            if (y > ymax) {
+            light.setPosition(changing);
+
+            if (direction.isReached(changing, maxValue)) {
                 light.setActive(false);
                 this.windLights.get(blower).removeValue(light, true);
             }else if (distance > 50){
@@ -171,8 +183,9 @@ public class LightManager {
      */
     public void generateWind(Rectangle bounds, WindBlower blower){
         Random r = new Random();
+        Vector2 position = blower.getDirection().getBase(bounds, true);
 
-        this.windLights.get(blower).add(new PointLight(this.rayHandler, 4, Color.WHITE, BLOWER_LIGHT_INTENSITY, bounds.x + (2.0f + r.nextInt(6)) * bounds.width / 10, bounds.y));
+        this.windLights.get(blower).add(new PointLight(this.rayHandler, 4, Color.WHITE, BLOWER_LIGHT_INTENSITY, position.x, position.y));
     }
 
     public void renderEnemyLight(Enemy enemy) {

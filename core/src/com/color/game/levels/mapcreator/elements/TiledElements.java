@@ -27,10 +27,11 @@ public abstract class TiledElements {
 
     public static void setCharacter(Level level, MapLayer layer){
         Vector2 pos = new Vector2();
+        
         try {
-            Rectangle character = ((RectangleMapObject) layer.getObjects().get("character")).getRectangle();
-            pos.x = (convert(character.x) + convert(character.width));
-            pos.y = (convert(character.y) + convert(character.height));
+            Rectangle character = ((RectangleMapObject) layer.getObjects().get(0)).getRectangle();
+            pos.x = ((convert(character.x) + convert(character.width)))*2;
+            pos.y = ((convert(character.y) + convert(character.height)))*2;
         } catch (NullPointerException n) {
             pos = new Vector2(1, 1);
         }

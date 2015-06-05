@@ -42,7 +42,7 @@ public class LightManager {
     private static final float COLOR_LIGHT_ACTIVATION_DELAY = 0.2f;
     private static final float COLOR_LIGHT_DEACTIVATION_DELAY = 0.5f;
     // Character
-    private static final float CHARACTER_LIGHT_WIDTH = 15f;
+    private static final float CHARACTER_LIGHT_WIDTH = 20f;
     // Exit
     private static final float EXIT_LIGHT_WIDTH = 10f;
     private static final float EXIT_LIGHT_MIN = 5f;
@@ -73,8 +73,8 @@ public class LightManager {
 
     public LightManager(Level level) {
 
-        minAmbientLight = randomizeBackgroundColor(0.1f);
-        maxAmbientLight = randomizeBackgroundColor(0.3f);
+        minAmbientLight = randomizeBackgroundColor(0.2f);
+        maxAmbientLight = randomizeBackgroundColor(0.45f);
 
         this.colorLights = new HashMap<>();
         this.exitLights  = new HashMap<>();
@@ -175,7 +175,6 @@ public class LightManager {
                 changing.y += light.getY() + moving;
             }
             float distance = direction.calculatePercentage(changing, maxValue, blower.getPosition());
-            System.out.println(distance);
 
             //Modifying position
             light.setPosition(changing);

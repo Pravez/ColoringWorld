@@ -28,9 +28,6 @@ public class TransitionScreen extends BaseScreen {
         this.space = createLabel("Press SPACE to continue", 18, TEXT_COLOR);
 
         table.add(title).padBottom(30).row();
-        /*Image image = new Image();
-        image.setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("dead.png")))));
-        table.add(image).row();*/
         table.add(this.message).padTop(30).row();
         table.add(this.space).padTop(200);
 

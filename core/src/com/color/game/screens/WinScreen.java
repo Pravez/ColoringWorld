@@ -68,9 +68,9 @@ public class WinScreen extends BaseScreen {
         this.rayHandler.setAmbientLight(Color.BLACK);
         this.rayHandler.setCombinedMatrix(new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()).combined);
 
-        this.bronzeLight = new PointLight(this.rayHandler, 15, new Color(187/255f, 172/255f, 157/255f, 1), 200, 0, 0);
-        this.silverLight = new PointLight(this.rayHandler, 15, new Color(52/255f, 172/255f, 157/255f, 1), 200, 0, 0);
-        this.goldLight   = new PointLight(this.rayHandler, 15, new Color(187/255f, 90/255f, 90/255f, 1), 200, 0, 0);
+        this.bronzeLight = new PointLight(this.rayHandler, 15, BRONZE_COLOR, 200, 0, 0);
+        this.silverLight = new PointLight(this.rayHandler, 15, SILVER_COLOR, 200, 0, 0);
+        this.goldLight   = new PointLight(this.rayHandler, 15, GOLD_COLOR, 200, 0, 0);
 
         initScreen();
 
@@ -95,9 +95,9 @@ public class WinScreen extends BaseScreen {
     }
 
     private void initScreen() {
-        this.bronzeStar = new Image();
-        this.silverStar = new Image();
-        this.goldStar   = new Image();
+        this.bronzeStar = new Image(new SpriteDrawable(new Sprite(Assets.getTexture(AnimatedCube.class))));
+        this.silverStar = new Image(new SpriteDrawable(new Sprite(Assets.getTexture(AnimatedCube.class))));
+        this.goldStar   = new Image(new SpriteDrawable(new Sprite(Assets.getTexture(AnimatedCube.class))));
 
         this.scoreTimer = new Timer();
     }
@@ -131,7 +131,6 @@ public class WinScreen extends BaseScreen {
     }
 
     private void addStar(Image star, float x, PointLight light, Vector2 center) {
-        star.setDrawable(new SpriteDrawable(new Sprite(Assets.getTexture(AnimatedCube.class))));
         star.setSize(STAR_WIDTH, STAR_HEIGHT);
         star.setPosition(x, 300);
         this.stage.addActor(star);

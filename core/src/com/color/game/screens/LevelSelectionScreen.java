@@ -1,6 +1,7 @@
 package com.color.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
+import com.color.game.gui.AnimatedCube;
 import com.color.game.levels.LevelManager;
 import com.color.game.levels.ScoreHandler;
 
@@ -30,7 +32,7 @@ public class LevelSelectionScreen extends BaseScreen {
 
         Table table = new Table();
 
-        this.starDrawable = new SpriteDrawable(new Sprite(Assets.manager.get("sprites/star.png", Texture.class)));
+        this.starDrawable = new SpriteDrawable(new Sprite(Assets.getTexture(AnimatedCube.class)));
 
         // Title
         table.add(createLabel("Level Selection", TITLE_SIZE, TITLE_COLOR)).row();
@@ -97,13 +99,22 @@ public class LevelSelectionScreen extends BaseScreen {
         float padRight = 2;
         float padLeft  = 2;
         starTable.clear();
-        if (scoreHandler.isBronzeReached())
-            starTable.add(new Image(this.starDrawable)).size(STAR_SIZE, STAR_SIZE).padRight(padRight).padLeft(padLeft);
+
+        starTable.add(getStar(scoreHandler.isBronzeReached(), BRONZE_COLOR)).size(STAR_SIZE, STAR_SIZE).padRight(padRight).padLeft(padLeft);
+        starTable.add(getStar(scoreHandler.isSilverReached(), SILVER_COLOR)).size(STAR_SIZE, STAR_SIZE).padRight(padRight).padLeft(padLeft);
+        starTable.add(getStar(scoreHandler.isGoldReached(), GOLD_COLOR)).size(STAR_SIZE, STAR_SIZE).padRight(padRight).padLeft(padLeft);
+    }
+
+    private Actor getStar(boolean reached, Color color) {
+        if (reached)
+            return coloredImage(this.starDrawable, color);
         else
-            starTable.add(new Actor()).size(STAR_SIZE, STAR_SIZE).padRight(padRight).padLeft(padLeft);
-        if (scoreHandler.isSilverReached())
-            starTable.add(new Image(this.starDrawable)).size(STAR_SIZE, STAR_SIZE).padRight(padRight).padLeft(padLeft);
-        if (scoreHandler.isGoldReached())
-            starTable.add(new Image(this.starDrawable)).size(STAR_SIZE, STAR_SIZE).padRight(padRight).padLeft(padLeft);
+            return new Actor();
+    }
+
+    public Image coloredImage(SpriteDrawable drawable, Color color) {
+        Image image = new Image(drawable);
+        image.setColor(color);
+        return image;
     }
 }

@@ -3,14 +3,10 @@ package com.color.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.color.game.ColorGame;
-import com.color.game.assets.Assets;
 
 /**
  * TransitionSreen when the character dies, or when the level is complete
@@ -24,10 +20,8 @@ public class TransitionScreen extends BaseScreen {
 
     public TransitionScreen(ColorGame game) {
         super(game);
-        this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
 
         Table table = new Table();
-        table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
 
         this.title = createLabel("", 28, TEXT_COLOR);
         this.message = createLabel("", 14, TEXT_COLOR);

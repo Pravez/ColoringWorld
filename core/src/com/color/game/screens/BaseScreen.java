@@ -6,6 +6,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -13,21 +17,34 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
+import com.color.game.gui.AnimatedCube;
+import com.color.game.gui.StripButton;
 
 /**
  * BaseScreen, the base class of all the screens of the Game
  * It has a reference to the {@link ColorGame} class and contains all common attributes between the screens
  */
-class BaseScreen implements Screen, InputProcessor {
+public class BaseScreen implements Screen, InputProcessor {
+
+    static final float BUTTON_WIDTH  = 250;
+    static final float BUTTON_HEIGHT = 50;
+    static final float BUTTON_GAP = 60;
+    static final float BUTTON_PADDING = 20;
+    static final float BUTTON_OPACITY = 0.4f;
+
+    static final float BUTTONS_BEGINNING = 400;
 
     protected final static Color TEXT_COLOR = new Color(142f/255, 188f/255, 224f/255, 1);
 
     final ColorGame game;
 
-    Texture   texture;
-    Stage     stage;
+    protected Stage     stage;
+    private static Stage     backStage;
+    private StripButton menuButton;
 
     /**
      * Constructor of the BaseScreen
@@ -38,12 +55,47 @@ class BaseScreen implements Screen, InputProcessor {
         this.stage = new Stage();
     }
 
+    public static void init() {
+        backStage = new Stage();
+
+        // Background of the BaseScreen
+        Table table = new Table();
+        table.setBackground(new SpriteDrawable(new Sprite(Assets.manager.get("backgrounds/background.png", Texture.class))));
+        table.setFillParent(true);
+        backStage.addActor(table);
+
+        addAnimatedCubes();
+    }
+
+    private static void addAnimatedCubes() {
+        //backStage.addActor(new AnimatedCube(new Rectangle(500, 400, 60, 60), new Color(187/255f, 172/255f, 157/255f, 0.8f), 20, true, false));
+        //backStage.addActor(new AnimatedCube(new Rectangle(600, 300, 80, 80), new Color(52/255f, 172/255f, 157/255f, 0.8f), 10, true, true));
+
+        Array<Color> colors = new Array<>();
+        colors.add(new Color(187/255f, 172/255f, 157/255f, 0.8f));
+        colors.add(new Color(52/255f, 172/255f, 157/255f, 0.8f));
+        colors.add(new Color(187/255f, 90/255f, 90/255f, 0.8f));
+
+        for (int i = 0 ; i < 20 ; i++) {
+            int size = MathUtils.random(30, 120);
+            int x = MathUtils.random(550, Gdx.graphics.getWidth() - size);
+            int y = MathUtils.random(size, Gdx.graphics.getHeight() - size);
+            Color color = colors.get(MathUtils.random(0, colors.size - 1));
+            color.a = MathUtils.random(0.4f, 0.85f);
+
+            backStage.addActor(new AnimatedCube(new Rectangle(x, y, size, size), color, MathUtils.random(-10f, 10f), MathUtils.randomBoolean(), MathUtils.randomBoolean()));
+        }
+    }
+
     /**
      * Show method called when the screen is actually put to render at the screen
      */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(this.stage);
+        if (this.menuButton != null) {
+            this.menuButton.reset();
+        }
     }
 
     /**
@@ -53,10 +105,13 @@ class BaseScreen implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT | (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
 
-        stage.act(delta);
-        stage.draw();
+        backStage.act(delta);
+        backStage.draw();
+
+        this.stage.act(delta);
+        this.stage.draw();
     }
 
     /**
@@ -84,19 +139,20 @@ class BaseScreen implements Screen, InputProcessor {
      */
     @Override
     public void dispose() {
-        if (this.texture != null) {
-            this.texture.dispose();
-        }
         this.stage.dispose();
     }
 
+    public static void disposeAnimations() {
+        backStage.dispose();
+    }
+
     /**
-     * Method called to set the {@link Button}'s {@link ClickListener}
-     * @param button the corresponding {@link Button}
+     * Method called to set the {@link Actor}'s {@link ClickListener}
+     * @param actor the corresponding {@link Actor}
      * @param runnable the {@link Runnable} called when the ClickEvent is being fired
      */
-    protected void setButtonListener(Button button, final Runnable runnable) {
-        button.addListener(new ClickListener() {
+    protected void setButtonListener(Actor actor, final Runnable runnable) {
+        actor.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.soundManager.playClickSound();
@@ -113,25 +169,26 @@ class BaseScreen implements Screen, InputProcessor {
      * @return the Label created
      */
     protected Label createLabel(String value, int size, Color color) {
-        return new Label(value, new Label.LabelStyle(Assets.getBasicFont(size), color));
+        return new Label(value, new Label.LabelStyle(Assets.getMenuFont(size), color));
     }
 
     /**
-     * Method called to add a Menu Button to the Table
-     * @param table the Table where to add the Button
-     * @param colspan the column span the button should take
-     * @param padTop the padding to the top
+     * Method called to add a Menu Button to the Screen
      */
-    protected void addMenuButton(Table table, int colspan, float padTop) {
-        TextButton buttonMenu = new TextButton("Menu", Assets.menuSkin);
-        setButtonListener(buttonMenu, new Runnable() {
+    protected void addMenuButton() {
+        this.menuButton = addButton(0, BUTTONS_BEGINNING - BUTTON_GAP * 6, new Color(187 / 255f, 172 / 255f, 157 / 255f, BUTTON_OPACITY), "Menu", 42, Color.WHITE, new Runnable() {
             @Override
             public void run() {
                 game.setMenuScreen();
             }
         });
+    }
 
-        table.add(buttonMenu).colspan(colspan).size(250, 60).padTop(padTop).row();
+    protected StripButton addButton(float x, float y, Color color, String label, int fontSize, Color fontColor, Runnable runnable) {
+        StripButton button = new StripButton(new Rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT), color, createLabel(label, fontSize, fontColor));
+        setButtonListener(button, runnable);
+        this.stage.addActor(button);
+        return button;
     }
 
     @Override

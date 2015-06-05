@@ -58,6 +58,8 @@ public class ColorGame extends Game {
 
 		this.musicManager.playMusic(MusicManager.MUSIC.MENU);
 
+		BaseScreen.init();
+
 		this.gameScreen           = new GameScreen(this);
 		this.levelSelectionScreen = new LevelSelectionScreen(this);
 		this.menuScreen           = new MenuScreen(this);
@@ -94,6 +96,7 @@ public class ColorGame extends Game {
 		LevelManager.disposeLevels();
 		GraphicManager.dispose();
 		this.musicManager.dispose();
+		BaseScreen.disposeAnimations();
 	}
 
 	public void reset() {

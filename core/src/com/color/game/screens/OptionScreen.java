@@ -1,12 +1,9 @@
 package com.color.game.screens;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
 
@@ -26,9 +23,6 @@ public class OptionScreen extends BaseScreen {
         super(game);
 
         Table table = new Table();
-        // Background of the OptionScreen
-        this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
-        table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
 
         // Title of the Screen
         table.add(createLabel("Options", 32, Color.WHITE)).colspan(2).row();
@@ -39,7 +33,7 @@ public class OptionScreen extends BaseScreen {
         addSliders(table);
 
         // Menu Button
-        addMenuButton(table, 2, 80);
+        addMenuButton();
 
         table.setFillParent(true);
         stage.addActor(table);

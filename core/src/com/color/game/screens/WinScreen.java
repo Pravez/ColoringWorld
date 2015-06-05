@@ -56,10 +56,9 @@ public class WinScreen extends BaseScreen {
     public WinScreen(ColorGame game) {
         super(game);
 
-        init();
+        initScreen();
 
         Table table  = new Table();
-        table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
 
         // Title
         table.add(createLabel("You won !", 28, TEXT_COLOR)).padBottom(30).colspan(2).row();
@@ -79,7 +78,7 @@ public class WinScreen extends BaseScreen {
         initSentences();
     }
 
-    private void init() {
+    private void initScreen() {
         this.starTexture      = Assets.manager.get("sprites/star.png", Texture.class);
         this.emptyStarTexture = Assets.manager.get("sprites/star-empty.png", Texture.class);
 
@@ -87,7 +86,6 @@ public class WinScreen extends BaseScreen {
         this.silverStar = new Image();
         this.goldStar   = new Image();
 
-        this.texture    = new Texture(Gdx.files.internal("backgrounds/background0.png"));
         this.scoreTimer = new Timer();
     }
 

@@ -29,9 +29,6 @@ public class LevelSelectionScreen extends BaseScreen {
         super(game);
 
         Table table = new Table();
-        // Background of the Screen
-        this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
-        table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
 
         this.starDrawable = new SpriteDrawable(new Sprite(Assets.manager.get("sprites/star.png", Texture.class)));
 
@@ -42,7 +39,7 @@ public class LevelSelectionScreen extends BaseScreen {
         addLevelButtons(table);
 
         // Menu Button
-        addMenuButton(table, 2, 80);
+        addMenuButton();
 
         table.setFillParent(true);
         stage.addActor(table);

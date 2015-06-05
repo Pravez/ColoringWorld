@@ -44,7 +44,7 @@ public class LightManager {
     // Character
     private static final float CHARACTER_LIGHT_WIDTH = 20f;
     // Exit
-    private static final float EXIT_LIGHT_WIDTH = 10f;
+    private static final float EXIT_LIGHT_WIDTH = 200f;
     private static final float EXIT_LIGHT_MIN = 5f;
     // Windblower
     private static final float BLOWER_LIGHT_INTENSITY = 2.0f;
@@ -256,7 +256,9 @@ public class LightManager {
 
     public void addExitLights(Exit exit) {
         Vector2 position = exit.getPosition();
-        this.exitLights.put(exit, new PointLight(this.rayHandler, 5, Color.CYAN, EXIT_LIGHT_MIN, position.x, position.y));
+        PointLight light = new PointLight(this.rayHandler, 5, Color.CYAN, EXIT_LIGHT_MIN, position.x, position.y);
+        light.setXray(true);
+        this.exitLights.put(exit, light);
     }
 
     public void addTeleporterLights(Teleporter teleporter) {

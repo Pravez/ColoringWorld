@@ -73,7 +73,6 @@ With this, you will be able to have an overview of the game and its future.
 * animation of death : the game runs slower
 * add music
 
-
 ## Version 0.6 - Bonuses
 * definition of more complex level exit (code to enter, keys to find, color to activate, …)
 * (10 more levels)

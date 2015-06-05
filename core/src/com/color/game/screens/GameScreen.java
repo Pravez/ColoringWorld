@@ -98,6 +98,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         this.colorCommandManager = new ColorCommandManager();
 
         this.runnables = new Array<>();
+
     }
 
     /**
@@ -148,6 +149,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         LevelManager.getCurrentLevel().restart();
         respawn();
         this.restart = false;
+        LevelManager.getCurrentLevel().graphicManager.lightManager.makeItBloody();
     }
 
     /**
@@ -242,6 +244,7 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         camera.update();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
 
         handlePause();
 

@@ -88,7 +88,6 @@ public class TiledPlatforms extends TiledStaticElements {
 
             return 1 + fillLayerRows(row+1, col, width);
         }
-
         return 0;
     }
 
@@ -106,9 +105,9 @@ public class TiledPlatforms extends TiledStaticElements {
      */
     @Override
     protected void createBodies(){
-        for(TiledCell cell : finalElements.keySet()){
-            Vector2 datas = finalElements.get(cell);
-            level.addActor(new Platform(new Vector2(cell.posX * unitSize, cell.posY * unitSize), datas.x * unitSize, datas.y * unitSize, level));
+        for(TiledCell cell : this.finalElements.keySet()){
+            Vector2 datas = this.finalElements.get(cell);
+            this.level.addActor(new Platform(new Vector2(cell.posX * unitSize, cell.posY * unitSize), datas.x * unitSize, datas.y * unitSize, level));
         }
     }
 }

@@ -23,7 +23,7 @@
   <object id="83" name="1" x="672" y="416" width="128" height="256">
    <properties>
     <property name="activated" value="false"/>
-    <property name="direction" value="NORTH"/>
+    <property name="direction" value="SOUTH"/>
    </properties>
   </object>
  </objectgroup>

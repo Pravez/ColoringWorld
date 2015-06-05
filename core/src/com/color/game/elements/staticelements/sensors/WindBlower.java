@@ -10,15 +10,17 @@ import com.color.game.levels.Level;
  */
 public class WindBlower extends Sensor {
 
-    private static final float PUSH_FORCE = 60f;
+    private static final float PUSH_FORCE = 40f;
     final private PushCommand pushCommand;
     final private Vector2 force;
+    final private WindDirection direction;
 
     public WindBlower(Vector2 position, float width, float height, Level level, WindDirection direction) {
         super(position, width, height, level.map);
         Vector2 coordinates = direction.toCoordinates();
         this.force = new Vector2(coordinates.x * PUSH_FORCE, coordinates.y * PUSH_FORCE);
         this.pushCommand = new PushCommand();
+        this.direction = direction;
 
         level.graphicManager.addWindBlower(direction, this);
     }
@@ -38,5 +40,9 @@ public class WindBlower extends Sensor {
     @Override
     public void endAct() {
         this.pushCommand.end();
+    }
+
+    public WindDirection getDirection() {
+        return direction;
     }
 }

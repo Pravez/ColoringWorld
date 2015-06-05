@@ -17,5 +17,6 @@ public class Platform extends BaseStaticElement {
         super(position, width, height, level.map, PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);
         this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.PLATFORM));
         level.addPlatform(this);
+
     }
 }

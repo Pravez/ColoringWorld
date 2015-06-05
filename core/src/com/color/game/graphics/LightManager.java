@@ -36,8 +36,7 @@ public class LightManager {
     private static final float COLOR_LIGHT_WIDTH = 1.6f;
     private static final float ENEMY_LIGHT_WIDTH = 6f;
     // Ambient light animation
-    private static final Color MIN_AMBIENT_LIGHT = new Color(1, 1, 1, 0.2f);
-    private static final Color MAX_AMBIENT_LIGHT = new Color(1, 1, 1, 0.4f);
+
     private static final float AMBIENT_CHANGE_DELAY = 3.0f;
     // Color light animation
     private static final float COLOR_LIGHT_ACTIVATION_DELAY = 0.2f;
@@ -51,6 +50,9 @@ public class LightManager {
     private static final float BLOWER_LIGHT_INTENSITY = 2.0f;
 
     private HashMap<ColorPlatform, Array<PointLight>> colorLights;
+
+    private Color minAmbientLight;
+    private Color maxAmbientLight;
 
     /**
      * Light tools
@@ -70,13 +72,20 @@ public class LightManager {
     private float timePassed = 0;
 
     public LightManager(Level level) {
+
+        minAmbientLight = randomizeBackgroundColor(0.1f);
+        maxAmbientLight = randomizeBackgroundColor(0.3f);
+
         this.colorLights = new HashMap<>();
         this.exitLights  = new HashMap<>();
         this.enemyLights = new HashMap<>();
         this.windLights  = new HashMap<>();
         this.rayHandler  = new RayHandler(level.getWorld());
-        this.rayHandler.setAmbientLight(MIN_AMBIENT_LIGHT);
+        this.rayHandler.setAmbientLight(minAmbientLight);
         this.characterLight = new PointLight(this.rayHandler, 50, Color.WHITE, CHARACTER_LIGHT_WIDTH, 5, 5);
+
+        ambientLight = new Color(minAmbientLight);
+        ambientTarget = maxAmbientLight;
     }
 
     public void dispose() {
@@ -84,12 +93,20 @@ public class LightManager {
     }
 
     public static void init() {
-        ambientLight = new Color(MIN_AMBIENT_LIGHT);
-        ambientTarget = MAX_AMBIENT_LIGHT;
 
         lightCamera = new OrthographicCamera();
         lightCamera.setToOrtho(false, 1.0f * Gdx.graphics.getWidth() / BaseElement.WORLD_TO_SCREEN, 1.0f * Gdx.graphics.getHeight() / BaseElement.WORLD_TO_SCREEN);
         PointLight.setContactFilter(PhysicComponent.CATEGORY_SCENERY, (short) 0, PhysicComponent.MASK_SCENERY);
+    }
+
+    public Color randomizeBackgroundColor(float alpha){
+        Random r = new Random();
+        return new Color(r.nextFloat() * (0.5f - 0.2f) + 0.1f,r.nextFloat() * (0.7f - 0.3f) + 0.1f,r.nextFloat() * (0.7f - 0.3f) + 0.1f, alpha);
+    }
+
+    public void makeItBloody(){
+        minAmbientLight.r += 0.025f;
+        maxAmbientLight.r += 0.025f;
     }
 
     /**
@@ -100,7 +117,7 @@ public class LightManager {
         /** AMBIENT LIGHT LERP **/
         if (this.timePassed > AMBIENT_CHANGE_DELAY) {
             this.timePassed = 0;
-            ambientTarget = (ambientTarget == MIN_AMBIENT_LIGHT) ? MAX_AMBIENT_LIGHT : MIN_AMBIENT_LIGHT;
+            ambientTarget = (ambientTarget == minAmbientLight) ? maxAmbientLight : minAmbientLight;
         }
         ambientLight.lerp(ambientTarget, delta/AMBIENT_CHANGE_DELAY);
         this.rayHandler.setAmbientLight(ambientLight);
@@ -143,15 +160,27 @@ public class LightManager {
 
     public void renderWindBlowerLight(WindBlower blower) {
         for (PointLight light : this.windLights.get(blower)) {
-            //Defining datas
-            float y = light.getY() + 0.5f;
-            float ymax = blower.getWorldBounds().height/2 + blower.getPosition().y;
-            float distance = (y*100)/ymax;
+
+            WindDirection direction = blower.getDirection();
+
+            Vector2 changing = direction.toCoordinates().scl(light.getPosition());
+            changing.x = Math.abs(changing.x);
+            changing.y = Math.abs(changing.y);
+            Vector2 maxValue = direction.adaptBlowerMaxValue(blower.getWorldBounds().width/2, blower.getWorldBounds().height/2, blower.getPosition());
+            float moving = ((new Random().nextInt(21) - 10) / 18.0f);
+            direction.addValue(changing, 0.5f);
+            if(changing.x == 0){
+                changing.x += light.getX() + moving;
+            }else{
+                changing.y += light.getY() + moving;
+            }
+            float distance = direction.calculatePercentage(changing, maxValue, blower.getPosition());
+            System.out.println(distance);
 
             //Modifying position
-            light.setPosition(light.getX(), y);
-            light.setPosition(light.getX()+((new Random().nextInt(21) - 10) / 18.0f), light.getY());
-            if (y > ymax) {
+            light.setPosition(changing);
+
+            if (direction.isReached(changing, maxValue)) {
                 light.setActive(false);
                 this.windLights.get(blower).removeValue(light, true);
             }else if (distance > 50){
@@ -171,8 +200,9 @@ public class LightManager {
      */
     public void generateWind(Rectangle bounds, WindBlower blower){
         Random r = new Random();
+        Vector2 position = blower.getDirection().getBase(bounds, true);
 
-        this.windLights.get(blower).add(new PointLight(this.rayHandler, 4, Color.WHITE, BLOWER_LIGHT_INTENSITY, bounds.x + (2.0f + r.nextInt(6)) * bounds.width / 10, bounds.y));
+        this.windLights.get(blower).add(new PointLight(this.rayHandler, 4, Color.WHITE, BLOWER_LIGHT_INTENSITY, position.x, position.y));
     }
 
     public void renderEnemyLight(Enemy enemy) {

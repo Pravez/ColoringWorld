@@ -4,12 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
@@ -31,10 +28,6 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
 
         Table table = new Table();
 
-        // Background of the MenuScreen
-        this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
-        table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
-
         // Title
         table.add(createLabel("Key Controls", 32, Color.WHITE)).row();
 
@@ -42,7 +35,7 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
         addKeyModifiers(table);
 
         // Menu Button
-        addMenuButton(table, 2, 80);
+        addMenuButton();
 
         // Already Used Message
         this.usedMessage = new Label("This key is already used", Assets.menuSkin);

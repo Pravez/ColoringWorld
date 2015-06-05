@@ -2,25 +2,18 @@ package com.color.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
+import com.color.game.gui.StripButton;
 
 /**
  * MenuScreen to show the menu of the game
  */
 public class MenuScreen extends BaseScreen {
-
-    private static final float BUTTON_WIDTH  = 250;
-    private static final float BUTTON_HEIGHT = 60;
-    private static final float BUTTON_GAP    = 20;
 
     /**
      * Constructor of the MenuScreen
@@ -29,60 +22,48 @@ public class MenuScreen extends BaseScreen {
     public MenuScreen(final ColorGame game) {
         super(game);
 
-        Table table = new Table();
-        // Background of the MenuScreen
-        this.texture = Assets.manager.get("backgrounds/background0.png", Texture.class);
-        table.setBackground(new SpriteDrawable(new Sprite(this.texture)));
-
-        // Title of the game
-        addTitle(table, "WELT FARBEN ACH YA !");
-
-        // Buttons of the menu
-        addButton(table, "Play", new Runnable() {
+        addButton(0, BUTTONS_BEGINNING, new Color(173 / 255f, 44 / 255f, 38 / 255f, BUTTON_OPACITY), "Play", 42, Color.WHITE, new Runnable() {
             @Override
             public void run() {
                 game.setGameScreen();
             }
         });
-        addButton(table, "Levels", new Runnable() {
+        addButton(0, BUTTONS_BEGINNING - BUTTON_GAP, new Color(62 / 255f, 57 / 255f, 250 / 255f, BUTTON_OPACITY), "Levels", 42, Color.WHITE, new Runnable() {
             @Override
             public void run() {
                 game.setLevelSelectionScreen();
             }
         });
-        addButton(table, "Options", new Runnable() {
+        addButton(0, BUTTONS_BEGINNING - BUTTON_GAP * 2, new Color(250 / 255f, 221 / 255f, 18 / 255f, BUTTON_OPACITY), "Options", 42, Color.WHITE, new Runnable() {
             @Override
             public void run() {
                 game.setOptionScreen();
             }
         });
-        addButton(table, "Keys", new Runnable() {
+        addButton(0, BUTTONS_BEGINNING - BUTTON_GAP * 3, new Color(93 / 255f, 9 / 255f, 122 / 255f, BUTTON_OPACITY), "Keys", 42, Color.WHITE, new Runnable() {
             @Override
             public void run() {
                 game.setKeysScreen();
             }
         });
-        addButton(table, "Reset", new Runnable() {
+        addButton(0, BUTTONS_BEGINNING - BUTTON_GAP * 4, new Color(9 / 255f, 127 / 255f, 10 / 255f, BUTTON_OPACITY), "Reset", 42, Color.WHITE, new Runnable() {
             @Override
             public void run() {
                 game.reset();
             }
         });
-        addButton(table, "Credits", new Runnable() {
+        addButton(0, BUTTONS_BEGINNING - BUTTON_GAP * 5, new Color(250 / 255f, 151 / 255f, 21 / 255f, BUTTON_OPACITY), "Credits", 42, Color.WHITE, new Runnable() {
             @Override
             public void run() {
                 game.setCreditsScreen();
             }
         });
-        addButton(table, "Exit", new Runnable() {
+        addButton(0, BUTTONS_BEGINNING - BUTTON_GAP * 6, new Color(187 / 255f, 172 / 255f, 157 / 255f, BUTTON_OPACITY), "Exit", 42, Color.WHITE, new Runnable() {
             @Override
             public void run() {
                 Gdx.app.exit();
             }
         });
-
-        table.setFillParent(true);
-        stage.addActor(table);
     }
 
     private void addTitle(Table table, String text) {
@@ -92,7 +73,7 @@ public class MenuScreen extends BaseScreen {
 
     private void addButton(Table table, String text, Runnable runnable) {
         TextButton textButton = new TextButton(text, Assets.menuSkin);
-        table.add(textButton).size(BUTTON_WIDTH, BUTTON_HEIGHT).padBottom(BUTTON_GAP).row();
+        table.add(textButton).size(BUTTON_WIDTH, BUTTON_HEIGHT).padBottom(BUTTON_PADDING).row();
         setButtonListener(textButton, runnable);
     }
 }

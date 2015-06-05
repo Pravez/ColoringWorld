@@ -22,6 +22,8 @@ import com.color.game.elements.staticelements.platforms.DeadlyPlatform;
 import com.color.game.elements.staticelements.sensors.Notice;
 import com.color.game.elements.staticelements.sensors.Teleporter;
 import com.color.game.elements.staticelements.sensors.WindBlower;
+import com.color.game.gui.AnimatedCube;
+import com.color.game.gui.StripButton;
 
 import java.util.HashMap;
 
@@ -44,6 +46,7 @@ public class Assets {
     private static FileHandle basicFont;
     private static FileHandle bebasFont;
     private static FileHandle groboldFont;
+    private static FileHandle menuFont;
 
     private static HashMap<Class<?>, Texture> textures;
 
@@ -56,14 +59,16 @@ public class Assets {
      */
     public static void queueLoading() {
         // Backgrounds
+        manager.load("backgrounds/background.png", Texture.class);
         manager.load("backgrounds/background0.png", Texture.class);
         manager.load("backgrounds/background1.png", Texture.class);
         manager.load("backgrounds/white.png", Texture.class);
 
         // Fonts
-        basicFont = new FileHandle("fonts/Future-Earth.ttf");
-        bebasFont = new FileHandle("fonts/BebasNeue.otf");
+        basicFont   = new FileHandle("fonts/Future-Earth.ttf");
+        bebasFont   = new FileHandle("fonts/BebasNeue.otf");
         groboldFont = new FileHandle("fonts/grobold.ttf");
+        menuFont    = new FileHandle("fonts/Cashew Apple Ale Bold.ttf");
 
         // Musics
         manager.load("musics/main_music_final.mp3", Music.class);
@@ -91,6 +96,8 @@ public class Assets {
         manager.load("sprites/fireflies.png", Texture.class);
         manager.load("sprites/exit.png", Texture.class);
         manager.load("sprites/color.png", Texture.class);
+        manager.load("sprites/cube.png", Texture.class);
+        manager.load("sprites/triangle.png", Texture.class);
 
         manager.load("sprites/star.png", Texture.class);
         manager.load("sprites/star-empty.png", Texture.class);
@@ -121,6 +128,8 @@ public class Assets {
         Assets.textures.put(Vector2.class, Assets.manager.get("sprites/light.png", Texture.class));
         Assets.textures.put(Exit.class, Assets.manager.get("sprites/exit.png", Texture.class));
         Assets.textures.put(Enemy.class, Assets.manager.get("sprites/enemy.png", Texture.class));
+        Assets.textures.put(AnimatedCube.class, Assets.manager.get("sprites/cube.png", Texture.class));
+        Assets.textures.put(StripButton.class, Assets.manager.get("sprites/triangle.png", Texture.class));
     }
 
     public static Texture getTexture(Class<?> type) {
@@ -176,6 +185,15 @@ public class Assets {
         parameter.size = size;
         parameter.borderColor = Color.BLACK;
         parameter.borderWidth = 1;
+        BitmapFont font = generator.generateFont(parameter);
+        generator.dispose();
+        return font;
+    }
+
+    public static BitmapFont getMenuFont(int size) {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.menuFont);
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = size;
         BitmapFont font = generator.generateFont(parameter);
         generator.dispose();
         return font;

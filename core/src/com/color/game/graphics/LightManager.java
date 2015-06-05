@@ -36,8 +36,7 @@ public class LightManager {
     private static final float COLOR_LIGHT_WIDTH = 1.6f;
     private static final float ENEMY_LIGHT_WIDTH = 6f;
     // Ambient light animation
-    private static final Color MIN_AMBIENT_LIGHT = new Color(1, 1, 1, 0.2f);
-    private static final Color MAX_AMBIENT_LIGHT = new Color(1, 1, 1, 0.4f);
+
     private static final float AMBIENT_CHANGE_DELAY = 3.0f;
     // Color light animation
     private static final float COLOR_LIGHT_ACTIVATION_DELAY = 0.2f;
@@ -51,6 +50,9 @@ public class LightManager {
     private static final float BLOWER_LIGHT_INTENSITY = 2.0f;
 
     private HashMap<ColorPlatform, Array<PointLight>> colorLights;
+
+    private Color minAmbientLight;
+    private Color maxAmbientLight;
 
     /**
      * Light tools
@@ -70,13 +72,20 @@ public class LightManager {
     private float timePassed = 0;
 
     public LightManager(Level level) {
+
+        minAmbientLight = randomizeBackgroundColor(0.1f);
+        maxAmbientLight = randomizeBackgroundColor(0.3f);
+
         this.colorLights = new HashMap<>();
         this.exitLights  = new HashMap<>();
         this.enemyLights = new HashMap<>();
         this.windLights  = new HashMap<>();
         this.rayHandler  = new RayHandler(level.getWorld());
-        this.rayHandler.setAmbientLight(MIN_AMBIENT_LIGHT);
+        this.rayHandler.setAmbientLight(minAmbientLight);
         this.characterLight = new PointLight(this.rayHandler, 50, Color.WHITE, CHARACTER_LIGHT_WIDTH, 5, 5);
+
+        ambientLight = new Color(minAmbientLight);
+        ambientTarget = maxAmbientLight;
     }
 
     public void dispose() {
@@ -84,12 +93,20 @@ public class LightManager {
     }
 
     public static void init() {
-        ambientLight = new Color(MIN_AMBIENT_LIGHT);
-        ambientTarget = MAX_AMBIENT_LIGHT;
 
         lightCamera = new OrthographicCamera();
         lightCamera.setToOrtho(false, 1.0f * Gdx.graphics.getWidth() / BaseElement.WORLD_TO_SCREEN, 1.0f * Gdx.graphics.getHeight() / BaseElement.WORLD_TO_SCREEN);
         PointLight.setContactFilter(PhysicComponent.CATEGORY_SCENERY, (short) 0, PhysicComponent.MASK_SCENERY);
+    }
+
+    public Color randomizeBackgroundColor(float alpha){
+        Random r = new Random();
+        return new Color(r.nextFloat() * (0.5f - 0.2f) + 0.1f,r.nextFloat() * (0.7f - 0.3f) + 0.1f,r.nextFloat() * (0.7f - 0.3f) + 0.1f, alpha);
+    }
+
+    public void makeItBloody(){
+        minAmbientLight.r += 0.025f;
+        maxAmbientLight.r += 0.025f;
     }
 
     /**
@@ -100,7 +117,7 @@ public class LightManager {
         /** AMBIENT LIGHT LERP **/
         if (this.timePassed > AMBIENT_CHANGE_DELAY) {
             this.timePassed = 0;
-            ambientTarget = (ambientTarget == MIN_AMBIENT_LIGHT) ? MAX_AMBIENT_LIGHT : MIN_AMBIENT_LIGHT;
+            ambientTarget = (ambientTarget == minAmbientLight) ? maxAmbientLight : minAmbientLight;
         }
         ambientLight.lerp(ambientTarget, delta/AMBIENT_CHANGE_DELAY);
         this.rayHandler.setAmbientLight(ambientLight);

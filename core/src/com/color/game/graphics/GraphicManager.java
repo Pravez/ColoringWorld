@@ -55,7 +55,7 @@ public class GraphicManager {
     private static SpriteBatch   batch;
     private static ShapeRenderer renderer;
 
-    private LightManager lightManager;
+    public LightManager lightManager;
 
     private static Color characterColor;
 

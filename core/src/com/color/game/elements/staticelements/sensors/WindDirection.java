@@ -31,6 +31,12 @@ public enum WindDirection {
         return coordinates;
     }
 
+    /**
+     * Method to check according to the direction if a vector2 has reached a position
+     * @param actualVector
+     * @param maxVector
+     * @return
+     */
     public boolean isReached(Vector2 actualVector, Vector2 maxVector){
         switch(this){
             case NORTH:
@@ -46,6 +52,11 @@ public enum WindDirection {
         }
     }
 
+    /**
+     * Method to add a value to a vector 2 according to a direction
+     * @param vector
+     * @param value
+     */
     public void addValue(Vector2 vector, float value){
         switch(this){
             case NORTH:
@@ -63,6 +74,13 @@ public enum WindDirection {
         }
     }
 
+    /**
+     * Method to adapt the max value (distance) of a blower, according to his direction
+     * @param width
+     * @param height
+     * @param position
+     * @return
+     */
     public Vector2 adaptBlowerMaxValue(float width, float height, Vector2 position){
         switch (this){
             case NORTH:
@@ -78,6 +96,13 @@ public enum WindDirection {
         }
     }
 
+    /**
+     * Method to calculate percentage of distance between two values, with a basis, according to a direction.
+     * @param actualVector
+     * @param maxVector
+     * @param basis
+     * @return
+     */
     public float calculatePercentage(Vector2 actualVector, Vector2 maxVector, Vector2 basis){
         switch(this){
             case NORTH:
@@ -116,6 +141,13 @@ public enum WindDirection {
         return null;
     }
 
+    /**
+     * Method to get the base of the bounds according to a direction. The gap is there to randomize a position
+     * on the base.
+     * @param bounds
+     * @param gap
+     * @return
+     */
     public Vector2 getBase(Rectangle bounds, boolean gap) {
         float gapValue = 0;
         if(gap){

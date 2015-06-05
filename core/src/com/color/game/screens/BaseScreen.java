@@ -36,7 +36,7 @@ public class BaseScreen implements Screen, InputProcessor {
     public final static int BUTTON_SIZE = 42;
     public final static int TITLE_SIZE = 72;
     public final static int TEXT_SIZE = 64;
-    public final static int SMALL_TEXT_SIZE = 50;
+    public final static int SMALL_TEXT_SIZE = 40;
 
     static final float BUTTON_WIDTH  = 250;
     static final float BUTTON_HEIGHT = 50;

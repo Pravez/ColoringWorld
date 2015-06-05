@@ -142,7 +142,7 @@ public class WinScreen extends BaseScreen {
     private void addMessages(Table table) {
         this.newBestScore = createLabel("New Best Score !", SMALL_TEXT_SIZE, Color.ORANGE);
         this.message      = createLabel("", SMALL_TEXT_SIZE, TEXT_COLOR);
-        this.space        = createLabel("Press SPACE to continue", TEXT_SIZE, TEXT_COLOR);
+        this.space        = createLabel("Press SPACE to continue", SMALL_TEXT_SIZE, TEXT_COLOR);
 
         table.add(this.newBestScore).padTop(120).colspan(2).row();
         table.add(this.message).padTop(20).colspan(2).row();

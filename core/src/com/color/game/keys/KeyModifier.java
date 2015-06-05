@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.color.game.assets.Assets;
+import com.color.game.screens.BaseScreen;
 
 public class KeyModifier {
 
@@ -27,8 +28,8 @@ public class KeyModifier {
 
     public KeyModifier(Key key) {
         this.key = key;
-        this.label = new Label(this.key.getUse() + " : ", Assets.menuSkin);
-        this.value = new Label(Input.Keys.toString(this.key.getCode()), new Label.LabelStyle(Assets.getBasicFont(22), Color.WHITE));
+        this.label = BaseScreen.createLabel(this.key.getUse() + " ; ", BaseScreen.TEXT_SIZE, BaseScreen.TEXT_COLOR);
+        this.value = BaseScreen.createLabel(Input.Keys.toString(this.key.getCode()), BaseScreen.TEXT_SIZE, BaseScreen.TEXT_COLOR);
 
         this.table = new Table(Assets.menuSkin);
 

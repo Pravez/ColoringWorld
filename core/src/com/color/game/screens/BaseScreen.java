@@ -30,6 +30,14 @@ import com.color.game.gui.StripButton;
  */
 public class BaseScreen implements Screen, InputProcessor {
 
+    /**
+     * Default size to have homogeneous texts
+     */
+    public final static int BUTTON_SIZE = 42;
+    public final static int TITLE_SIZE = 72;
+    public final static int TEXT_SIZE = 64;
+    public final static int SMALL_TEXT_SIZE = 50;
+
     static final float BUTTON_WIDTH  = 250;
     static final float BUTTON_HEIGHT = 50;
     static final float BUTTON_GAP = 60;
@@ -38,13 +46,13 @@ public class BaseScreen implements Screen, InputProcessor {
 
     static final float BUTTONS_BEGINNING = 400;
 
-    protected final static Color TEXT_COLOR = new Color(142f/255, 188f/255, 224f/255, 1);
+    public final static Color TITLE_COLOR = Color.DARK_GRAY;//new Color(142f/255, 188f/255, 224f/255, 1);
+    public final static Color TEXT_COLOR = new Color(110f/255, 109f/255, 106f/255, 1);
 
     final ColorGame game;
 
     protected Stage     stage;
     private static Stage     backStage;
-    private StripButton menuButton;
 
     /**
      * Constructor of the BaseScreen
@@ -68,9 +76,6 @@ public class BaseScreen implements Screen, InputProcessor {
     }
 
     private static void addAnimatedCubes() {
-        //backStage.addActor(new AnimatedCube(new Rectangle(500, 400, 60, 60), new Color(187/255f, 172/255f, 157/255f, 0.8f), 20, true, false));
-        //backStage.addActor(new AnimatedCube(new Rectangle(600, 300, 80, 80), new Color(52/255f, 172/255f, 157/255f, 0.8f), 10, true, true));
-
         Array<Color> colors = new Array<>();
         colors.add(new Color(187/255f, 172/255f, 157/255f, 0.8f));
         colors.add(new Color(52/255f, 172/255f, 157/255f, 0.8f));
@@ -93,9 +98,6 @@ public class BaseScreen implements Screen, InputProcessor {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(this.stage);
-        if (this.menuButton != null) {
-            this.menuButton.reset();
-        }
     }
 
     /**
@@ -168,7 +170,7 @@ public class BaseScreen implements Screen, InputProcessor {
      * @param color the color of the text
      * @return the Label created
      */
-    protected Label createLabel(String value, int size, Color color) {
+    public static Label createLabel(String value, int size, Color color) {
         return new Label(value, new Label.LabelStyle(Assets.getMenuFont(size), color));
     }
 
@@ -176,7 +178,7 @@ public class BaseScreen implements Screen, InputProcessor {
      * Method called to add a Menu Button to the Screen
      */
     protected void addMenuButton() {
-        this.menuButton = addButton(0, BUTTONS_BEGINNING - BUTTON_GAP * 6, new Color(187 / 255f, 172 / 255f, 157 / 255f, BUTTON_OPACITY), "Menu", 42, Color.WHITE, new Runnable() {
+        addButton(0, BUTTONS_BEGINNING - BUTTON_GAP * 6, new Color(187 / 255f, 172 / 255f, 157 / 255f, BUTTON_OPACITY), "Menu", BUTTON_SIZE, Color.WHITE, new Runnable() {
             @Override
             public void run() {
                 game.setMenuScreen();
@@ -184,11 +186,10 @@ public class BaseScreen implements Screen, InputProcessor {
         });
     }
 
-    protected StripButton addButton(float x, float y, Color color, String label, int fontSize, Color fontColor, Runnable runnable) {
+    protected void addButton(float x, float y, Color color, String label, int fontSize, Color fontColor, Runnable runnable) {
         StripButton button = new StripButton(new Rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT), color, createLabel(label, fontSize, fontColor));
         setButtonListener(button, runnable);
         this.stage.addActor(button);
-        return button;
     }
 
     @Override

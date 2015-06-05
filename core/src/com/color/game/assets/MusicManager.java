@@ -48,6 +48,17 @@ public class MusicManager {
         this.musics.get(musics).setLooping(true);
     }
 
+    public boolean isPlaying(MUSIC musics) {
+        return this.musics.get(musics).isPlaying();
+    }
+
+    public boolean isPlaying() {
+        for (Music music : this.musics.values())
+            if (music.isPlaying())
+                return true;
+        return false;
+    }
+
     public void dispose() {
         for (Music music : this.musics.values())
             music.dispose();

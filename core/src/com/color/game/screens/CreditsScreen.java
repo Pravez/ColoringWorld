@@ -16,11 +16,11 @@ public class CreditsScreen extends BaseScreen {
 
         Table table = new Table();
 
-        table.add(createLabel("Credits", 32, TEXT_COLOR)).padBottom(50).row();
+        table.add(createLabel("Credits", TITLE_SIZE, TITLE_COLOR)).padBottom(50).row();
 
-        table.add(createLabel("Made by :", 28, TEXT_COLOR)).row();
-        table.add(createLabel("Alexis Dufrenne", 30, Color.WHITE)).row();
-        table.add(createLabel("Paul Breton", 30, Color.WHITE)).row();
+        table.add(createLabel("Made by ;", TEXT_SIZE, TEXT_COLOR)).row();
+        table.add(createLabel("Alexis Dufrenne", TEXT_SIZE, TEXT_COLOR)).row();
+        table.add(createLabel("Paul Breton", TEXT_SIZE, TEXT_COLOR)).row();
 
         addMenuButton();
 

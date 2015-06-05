@@ -277,7 +277,8 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
                 @Override
                 public void run() {
                     run = true;
-                    game.setDeathScreen();
+                    restart();
+                    //game.setDeathScreen();
                 }
             }, DEATH_DELAY);
         }

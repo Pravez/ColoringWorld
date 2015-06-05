@@ -56,12 +56,6 @@ public class StripButton extends Actor {
         return clickListener.isOver();
     }
 
-    public void reset() {
-        this.setColor(this.originalColor);
-        this.setWidth(this.originalWidth);
-        this.label.setX(getX() + TEXT_POS * getWidth());
-    }
-
     @Override
     public void act(float delta) {
         super.act(delta);

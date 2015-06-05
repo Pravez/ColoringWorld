@@ -13,6 +13,7 @@ import com.color.game.ColorGame;
 import com.color.game.assets.Assets;
 import com.color.game.command.colors.ColorCommand;
 import com.color.game.keys.KeyEffect;
+import com.color.game.screens.BaseScreen;
 
 /**
  * ColorGauge, the class to show graphically the delay between two activation of a color command
@@ -41,8 +42,8 @@ public class ColorGauge {
         this.shapeRenderer = new ShapeRenderer();
         this.time = ColorCommand.COLOR_DELAY;
 
-        this.key = new Label(Input.Keys.toString(((ColorGame) Gdx.app.getApplicationListener()).keys.getKeyCode(effect)), new Label.LabelStyle(Assets.getBasicFont(18), color));
-        this.key.setPosition(bounds.x + bounds.width/2 - this.key.getWidth()/2, bounds.y - 30);
+        this.key = BaseScreen.createLabel(Input.Keys.toString(((ColorGame) Gdx.app.getApplicationListener()).keys.getKeyCode(effect)), 40, color);
+        this.key.setPosition(bounds.x + bounds.width/2 - this.key.getWidth()/2, bounds.y - 40);
 
         this.effect = effect;
     }
@@ -97,7 +98,7 @@ public class ColorGauge {
 
         batch.begin();
         this.key.draw(batch, 1);
-        batch.draw(Assets.manager.get("sprites/bar.png", Texture.class), bounds.x, bounds.y, bounds.width, bounds.height);
+        //batch.draw(Assets.manager.get("sprites/bar.png", Texture.class), bounds.x, bounds.y, bounds.width, bounds.height);
     }
 
     /**

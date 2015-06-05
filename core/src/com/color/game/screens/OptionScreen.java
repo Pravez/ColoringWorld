@@ -25,11 +25,11 @@ public class OptionScreen extends BaseScreen {
         Table table = new Table();
 
         // Title of the Screen
-        table.add(createLabel("Options", 32, Color.WHITE)).colspan(2).row();
+        table.add(createLabel("Options", TITLE_SIZE, TITLE_COLOR)).colspan(2).row();
 
         // Music and Sound Sliders
-        this.musicValue = new Label(" " + (int) (game.musicManager.getVolume() * 10), Assets.menuSkin);
-        this.soundValue = new Label(" " + (int)(game.soundManager.getVolume() * 10), Assets.menuSkin);
+        this.musicValue = createLabel(" " + (int) (game.musicManager.getVolume() * 10), TEXT_SIZE, TEXT_COLOR);
+        this.soundValue = createLabel(" " + (int) (game.soundManager.getVolume() * 10), TEXT_SIZE, TEXT_COLOR);
         addSliders(table);
 
         // Menu Button
@@ -41,7 +41,7 @@ public class OptionScreen extends BaseScreen {
 
     private void addSliders(Table table) {
         // The Music Volume Slider
-        addVolumeSlider(table, "Music Volume : ", this.musicValue, this.game.musicManager.getVolume(), new ChangeListener() {
+        addVolumeSlider(table, "Music Volume ; ", this.musicValue, this.game.musicManager.getVolume(), new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 game.musicManager.setVolume(((Slider) actor).getValue());
@@ -50,7 +50,7 @@ public class OptionScreen extends BaseScreen {
         });
 
         // The Sound Volume Slider
-        addVolumeSlider(table, "Sound Volume : ", this.soundValue, this.game.soundManager.getVolume(), new ChangeListener() {
+        addVolumeSlider(table, "Sound Volume ; ", this.soundValue, this.game.soundManager.getVolume(), new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.soundManager.setVolume(((Slider) actor).getValue());
@@ -61,7 +61,7 @@ public class OptionScreen extends BaseScreen {
     }
 
     private void addVolumeSlider(Table table, String text, Label value, float sliderValue, ChangeListener changeListener) {
-        Label label = new Label(text, Assets.menuSkin);
+        Label label = createLabel(text, TEXT_SIZE, TEXT_COLOR);
         table.add(label);
         Slider slider = new Slider(0.0f, 1.0f, 0.1f, false, Assets.menuSkin);
         slider.setValue(sliderValue);

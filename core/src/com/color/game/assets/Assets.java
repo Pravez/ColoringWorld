@@ -34,11 +34,7 @@ import java.util.HashMap;
  */
 public class Assets {
 
-    /**
-     * Default size to have homogeneous texts
-     */
-    public final static int TITLE_SIZE = 42;
-    public final static int TEXT_SIZE = 22;
+
 
     /**
      * The fileHandles for the different used fonts

@@ -36,8 +36,8 @@ public class GraphicManager {
     /**
      * Notice constants
      */
-    private static final int FONT_SIZE = 18;//14;
-    private static final int TEXT_WIDTH = 260;//200;
+    private static final int FONT_SIZE = 36;
+    private static final int TEXT_WIDTH = 260;
     private static final int TEXT_GAP = 20;
     private static final float NOTICE_DELAY = 0.15f;
 
@@ -95,7 +95,7 @@ public class GraphicManager {
         colorPlatformTexture = Assets.getTexture(ColorPlatform.class);
 
         noticeAnimation = new TextureAnimation(Assets.getTexture(Notice.class), 2, 2, NOTICE_DELAY);
-        fontCache       = new BitmapFontCache(Assets.getGroboldFont(FONT_SIZE));
+        fontCache       = new BitmapFontCache(Assets.getMenuFont(FONT_SIZE));
 
         background      = Assets.manager.get("sprites/back.png", Texture.class);
     }

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.color.game.gui.ColorGauge;
 import com.color.game.keys.KeyEffect;
 
 /**
@@ -28,9 +27,9 @@ public class Gauges extends Actor {
         float width = (bounds.width - 6)/3;
         float gap = 2;
 
-        this.redGauge    = new ColorGauge(new Rectangle(bounds.x, bounds.y, width, bounds.height), Color.RED, KeyEffect.RED);
-        this.yellowGauge = new ColorGauge(new Rectangle(bounds.x + width + gap, bounds.y, width, bounds.height), Color.YELLOW, KeyEffect.YELLOW);
-        this.blueGauge   = new ColorGauge(new Rectangle(bounds.x + width * 2 + gap * 2, bounds.y, width, bounds.height), Color.BLUE, KeyEffect.BLUE);
+        this.redGauge    = new ColorGauge(new Rectangle(bounds.x, bounds.y, width, bounds.height), new Color(173 / 255f, 44 / 255f, 38 / 255f, 1), KeyEffect.RED);
+        this.yellowGauge = new ColorGauge(new Rectangle(bounds.x + width + gap, bounds.y, width, bounds.height), new Color(250 / 255f, 221 / 255f, 18 / 255f, 1), KeyEffect.YELLOW);
+        this.blueGauge   = new ColorGauge(new Rectangle(bounds.x + width * 2 + gap * 2, bounds.y, width, bounds.height), new Color(62 / 255f, 57 / 255f, 250 / 255f, 1), KeyEffect.BLUE);
     }
 
     /**

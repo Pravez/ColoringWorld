@@ -29,7 +29,7 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
         Table table = new Table();
 
         // Title
-        table.add(createLabel("Key Controls", 32, Color.WHITE)).row();
+        table.add(createLabel("Key Controls", TITLE_SIZE, TITLE_COLOR)).row();
 
         // Keys Modifiers
         addKeyModifiers(table);
@@ -38,7 +38,7 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
         addMenuButton();
 
         // Already Used Message
-        this.usedMessage = new Label("This key is already used", Assets.menuSkin);
+        this.usedMessage = createLabel("This key is already used", TEXT_SIZE, TEXT_COLOR);
         this.usedMessage.setPosition((Gdx.graphics.getWidth() - this.usedMessage.getWidth())/2, this.usedMessage.getHeight());
 
         table.setFillParent(true);

@@ -33,7 +33,7 @@ public class LevelSelectionScreen extends BaseScreen {
         this.starDrawable = new SpriteDrawable(new Sprite(Assets.manager.get("sprites/star.png", Texture.class)));
 
         // Title
-        table.add(createLabel("Level Selection", 23, TEXT_COLOR)).row();
+        table.add(createLabel("Level Selection", TITLE_SIZE, TITLE_COLOR)).row();
 
         // Level Buttons
         addLevelButtons(table);

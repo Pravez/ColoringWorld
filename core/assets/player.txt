@@ -1,0 +1,30 @@
+Level 1
+UNLOCK
+7790
+Level 2
+UNLOCK
+3262
+Level 3
+UNLOCK
+9925
+Level 4
+UNLOCK
+1849
+Level 5
+UNLOCK
+26635
+Level 6
+UNLOCK
+26036
+Level 7
+UNLOCK
+0
+Level 8
+LOCK
+0
+Level 9
+LOCK
+0
+Level 10
+LOCK
+0

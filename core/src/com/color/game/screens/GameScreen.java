@@ -71,8 +71,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
 
     public boolean restart = false;
 
-    private Box2DDebugRenderer debugRenderer;
-
     /**
      * Current Lever
      */
@@ -94,7 +92,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         this.timer = new Timer();
 
         this.runningLevel = LevelManager.getCurrentLevelNumber();
-        debugRenderer = new Box2DDebugRenderer();
 
         uiStage = new UIStage(this);
 
@@ -245,7 +242,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
     public void render(float delta) {
         super.render(delta);
         camera.update();
-        debugRenderer.render(LevelManager.getCurrentLevel().getWorld(), camera.combined);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
@@ -425,7 +421,6 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
             Vector3 worldCoordinates = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(worldCoordinates);
             character.teleport(new Vector2(worldCoordinates.x / BaseElement.WORLD_TO_SCREEN, worldCoordinates.y / BaseElement.WORLD_TO_SCREEN));
-            System.out.println(character.getPosition());
         }
         return false;
     }

@@ -67,8 +67,8 @@ public class Assets {
         menuFont    = new FileHandle("fonts/Cashew Apple Ale Bold.ttf");
 
         // Musics
-        manager.load("musics/main_music_final.mp3", Music.class);
-        manager.load("musics/Blank_Holes_modified.mp3", Music.class);
+        manager.load("musics/Ether.mp3", Music.class);
+        manager.load("musics/Hydra.mp3", Music.class);
 
         // Sounds
         manager.load("sounds/click.mp3", Sound.class);

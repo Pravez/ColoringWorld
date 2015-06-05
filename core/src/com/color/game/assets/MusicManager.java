@@ -24,8 +24,8 @@ public class MusicManager {
 
     private void init() {
         this.musics = new HashMap<>();
-        this.musics.put(MUSIC.MENU, Assets.manager.get("musics/Blank_Holes_modified.mp3", Music.class));
-        this.musics.put(MUSIC.GAME, Assets.manager.get("musics/main_music_final.mp3", Music.class));
+        this.musics.put(MUSIC.MENU, Assets.manager.get("musics/Ether.mp3", Music.class));
+        this.musics.put(MUSIC.GAME, Assets.manager.get("musics/Hydra.mp3", Music.class));
         setVolume(this.volume);
     }
 

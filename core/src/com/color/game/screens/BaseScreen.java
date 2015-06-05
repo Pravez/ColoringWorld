@@ -36,7 +36,7 @@ public class BaseScreen implements Screen, InputProcessor {
     public final static int BUTTON_SIZE = 42;
     public final static int TITLE_SIZE = 72;
     public final static int TEXT_SIZE = 64;
-    public final static int SMALL_TEXT_SIZE = 50;
+    public final static int SMALL_TEXT_SIZE = 40;
 
     static final float BUTTON_WIDTH  = 250;
     static final float BUTTON_HEIGHT = 50;
@@ -48,6 +48,10 @@ public class BaseScreen implements Screen, InputProcessor {
 
     public final static Color TITLE_COLOR = Color.DARK_GRAY;//new Color(142f/255, 188f/255, 224f/255, 1);
     public final static Color TEXT_COLOR = new Color(110f/255, 109f/255, 106f/255, 1);
+
+    public final static Color BRONZE_COLOR = new Color(187/255f, 172/255f, 157/255f, 1);
+    public final static Color SILVER_COLOR = new Color(52/255f, 172/255f, 157/255f, 1);
+    public final static Color GOLD_COLOR   = new Color(187/255f, 90/255f, 90/255f, 1);
 
     final ColorGame game;
 

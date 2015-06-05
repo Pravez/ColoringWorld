@@ -67,7 +67,6 @@ public class GraphicManager {
     private static Texture          colorPlatformTexture;
     private static TextureAnimation noticeAnimation;
     private static BitmapFontCache  fontCache;
-    private static Texture          background;
 
     public GraphicManager(Level level) {
         this.elements       = new HashMap<>();
@@ -96,8 +95,6 @@ public class GraphicManager {
 
         noticeAnimation = new TextureAnimation(Assets.getTexture(Notice.class), 2, 2, NOTICE_DELAY);
         fontCache       = new BitmapFontCache(Assets.getMenuFont(FONT_SIZE));
-
-        background      = Assets.manager.get("sprites/back.png", Texture.class);
     }
 
     /**
@@ -467,6 +464,5 @@ public class GraphicManager {
     public static void dispose() {
         batch.dispose();
         renderer.dispose();
-        background.dispose();
     }
 }

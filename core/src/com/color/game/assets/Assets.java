@@ -34,14 +34,10 @@ import java.util.HashMap;
  */
 public class Assets {
 
-
-
     /**
      * The fileHandles for the different used fonts
      */
     private static FileHandle basicFont;
-    private static FileHandle bebasFont;
-    private static FileHandle groboldFont;
     private static FileHandle menuFont;
 
     private static HashMap<Class<?>, Texture> textures;
@@ -56,14 +52,10 @@ public class Assets {
     public static void queueLoading() {
         // Backgrounds
         manager.load("backgrounds/background.png", Texture.class);
-        manager.load("backgrounds/background0.png", Texture.class);
-        manager.load("backgrounds/background1.png", Texture.class);
         manager.load("backgrounds/white.png", Texture.class);
 
         // Fonts
         basicFont   = new FileHandle("fonts/Future-Earth.ttf");
-        bebasFont   = new FileHandle("fonts/BebasNeue.otf");
-        groboldFont = new FileHandle("fonts/grobold.ttf");
         menuFont    = new FileHandle("fonts/Cashew Apple Ale Bold.ttf");
 
         // Musics
@@ -78,15 +70,10 @@ public class Assets {
 
         // Sprites
         manager.load("sprites/bar.png", Texture.class);
-        manager.load("sprites/spike.png", Texture.class);
         manager.load("sprites/moving.png", Texture.class);
         manager.load("sprites/falling.png", Texture.class);
-        manager.load("sprites/teleport.png", Texture.class);
-        manager.load("sprites/light.png", Texture.class);
         manager.load("sprites/enemy.png", Texture.class);
-        manager.load("sprites/back.png", Texture.class);
-        manager.load("sprites/wind.png", Texture.class);
-        manager.load("sprites/lava.png", Texture.class);
+        manager.load("sprites/deadly.png", Texture.class);
         manager.load("sprites/enabled.png", Texture.class);
         manager.load("sprites/lever.png", Texture.class);
         manager.load("sprites/fireflies.png", Texture.class);
@@ -94,11 +81,6 @@ public class Assets {
         manager.load("sprites/color.png", Texture.class);
         manager.load("sprites/cube.png", Texture.class);
         manager.load("sprites/triangle.png", Texture.class);
-
-        manager.load("sprites/star.png", Texture.class);
-        manager.load("sprites/star-empty.png", Texture.class);
-
-        manager.load("sprites/light.png", Texture.class);
 
         // Colors
         manager.load("colors/red.png", Texture.class);
@@ -116,12 +98,9 @@ public class Assets {
         Assets.textures.put(Lever.class, Assets.manager.get("sprites/lever.png", Texture.class));
         Assets.textures.put(ColorPlatform.class, Assets.manager.get("sprites/color.png", Texture.class));
         Assets.textures.put(Notice.class, Assets.manager.get("sprites/fireflies.png", Texture.class));
-        Assets.textures.put(WindBlower.class, Assets.manager.get("sprites/wind.png", Texture.class));
-        Assets.textures.put(DeadlyPlatform.class, Assets.manager.get("sprites/lava.png", Texture.class));
+        Assets.textures.put(DeadlyPlatform.class, Assets.manager.get("sprites/deadly.png", Texture.class));
         Assets.textures.put(FallingPlatform.class, Assets.manager.get("sprites/falling.png", Texture.class));
         Assets.textures.put(MovingPlatform.class, Assets.manager.get("sprites/moving.png", Texture.class));
-        Assets.textures.put(Teleporter.class, Assets.manager.get("sprites/teleport.png", Texture.class));
-        Assets.textures.put(Vector2.class, Assets.manager.get("sprites/light.png", Texture.class));
         Assets.textures.put(Exit.class, Assets.manager.get("sprites/exit.png", Texture.class));
         Assets.textures.put(Enemy.class, Assets.manager.get("sprites/enemy.png", Texture.class));
         Assets.textures.put(AnimatedCube.class, Assets.manager.get("sprites/cube.png", Texture.class));
@@ -161,26 +140,6 @@ public class Assets {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.basicFont);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = size;
-        BitmapFont font = generator.generateFont(parameter);
-        generator.dispose();
-        return font;
-    }
-
-    public static BitmapFont getBebasFont(int size) {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.bebasFont);
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = size;
-        BitmapFont font = generator.generateFont(parameter);
-        generator.dispose();
-        return font;
-    }
-
-    public static BitmapFont getGroboldFont(int size) {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.groboldFont);
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = size;
-        parameter.borderColor = Color.BLACK;
-        parameter.borderWidth = 1;
         BitmapFont font = generator.generateFont(parameter);
         generator.dispose();
         return font;

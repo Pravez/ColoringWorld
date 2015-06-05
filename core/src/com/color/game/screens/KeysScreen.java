@@ -50,8 +50,6 @@ public class KeysScreen extends BaseScreen implements InputProcessor {
         ArrayMap<KeyEffect, Key> keys = this.game.keys.getKeys();
 
         for (Key key : keys.values()) {
-            if (keys.getKey(key, true) == KeyEffect.RUN)
-                break;
             final KeyModifier keyModifier = new KeyModifier(key);
             keyModifier.addClickListener(new Runnable() {
                 @Override

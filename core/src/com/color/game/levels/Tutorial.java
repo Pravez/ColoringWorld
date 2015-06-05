@@ -69,8 +69,8 @@ public class Tutorial {
         text = text.replace("[JUMP]", Input.Keys.toString(mapper.getKeyCode(KeyEffect.JUMP)));
         text = text.replace("[LEFT]", Input.Keys.toString(mapper.getKeyCode(KeyEffect.LEFT)));
         text = text.replace("[RIGHT]", Input.Keys.toString(mapper.getKeyCode(KeyEffect.RIGHT)));
-        text = text.replace("[SQUAT]", Input.Keys.toString(mapper.getKeyCode(KeyEffect.SQUAT)));
-        text = text.replace("[RUN]", Input.Keys.toString(mapper.getKeyCode(KeyEffect.RUN)));
+        //text = text.replace("[SQUAT]", Input.Keys.toString(mapper.getKeyCode(KeyEffect.SQUAT)));
+        //text = text.replace("[RUN]", Input.Keys.toString(mapper.getKeyCode(KeyEffect.RUN)));
         return text;
     }
 

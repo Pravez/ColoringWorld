@@ -21,6 +21,14 @@ import com.color.game.assets.Assets;
  */
 public class StripButton extends Actor {
 
+    public static final Color RED = new Color(173 / 255f, 44 / 255f, 38 / 255f, 0.4f);
+    public static final Color BLUE = new Color(62 / 255f, 57 / 255f, 250 / 255f, 0.4f);
+    public static final Color YELLOW = new Color(250 / 255f, 221 / 255f, 18 / 255f, 0.4f);
+    public static final Color PURPLE = new Color(93 / 255f, 9 / 255f, 122 / 255f, 0.4f);
+    public static final Color GREEN = new Color(9 / 255f, 127 / 255f, 10 / 255f, 0.4f);
+    public static final Color ORANGE = new Color(250 / 255f, 151 / 255f, 21 / 255f, 0.4f);
+    public static final Color WHITE = new Color(187 / 255f, 172 / 255f, 157 / 255f, 0.4f);
+
     public enum Side {
         LEFT,
         RIGHT

@@ -40,7 +40,7 @@ public class UIStage extends Stage {
         // Buttons : Play, Restart, Menu
         float x = Gdx.graphics.getWidth() - BaseScreen.BUTTON_WIDTH;
         float y = Gdx.graphics.getHeight() - BaseScreen.BUTTON_HEIGHT - BUTTON_GAP;
-        this.playButton = BaseScreen.createRightButton(x, y, Color.RED, "Pause", BaseScreen.BUTTON_SIZE, Color.WHITE, new Runnable() {
+        this.playButton = BaseScreen.createRightButton(x, y, StripButton.RED, "Pause", BaseScreen.BUTTON_SIZE, Color.WHITE, new Runnable() {
             @Override
             public void run() {
                 if (GameScreen.isRunning()) {
@@ -53,14 +53,14 @@ public class UIStage extends Stage {
             }
         });
         y -= BaseScreen.BUTTON_HEIGHT + BUTTON_GAP;
-        this.restartButton = BaseScreen.createRightButton(x, y, Color.BLUE, "Restart", BaseScreen.BUTTON_SIZE, Color.WHITE, new Runnable() {
+        this.restartButton = BaseScreen.createRightButton(x, y, StripButton.BLUE, "Restart", BaseScreen.BUTTON_SIZE, Color.WHITE, new Runnable() {
             @Override
             public void run() {
                 gameScreen.restart();
             }
         });
         y -= BaseScreen.BUTTON_HEIGHT + BUTTON_GAP;
-        this.menuButton = BaseScreen.createRightButton(x, y, Color.YELLOW, "Menu", BaseScreen.BUTTON_SIZE, Color.WHITE, new Runnable() {
+        this.menuButton = BaseScreen.createRightButton(x, y, StripButton.YELLOW, "Menu", BaseScreen.BUTTON_SIZE, Color.WHITE, new Runnable() {
             @Override
             public void run() {
                 ((ColorGame) Gdx.app.getApplicationListener()).setMenuScreen();

@@ -41,12 +41,10 @@ public class BaseScreen implements Screen, InputProcessor {
     public static final float BUTTON_WIDTH  = 250;
     public static final float BUTTON_HEIGHT = 50;
     static final float BUTTON_GAP = 60;
-    static final float BUTTON_PADDING = 20;
-    static final float BUTTON_OPACITY = 0.4f;
 
     static final float BUTTONS_BEGINNING = 400;
 
-    public final static Color TITLE_COLOR = Color.DARK_GRAY;//new Color(142f/255, 188f/255, 224f/255, 1);
+    public final static Color TITLE_COLOR = Color.DARK_GRAY;
     public final static Color TEXT_COLOR = new Color(110f/255, 109f/255, 106f/255, 1);
 
     public final static Color BRONZE_COLOR = new Color(187/255f, 172/255f, 157/255f, 1);
@@ -196,7 +194,7 @@ public class BaseScreen implements Screen, InputProcessor {
      * Method called to add a Menu Button to the Screen
      */
     protected void addMenuButton() {
-        addLeftButton(0, BUTTONS_BEGINNING - BUTTON_GAP * 6, new Color(187 / 255f, 172 / 255f, 157 / 255f, BUTTON_OPACITY), "Menu", BUTTON_SIZE, Color.WHITE, new Runnable() {
+        addLeftButton(0, BUTTONS_BEGINNING - BUTTON_GAP * 6, StripButton.WHITE, "Menu", BUTTON_SIZE, Color.WHITE, new Runnable() {
             @Override
             public void run() {
                 game.setMenuScreen();

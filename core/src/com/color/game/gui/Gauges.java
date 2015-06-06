@@ -1,6 +1,5 @@
 package com.color.game.gui;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -28,9 +27,9 @@ public class Gauges extends Actor {
         float width = (bounds.width - 6)/3;
         float gap = 2;
 
-        this.redGauge    = new ColorGauge(new Rectangle(bounds.x, bounds.y, width, bounds.height), new Color(173 / 255f, 44 / 255f, 38 / 255f, 1), KeyEffect.RED);
-        this.yellowGauge = new ColorGauge(new Rectangle(bounds.x + width + gap, bounds.y, width, bounds.height), new Color(250 / 255f, 221 / 255f, 18 / 255f, 1), KeyEffect.YELLOW);
-        this.blueGauge   = new ColorGauge(new Rectangle(bounds.x + width * 2 + gap * 2, bounds.y, width, bounds.height), new Color(62 / 255f, 57 / 255f, 250 / 255f, 1), KeyEffect.BLUE);
+        this.redGauge    = new ColorGauge(new Rectangle(bounds.x, bounds.y, width, bounds.height), StripButton.RED, KeyEffect.RED);
+        this.yellowGauge = new ColorGauge(new Rectangle(bounds.x + width + gap, bounds.y, width, bounds.height), StripButton.YELLOW, KeyEffect.YELLOW);
+        this.blueGauge   = new ColorGauge(new Rectangle(bounds.x + width * 2 + gap * 2, bounds.y, width, bounds.height), StripButton.BLUE, KeyEffect.BLUE);
     }
 
     /**
@@ -58,24 +57,6 @@ public class Gauges extends Actor {
         this.redGauge.draw(batch);
         this.yellowGauge.draw(batch);
         this.blueGauge.draw(batch);
-    }
-
-    public void restartRed() {
-        this.redGauge.restart();
-    }
-
-    public void restartBlue() {
-        this.blueGauge.restart();
-    }
-
-    public void restartYellow() {
-        this.yellowGauge.restart();
-    }
-
-    public void restartTimeColors() {
-        this.redGauge.restart();
-        this.blueGauge.restart();
-        this.yellowGauge.restart();
     }
 
     /**

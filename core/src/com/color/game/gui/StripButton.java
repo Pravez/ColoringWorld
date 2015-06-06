@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -20,6 +21,11 @@ import com.color.game.assets.Assets;
  */
 public class StripButton extends Actor {
 
+    public enum Side {
+        LEFT,
+        RIGHT
+    }
+
     private static final float ANIMATION_DELAY = 0.3f;
 
     private static final float TRIANGLE_WIDTH = 15;
@@ -29,27 +35,47 @@ public class StripButton extends Actor {
 
     private final Color originalColor;
     private final float originalWidth;
+    private float originalX;
 
+    private Sprite sprite;
     private Label label;
     boolean isChecked;
     private ClickListener clickListener;
 
+    private Side side;
+
     private ShapeRenderer renderer;
 
-    public StripButton(Rectangle bounds, Color color, Label label) {
+    public StripButton(Rectangle bounds, Color color, Label label, Side side) {
         super();
         this.label = label;
         this.originalWidth = bounds.width;
         this.originalColor = color;
-        setColor(color);
-        initialize();
+        this.side = side;
 
         setPosition(bounds.x, bounds.y);
         setSize(bounds.width, bounds.height);
 
-        this.label.setPosition(getX() + TEXT_POS * getWidth(), getY() + getHeight()/2 - this.label.getHeight()/2 + GAP_Y);
+        init();
+    }
+
+    private void init() {
+        setColor(this.originalColor);
+        initialize();
+
+        this.sprite = new Sprite(Assets.getTexture(StripButton.class));
+        if (this.side == Side.RIGHT) {
+            this.sprite.flip(true, false);
+            this.originalX = getX();
+            this.label.setPosition(getX() + (1 - TEXT_POS) * getWidth() - this.label.getWidth(), getY() + getHeight()/2 - this.label.getHeight()/2 + GAP_Y);
+        } else
+            this.label.setPosition(getX() + TEXT_POS * getWidth(), getY() + getHeight()/2 - this.label.getHeight()/2 + GAP_Y);
 
         this.renderer = new ShapeRenderer();
+    }
+
+    public void setText(String text) {
+        this.label.setText(text);
     }
 
     public boolean isOver () {
@@ -59,27 +85,39 @@ public class StripButton extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (isOver()) { // When the cursor is over
-            float coef = (delta/ANIMATION_DELAY);
-            if (getWidth() < this.originalWidth * 2) {
-                setWidth(getWidth() + coef * this.originalWidth);
-                this.label.setX(this.label.getX() + coef * (getX() + this.originalWidth * 2 * (1 - TEXT_POS) - this.label.getWidth()));
-            } else if (this.label.getX() > getX() + (1 - TEXT_POS) * getWidth())
-                this.label.setX(getX() + this.originalWidth * 2 * (1 - TEXT_POS) - this.label.getWidth());
-            this.getColor().lerp(this.originalColor.r, this.originalColor.g, this.originalColor.b, 1f, coef);
-        } else {
-            float coef = (delta/ANIMATION_DELAY);
-            if (getWidth() > this.originalWidth) {
-                setWidth(getWidth() - coef * this.originalWidth);
-                this.label.setX(this.label.getX() - coef * (getX() + this.originalWidth * 2 * (1 - TEXT_POS) - this.label.getWidth()));
-                if (this.label.getX() < getX() + TEXT_POS * getWidth())
-                    this.label.setX(getX() + TEXT_POS * getWidth());
-            } else if (this.label.getX() != getX() + TEXT_POS * getWidth())
-                this.label.setX(getX() + TEXT_POS * getWidth());
-            else
-                setWidth(this.originalWidth);
-            this.getColor().lerp(this.originalColor.r, this.originalColor.g, this.originalColor.b, 0.4f, coef);
+
+        float coef = (delta/ANIMATION_DELAY);
+        float finalWidth = isOver() ? this.originalWidth * 2 : this.originalWidth;
+        boolean exceeded = isOver() ? getWidth() > finalWidth : getWidth() < finalWidth;
+        boolean unreached = isOver() ? getWidth() < finalWidth : getWidth() > finalWidth;
+
+        if (unreached) {
+            float size = coef * this.originalWidth;
+            float sign = isOver() ? 1 : -1;
+
+            setWidth(getWidth() + sign * size);
+            if (this.side == Side.RIGHT) {
+                setX(getX() - sign * size);
+                this.label.setX(this.label.getX() - sign * coef * (this.originalX + this.originalWidth * (2 * TEXT_POS - 1)));
+            } else
+                this.label.setX(this.label.getX() + sign * coef * (getX() + this.originalWidth * 2 * (1 - TEXT_POS) - this.label.getWidth()));
         }
+
+        if (exceeded) {
+            setWidth(finalWidth);
+            if (this.side == Side.RIGHT)
+                setX(this.originalX + this.originalWidth - finalWidth);
+        }
+
+        if (this.label.getX() < getX() + TEXT_POS * getWidth())
+            this.label.setX(getX() + TEXT_POS * getWidth());
+        else if (this.label.getX() + this.label.getWidth() > getX() + (1 - TEXT_POS) * getWidth())
+            this.label.setX(getX() + (1 - TEXT_POS) * getWidth() - this.label.getWidth());
+
+        // Color linear interpolation
+        this.getColor().lerp(this.originalColor.r, this.originalColor.g, this.originalColor.b, isOver() ? 1f : 0.4f, coef);
+        this.sprite.setColor(getColor());
+        this.sprite.setPosition(this.side == Side.LEFT ? getX() + getWidth() : getX() - TRIANGLE_WIDTH, getY());
     }
 
     @Override
@@ -95,9 +133,7 @@ public class StripButton extends Actor {
 
         // Draw Label text
         batch.begin();
-        batch.setColor(getColor());
-        float right = getX() + getWidth();
-        batch.draw(Assets.getTexture(StripButton.class), right, getY(), TRIANGLE_WIDTH, getHeight());
+        this.sprite.draw(batch);
         this.label.draw(batch, parentAlpha);
     }
 

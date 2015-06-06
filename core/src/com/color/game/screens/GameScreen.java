@@ -245,15 +245,14 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-
         handlePause();
+        uiStage.act(delta); // Act the User Interface Stage
 
         // If the game is in running mode
         if (run) {
             runRunnables();
 
             LevelManager.getCurrentLevel().act(delta); // Act the current level Stage
-            uiStage.act(delta); // Act the User Interface Stage
 
             handleInputs();
             handleCharacter();

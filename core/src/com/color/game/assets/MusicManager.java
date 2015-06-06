@@ -11,12 +11,12 @@ public class MusicManager {
 
     private float volume = 0.5f;
 
-    public enum MUSIC {
+    public enum Place {
         MENU,
         GAME
     }
 
-    private HashMap<MUSIC, Music> musics;
+    private HashMap<Place, Music> musics;
 
     public MusicManager() {
         init();
@@ -24,8 +24,8 @@ public class MusicManager {
 
     private void init() {
         this.musics = new HashMap<>();
-        this.musics.put(MUSIC.MENU, Assets.manager.get("musics/Ether.mp3", Music.class));
-        this.musics.put(MUSIC.GAME, Assets.manager.get("musics/Hydra.mp3", Music.class));
+        this.musics.put(Place.MENU, Assets.manager.get("musics/Ether.mp3", Music.class));
+        this.musics.put(Place.GAME, Assets.manager.get("musics/Hydra.mp3", Music.class));
         setVolume(this.volume);
     }
 
@@ -41,14 +41,14 @@ public class MusicManager {
         return this.volume;
     }
 
-    public void playMusic(MUSIC musics) {
+    public void playMusic(Place musics) {
         for (Music music : this.musics.values())
             music.stop();
         this.musics.get(musics).play();
         this.musics.get(musics).setLooping(true);
     }
 
-    public boolean isPlaying(MUSIC musics) {
+    public boolean isPlaying(Place musics) {
         return this.musics.get(musics).isPlaying();
     }
 

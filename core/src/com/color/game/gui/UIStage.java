@@ -3,14 +3,10 @@ package com.color.game.gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.color.game.ColorGame;
-import com.color.game.assets.Assets;
 import com.color.game.levels.LevelManager;
 import com.color.game.screens.BaseScreen;
 import com.color.game.screens.GameScreen;
@@ -24,9 +20,9 @@ public class UIStage extends Stage {
 
     final public Gauges colorGauges;
 
-    final private TextButton playButton;
-    final private TextButton restartButton;
-    final private TextButton menuButton;
+    final private StripButton playButton;
+    final private StripButton restartButton;
+    final private StripButton menuButton;
 
     private static final int BUTTON_GAP = 25;
 
@@ -42,35 +38,11 @@ public class UIStage extends Stage {
         ColorFigure colorFigure = new ColorFigure(gameScreen, new Rectangle(this.colorGauges.getWidth() + 40, Gdx.graphics.getHeight() - 100, 100, 100));
 
         // Buttons : Play, Restart, Menu
-        this.playButton = new TextButton("Pause", Assets.menuSkin);
-        this.playButton.setPosition(Gdx.graphics.getWidth() - this.playButton.getWidth() - BUTTON_GAP,
-                Gdx.graphics.getHeight() - this.playButton.getHeight() - BUTTON_GAP);
-
-        this.restartButton = new TextButton("Restart", Assets.menuSkin);
-        restartButton.setPosition(Gdx.graphics.getWidth() - restartButton.getWidth() - BUTTON_GAP,
-                this.playButton.getY() - restartButton.getHeight() - BUTTON_GAP/2);
-
-        restartButton.addListener(new ClickListener() {
+        float x = Gdx.graphics.getWidth() - BaseScreen.BUTTON_WIDTH;
+        float y = Gdx.graphics.getHeight() - BaseScreen.BUTTON_HEIGHT - BUTTON_GAP;
+        this.playButton = BaseScreen.createRightButton(x, y, Color.RED, "Pause", BaseScreen.BUTTON_SIZE, Color.WHITE, new Runnable() {
             @Override
-            public void clicked(InputEvent event, float x, float y) {
-                gameScreen.restart();
-            }
-        });
-
-        this.menuButton = new TextButton("Menu", Assets.menuSkin);
-        menuButton.setPosition(Gdx.graphics.getWidth() - menuButton.getWidth() - BUTTON_GAP,
-                restartButton.getY() - menuButton.getHeight() - BUTTON_GAP/2);
-
-        menuButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                ((ColorGame) Gdx.app.getApplicationListener()).setMenuScreen();
-            }
-        });
-
-        this.playButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
+            public void run() {
                 if (GameScreen.isRunning()) {
                     gameScreen.pauseGame();
                     pause();
@@ -78,6 +50,20 @@ public class UIStage extends Stage {
                     gameScreen.resumeGame();
                     resume();
                 }
+            }
+        });
+        y -= BaseScreen.BUTTON_HEIGHT + BUTTON_GAP;
+        this.restartButton = BaseScreen.createRightButton(x, y, Color.BLUE, "Restart", BaseScreen.BUTTON_SIZE, Color.WHITE, new Runnable() {
+            @Override
+            public void run() {
+                gameScreen.restart();
+            }
+        });
+        y -= BaseScreen.BUTTON_HEIGHT + BUTTON_GAP;
+        this.menuButton = BaseScreen.createRightButton(x, y, Color.YELLOW, "Menu", BaseScreen.BUTTON_SIZE, Color.WHITE, new Runnable() {
+            @Override
+            public void run() {
+                ((ColorGame) Gdx.app.getApplicationListener()).setMenuScreen();
             }
         });
 
@@ -93,15 +79,12 @@ public class UIStage extends Stage {
         this.colorGauges.yellowGauge.update();
     }
 
-    private void addButton(Button button) {
+    private void addButton(Actor button) {
         this.addActor(button);
     }
 
     public void updateButton(String text) {
         this.playButton.setText(text);
-        this.playButton.pack();
-        this.playButton.setPosition(Gdx.graphics.getWidth() - this.playButton.getWidth() - BUTTON_GAP,
-                Gdx.graphics.getHeight() - this.playButton.getHeight() - BUTTON_GAP);
     }
 
     public void pause() {

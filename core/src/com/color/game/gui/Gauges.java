@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.color.game.keys.KeyEffect;
+import com.color.game.screens.GameScreen;
 
 /**
  * Gauges, the class handling the different {@link ColorGauge} of the game, currently, there are three colors :
@@ -38,10 +39,12 @@ public class Gauges extends Actor {
      */
     @Override
     public void act(float delta) {
-        super.act(delta);
-        this.redGauge.act(delta);
-        this.yellowGauge.act(delta);
-        this.blueGauge.act(delta);
+        if (GameScreen.isRunning()) {
+            super.act(delta);
+            this.redGauge.act(delta);
+            this.yellowGauge.act(delta);
+            this.blueGauge.act(delta);
+        }
     }
 
     /**

@@ -38,8 +38,8 @@ public class BaseScreen implements Screen, InputProcessor {
     public final static int TEXT_SIZE = 64;
     public final static int SMALL_TEXT_SIZE = 40;
 
-    static final float BUTTON_WIDTH  = 250;
-    static final float BUTTON_HEIGHT = 50;
+    public static final float BUTTON_WIDTH  = 250;
+    public static final float BUTTON_HEIGHT = 50;
     static final float BUTTON_GAP = 60;
     static final float BUTTON_PADDING = 20;
     static final float BUTTON_OPACITY = 0.4f;
@@ -168,6 +168,20 @@ public class BaseScreen implements Screen, InputProcessor {
     }
 
     /**
+     * Method called to set the {@link Actor}'s {@link ClickListener}
+     * @param actor the corresponding {@link Actor}
+     * @param runnable the {@link Runnable} called when the ClickEvent is being fired
+     */
+    protected static void setStripButtonListener(Actor actor, final Runnable runnable) {
+        actor.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                runnable.run();
+            }
+        });
+    }
+
+    /**
      * Method called to create a Label
      * @param value the text to display
      * @param size the size of the text
@@ -182,7 +196,7 @@ public class BaseScreen implements Screen, InputProcessor {
      * Method called to add a Menu Button to the Screen
      */
     protected void addMenuButton() {
-        addButton(0, BUTTONS_BEGINNING - BUTTON_GAP * 6, new Color(187 / 255f, 172 / 255f, 157 / 255f, BUTTON_OPACITY), "Menu", BUTTON_SIZE, Color.WHITE, new Runnable() {
+        addLeftButton(0, BUTTONS_BEGINNING - BUTTON_GAP * 6, new Color(187 / 255f, 172 / 255f, 157 / 255f, BUTTON_OPACITY), "Menu", BUTTON_SIZE, Color.WHITE, new Runnable() {
             @Override
             public void run() {
                 game.setMenuScreen();
@@ -190,10 +204,16 @@ public class BaseScreen implements Screen, InputProcessor {
         });
     }
 
-    protected void addButton(float x, float y, Color color, String label, int fontSize, Color fontColor, Runnable runnable) {
-        StripButton button = new StripButton(new Rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT), color, createLabel(label, fontSize, fontColor));
+    protected void addLeftButton(float x, float y, Color color, String label, int fontSize, Color fontColor, Runnable runnable) {
+        StripButton button = new StripButton(new Rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT), color, createLabel(label, fontSize, fontColor), StripButton.Side.LEFT);
         setButtonListener(button, runnable);
         this.stage.addActor(button);
+    }
+
+    public static StripButton createRightButton(float x, float y, Color color, String label, int fontSize, Color fontColor, Runnable runnable) {
+        StripButton button = new StripButton(new Rectangle(x, y, BUTTON_WIDTH, BUTTON_HEIGHT), color, createLabel(label, fontSize, fontColor), StripButton.Side.RIGHT);
+        setStripButtonListener(button, runnable);
+        return button;
     }
 
     @Override

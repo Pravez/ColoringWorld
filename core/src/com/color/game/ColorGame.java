@@ -146,8 +146,8 @@ public class ColorGame extends Game {
 	}
 
 	public void setGameScreen() {
-        if(!this.musicManager.isPlaying(MusicManager.MUSIC.GAME)) {
-            this.musicManager.playMusic(MusicManager.MUSIC.GAME);
+        if(!this.musicManager.isPlaying(MusicManager.Place.GAME)) {
+            this.musicManager.playMusic(MusicManager.Place.GAME);
         }
 		super.setScreen(this.gameScreen);
 	}
@@ -158,8 +158,8 @@ public class ColorGame extends Game {
 	}
 
 	public void setMenuScreen() {
-        if(!this.musicManager.isPlaying(MusicManager.MUSIC.MENU)) {
-            this.musicManager.playMusic(MusicManager.MUSIC.MENU);
+        if(!this.musicManager.isPlaying(MusicManager.Place.MENU)) {
+            this.musicManager.playMusic(MusicManager.Place.MENU);
         }
 		super.setScreen(this.menuScreen);
 	}

@@ -32,7 +32,6 @@ public class ColorGame extends Game {
 	private MenuScreen           menuScreen;
 	private OptionScreen         optionScreen;
 	private KeysScreen           keysScreen;
-	private TransitionScreen     transitionScreen;
 	private WinScreen            winScreen;
 	private CreditsScreen        creditsScreen;
 
@@ -63,7 +62,6 @@ public class ColorGame extends Game {
 		this.menuScreen           = new MenuScreen(this);
 		this.optionScreen 	      = new OptionScreen(this);
 		this.keysScreen           = new KeysScreen(this);
-		this.transitionScreen     = new TransitionScreen(this);
 		this.winScreen            = new WinScreen(this);
         this.creditsScreen        = new CreditsScreen(this);
 
@@ -99,50 +97,6 @@ public class ColorGame extends Game {
 
 	public void reset() {
 		LevelManager.reset();
-	}
-
-	// Screens
-	public void setDeathScreen() {
-		this.transitionScreen.setTitle("You die");
-		/*if (BaseStage.character.getDeathState() == DeathState.PIKES) {
-            cause.setText("Aouch, it is prickly !");
-        } else {*/
-		ArrayList<String> sentences = new ArrayList<>();
-		sentences.add("You have fallen into a puddle...");
-		sentences.add("Maybe you thought you could fly ?");
-		sentences.add("Nice try ! But not...");
-		sentences.add("GAME OVER... You have to try again !");
-		sentences.add("Are you a dummy ? This was so easy !");
-		sentences.add("This game is such a pain !");
-		sentences.add("Still playing at this game ?");
-
-		this.transitionScreen.setMessage(sentences.get(MathUtils.random(0, sentences.size() - 1)));
-		this.transitionScreen.setEndRunnable(new Runnable() {
-			@Override
-			public void run() {
-				setGameScreen();
-			}
-		});
-		super.setScreen(this.transitionScreen);
-	}
-
-	public void setEndScreen() {
-		this.transitionScreen.setTitle("You finished the game");
-		ArrayList<String> sentences = new ArrayList<>();
-		sentences.add("Your parents must be proud of you !");
-		sentences.add("Have you cheated ?");
-		sentences.add("The chance of the beginner in every instance !");
-
-		this.transitionScreen.setMessage(sentences.get(MathUtils.random(0, sentences.size() - 1)));
-		this.transitionScreen.setEndRunnable(new Runnable() {
-			@Override
-			public void run() {
-				LevelManager.restart();
-				gameScreen.reset();
-				setMenuScreen();
-			}
-		});
-		super.setScreen(this.transitionScreen);
 	}
 
 	public void setGameScreen() {

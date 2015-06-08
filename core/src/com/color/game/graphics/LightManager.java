@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.color.game.elements.BaseElement;
 import com.color.game.elements.PhysicComponent;
@@ -93,7 +94,6 @@ public class LightManager {
     }
 
     public static void init() {
-
         lightCamera = new OrthographicCamera();
         lightCamera.setToOrtho(false, 1.0f * Gdx.graphics.getWidth() / BaseElement.WORLD_TO_SCREEN, 1.0f * Gdx.graphics.getHeight() / BaseElement.WORLD_TO_SCREEN);
         PointLight.setContactFilter(PhysicComponent.CATEGORY_SCENERY, (short) 0, PhysicComponent.MASK_SCENERY);

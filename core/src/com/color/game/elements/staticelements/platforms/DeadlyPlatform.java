@@ -12,8 +12,10 @@ import com.color.game.levels.Level;
  */
 public class DeadlyPlatform extends BaseStaticElement {
 
+    private static final float DEAD_GAP = 0.1f;
+
     public DeadlyPlatform(Vector2 position, float width, float height, Level level) {
-        super(position, width, height, level.map, PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);
+        super(new Vector2(position.x + DEAD_GAP, position.y + DEAD_GAP), width - 2 * DEAD_GAP, height - 2 * DEAD_GAP, level.map, PhysicComponent.CATEGORY_SCENERY, PhysicComponent.MASK_SCENERY);
         this.physicComponent.configureUserData(new StaticElementUserData(this, width, height, UserDataType.DEADLY));
 
         level.addPlatform(this);

@@ -60,8 +60,6 @@ public class Assets {
 
         // Sounds
         manager.load("sounds/click.mp3", Sound.class);
-        manager.load("sounds/jump.mp3", Sound.class);
-        manager.load("sounds/landing.wav", Sound.class);
         manager.load("sounds/sound.wav", Sound.class);
 
         // Sprites

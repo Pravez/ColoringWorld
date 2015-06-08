@@ -1,3 +1,20 @@
+# 0.5 (June 8, 2015) - END OF PROGRAMMING IN TSUKUBA
+- Changed the theme of the game, and the history
+- Changed sprites
+- Added animations
+- Added and modified levels
+- Changed screens skins
+- Added musics to the game
+- Added tutorials (~)
+
+# 0.4.2 (June 8, 2015)
+- Changed the whole UI of the game with new menus etc.
+- Minor bugfixes
+- Updated name of the game
+- Added credits screen
+- Modified levels 1 to 5
+- Updated musics
+
 # 0.4.1 (June 4, 2015)
 - Changed way to load cells from the TMX files
 - Changed the whole theme of the game

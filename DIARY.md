@@ -1,3 +1,22 @@
+# June 8, 2015
+* Found a name for the game
+* Worked final elements and adjusted some last things
+* released version 0.4.2 with all last elements
+* merged with master branch and released tsukuba's final version, 0.5.
+* Continued to work on the final presentation
+
+# June 7, 2015
+* Continued to work on the presentation
+
+# June 6, 2015
+* Work on buttons for the menus, adapting strip buttons to the theme.
+* Started to create the final presentation of the game
+
+# June 5, 2015
+* Changed the whole theme and adapted with the lights theme. Changed much menus.
+* Removed assets that were useless
+* Changed musics
+
 # June 4, 2015
 * Reworked the windblowers skin
 * @deprecated ColoredMagnet, BouncingPlatforms
@@ -10,7 +29,7 @@
 * Released v0.4.1
 
 # June 3, 2015
-
+* Nothing
 
 # June 2, 2015
 * Finished reworking on level loader : better algorithm

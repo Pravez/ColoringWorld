@@ -1,6 +1,5 @@
 package com.color.game.screens;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.color.game.ColorGame;
 
@@ -19,8 +18,11 @@ public class CreditsScreen extends BaseScreen {
         table.add(createLabel("Credits", TITLE_SIZE, TITLE_COLOR)).padBottom(50).row();
 
         table.add(createLabel("Made by ;", TEXT_SIZE, TEXT_COLOR)).row();
-        table.add(createLabel("Alexis Dufrenne", TEXT_SIZE, TEXT_COLOR)).row();
-        table.add(createLabel("Paul Breton", TEXT_SIZE, TEXT_COLOR)).row();
+        table.add(createLabel("Paul BRETON", TEXT_SIZE, TEXT_COLOR)).row();
+        table.add(createLabel("Alexis DUFRENNE", TEXT_SIZE, TEXT_COLOR)).row();
+        table.add(createLabel("Supervised by ;", TEXT_SIZE, TEXT_COLOR)).row();
+        table.add(createLabel("Claus ARNHA", TEXT_SIZE, TEXT_COLOR)).row();
+        table.add(createLabel("For the University of Tsukuba", SMALL_TEXT_SIZE, TEXT_COLOR)).row();
 
         addMenuButton();
 

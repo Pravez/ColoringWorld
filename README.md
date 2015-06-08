@@ -4,6 +4,12 @@ Game featuring a strange man using colors to live his life
 If you want to know exactly what is being done, please see the [changelog](CHANGELOG.md).
 Concerning daily work, see the [diary](DIARY.md).
 
+## Version 0.5 released :
+* Changed the whole theme of the game
+* Modified levels
+* Corrected and changed many elements of the game
+
+
 ## Version 0.4 released :
 * Added graphics
 * Added level editor with software TILED

@@ -144,10 +144,11 @@ public class GameScreen extends BaseScreen implements InputProcessor, ContactLis
      */
     public void restart() {
         LevelManager.getCurrentLevel().addDeath();
-        //this.uiStage.changeDeathNumber();
         character.changeLevel(LevelManager.getCurrentLevel());
         LevelManager.getCurrentLevel().restart();
         respawn();
+        resumeGame();
+        uiStage.resume();
         this.restart = false;
         LevelManager.getCurrentLevel().graphicManager.lightManager.makeItBloody();
     }

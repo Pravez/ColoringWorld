@@ -3,14 +3,12 @@ package com.color.game.gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.color.game.ColorGame;
-import com.color.game.assets.Assets;
 import com.color.game.command.colors.ColorCommand;
 import com.color.game.keys.KeyEffect;
 import com.color.game.screens.BaseScreen;
@@ -42,7 +40,7 @@ public class ColorGauge {
         this.shapeRenderer = new ShapeRenderer();
         this.time = ColorCommand.COLOR_DELAY;
 
-        this.key = BaseScreen.createLabel(Input.Keys.toString(((ColorGame) Gdx.app.getApplicationListener()).keys.getKeyCode(effect)), 40, color);
+        this.key = BaseScreen.createLabel(Input.Keys.toString(((ColorGame) Gdx.app.getApplicationListener()).keys.getKeyCode(effect)), 40, new Color(color.r, color.g, color.b, 1));
         this.key.setPosition(bounds.x + bounds.width/2 - this.key.getWidth()/2, bounds.y - 40);
 
         this.effect = effect;
@@ -98,7 +96,6 @@ public class ColorGauge {
 
         batch.begin();
         this.key.draw(batch, 1);
-        //batch.draw(Assets.manager.get("sprites/bar.png", Texture.class), bounds.x, bounds.y, bounds.width, bounds.height);
     }
 
     /**

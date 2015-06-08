@@ -149,6 +149,8 @@ public class ColorGame extends Game {
         if(!this.musicManager.isPlaying(MusicManager.Place.GAME)) {
             this.musicManager.playMusic(MusicManager.Place.GAME);
         }
+		this.gameScreen.resumeGame();
+		this.gameScreen.uiStage.resume();
 		super.setScreen(this.gameScreen);
 	}
 

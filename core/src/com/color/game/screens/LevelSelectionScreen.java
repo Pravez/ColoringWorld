@@ -2,7 +2,6 @@ package com.color.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -52,9 +51,8 @@ public class LevelSelectionScreen extends BaseScreen {
         int size      = Gdx.graphics.getWidth()/(NB_LEVEL_WIDTH + 3);
         Table levelTable = new Table();
 
-        for (int i = 0 ; i < levelSize ; i++) {
+        for (int i = 0 ; i < levelSize ; i++)
             addLevelButton(i, levelTable, size);
-        }
 
         table.add(levelTable).row();
     }

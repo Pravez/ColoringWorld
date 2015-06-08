@@ -16,6 +16,7 @@ import com.color.game.screens.GameScreen;
  */
 public class UIStage extends Stage {
 
+    final private Label moveInstructions;
     final private Label levelNumber;
 
     final public Gauges colorGauges;
@@ -27,6 +28,7 @@ public class UIStage extends Stage {
     private static final int BUTTON_GAP = 25;
 
     public UIStage(final GameScreen gameScreen) {
+
         // The number of the Level
         this.levelNumber = BaseScreen.createLabel("Level " + (LevelManager.getCurrentLevelNumber() + 1), BaseScreen.TITLE_SIZE, Color.WHITE);
         this.levelNumber.setPosition((Gdx.graphics.getWidth() - this.levelNumber.getWidth())/2, Gdx.graphics.getHeight() - this.levelNumber.getHeight());
@@ -66,6 +68,10 @@ public class UIStage extends Stage {
                 ((ColorGame) Gdx.app.getApplicationListener()).setMenuScreen();
             }
         });
+        y -= BaseScreen.BUTTON_HEIGHT * 2;
+        // Camera moving instructions
+        this.moveInstructions = BaseScreen.createLabel("Press the arrow keys \nto move the camera", BaseScreen.BUTTON_SIZE, Color.WHITE);
+        this.moveInstructions.setPosition(Gdx.graphics.getWidth() - this.moveInstructions.getWidth(), y);
 
         this.addActor(this.levelNumber);
         this.addActor(this.colorGauges);
@@ -79,24 +85,22 @@ public class UIStage extends Stage {
         this.colorGauges.yellowGauge.update();
     }
 
-    private void addButton(Actor button) {
-        this.addActor(button);
-    }
-
     public void updateButton(String text) {
         this.playButton.setText(text);
     }
 
     public void pause() {
         updateButton("Resume");
-        addButton(restartButton);
-        addButton(menuButton);
+        this.addActor(this.restartButton);
+        this.addActor(this.menuButton);
+        this.addActor(this.moveInstructions);
     }
 
     public void resume() {
         updateButton("Pause");
-        restartButton.remove();
-        menuButton.remove();
+        this.restartButton.remove();
+        this.menuButton.remove();
+        this.moveInstructions.remove();
     }
 
     public void changeLevelNumber() {

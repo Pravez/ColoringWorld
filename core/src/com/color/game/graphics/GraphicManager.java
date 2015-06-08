@@ -94,7 +94,7 @@ public class GraphicManager {
         colorPlatformTexture = Assets.getTexture(ColorPlatform.class);
 
         noticeAnimation = new TextureAnimation(Assets.getTexture(Notice.class), 2, 2, NOTICE_DELAY);
-        fontCache       = new BitmapFontCache(Assets.getMenuFont(FONT_SIZE));
+        fontCache       = new BitmapFontCache(Assets.getMainFont(FONT_SIZE));
     }
 
     /**

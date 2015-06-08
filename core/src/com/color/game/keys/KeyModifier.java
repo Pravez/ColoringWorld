@@ -31,7 +31,7 @@ public class KeyModifier {
         this.label = BaseScreen.createLabel(this.key.getUse() + " ; ", BaseScreen.TEXT_SIZE, BaseScreen.TEXT_COLOR);
         this.value = BaseScreen.createLabel(Input.Keys.toString(this.key.getCode()), BaseScreen.TEXT_SIZE, BaseScreen.TEXT_COLOR);
 
-        this.table = new Table(Assets.menuSkin);
+        this.table = new Table(Assets.skin);
 
         this.table.add(this.label).right().padLeft(LABEL_WIDTH - this.label.getWidth());
         this.table.add(this.value).width(VALUE_WIDTH).left().row();

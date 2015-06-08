@@ -5,12 +5,10 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.color.game.elements.dynamicelements.enemies.Enemy;
 import com.color.game.elements.dynamicplatforms.FallingPlatform;
@@ -20,8 +18,6 @@ import com.color.game.elements.staticelements.Lever;
 import com.color.game.elements.staticelements.platforms.ColorPlatform;
 import com.color.game.elements.staticelements.platforms.DeadlyPlatform;
 import com.color.game.elements.staticelements.sensors.Notice;
-import com.color.game.elements.staticelements.sensors.Teleporter;
-import com.color.game.elements.staticelements.sensors.WindBlower;
 import com.color.game.gui.AnimatedCube;
 import com.color.game.gui.StripButton;
 
@@ -37,13 +33,13 @@ public class Assets {
     /**
      * The fileHandles for the different used fonts
      */
-    private static FileHandle basicFont;
-    private static FileHandle menuFont;
+    private static FileHandle titleFont;
+    private static FileHandle mainFont;
 
     private static HashMap<Class<?>, Texture> textures;
 
     final public static AssetManager manager  = new AssetManager();
-    public static Skin         menuSkin;
+    public static Skin skin;
 
     /**
      * Add to the loading queue of the AssetManager all the assets to load
@@ -55,8 +51,8 @@ public class Assets {
         manager.load("backgrounds/white.png", Texture.class);
 
         // Fonts
-        basicFont   = new FileHandle("fonts/Future-Earth.ttf");
-        menuFont    = new FileHandle("fonts/Cashew Apple Ale Bold.ttf");
+        titleFont = new FileHandle("fonts/Neverwinter Bold.otf");
+        mainFont  = new FileHandle("fonts/Cashew Apple Ale Bold.ttf");
 
         // Musics
         manager.load("musics/Ether.mp3", Music.class);
@@ -115,11 +111,11 @@ public class Assets {
      * Initialize the skin used in the different screens
      */
     public static void setMenuSkin() {
-        if(menuSkin == null) {
-            menuSkin = new Skin();
-            menuSkin.add("future", getBasicFont(20));
-            menuSkin.addRegions(new TextureAtlas(Gdx.files.internal("skins/uiskin.atlas")));
-            menuSkin.load(Gdx.files.internal("skins/uiskin.json"));
+        if(skin == null) {
+            skin = new Skin();
+            skin.add("future", getMainFont(40));
+            skin.addRegions(new TextureAtlas(Gdx.files.internal("skins/uiskin.atlas")));
+            skin.load(Gdx.files.internal("skins/uiskin.json"));
         }
     }
 
@@ -131,13 +127,8 @@ public class Assets {
         return manager.update();
     }
 
-    /**
-     * Return a BitmapFont with the BasicFont of the game, at the size specified in parameter
-     * @param size the size of the BitmapFont to create
-     * @return the BitmapFont created
-     */
-    public static BitmapFont getBasicFont(int size) {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.basicFont);
+    public static BitmapFont getTitleFont(int size) {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.titleFont);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = size;
         BitmapFont font = generator.generateFont(parameter);
@@ -145,8 +136,8 @@ public class Assets {
         return font;
     }
 
-    public static BitmapFont getMenuFont(int size) {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.menuFont);
+    public static BitmapFont getMainFont(int size) {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Assets.mainFont);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = size;
         BitmapFont font = generator.generateFont(parameter);
@@ -159,6 +150,6 @@ public class Assets {
      */
     public static void dispose() {
         manager.dispose();
-        menuSkin.dispose();
+        skin.dispose();
     }
 }

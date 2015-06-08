@@ -2,8 +2,13 @@ package com.color.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Array;
 import com.color.game.ColorGame;
+import com.color.game.assets.Assets;
 import com.color.game.gui.StripButton;
+
+import java.util.AbstractMap;
 
 /**
  * MenuScreen to show the menu of the game
@@ -59,5 +64,27 @@ public class MenuScreen extends BaseScreen {
                 Gdx.app.exit();
             }
         });
+
+        initTitle();
+    }
+
+    private void initTitle() {
+        Array<AbstractMap.SimpleEntry<Label, Integer>> title = new Array<>();
+        Color color = Color.BLACK;
+
+        title.add(new AbstractMap.SimpleEntry(new Label("a", new Label.LabelStyle(Assets.getTitleFont(55), color)), 97));
+        title.add(new AbstractMap.SimpleEntry(new Label(" journey", new Label.LabelStyle(Assets.getTitleFont(63), color)), 101));
+        title.add(new AbstractMap.SimpleEntry(new Label(" in", new Label.LabelStyle(Assets.getTitleFont(55), color)), 111));
+        title.add(new AbstractMap.SimpleEntry(new Label(" the", new Label.LabelStyle(Assets.getTitleFont(51), color)), 121));
+        title.add(new AbstractMap.SimpleEntry(new Label(" dark", new Label.LabelStyle(Assets.getTitleFont(71), color)), 143));
+
+        float beginX = 50;
+        float width = 0;
+
+        for (AbstractMap.SimpleEntry<Label, Integer> entries : title) {
+            entries.getKey().setPosition(beginX + width, Gdx.graphics.getHeight() - entries.getValue());
+            width += entries.getKey().getPrefWidth();
+            this.stage.addActor(entries.getKey());
+        }
     }
 }

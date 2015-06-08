@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class ColorGame extends Game {
 
-	public static final String TITLE = "DEUTSCH SPIEL";
+	public static final String TITLE = "A journey in the dark";
 	public static final int WIDTH = 1000, HEIGHT = 800;
 
 	public SoundManager soundManager;
@@ -150,7 +150,7 @@ public class ColorGame extends Game {
             this.musicManager.playMusic(MusicManager.Place.GAME);
         }
 		this.gameScreen.resumeGame();
-		this.gameScreen.uiStage.resume();
+		GameScreen.uiStage.resume();
 		super.setScreen(this.gameScreen);
 	}
 

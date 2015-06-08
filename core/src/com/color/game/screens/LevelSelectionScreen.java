@@ -58,7 +58,7 @@ public class LevelSelectionScreen extends BaseScreen {
     }
 
     private void addLevelButton(final int index, Table table, int size) {
-        final Button levelButton = new TextButton("" + (index + 1), Assets.menuSkin);
+        final Button levelButton = new TextButton("" + (index + 1), Assets.skin);
 
         if (LevelManager.isLock(index))
             levelButton.setDisabled(true);

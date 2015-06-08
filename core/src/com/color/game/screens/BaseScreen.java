@@ -7,15 +7,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -53,8 +55,8 @@ public class BaseScreen implements Screen, InputProcessor {
 
     final ColorGame game;
 
-    protected Stage     stage;
-    private static Stage     backStage;
+    protected Stage      stage;
+    private static Stage backStage;
 
     /**
      * Constructor of the BaseScreen
@@ -187,7 +189,7 @@ public class BaseScreen implements Screen, InputProcessor {
      * @return the Label created
      */
     public static Label createLabel(String value, int size, Color color) {
-        return new Label(value, new Label.LabelStyle(Assets.getMenuFont(size), color));
+        return new Label(value, new Label.LabelStyle(Assets.getMainFont(size), color));
     }
 
     /**

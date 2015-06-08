@@ -1,6 +1,5 @@
 package com.color.game.screens;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -63,7 +62,7 @@ public class OptionScreen extends BaseScreen {
     private void addVolumeSlider(Table table, String text, Label value, float sliderValue, ChangeListener changeListener) {
         Label label = createLabel(text, TEXT_SIZE, TEXT_COLOR);
         table.add(label);
-        Slider slider = new Slider(0.0f, 1.0f, 0.1f, false, Assets.menuSkin);
+        Slider slider = new Slider(0.0f, 1.0f, 0.1f, false, Assets.skin);
         slider.setValue(sliderValue);
         table.add(slider);
         label.invalidate();

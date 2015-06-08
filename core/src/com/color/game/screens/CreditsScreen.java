@@ -18,10 +18,10 @@ public class CreditsScreen extends BaseScreen {
         table.add(createLabel("Credits", TITLE_SIZE, TITLE_COLOR)).padBottom(50).row();
 
         table.add(createLabel("Made by ;", TEXT_SIZE, TEXT_COLOR)).row();
-        table.add(createLabel("Paul BRETON", TEXT_SIZE, TEXT_COLOR)).row();
-        table.add(createLabel("Alexis DUFRENNE", TEXT_SIZE, TEXT_COLOR)).row();
+        table.add(createLabel("Paul BRETON", SMALL_TEXT_SIZE, TEXT_COLOR)).row();
+        table.add(createLabel("Alexis DUFRENNE", SMALL_TEXT_SIZE, TEXT_COLOR)).row();
         table.add(createLabel("Supervised by ;", TEXT_SIZE, TEXT_COLOR)).row();
-        table.add(createLabel("Claus ARNHA", TEXT_SIZE, TEXT_COLOR)).row();
+        table.add(createLabel("Claus ARANHA", SMALL_TEXT_SIZE, TEXT_COLOR)).row();
         table.add(createLabel("For the University of Tsukuba", SMALL_TEXT_SIZE, TEXT_COLOR)).row();
 
         addMenuButton();

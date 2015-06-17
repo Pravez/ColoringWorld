@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In this document, is presented all the different general tasks around the game, and its features in developement or scheduled. All the tasks are gather around different versions of the game.
+In this document, are presented all the different general tasks around the game, and its features in developement or scheduled. All the tasks are gather around different versions of the game.
 With this, you will be able to have an overview of the game and its future.
 
 ## Version 0.0.A - Prototype

@@ -1,7 +1,11 @@
-# ColoringWorld
-Game featuring a strange man using colors to live his life
+# A Journey In The Dark
 
-If you want to know exactly what is being done, please see the [changelog](CHANGELOG.md).
+A Journey In The Dark presents a cube of light wich have to escape darkness which has fallen into his world.
+In order to succeed, he has to reach the Crystal. Hopefully, you can control light and light combinations to help him. But his journey won't be always easy, so beware !
+
+By pressing U, I or O, (keys can be changed) you can activate colored platforms and manage your way.
+
+If you want to know exactly what is being done in the game development, please see the [changelog](CHANGELOG.md).
 Concerning daily work, see the [diary](DIARY.md).
 
 ## Version 0.5 released :
